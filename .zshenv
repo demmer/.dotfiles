@@ -147,12 +147,22 @@ export CVSROOT_LLADD=:ext:cvs-sourceforge:/cvsroot/lladd
 
 # Host specific overrides
 if [ $HOST = pisco ]; then
-	export CVSROOT_PISCO=/repository
-	export CVSROOT_TIER=/usr/projects/tier/ICT/repository
-fi
+    export CVSROOT_PISCO=/repository
+    export CVSROOT_TIER=/usr/projects/tier/ICT/repository
+    export CVSROOT=$CVSROOT_PISCO
 
-if [ -d /repository/CVSROOT ]; then
+elif [ -d /project/cs/brewer/tier/ICT/repository/CVSROOT ]; then
+    export CVSROOT_PISCO=/project/cs/brewer/tier/demmer/repository/
+    export CVSROOT_TIER=/project/cs/brewer/tier/ICT/repository/
+    export CVSROOT=$CVSROOT_TIER
+
+elif [ -d /usr/src/bundles/orig/CVSROOT ]; then
+    export CVSROOT_DTN=/usr/src/bundles/orig
+    export CVSROOT=$CVSROOT_DTN
+
+elif [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
+
 else 
     export CVSROOT=$CVSROOT_INIGO
 fi
