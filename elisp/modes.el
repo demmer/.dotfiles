@@ -138,18 +138,11 @@
   (interactive)
   (if (string-match ".*am-1.*" (file-name-directory buffer-file-name))
       (let ((directory))
-	(setq directory (format "%s../ffn/bin/%s" 
-				(file-name-directory buffer-file-name)
-				(getenv "ARCH")))
-	(if (file-directory-p directory)
-	    (progn
-	      (make-local-variable 'compile-command)
-	      (setq compile-command (format "cd %s; make" directory)))
-	  )
-
-	(setq directory (format "%s../../ffn/bin/%s" 
-				(file-name-directory buffer-file-name)
-				(getenv "ARCH")))
+	(setq directory (file-name-directory 
+			 (file-truename 
+			  (format "%s../ffn/bin/%s/GNUMakerules" 
+				  (file-name-directory buffer-file-name)
+				  (getenv "ARCH")))))
 	(if (file-directory-p directory)
 	    (progn
 	      (make-local-variable 'compile-command)
