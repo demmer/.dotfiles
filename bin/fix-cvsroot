@@ -1,0 +1,16 @@
+#!/bin/sh
+
+root=$1
+shift
+
+if [ x$root = x ]; then
+	echo "usage: fix-cvsroot [root]"
+	exit 1
+fi
+
+for cvs in `find . -type d -name CVS`; do
+	echo $cvs/Root
+	rm -f $cvs/Root
+	echo $root > $cvs/Root
+done
+
