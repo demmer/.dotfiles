@@ -460,6 +460,10 @@ with tab characters underneath."
 	(list
 	 (cons 'c++-mode 2)
 	 (cons t t)))
+
+  (setq c++-font-lock-extra-types (append '("std"
+					    "u_char")
+					  c++-font-lock-extra-types))
   
   (setq font-lock-multiline t)
   )
