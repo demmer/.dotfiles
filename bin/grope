@@ -19,7 +19,7 @@
 ##	- Fix so 'grope -l foo' works.  Currently it says bogus output.
 ##
 ## Author: Bart Robinson <lomew@cs.utah.edu> - Oct 1996
-## $Id: grope,v 1.1 2002-09-05 20:55:15 miked Exp $
+## $Id: grope,v 1.2 2002-09-05 20:57:37 miked Exp $
 
 use Cwd;
 
@@ -136,12 +136,3 @@ sub mygetcwd {
     }
     return $guess;
 }
-
-__END__
-cwd	/remote/users/ugrad/lomew/flource/oskit/libfdev_linux/include/net/CVS/
-dir	/remote/users/ugrad/lomew/flource/
-cwdr	oskit/libfdev_linux/include/net/CVS/
-$_	/remote/users/ugrad/lomew/flource/oskit/libkern/x86/base_paging_init.c:
-$_	oskit/libkern/x86/base_paging_init.c:
-count	5
-WANT	../../../../libkern/x86/base_paging_init.c
