@@ -7,13 +7,16 @@ $line2 = <STDIN>;
 
 while ($line3 = <STDIN>) {
     if ($line2 =~ /^$/ &&
-	$line1 =~ /^.*:/ &&
- 	$line3 =~ /^.*:/)
+	$line1 =~ /^\S+: / &&
+ 	$line3 =~ /^\S+: /)
     {
-	print "----------------------\n";
-	print $line1;
-	print $line2;
-	print $line3;
+	if (! ($line3 =~ /^SPAM:/))
+	{
+	    print "----------------------\n";
+	    print $line1;
+	    print $line2;
+	    print $line3;
+	}
     }
 
     $line1 = $line2;
