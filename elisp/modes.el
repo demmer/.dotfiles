@@ -323,7 +323,9 @@
 (defun my-sh-setup () 
   (interactive)
   (define-key sh-mode-map "\t" 'self-insert-command)
-  )
+  (define-key sh-mode-map "\C-c\C-c" 'comment-region) 
+  (define-key sh-mode-map "\C-c\C-u" 'uncomment-region)
+ )
 (add-hook 'sh-mode-hook 'my-sh-setup)
 
 ;;; elisp debugging
