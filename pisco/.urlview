@@ -1,0 +1,3 @@
+EXPERT
+REGEXP ((ht|f)t(p|ps):(//)?[^ >\"\t]*|www\\.[-a-z0-9.]+)[^ .,;\t>\n\">)]
+COMMAND /bin/sh -c "firefox -remote 'openUrl(%s, new-tab)' || sleep 5"

@@ -65,7 +65,7 @@ WMPID=$!
 # Utility programs
 mozilla & 
 dclock &
-yabiff -geometry $YABIFF_GEOM argus:@,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
+yabiff -geometry $YABIFF_GEOM argus:inbox,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
 gaim &
 
 # Bring up a console window and a work shell
@@ -76,12 +76,11 @@ xterm -title "Console" -n "Console" -geometry =$CONSOLE_GEOM -e /bin/sh -c \
 xterm -n "Fezzik, it's you . . . true" -geometry =$XTERM_1_GEOM &
 
 # Mail shells
-argus-xmutt &
+pisco-xmutt &
 xoopi-xmutt &
 
 # Tunnels for urlview
 $HOME/bin/urlview-tunnel-shell xoopi
-$HOME/bin/urlview-tunnel-shell argus
 
 # Bring up emacs and work shells
 emacs -geometry =$EMACS_XINIT_GEOM -title "Inconceivable" &

@@ -9,7 +9,9 @@ source ~/.muttrc.generic
 
 my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 
-mailboxes ! =tinyos =tier =dtn =spam
+set spoolfile =$HOME/Mail/inbox
+
+mailboxes =inbox =tinyos =tier =dtn =spam
 
 #
 # Sorting order dependent on the folder

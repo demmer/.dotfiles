@@ -1,16 +1,4 @@
-#!/bin/csh -f
-
-setenv TERMINFO ~/.terminfo
-if ($TERM == "" || $TERM == "xterm") then
-    setenv TERM xterm-color
-endif
+#!/bin/sh -f
 stty stop  "^\'"           # unset ctrl-s
 stty lnext "^\'"           # unset ctrl-v
-
-foreach dir (`echo $PATH | sed 's/:/ /g'`)
-	if ($dir == $HOME/bin) continue
-  	if (-x $dir/mutt) exec $dir/mutt $argv
-end
-
-echo "can't find mutt in $PATH"
-exit 1
+exec runprog mutt

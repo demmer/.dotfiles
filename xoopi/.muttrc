@@ -24,15 +24,14 @@ mailboxes ! =pair-notices =sa-talk =spam
 # To get red     use magenta
 
 color attachment brightred	black
-color error      cyan         black
+color error      cyan         	black
 color indicator  black		white
 color markers    red            black
-color message    yellow           black
+color message    yellow         black
 color normal     white          black
 color quoted     white          black
-color signature  cyan         black
+color signature  cyan         	black
 color status     black		white
-color tilde      cyan         black
+color tilde      cyan         	black
 color tree       brightred      black
-
 color hdrdefault cyan	        black

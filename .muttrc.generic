@@ -20,6 +20,7 @@ set include=yes
 set index_format="%Z %-4C %{%b %d} %-18.18F (%c) %s"
 set mail_check=2
 unset move
+set mark_old=no
 set postpone=no
 set postponed="=postponed"
 set record="=sent"
@@ -104,7 +105,7 @@ macro index R "|report-spam\ns=spam-certain\n" "mark message as spam"
 macro pager R "|report-spam\ns=spam-certain\n" "mark message as spam"
 
 #
-# Colors:
+# Color overrides if necessary:
 # To get cyan    use yellow
 # To get yellow  use cyan
 # To get red     use magenta
@@ -120,18 +121,7 @@ color signature  yellow         black
 color status     black		white
 color tilde      yellow         black
 color tree       brightred      black
-
 color hdrdefault yellow	        black
-
-#
-# Mono video attributes
-#
-#mono  attachment bold
-#mono  status     none
-
-#mono  hdrdefault none
-#mono  header     bold                   ^from:
-#mono  header     bold                   ^subject:
 
 #
 # Mail header fields to show / ignore

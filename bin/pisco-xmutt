@@ -1,0 +1,9 @@
+#!/bin/sh -f
+
+PROG=
+if [ ! '$HOST' == 'pisco' ]; then
+	PROG='ssh -t pisco'
+fi
+
+xterm -title "EECS Mail Shell" -geometry $PISCO_XMUTT_GEOM -e \
+	$PROG mutt &
