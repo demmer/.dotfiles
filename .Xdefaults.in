@@ -1,175 +1,142 @@
+# 1 ".Xdefaults"
 !
-! File:    .Xdefaults
-! Author:  mjd compiled from various sources
+! File: .Xdefaults
+! Author: mjd compiled from various sources
 !
-
-! Check the display bit depth
-#if defined(PLANES) && (PLANES == 1)
-
-! Colors and fonts for NCD's in dept.
-
-# define DEF_FONT   9x15
-# define EMACS_FONT 9x15
-# define BOLD_FONT  9x15bold
-# define CURSOR 	white
-# define EMACS_PTR 	white
-# define FORE    	black
-# define BACK    	gray87
-# define T_FORE  	white
-# define T_BACK  	black
-# define POINTER 	white
-
-#else
-
-! Colors and fonts when on a real display
-
-# define DEF_FONT   lucidasanstypewriter-bold-12
-! # define EMACS_FONT -*-lucida sans typewriter-*-*-*-*-12-*-*-*-*-*-*-*
-# define EMACS_FONT lucidasanstypewriter-bold-12
-# define BOLD_FONT  lucidasanstypewriter-bold-12
-# define CURSOR 	yellow
-# define EMACS_PTR	red
-# define FORE    	black
-# define BACK    	gray87
-# define T_FORE  	ivory
-# define T_BACK  	black
-# define POINTER 	white
-
-#endif
 
 ! gnuplot
-gnuplot*textColor:   red
+gnuplot*textColor: red
 gnuplot*borderColor: black
-gnuplot*axisColor:   black
-gnuplot*line1Color:  magenta
+gnuplot*axisColor: black
+gnuplot*line1Color: magenta
 
 ! dclock
-dclock*geometry:                =93x48+712+1
-dclock*hands:                   black
-dclock*foreground:              FORE
-dclock*background:              BACK
-dclock*highlight:               black
-dclock*borderWidth:             0
-dclock*update:                  1
+dclock*geometry: =93x48+712+1
+dclock*hands: black
+dclock*foreground: black
+dclock*background: gray87
+dclock*highlight: black
+dclock*borderWidth: 0
+dclock*update: 1
 
 ! xclock
-xclock*geometry:                =93x48+712+1
-xclock*hands:                   black
-xclock*foreground:              FORE
-xclock*background:              BACK
-xclock*highlight:               black
-xclock*borderWidth:             0
-xclock*update:                  1
+xclock*geometry: =93x48+712+1
+xclock*hands: black
+xclock*foreground: black
+xclock*background: gray87
+xclock*highlight: black
+xclock*borderWidth: 0
+xclock*update: 1
 
 ! colorxterm
-colorxterm*foreground:				white
-colorxterm*background:				black
-colorxterm*cursorColor:				CURSOR
-colorxterm*pointerColor:                POINTER
-colorxterm*pointerColorBackground:      ivory
-colorxterm*jumpScroll:                  true
-colorxterm*saveLines:                   2000
-colorxterm*scrollBar:                   true
-colorxterm*scrollbar*thickness:         14
-colorxterm*scrollbar*foreground:		grey40
-colorxterm*scrollbar*background:		grey40
-colorxterm*reverseWrap:                 true
-colorxterm*scrollKey:                   true
-colorxterm*font:       	               DEF_FONT
+colorxterm*foreground: white
+colorxterm*background: black
+colorxterm*cursorColor: yellow
+colorxterm*pointerColor: white
+colorxterm*pointerColorBackground: ivory
+colorxterm*jumpScroll: true
+colorxterm*saveLines: 2000
+colorxterm*scrollBar: true
+colorxterm*scrollbar*thickness: 14
+colorxterm*scrollbar*foreground: grey40
+colorxterm*scrollbar*background: grey40
+colorxterm*reverseWrap: true
+colorxterm*scrollKey: true
+colorxterm*font: lucidasanstypewriter-bold-12
 
-colorxterm*color0:                      black
-colorxterm*color1:                      blue
-colorxterm*color2:                      green
-colorxterm*color3:                      yellow
-colorxterm*color4:                      RoyalBlue1
-colorxterm*color5:                      red
-colorxterm*color6:                      dodger blue
-colorxterm*color7:                      white
+colorxterm*color0: black
+colorxterm*color1: blue
+colorxterm*color2: green
+colorxterm*color3: yellow
+colorxterm*color4: RoyalBlue1
+colorxterm*color5: red
+colorxterm*color6: dodger blue
+colorxterm*color7: white
 
-colorxterm*VT100.Translations: #override\n\
-	<KeyPress>Prior : scroll-back(1,page)\n\
-	<KeyPress>Next : scroll-forw(1,page)
+colorxterm*VT100.Translations: #override\n <KeyPress>Prior : scroll-back(1,page)\n <KeyPress>Next : scroll-forw(1,page)
+
+
 ! xterm
-xterm*foreground:				T_FORE
-xterm*background:				T_BACK
-xterm*cursorColor:              	CURSOR
-xterm*pointerColor:             	POINTER
-xterm*pointerColorBackground:   	ivory
-xterm*jumpScroll:				true
-xterm*saveLines:				1000	
-xterm*scrollBar:				true
-xterm*scrollBar*thickness:		12
-xterm*reverseWrap:				true
-xterm*font:       				DEF_FONT
+xterm*foreground: ivory
+xterm*background: black
+xterm*cursorColor: yellow
+xterm*pointerColor: white
+xterm*pointerColorBackground: ivory
+xterm*jumpScroll: true
+xterm*saveLines: 1000
+xterm*scrollBar: true
+xterm*scrollBar*thickness: 12
+xterm*reverseWrap: true
+xterm*font: lucidasanstypewriter-bold-12
 
-xterm*color0:                      Black
-xterm*color1:                      Blue
-xterm*color2:                      Green
-xterm*color3:                      Yellow
-xterm*color4:                      RoyalBlue1
-xterm*color5:                      Red
-xterm*color6:                      dodger blue
-xterm*color7:                      White
+xterm*color0: Black
+xterm*color1: Blue
+xterm*color2: Green
+xterm*color3: Yellow
+xterm*color4: RoyalBlue1
+xterm*color5: Red
+xterm*color6: dodger blue
+xterm*color7: White
 
-xterm*VT100.Translations: #override\n\
-	<KeyPress>Prior : scroll-back(1,page)\n\
-	<KeyPress>Next : scroll-forw(1,page)
+xterm*VT100.Translations: #override\n <KeyPress>Prior : scroll-back(1,page)\n <KeyPress>Next : scroll-forw(1,page)
+
+
 
 
 ! emacs
-emacs*font:			EMACS_FONT
-emacs*geometry:			=82x54+0+1
-emacs*borderWidth:		2
-emacs*internalBorder:		2
-emacs*foreground:		T_FORE
-emacs.background:		T_BACK
-emacs*menu*foreground:		FORE
-emacs*menu*background:		BACK
-emacs*menubar*foreground:	black
-emacs*menubar*background:	grey87
-emacs*scrollbar*foreground:	honeydew2
-emacs*scrollbar*background:	cadetBlue4
-emacs*borderColor:		white
-emacs*cursorColor:		CURSOR
-emacs*pointerColor:		EMACS_PTR
+emacs*font: lucidasanstypewriter-bold-12
+emacs*geometry: =82x54+0+1
+emacs*borderWidth: 2
+emacs*internalBorder: 2
+emacs*foreground: ivory
+emacs.background: black
+emacs*menu*foreground: black
+emacs*menu*background: gray87
+emacs*menubar*foreground: black
+emacs*menubar*background: grey87
+emacs*scrollbar*foreground: honeydew2
+emacs*scrollbar*background: cadetBlue4
+emacs*borderColor: white
+emacs*cursorColor: yellow
+emacs*pointerColor: red
 
 ! xbiff
-xbiff*geometry:		=50x55+659+1
-xbiff*foreground:		FORE
-xbiff*background:	     BACK
-xbiff*highlight:		ivory
-xbiff*borderWidth:		0
+xbiff*geometry: =50x55+659+1
+xbiff*foreground: black
+xbiff*background: gray87
+xbiff*highlight: ivory
+xbiff*borderWidth: 0
 
 ! mailbox
-mailbox*geometry:		=270x60+812+1
-mailbox*foreground:		FORE
-mailbox*background:	     BACK
-mailbox*borderWidth:	0
+mailbox*geometry: =270x60+812+1
+mailbox*foreground: black
+mailbox*background: gray87
+mailbox*borderWidth: 0
 
 ! xload
-xload*geometry:		=150x88+0+0
-xload*foreground:		FORE
-xload*background:		BACK
-xload*highlight:		firebrick3
-xload*scale:			1
-xload*font:			*schoolbook-medium-r-normal--18*
+xload*geometry: =150x88+0+0
+xload*foreground: black
+xload*background: gray87
+xload*highlight: firebrick3
+xload*scale: 1
+xload*font: *schoolbook-medium-r-normal--18*
 
 ! XPostit
-xpostit.geometry:				=60x53+560+2
-xpostit*foreground:				FORE
-xpostit*background:				BACK
-xpostit.Confirm*foreground:		FORE
-xpostit.Confirm*background:		BACK
-xpostit.Confirm*font:			*helvetica-bold-r-normal--12*
-xpostit*PostItNote*foreground:	FORE
-xpostit*PostItNote*background:	BACK
-xpostit*PostItNote*font:			*helvetica-bold-r-normal--14*
-xpostit*saveNotes:				true
+xpostit.geometry: =60x53+560+2
+xpostit*foreground: black
+xpostit*background: gray87
+xpostit.Confirm*foreground: black
+xpostit.Confirm*background: gray87
+xpostit.Confirm*font: *helvetica-bold-r-normal--12*
+xpostit*PostItNote*foreground: black
+xpostit*PostItNote*background: gray87
+xpostit*PostItNote*font: *helvetica-bold-r-normal--14*
+xpostit*saveNotes: true
 
 ! Xlock
 XLock.mode: swarm
 XLock.font: -b&h-lucida-medium-r-normal-sans-24-*-*-*-*-*-iso8859-1
-XLock.foreground: FORE
+XLock.foreground: black
 XLock.background: white
 XLock.username: Username:
 XLock.password: Password:
@@ -194,181 +161,83 @@ XLock.inroot: off
 XLock.grabmouse: on
 XLock.forceLogout: 30
 XLock.logoutButtonLabel: Logout
-XLock.logoutButtonHelp: \
-Click the "Logout" button to log out current\n\
-user and make workstation available.
-XLock.logoutFailedString: \
-Logout attempt FAILED.\n\
-Current user could not be automatically logged out.
+XLock.logoutButtonHelp: Click the "Logout" button to log out current\nuser and make workstation available.
+
+
+XLock.logoutFailedString: Logout attempt FAILED.\nCurrent user could not be automatically logged out.
+
+
 XLock.rock.delay: 0
 XLock.rock.batchcount: 100
 XLock.rock.saturation: 1
 
 ! X11 Resources generated for SoftWindows by amd on Thu Dec 14 18:46:46 1995
 ! Fix a bug in the Open Look window manager olwm.
-Olwm.windowCacheSize:	0
+Olwm.windowCacheSize: 0
 ! Define a new keyboard accelerator-less
 ! window menu for HP-VUE
-Vuewm*sOftWindows*windowMenu:	NoAcceleratorWindowMenu
+Vuewm*sOftWindows*windowMenu: NoAcceleratorWindowMenu
 ! Define a new keyboard accelerator-less
-! window menu for SGI's 4Dwm
-4Dwm*sOftWindows*windowMenu:	SoftWindowsMenu
-! Define screen accelerator keys for SGI's 4Dwm
-4Dwm*keyBindings:	SoftWindowsKeys
+! window menu for SGI's 4Dwm'
+4Dwm*sOftWindows*windowMenu: SoftWindowsMenu
+! Define screen accelerator keys for SGI's 4Dwm'
+4Dwm*keyBindings: SoftWindowsKeys
 ! Define a new keyboard accelerator-less window menu
 ! for standard Motif
-Mwm*sOftWindows*windowMenu:	SoftWindowsMenu
+Mwm*sOftWindows*windowMenu: SoftWindowsMenu
 
 ! Framemaker
-Maker*background:                gray60
-Maker.makerkit.geometry:         300x50+0+0
-Maker.focusOnMouse:              True
-Maker.printerName:               ps3
-Maker.colorDocs:                 True
-Maker.colorImages:               True
-Maker.penWidths:                 0.5,1.0,2.5,5.0
-Maker.zoomPercents:              25,50,100,120,150,160,200,400,800,1600
-!Maker.tools.tools_form.x:       810
-!Maker.tools.tools_form..y:      5
-Maker.pgf.bb.x:                  670
-Maker.pgf.bb.y:                  300
-!  inhibit startup messages
-Maker.expertMode:                expert
-Maker.splashScreen:              False
-!  these allow framemaker to display bigger and more images
-Maker.maxClientBitmaps:          256
-Maker.clientBitmapSize:          8000000
-Maker.maxServerBitmaps:          256
-Maker.serverBitmapSize:          8000000
-!  temporary cludge to get around the ClickPrint problem
-!Maker.api:                       False
+Maker*background: gray60
+Maker.makerkit.geometry: 300x50+0+0
+Maker.focusOnMouse: True
+Maker.printerName: ps3
+Maker.colorDocs: True
+Maker.colorImages: True
+Maker.penWidths: 0.5,1.0,2.5,5.0
+Maker.zoomPercents: 25,50,100,120,150,160,200,400,800,1600
+!Maker.tools.tools_form.x: 810
+!Maker.tools.tools_form..y: 5
+Maker.pgf.bb.x: 670
+Maker.pgf.bb.y: 300
+! inhibit startup messages
+Maker.expertMode: expert
+Maker.splashScreen: False
+! these allow framemaker to display bigger and more images
+Maker.maxClientBitmaps: 256
+Maker.clientBitmapSize: 8000000
+Maker.maxServerBitmaps: 256
+Maker.serverBitmapSize: 8000000
+! temporary cludge to get around the ClickPrint problem
+!Maker.api: False
 
 
-!  Motif translations for Emacs keybindings in an XmText widgit
-!  from part3 of the Motif FAQ - copied from jal
-*XmText.translations: #override\n\
-        Ctrl <Key>b:            backward-character()\n\
-        Alt <Key>b:             backward-word()\n\
-        Meta <Key>b:            backward-word()\n\
-        Shift Alt <Key>b:       backward-word(extend)\n\
-        Shift Meta <Key>b:      backward-word(extend)\n\
-        Alt <Key>[:             backward-paragraph()\n\
-        Meta <Key>[:            backward-paragraph()\n\
-        Shift Alt <Key>[:       backward-paragraph(extend)\n\
-        Shift Meta <Key>[:      backward-paragraph(extend)\n\
-        Alt <Key><:             beginning-of-file()\n\
-        Meta <Key><:            beginning-of-file()\n\
-        Ctrl <Key>a:            beginning-of-line()\n\
-        Shift Ctrl <Key>a:      beginning-of-line(extend)\n\
-        Ctrl <Key>osfInsert:    copy-clipboard()\n\
-        Shift <Key>osfDelete:   cut-clipboard()\n\
-        Shift <Key>osfInsert:   paste-clipboard()\n\
-        Alt <Key>>:             end-of-file()\n\
-        Meta <Key>>:            end-of-file()\n\
-        Ctrl <Key>e:            end-of-line()\n\
-        Shift Ctrl <Key>e:      end-of-line(extend)\n\
-        Ctrl <Key>f:            forward-character()\n\
-        Alt <Key>]:             forward-paragraph()\n\
-        Meta <Key>]:            forward-paragraph()\n\
-        Shift Alt <Key>]:       forward-paragraph(extend)\n\
-        Shift Meta <Key>]:      forward-paragraph(extend)\n\
-        Ctrl Alt <Key>f:        forward-word()\n\
-        Ctrl Meta <Key>f:       forward-word()\n\
-        Ctrl <Key>d:            delete-next-character()\n\
-        Alt <Key>BackSpace:     delete-previous-word()\n\
-        Meta <Key>BackSpace:    delete-previous-word()\n\
-        Ctrl <Key>w:            key-select() delete-selection()\n\
-        Ctrl <Key>k:            delete-to-end-of-line()\n\
-        Alt <Key>Delete:        delete-to-start-of-line()\n\
-        Meta <Key>Delete:       delete-to-start-of-line()\n\
-        Ctrl <Key>o:            newline-and-backup()\n\
-        Ctrl <Key>j:            newline-and-indent()\n\
-        Ctrl <Key>n:            next-line()\n\
-        Ctrl <Key>osfLeft:      page-left()\n\
-        Ctrl <Key>osfRight:     page-right()\n\
-        Ctrl <Key>p:            previous-line()\n\
-        Ctrl <Key>g:            process-cancel()\n\
-        Ctrl <Key>osfDown:      next-page()\n\
-        Ctrl <Key>osfUp:        previous-page()\n\
-        Ctrl <Key>space:        set-anchor()\n
+! Motif translations for Emacs keybindings in an XmText widgit
+! from part3 of the Motif FAQ - copied from jal
+*XmText.translations: #override\n Ctrl <Key>b: backward-character()\n Alt <Key>b: backward-word()\n Meta <Key>b: backward-word()\n Shift Alt <Key>b: backward-word(extend)\n Shift Meta <Key>b: backward-word(extend)\n Alt <Key>[: backward-paragraph()\n Meta <Key>[: backward-paragraph()\n Shift Alt <Key>[: backward-paragraph(extend)\n Shift Meta <Key>[: backward-paragraph(extend)\n Alt <Key><: beginning-of-file()\n Meta <Key><: beginning-of-file()\n Ctrl <Key>a: beginning-of-line()\n Shift Ctrl <Key>a: beginning-of-line(extend)\n Ctrl <Key>osfInsert: copy-clipboard()\n Shift <Key>osfDelete: cut-clipboard()\n Shift <Key>osfInsert: paste-clipboard()\n Alt <Key>>: end-of-file()\n Meta <Key>>: end-of-file()\n Ctrl <Key>e: end-of-line()\n Shift Ctrl <Key>e: end-of-line(extend)\n Ctrl <Key>f: forward-character()\n Alt <Key>]: forward-paragraph()\n Meta <Key>]: forward-paragraph()\n Shift Alt <Key>]: forward-paragraph(extend)\n Shift Meta <Key>]: forward-paragraph(extend)\n Ctrl Alt <Key>f: forward-word()\n Ctrl Meta <Key>f: forward-word()\n Ctrl <Key>d: delete-next-character()\n Alt <Key>BackSpace: delete-previous-word()\n Meta <Key>BackSpace: delete-previous-word()\n Ctrl <Key>w: key-select() delete-selection()\n Ctrl <Key>k: delete-to-end-of-line()\n Alt <Key>Delete: delete-to-start-of-line()\n Meta <Key>Delete: delete-to-start-of-line()\n Ctrl <Key>o: newline-and-backup()\n Ctrl <Key>j: newline-and-indent()\n Ctrl <Key>n: next-line()\n Ctrl <Key>osfLeft: page-left()\n Ctrl <Key>osfRight: page-right()\n Ctrl <Key>p: previous-line()\n Ctrl <Key>g: process-cancel()\n Ctrl <Key>osfDown: next-page()\n Ctrl <Key>osfUp: previous-page()\n Ctrl <Key>space: set-anchor()\n
 
-!  Emacs-like Motif bindings for TextFields
-!  swiped from above code; the kill- actions don't seem to work
-*XmTextField.translations: #override\n\
-        Ctrl <Key>b:            backward-character()\n\
-        Alt <Key>b:             backward-word()\n\
-        Meta <Key>b:            backward-word()\n\
-        Shift Alt <Key>b:       backward-word(extend)\n\
-        Shift Meta <Key>b:      backward-word(extend)\n\
-        Ctrl <Key>a:            beginning-of-line()\n\
-        Shift Ctrl <Key>a:      beginning-of-line(extend)\n\
-        Ctrl <Key>osfInsert:    copy-clipboard()\n\
-        Shift <Key>osfDelete:   cut-clipboard()\n\
-        Shift <Key>osfInsert:   paste-clipboard()\n\
-        Ctrl <Key>e:            end-of-line()\n\
-        Shift Ctrl <Key>e:      end-of-line(extend)\n\
-        Ctrl <Key>f:            forward-character()\n\
-        Ctrl Alt <Key>f:        forward-word()\n\
-        Ctrl Meta <Key>f:       forward-word()\n\
-        Ctrl <Key>d:            delete-next-character()\n\
-        Alt <Key>BackSpace:     delete-previous-word()\n\
-        Meta <Key>BackSpace:    delete-previous-word()\n\
-        Ctrl <Key>w:            key-select() delete-selection()\n\
-        Ctrl <Key>k:            delete-to-end-of-line()\n\
-        Alt <Key>Delete:        delete-to-start-of-line()\n\
-        Meta <Key>Delete:       delete-to-start-of-line()\n\
-        Ctrl <Key>g:            process-cancel()\n\
-        Ctrl <Key>space:        set-anchor()\n
-
+! Emacs-like Motif bindings for TextFields
+! swiped from above code; the kill- actions don't seem to work'
+*XmTextField.translations: #override\n Ctrl <Key>b: backward-character()\n Alt <Key>b: backward-word()\n Meta <Key>b: backward-word()\n Shift Alt <Key>b: backward-word(extend)\n Shift Meta <Key>b: backward-word(extend)\n Ctrl <Key>a: beginning-of-line()\n Shift Ctrl <Key>a: beginning-of-line(extend)\n Ctrl <Key>osfInsert: copy-clipboard()\n Shift <Key>osfDelete: cut-clipboard()\n Shift <Key>osfInsert: paste-clipboard()\n Ctrl <Key>e: end-of-line()\n Shift Ctrl <Key>e: end-of-line(extend)\n Ctrl <Key>f: forward-character()\n Ctrl Alt <Key>f: forward-word()\n Ctrl Meta <Key>f: forward-word()\n Ctrl <Key>d: delete-next-character()\n Alt <Key>BackSpace: delete-previous-word()\n Meta <Key>BackSpace: delete-previous-word()\n Ctrl <Key>w: key-select() delete-selection()\n Ctrl <Key>k: delete-to-end-of-line()\n Alt <Key>Delete: delete-to-start-of-line()\n Meta <Key>Delete: delete-to-start-of-line()\n Ctrl <Key>g: process-cancel()\n Ctrl <Key>space: set-anchor()\n
 
 !# Scrolling on wheel mouse: half a page normally, line per line with shift
-XTerm.vt100.translations: #override\n\
- Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n\
- Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n\
- Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n\
- Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n\
- <Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
- <Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
+XTerm.vt100.translations: #override\n Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n <Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n <Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n
+
+
+
+
+
+
 
 !# In the scrollbar we map buttons 5 & 4 to 1 and 2 otherwise, core dump
 !# This will move proportionnaly to cursor position but we dont know how to
 !# program the same exact behavior as in the text widget.
-XTerm.vt100.Scrollbar.translations: #override\n\
-     <Btn5Down>: StartScroll(Forward)\n\
-     <Btn4Down>: StartScroll(Backward)\n\
+XTerm.vt100.Scrollbar.translations: #override\n <Btn5Down>: StartScroll(Forward)\n <Btn4Down>: StartScroll(Backward)\n
+
+
 
 
 
 !## NETSCAPE mouse wheel scrolling
-Netscape*drawingArea.translations:  #replace    \
-        <Btn1Down>:           ArmLink()   \n\
-        <Btn2Down>:           ArmLink()   \n\
-        ~Shift<Btn1Up>:       ActivateLink()  \n\
-        ~Shift<Btn2Up>:       ActivateLink(new-window)  \
-                                        DisarmLink()    \n\
-        Shift<Btn1Up>:        ActivateLink(save-only)  \
-                                        DisarmLink()    \n\
-        Shift<Btn2Up>:        ActivateLink(save-only)  \
-                                        DisarmLink()    \n\
-        <Btn1Motion>:             DisarmLinkIfMoved()  \n\
-        <Btn2Motion>:             DisarmLinkIfMoved()  \n\
-        <Btn3Motion>:             DisarmLinkIfMoved()  \n\
-        <Motion>:             DescribeLink()  \n\
-        <Btn3Down>:           xfeDoPopup()    \n\
-        <Btn3Up>:             ActivatePopup() \n\
-        Ctrl<Btn4Down>: PageUp()\n\
-        Ctrl<Btn5Down>: PageDown()\n\
-        Shift<Btn4Down>: LineUp()\n\
-        Shift<Btn5Down>: LineDown()\n\
-         None<Btn4Down>: LineUp()LineUp()LineUp()LineUp()LineUp()LineUp()\n\
-         None<Btn5Down>: LineDown()LineDown()LineDown()LineDown()LineDown()LineDown()\n\
-        Alt<Btn4Down>: xfeDoCommand(forward)\n\
-        Alt<Btn5Down>: xfeDoCommand(back)\n
-
-Netscape*globalNonTextTranslations: #override\n\
- Shift<Btn4Down>: LineUp()\n\
- Shift<Btn5Down>: LineDown()\n\
- None<Btn4Down>:LineUp()LineUp()LineUp()LineUp()LineUp()LineUp()\n\
- None<Btn5Down>:LineDown()LineDown()LineDown()LineDown()LineDown()LineDown()\n\
- Alt<Btn4Down>: xfeDoCommand(forward)\n\
- Alt<Btn5Down>: xfeDoCommand(back)\n
+Netscape*drawingArea.translations: #replace <Btn1Down>: ArmLink() \n <Btn2Down>: ArmLink() \n ~Shift<Btn1Up>: ActivateLink() \n ~Shift<Btn2Up>: ActivateLink(new-window) DisarmLink() \n Shift<Btn1Up>: ActivateLink(save-only) DisarmLink() \n Shift<Btn2Up>: ActivateLink(save-only) DisarmLink() \n <Btn1Motion>: DisarmLinkIfMoved() \n <Btn2Motion>: DisarmLinkIfMoved() \n <Btn3Motion>: DisarmLinkIfMoved() \n <Motion>: DescribeLink() \n <Btn3Down>: xfeDoPopup() \n <Btn3Up>: ActivatePopup() \n Ctrl<Btn4Down>: PageUp()\n Ctrl<Btn5Down>: PageDown()\n Shift<Btn4Down>: LineUp()\n Shift<Btn5Down>: LineDown()\n None<Btn4Down>: LineUp()LineUp()LineUp()LineUp()LineUp()LineUp()\n None<Btn5Down>: LineDown()LineDown()LineDown()LineDown()LineDown()LineDown()\n Alt<Btn4Down>: xfeDoCommand(forward)\n Alt<Btn5Down>: xfeDoCommand(back)\n
+# 368 ".Xdefaults"
+Netscape*globalNonTextTranslations: #override\n Shift<Btn4Down>: LineUp()\n Shift<Btn5Down>: LineDown()\n None<Btn4Down>:LineUp()LineUp()LineUp()LineUp()LineUp()LineUp()\n None<Btn5Down>:LineDown()LineDown()LineDown()LineDown()LineDown()LineDown()\n Alt<Btn4Down>: xfeDoCommand(forward)\n Alt<Btn5Down>: xfeDoCommand(back)\n
