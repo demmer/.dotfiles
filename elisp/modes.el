@@ -69,6 +69,8 @@
   (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
+  (define-key java-mode-map "\C-m" 'newline-and-indent)
+  (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
 )
 
 (add-hook 'c-mode-common-hook 'my-c-setup)
