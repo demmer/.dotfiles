@@ -227,12 +227,12 @@
 (add-hook 'sh-mode-hook 'my-sh-setup)
 
 ;;; elisp debugging
-(autoload 'edebug-defun "edebug" "debugger for elisp" t)
-(autoload 'edebug-all-defuns "edebug" "debugger for elisp" t)
-(setq edebug-global-prefix "\C-xX")
-(define-key emacs-lisp-mode-map "\C-xx" 'edebug-defun)
-(setq debugger 'edebug-debug)
-(setq max-lisp-eval-depth 10000)
+;; (autoload 'edebug-defun "edebug" "debugger for elisp" t)
+;; (autoload 'edebug-all-defuns "edebug" "debugger for elisp" t)
+;; (setq edebug-global-prefix "\C-xX")
+;; (define-key emacs-lisp-mode-map "\C-xx" 'edebug-defun)
+;; (setq debugger 'edebug-debug)
+;; (setq max-lisp-eval-depth 10000)
 
 ;; Set up the various faces for hilighting
 
