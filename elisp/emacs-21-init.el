@@ -158,7 +158,7 @@ This must be bound to a mouse-down event in the mode-line."
 ;; printer support
 (require 'lpr)
 (setq lpr-page-header-program "cat")
-(setq lpr-page-header-switches nil
+(setq lpr-page-header-switches nil)
 (setq lpr-command "enscript")
 (setq lpr-headers-switches (list "-B"))
 
