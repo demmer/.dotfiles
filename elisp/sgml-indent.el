@@ -3,6 +3,14 @@
 ;;
 ;; Defines a simple indentation routine for editing sgml or other
 ;; derived file types.
+;; 
+;; KNOWN BUGS:
+;;
+;; - Doesn't correctly deal with multiple close tags on the same line:
+;;   <mytag1/> </myenclosingtag> is interpreted as a self-closing tag
+;;   and so the next line will keep the same indent level instead of
+;;   popping up one level.
+
 
 (require 'sgml-mode)
 
