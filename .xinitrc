@@ -50,6 +50,7 @@ xoopi-tunnel &
 xoopi-mailbox &
 haight-mailbox &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
+[ -r $HOME/.fetchmailrc ] && fetchmail
 
 # Bring up a console window, email shells and a work shell
 xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
