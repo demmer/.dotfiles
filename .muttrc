@@ -40,10 +40,8 @@ set print_command="enscript -1R -P lp"
 # Sorting order dependent on the folder
 #
 folder-hook . set sort=mailbox-order
-folder-hook linux-kernel set sort=threads
-folder-hook netfilter set sort=threads
 
-mailboxes ! =linux-kernel =netfilter
+mailboxes !
 
 #
 # Suck in aliases
