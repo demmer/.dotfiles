@@ -1,0 +1,18 @@
+#!/bin/sh
+
+addr=$1
+shift
+
+if [ "$addr" == "" ]; then
+	echo "usage: $0 [ipaddr]"
+	exit 1
+fi
+
+rm -f /tmp/firewall
+sed "s/block known hacker addresses/&\n\
+       \t\$IPTABLES -A FIREWALL -s $addr -j REJECT/" < /etc/firewall > /tmp/firewall
+sudo mv -f /tmp/firewall /etc/init.d/firewall
+sudo /bin/sh /etc/init.d/firewall reload
+      
+    	
+    
