@@ -323,7 +323,7 @@ calls with dprintf macro calls. [mjd]"
 ))
 
 (defun vc-annotate-goto-line (prompt-version)
-  (interactive current-prefix-arg)
+  (interactive "P")
   (let ((opoint (point)) start linenum)
     (save-excursion
       (save-restriction
@@ -335,7 +335,7 @@ calls with dprintf macro calls. [mjd]"
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (call-interactively vc-annotate)
+    (vc-annotate current-prefix-arg)
     (other-window 1)
     (goto-line linenum)
     (other-window -1)
