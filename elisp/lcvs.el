@@ -658,7 +658,7 @@ the file on this line."
   (message "Diffing...done"))
 
 (defun lcvs-diff-head (arg)
-  "Diff some files against the HEAD revision.
+  "Diff some files against the HEAD revision or the head of the current branch.
 Use this when files have been checked in by someone else and you want
 to see what has changed before you update your copies.  See also
 `lcvs-diff-base'.
@@ -667,13 +667,16 @@ the file on this line."
   (interactive "P")
   (if (not (eq lcvs-submode 'examine))
       (error "Diffing BASE against HEAD is nonsensical in update mode"))
-  (message "Diffing...")
-  (lcvs-do-command "diff"
-		   "No differences with the HEAD"
-		   nil
-		   (append '("-N" "-rBASE" "-rHEAD")
+  (let ((tag (lcvs-sticky-tag (car (car (lcvs-get-relevant-files arg))))))
+    (if (null tag)
+	(setq tag "HEAD"))
+    (message "Diffing...")
+    (lcvs-do-command "diff"
+		     (format "No differences with %s" tag)
+		     nil
+		     (append (list"-N" "-rBASE" (format "-r%s" tag))
 			   (mapcar 'car (lcvs-get-relevant-files arg))))
-  (message "Diffing...done"))
+    (message "Diffing...done")))
 
 ;; There isn't an easy way to do diff-base and diff-head.
 ;;
