@@ -395,22 +395,40 @@ calls with dprintf macro calls. [mjd]"
   (compile-internal (concat "grope " sym) "No more grope hits" "grope"
                     nil grep-regexp-alist))
 
+(defun am-1-dir ()
+  (interactive)
+  (if (string-match "\\(.*\\)am-1.*" buffer-file-name)
+      (let ((dir
+	    (format "%s%s/am-1/"
+		    (substring buffer-file-name 
+			       (match-beginning 1) (match-end 1))
+		    (getenv "ARCH"))))
+	(if (file-directory-p dir) dir nil))
+    nil))
+  
+(defun pump-dir ()
+  (interactive)
+  (if (string-match "\\(.*\\)pump.*" buffer-file-name)
+      (let ((dir
+	    (format "%s%s/pump"
+		    (substring buffer-file-name 
+			       (match-beginning 1) (match-end 1))
+		    (getenv "ARCH"))))
+	(if (file-directory-p dir) dir nil))
+    nil))
+  
+
 ;; Try to make the compile command do the right thing for amsh
 (defun amsh-compile-command-hook ()
   (interactive)
-  (if (string-match ".*am-1.*" (file-name-directory buffer-file-name))
-      (let ((directory))
-	(setq directory (file-name-directory 
-			 (file-truename 
-			  (format "%s../ffn/bin/%s/GNUMakerules" 
-				  (file-name-directory buffer-file-name)
-				  (getenv "ARCH")))))
-	(if (file-directory-p directory)
-	    (progn
-	      (make-local-variable 'compile-command)
-	      (setq compile-command (format "cd %s; make" directory)))
-	  ))
-    ))
+  (let ((amdir	 (am-1-dir))
+	(pumpdir (pump-dir))
+	(dir)
+	)
+    (if (null amdir) (setq dir pumpdir) (setq dir amdir))
+    (if (null dir) nil
+      (make-local-variable 'compile-command)
+      (setq compile-command (format "cd %s; make" dir))
+      )))
 
 (add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
-  
