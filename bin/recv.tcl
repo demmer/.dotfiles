@@ -5,7 +5,7 @@
 #
 
 proc usage {} {
-    puts stderr {Usage: recv.tcl [-rate rate] [addr:]port}
+    puts stderr {Usage: recv.tcl [addr:]port}
     exit 1
 }
 
@@ -20,11 +20,9 @@ proc readable {input} {
 	return
     }
 
-    puts "$input readable"
-    
     set buf [read $input 10000]
     set len [string length $buf]
-    puts "read $len bytes"
+    puts "got $len byte packet"
 }
 
 proc accept {sock addr port} {
@@ -36,7 +34,6 @@ proc accept {sock addr port} {
     fileevent $sock readable "readable $sock"
 }
 
-set rate -1
 set addr 0
 set port -1
 
@@ -44,11 +41,6 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
 
     switch -- $arg {
-	"-rate" {
-	    incr i
-	    set rate [lindex $argv $i]
-	}
-
 	default {
 	    set l [split $arg ":"]
 	    if {[llength $l] == 1} {
@@ -68,7 +60,7 @@ if {$port == -1} {
 }
 
 puts stderr "recv parameters:"
-foreach var {rate addr port} {
+foreach var {addr port} {
     puts stderr "    $var:\t[set $var]"
 }
 
