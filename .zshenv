@@ -97,13 +97,6 @@ export REMOTE=~/.remote
 ### Setup gwm
 export GWMPATH=~/.gwm:/cs/data/gwm
 
-### Setup info
-infopath=(   \
-             /usr/info                               \
-             .                                       \
-             )
-export INFOPATH=${(j{:})infopath}
-
 ### Set up INDEX databases
 ##  usage: index <database> <key-regexp>
 export INDEXPATH=/u/system/admin/users:/u/system/admin/inventory
