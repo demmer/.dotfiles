@@ -316,7 +316,7 @@ calls with dprintf macro calls. [mjd]"
   (interactive)
   (let ((str) (grepargs))
     (setq str (read-from-minibuffer "grep in source in ~/work/am-1: "))
-    (setq grepargs (concat "grep -n -e " str " `find ~/work/am-1 -name \\*.cc -or -name \\*.h -or -name \\*.tcl`"))
+    (setq grepargs (concat "find ~/work/am-1 -name \\*.cc -or -name \\*.h -or -name \\*.tcl | xargs grep -n -e " str))
     (grep grepargs)
 ))
 
