@@ -71,11 +71,13 @@ alias xpisco='xssh pisco'
 alias xtier='xssh tier'
 alias xxoopi='xssh xoopi'
 alias xzabar='xssh zabar'
+alias xsandbox='xssh sandbox'
 
 alias xa=xargus
 alias xi=xinigo
 alias xp=xpisco
 alias xx=xxoopi
+alias xs=xsandbox
 
 alias script='SCRIPTPARENT=1 script'
 alias enscriptclean='enscript -B'
