@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.9 2001-03-10 00:44:32 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.10 2001-03-20 17:04:19 demmer Exp $
 
 
 (defun memequal (el list)
@@ -42,6 +42,9 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
 
 ;;; turn off audio bell
 (setq visible-bell t)
+
+;;; disable the annoying ctrl-Z mapping
+(global-unset-key "\^Z")
 
 ;;; wrap too-long lines in half windows
 (setq truncate-partial-width-windows nil)
