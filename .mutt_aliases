@@ -3,7 +3,7 @@
 #
 
 #
-# Source eecs aliases first so they don't stomp on mine
+# Source eecs aliases first so they don't stomp on mine.
 #
 source ~/.mutt_aliases_eecs
 
@@ -199,6 +199,14 @@ alias ngupta Nitin Gupta <ngupta@nbttech.com>
 #
 alias jay Jason LaTorre <latorrej@sterlingnet.com>
 alias patsy Patsy Manning <manningp@sterlingnet.com>
+
+#
+# Mailing Lists
+#
+alias tier TIER <ict4b_interest@listlink.berkeley.edu>
+alias tinyos tinyos <tinyos@millenium.berkeley.edu>
+alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
+
 
 #
 # Others added by mutt
