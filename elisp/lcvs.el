@@ -131,7 +131,7 @@ To see the whole log, use \\[lcvs-show-full-log].")
     (condition-case nil
 	(make-face-bold face)
       (error nil))
-    (set-face-foreground face "yellow")
+    (set-face-foreground face "purple")
     face))
 
 (defvar lcvs-M-face
