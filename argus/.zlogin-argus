@@ -1,0 +1,25 @@
+#
+# .zlogin for argus
+#
+
+#
+# Check that fetchmail is still running
+#
+fetchmaildied () {
+	echo "***"
+	echo "***"
+	echo "***"
+        echo "*** fetchmail pid $pid died "
+	echo "***"
+	echo "***"
+}
+
+if [ ! -f ~/.fetchmail.pid ]; then
+	fetchmaildied
+fi
+
+pid=`cat ~/.fetchmail.pid 2>/dev/null | xargs echo | sed 's/ .*//'`
+
+if [ ! -d /proc/$pid ]; then
+	fetchmaildied
+fi

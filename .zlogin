@@ -35,6 +35,12 @@ if [ "$TERM" = "dec-vt220" ]; then
 	export TERM=vt220
 fi
 
+#
+# Figure out the canonical hostname
+#
+HOST=`/bin/hostname | sed -e 's/\..*//'`
+export HOST
+
 #####################################################
 # Prompt the user for initial information gathering #
 #####################################################
@@ -60,8 +66,12 @@ if [ "$TERM" = "dialup" -o "$TERM" = "network" -o "$TERM" = "ansi" ]; then
 	export XONXOFF
 fi
 
-# always set the display when logging in from these hosts
-AUTO_DISPLAY_HOSTS="vissini fezzik"
+#
+# Check for host specific login file
+#
+if [ -f ~/.zlogin-$HOST ]; then
+	source ~/.zlogin-$HOST
+fi
 
 #
 # Prompt the user about starting X windows

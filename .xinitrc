@@ -15,12 +15,6 @@ echo "*****      `date`"
 echo "*******************************************************"
 
 #
-# Figure out the canonical hostname
-#
-HOST=`/bin/hostname | sed -e 's/\..*//'`
-export HOST
-
-#
 # Load in geometry
 #
 . $HOME/.geometry
