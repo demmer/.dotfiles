@@ -5,7 +5,7 @@
 ## USAGE: zsh -l
 ## 
 ## DATE:  10/4/94
-## $Id: .zlogin,v 1.1 2001-08-14 16:17:04 miked Exp $
+## $Id: .zlogin,v 1.2 2002-04-03 16:23:22 miked Exp $
 ## 
 ## Modification history:
 ##    jal   Sat May 27 17:29:40 1995   made header
@@ -64,67 +64,18 @@ fi
 ## create a netscape disk cache directory
 mkdir -p /tmp/netscape-$LOGNAME
 
-## if we are on a sun console
-if [ `tty` = "/dev/console" -a "$TERM" = "sun" ]; then
+## check about starting X
+# . .prompt-startx
 
-     # set the openwin path
-	if [ -d /usr/openwin ]; then
-		export OPENWINHOME='/usr/openwin'
-	fi
-
-	#  figure out what kind of graphics we've got
-	if [ -x /cs/bin/fbname ]; then
-		export FBNAME=`fbname`
+## load ssh environment if it doesn't exist
+if [ "$SSH_AUTH_SOCK" = "" ]; then
+	echo -n "Looking for ssh-agent... "
+	. .ssh-attach
+	if [ "$SSH_AUTH_SOCK" = "" ]; then
+		echo "not found."
 	else
-		export FBNAME='unk'
+		echo "found $SSH_AUTH_SOCK."
 	fi
-	case "$FBNAME" in
-	leo)
-		export FBBITS=24
-		;;
-	ffb)
-		export FBBITS=24
-		;;
-	gx)
-		export FBBITS=8
-		;;
-	*)
-		export FBBITS=8
-		;;
-	esac
-
-    	#
-	# Ask if the X environment should be activated
-	#
-
-	print -n "Start XWindows? [y] "
-	CHOICE=`grabchars -dy -t5`
-	print "$CHOICE"
-	if [ "$CHOICE" != "n" -a "$CHOICE" != "N" ]; then
-		if [ "$ARCH" = "solaris" ]; then
-			print "Starting OpenWindows under Solaris..."
-			$OPENWINHOME/bin/openwin -dev /dev/fb defdepth $FBBITS >&! ~/.err/openwin
-		elif [ "$ARCH" = "sunos" ]; then
-			print "Starting XWindows under SunOS..."
-			xinit 2>>! ~/.err/xinit
-		else
-			print "Starting XWindows on $ARCH..."
-			xinit 2>>! ~/.err/xinit
-		fi
-		sleep 5
-		logout
-	else
-		stty erase \^H
-	fi
-elif [ `tty` = "/dev/tty1" -a "$TERM" = "linux" ]; then
-    echo -n "Start X Windows? "
-    read -q CHOICE
-    if [ $CHOICE = 'y' ]; then
-	   echo "Starting X Windows..."
-	   startx 2>>! ~/.err/startx
-	   sleep 1
-	   logout
-    fi
 fi
 
 # If a dialup terminal
@@ -137,6 +88,6 @@ fi
 # run my overrided version of newmail that supports ringing the bell
 # newmail -i 15
 
-
-
+# always set the display when logging in from these hosts
+AUTO_DISPLAY_HOSTS="vissini fezzik"
 
