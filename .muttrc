@@ -1,0 +1,142 @@
+#
+# Mutt Configuration variable settings. See www.mutt.org for manual.
+#
+
+my_hdr From: mike@demmerfamily.com (Michael Demmer)
+# my_hdr From: mjd@acm.org (Michael Demmer)
+
+unset abort_unmodified
+set alias_file=~/.mutt_aliases
+set alternates="mjd@acm.org|mike@demmerfamily.com|miked@tera.com"
+set askcc                 # prompt for cc when composing
+set attribution="" 
+set auto_tag
+set beep_new
+unset confirmappend
+unset confirmcreate
+set delete=yes
+set dotlock_program="/usr/bin/mutt_dotlock"
+set editor="emacs -nw -q -l ~/elisp/mailonly.el"
+set fast_reply
+set folder_format="%-12f %2N %8s "
+set history=50
+set include=yes
+set index_format="%Z %-4C %{%b %d} %-18F (%l) %s"
+set mail_check=2
+unset move
+set postpone=no
+set postponed="=postponed"
+set record="=sent"
+set reverse_alias
+set reverse_name
+set sort=date-sent
+set status_format="-%r-%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t?Tag:%t?%?p? Post:%p?%?b? Inc:%b? %?l? %l?]-%>-(%P)---"
+set status_on_top
+set timeout=30
+set to_chars=" ++CF"	   #Who is the message to?  Chars represent:
+			   #1st if not to you, 2nd if only to you
+			   #3rd if to you+others, 4th if you in Cc:
+			   #5th if from you
+
+#
+# Suck in aliases
+#
+source ~/.mutt_aliases
+
+#
+# Remap some keybindings. Most of these provide an emacs like
+# environment although the lack of a meta key makes things hard.
+#
+
+# Page up/down with Control-v and Esc-v
+bind generic \Cv next-page
+bind generic v previous-page
+bind pager \Cv next-page
+bind pager v previous-page
+
+bind index < first-entry
+bind index > last-entry
+bind index \Cs search
+bind index \Cr search-reverse
+bind index Q  quit
+bind index + next-page
+bind index - previous-page
+bind index % sync-mailbox
+
+# Lots of redundency in changing fields, I like both esc and e to
+# prefix
+
+bind compose t edit-to
+bind compose f edit-from
+bind compose s edit-subject
+bind compose b edit-bcc
+bind compose c edit-cc
+bind compose m edit-message
+
+bind compose et edit-to
+bind compose ef edit-from
+bind compose es edit-subject
+bind compose eb edit-bcc
+bind compose ec edit-cc
+bind compose em edit-message
+
+bind compose <Return> send-message 
+bind compose s send-message
+bind compose \Cg exit
+bind compose f exit
+
+bind alias <Return> select-entry
+bind alias t tag-entry
+
+bind pager g group-reply
+bind pager < top
+bind pager > bottom
+bind pager T tag-message
+
+#
+# Colors:
+# To get cyan    use yellow
+# To get yellow  use cyan
+# To get red     use magenta
+
+color attachment brightred	black
+color error      yellow         black
+color indicator  black		white
+color markers    red            black
+color message    cyan           black
+color normal     white          black
+color quoted     white          black
+color signature  yellow         black
+color status     black		white
+color tilde      yellow         black
+color tree       brightred      black
+
+color hdrdefault yellow	        black
+#color header     brightyellow   black   ^from:
+#color header     brightyellow   black   ^(to|cc):
+#color header     brightyellow   black    ^subject:
+
+#
+# Mono video attributes
+#
+#mono  attachment bold
+#mono  status     none
+
+#mono  hdrdefault none
+#mono  header     bold                   ^from:
+#mono  header     bold                   ^subject:
+
+#
+# Mail header fields to show / ignore
+#
+ignore *
+unignore To: Cc: From: date subject Via:
+hdr_order From: To: Via: Cc: subject date
+
+# TODO: how do I make color attributes work?
+
+# TODO: from the pager, how can I start a new netscape window from a
+#       URL that appears within a piece of mail?
+
+# Question: how can I print the value of a variable?
+# Answer: "set ?sort" prints the value of the sort variable.
