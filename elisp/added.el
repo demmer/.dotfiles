@@ -405,3 +405,23 @@ to match the current line in the source file."
 		      (file-name-nondirectory (buffer-file-name))))))
   )
 
+(require 'man)
+(defun perldoc (man-args)
+  (interactive
+   (list (let* ((default-entry (Man-default-man-entry))
+		(input (read-string
+			(format "Perldoc%s: "
+				(if (string= default-entry "")
+				    ""
+				  (format " (default %s)" default-entry))))))
+	   (if (string= input "")
+	       (if (string= default-entry "")
+		   (error "No man args given")
+		 default-entry)
+	     input))))
+
+  (let ((my-manual-program manual-program))
+    (setq manual-program "perldoc")
+    (condition-case nil
+	(Man-getpage-in-background man-args))
+    (setq manual-program my-manual-program)))
