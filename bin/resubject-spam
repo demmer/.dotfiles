@@ -3,7 +3,7 @@
 $buf = "";
 
 while (<STDIN>) {
-    if (/^Subject: (\*\*.*\*\*)?(.*)/) {
+    if (/^Subject: (\*\*.*\*\* )?(.*)/) {
 	$oldspam = $1;
 	$subject = $2;
 	next;
@@ -17,7 +17,7 @@ while (<STDIN>) {
 
     if (/^$/) {
 	if ($rating && $subject) {
-	    print "Subject: *****SPAM-$rating*****$subject\n";
+	    print "Subject: *****SPAM-$rating***** $subject\n";
 	} else {
 	    print "Subject: $oldspam$subject\n";
 	}
