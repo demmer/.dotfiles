@@ -3,13 +3,25 @@
 # Format examples
 # MW	9:00-10:30 	CS262A Brewer	410 Soda
 # TuTh	11:00-12:00 	CS294 Culler	400 Soda
+#
+
+$oneunit = 30;
+
+%pretty_days = ( "M"  => "Monday",
+		 "Tu" => "Tuesday",
+ 		 "W"  => "Wednesday",
+ 		 "Th" => "Thursday",
+ 		 "F"  => "Friday"
+ 		 );
+
+@include_days = ("M", "Tu", "W", "Th", "F");
 
 $line = 0;
 while (<STDIN>) {
     $line++;
     next if (/^\s*$/); # skip blank lines
     next if (/^\#/);   # and comments
-    
+
     if (!/^([A-Za-z]+)\s+(\S+)\s+(.*)$/) {
 	die "Invalid line $line: $_"
     }
@@ -34,20 +46,21 @@ while (<STDIN>) {
     $extra = $5;
 
     if ((! $extra eq "") ||
-	($startmin != 0 && $startmin != 30) ||
-	($endmin != 0 && $endmin != 30) ) {
+	(($startmin % $oneunit) != 0) ||
+	(($endmin % $oneunit) != 0)) {
 	print "Invalid times '$times' at line $line\n";
 	exit 1;
     }
+
 
     # figure out the number of time units
     if ($starthr < 9) { $starthr += 12; }
     if ($endhr < 9)   { $endhr += 12; }
     
     $hrs = $endhr - $starthr;
-    $units = $hrs * 2;
-    if ($startmin == 30) { $units -= 1; }
-    if ($endmin == 30)   { $units += 1; }
+    $units = $hrs * (60 / $oneunit);
+    $units -= $startmin / $oneunit;
+    $units += $endmin   / $oneunit;
 
     foreach $day (@days_split) {
 	next if ($day eq "");
@@ -63,7 +76,7 @@ while (<STDIN>) {
 	$tmphr = $starthr;
 	$tmpmin = $startmin;
 	for ($tmpunits = $units - 1; $tmpunits > 0; $tmpunits--) {
-	    $tmpmin += 30;
+	    $tmpmin += $oneunit;
 	    if ($tmpmin == 60) {
 		$tmpmin = "00";
 		$tmphr ++;
@@ -86,17 +99,15 @@ print "
 
 <tr bgcolor=\"#E0E0E0\" align=\"center\" height=\"5%\">
 <td bgcolor=\"#FFFFFF\" width=\"8%\">&nbsp;</td>
-<td width=\"18%\">Monday</td>
-<td width=\"18%\">Tuesday</td>
-<td width=\"18%\">Wednesday</td>
-<td width=\"18%\">Thursday</td>
-<td width=\"18%\">Friday</td>
-</tr>
 ";
 
+foreach $day (@include_days) {
+    print "<td width=\"18%\">$pretty_days{$day}</td>\n";
+}
 
+print "</tr>\n";
 for ($hr = 9; $hr < 18; $hr++) {
-    for ($min = 0; $min < 60; $min += 30) {
+    for ($min = 0; $min < 60; $min += $oneunit) {
 	if ($min == 0) { $min = "00"; } # annoying
 
 	$prettyhr = $hr;
@@ -107,7 +118,7 @@ for ($hr = 9; $hr < 18; $hr++) {
 	print "<tr bgcolor=\"#FFFFFF\" align=\"center\" height=\"5%\">\n";
 	print "<td bgcolor=\"#E0E0E0\">$prettyhr:$min<br></td>\n";
 	
-	foreach $day ("M", "Tu", "W", "Th", "F") {
+	foreach $day (@include_days) {
 	    $key = "$day-$hr-$min";
 	    if ($schedule{$key}) {
 		next if ($schedule{$key} eq "...");
