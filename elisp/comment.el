@@ -180,6 +180,8 @@ to comment the return type if there is one. [TKL]"
 )))))	     
 
 
+;; amd: This is how long the comment lines should be
+(defvar *comment-length* 75)
 
 
 ;mjd: lists parameters in comment block
@@ -270,9 +272,6 @@ block. [MJD]"
 	 (box-increase)
 	 )
     ))  
-
-;; amd: This is how long the comment lines should be
-(defvar *comment-length* 75)
 
 ;; amd: fixes the end of one comment line, which can get screwed
 ;;      up by insert/delete

@@ -43,7 +43,6 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
 (setq delete-auto-save-files t)
 
 (setq require-final-newline 'ask)
-(setq compile-command '"make")
 
 ;;; show the time
 (load "time" t t)
@@ -110,6 +109,7 @@ This must be bound to a mouse-down event in the mode-line."
 				  default-frame-alist))
 
 ;; timestamp customizations
+(require 'time-stamp)
 (setq time-stamp-start "[Mm]odified:[     ]+\\\\?[\"<]+")
 (setq time-stamp-format "%b %d, %y %I:%M%p by %u")
 ;; (append-no-dup 'time-stamp write-file-hooks)
@@ -122,8 +122,9 @@ This must be bound to a mouse-down event in the mode-line."
 (load "tera-added")
 ;; require these features...
 (require 'complete)
-; (require 'crypt++)
-; (require 'zwrite)
+
+(require 'compile)
+(setq compile-command '"make")
 
 ;;; stuff that, for one reason or another, must come last
 (setq gc-cons-threshold 200000)
