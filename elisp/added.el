@@ -359,7 +359,7 @@ and selects that window."
 
     (message "Waiting for grope process...")
     (while (eq (process-status grope-proc) 'run)
-      (sit-for 1))
+      (sit-for 2))
 
     (unwind-protect
 	(progn
@@ -368,8 +368,10 @@ and selects that window."
 	  (first-error)
 	  (message "returned from first-error")
 	  (sit-for 1)
+	  (setq from (replace-regexp-in-string "\\\\" "" from))
+	  (message (format "from %s" from))
 	  (while t
-	    (while (re-search-forward from (line-end-position) t)
+	    (while (search-forward from (line-end-position) t)
 	      (replace-highlight (match-beginning 0) (match-end 0))
 	      (if (y-or-n-p (format "Replace %s with %s? " from to))
 		  (replace-match to t))
@@ -530,3 +532,134 @@ to match the current line in the source file."
   (insert " ") ;; indent does strange things in comment mode
   (indent-according-to-mode)
   )
+
+;; from bowei
+(defun c-align-by-last-char (from to char offset)
+  "Align all of the columns by the rightmost character, e.g. line up a
+bunch of = signs or variable declarations. Inserts space + offset."
+  (save-excursion
+    (goto-char from)
+    (let ((column 0)
+	  (endmark (make-marker)))
+      (move-marker endmark to)
+      ;; Find smallest column
+      (let ((find-smallest-column
+	     #'(lambda (col b e)
+		 (end-of-line)
+		 (let ((pos (search-backward char b)))
+		   (if (< col (- pos b 1))
+		       (- pos b 1)
+		     col))
+	       ) ; lambda
+	     ))
+	(setq column (fold-by-line-on-region from to find-smallest-column 0)))
+      ;; Put in the spaces
+      (let ((put-spaces
+	     #'(lambda (notused b e)
+		 (end-of-line)
+		 (let* ((pos (search-backward char b)))
+		   (insert-char 32 (+ (- column (- pos b)) offset))
+		 ) ; let*
+	       ) ; lambda
+	   ))
+	(fold-by-line-on-region from to put-spaces nil)
+      ) ; let
+    ) ; let
+  ) ; save-excursion
+)
+
+;; from bowei
+(defun c-align-space-in-region (from to)
+  "Do the correct formatting on a region, heuristically by looking at
+the characters on the first line."
+  (interactive "*r")
+  (save-excursion
+    (goto-char from)
+    (beginning-of-line)
+    (let ((use-equal (search-forward "=" (point-at-eol) t)))
+      (if use-equal
+	  (c-align-by-last-char from to "=" 1)
+	(c-align-by-last-char from to " " 1)))
+  ) ; save excursion
+)
+
+;; from bowei
+(defun c-create-flag-constants (from to type)
+  "Add constants to a C/C++ enumeration/define in the specified
+region, e.g.
+
+FLAG,
+ANOTHER_FLAG,
+YET_ANOTHER_FLAG,
+
+becomes:
+
+FLAG		 = 1<<0,
+ANOTHER_FLAG	 = 1<<1,
+YET_ANOTHER_FLAG = 1<<2,
+
+If the prefix is non-nil, then a numbered sequence from 0,1,... will
+be used instead of the bit positions."
+  (interactive "*r\nP")
+  (save-excursion
+    (goto-char from)
+    (let ((column 0)
+	  (endmark (make-marker)))
+      (move-marker endmark to)
+      ;; Find the smallest column, deleting what follows = and ,
+      (let ((find-smallest-column
+	     #'(lambda (col b e)
+		 (let ((pos (or (search-forward-regexp "=\\|," e t) (+ e 2))))
+		   (if (< col (- pos b 1))
+		       (- pos b 1)
+		     col)))))
+	(setq column (fold-by-line-on-region from to find-smallest-column 0))
+       ) ; let
+      ;; Generate the flag statements
+      (let ((make-flags
+	     #'(lambda (shift b e)		 
+		 (beginning-of-line)
+		 ;; skip empty lines
+		 (if (eolp) shift
+		   (progn
+		     ;; zap rid of crap after ,=
+		     (save-excursion
+		       (let ((pos (search-forward-regexp "=\\|," e t)))
+			 (if pos (delete-region (- pos 1) e))))
+		     ;; indent and put the 1<<X, on the line
+		     (end-of-line)
+		     (indent-to column)
+		     (if type
+			 (insert (format "= %d," shift))
+		       (insert (format "= 1<<%d," shift)))
+		     (+ shift 1)))
+		 ) ; lambda
+	   ))
+	(fold-by-line-on-region from endmark make-flags 0)
+      ) ; let
+    ) ; let
+  ) ; save-excursion
+)
+
+(defun fold-by-line-on-region (from to fcn initial-value &optional ws)
+  "Fold fcn on region (from, to), starting with the first line. fcn
+will have a signature (init-val beginning-of-line
+end-of-line). Returns the last folded value. Set ws to true if
+trailing whitespace should be deleted and ignored in terms of the end
+of line."
+  (save-excursion
+    (let ((cur-val initial-value))
+      (while (< (point) to)
+	(if ws (progn (end-of-line)
+		      (while (or (eq (char-before) " ")
+				 (eq (char-before) "\t"))
+			(delete-backward-char 1))))
+	(beginning-of-line)
+	(setq cur-val 
+	      (apply fcn (list cur-val (point) (point-at-eol))))
+	(forward-line 1)
+      ) ; while
+      cur-val
+    ) ; let
+  ) ; save-excursion
+)
