@@ -1,6 +1,6 @@
 #!/bin/sh -f
 
-CMD='ssh -q treat-batch mailbox unread count delay=1'
+CMD='ssh -q treat -o BatchMode=yes mailbox unread count delay=1'
 RED='< /dev/null > /dev/null'
 
     main_opts=""
@@ -22,4 +22,5 @@ fi
 for box in $boxes; do
     eval "opts=\$${box}_opts"
     $CMD $opts $RED &
+    sleep 1
 done
