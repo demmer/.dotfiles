@@ -1,4 +1,4 @@
 #!/bin/sh -f
 stty stop  "^\'"           # unset ctrl-s
 stty lnext "^\'"           # unset ctrl-v
-exec runprog mutt
+exec runprog mutt $*
