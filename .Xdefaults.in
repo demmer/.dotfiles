@@ -37,6 +37,20 @@ xterm*VT100.Translations: #override\n\
         <KeyPress> Insert: insert-selection(PRIMARY, CUT_BUFFER0) \n\
 	Shift<KeyPress>KP_Insert:insert-selection(PRIMARY, CUT_BUFFER0)
 
+
+gnome-terminal*foreground:			ivory
+gnome-terminal*background:			black
+gnome-terminal*cursorColor:              	yellow
+gnome-terminal*pointerColor:             	white
+gnome-terminal*pointerColorBackground:   	ivory
+gnome-terminal*jumpScroll:			true
+gnome-terminal*saveLines:			1000	
+gnome-terminal*scrollBar:			false
+gnome-terminal*scrollBar*thickness:		12
+gnome-terminal*reverseWrap:			true
+gnome-terminal*font:       			lucidasanstypewriter-bold-12
+
+
 ! emacs
 emacs*font:			lucidasanstypewriter-bold-12
 emacs*geometry:			=EMACS_GEOM
