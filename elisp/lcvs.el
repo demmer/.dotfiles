@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.28 $)
+;; Version: 1.2 ($Revision: 1.29 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -756,7 +756,8 @@ the file on this line.
 Influenced by the `lcvs-log-restrict-to-branch' and
 `lcvs-log-restrict-to-changes' variables."
   (interactive "P")
-  (let ((files (mapcar 'car (lcvs-get-relevant-files arg)))
+  (let ((files (mapcar 'car (or (lcvs-get-relevant-files arg 'noerror)
+				(lcvs-get-updatable-files))))
 	args working-revisions)
     ;; If the CVS/Tag file exists and contains a tag, then we use that
     ;; for logging so we only see messages for this branch.
