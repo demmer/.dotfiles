@@ -174,7 +174,7 @@ AddToFunc Resize-Now "I" Resize
 # A any modifier
 
 #	Button  Context	Modifier Function
-Mouse   0	FS	A	Resize
+Mouse   0	FS	A	Resize-Now
 Mouse   0	1	A	PopUp "WindowOps"
 Mouse   0	3	A	Close
 Mouse   0	4	A	Iconify
