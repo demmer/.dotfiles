@@ -55,6 +55,9 @@
 (global-set-key "\C-xf" 'find-file) 
 (global-set-key "\C-x\C-f" 'find-file)
 
+; mjd: i also make write-file mistakes
+(global-set-key "\C-xw" 'write-file)
+
 (global-set-key "\C-m" 'newline)
 (global-set-key "\C-xk" 'kill-buffer)
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
