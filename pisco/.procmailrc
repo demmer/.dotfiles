@@ -12,21 +12,14 @@ LOGABSTRACT=all
 #
 :0
 * ^X-BTI-AntiSpam: sta:upper
-| formail -I "Status: RO" >> $MAILDIR/spam-certain
+| formail -I "Status: RO" >> $MAILDIR/spam
 
 #
 # And 5 points or more gets copied to the spam folder.
 #
 :0
 * ^X-BTI-AntiSpam: sta:lower
-| formail -I "Status: RO" >> $MAILDIR/spam
-
-#
-# And this annoying film-list crap
-#
-:0
-* ^TO film-list@listlink.berkeley.edu
-| formail -I "Status: RO" >> $MAILDIR/spam
+| formail -I "Status: RO" >> $MAILDIR/spam-maybe
 
 #
 # Add a subject line for everything.
