@@ -210,6 +210,7 @@ alias durst Robert Durst <durst@mitre.org>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
 alias dtn-dev dtn-dev@mailman.dtnrg.org
+alias dtn-devel dtn-dev@mailman.dtnrg.org
 
 #
 # Mailing Lists
@@ -217,6 +218,11 @@ alias dtn-dev dtn-dev@mailman.dtnrg.org
 alias tier tier <tier@tier.cs.berkeley.edu>
 alias tinyos tinyos <tinyos@millenium.berkeley.edu>
 alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
+
+#
+# EECS overrides and secondary aliases
+#
+alias eric Eric Brewer <brewer@eecs.berkeley.edu>
 
 
 #
