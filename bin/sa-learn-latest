@@ -2,6 +2,10 @@
 
 which=-$1
 
+if [ "$which" = "-" ] ; then
+   which=
+fi
+
 set -x
 
 sa-learn --showdots --ham  --mbox $HOME/Mail/spool$which
