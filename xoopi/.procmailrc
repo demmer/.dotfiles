@@ -22,14 +22,14 @@ pair-notices
 {
 	:0 B bh
 	* ^X-Mailer: .*Outlook
-	| formail -I "Status: RO" >> $HOME/Mail/spam
+	| resubject-spam >> $HOME/Mail/spam
 }
 
 #
-# Kill the really bad spam (10 pts or higher). 
+# Kill the really bad spam (8 pts or higher). 
 #
 :0
-* ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
+* ^X-Spam-Level: \*\*\*\*\*\*\*\*
 | resubject-spam >> $HOME/Mail/spam
 
 #
