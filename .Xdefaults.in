@@ -115,6 +115,9 @@ xmms*geometry:			=-1-1
 xpdf.geometry:			=BASE_GEOM-5-5
 xpdf.zoom:			page
 
+! acroread
+acroread.geometry:		=ACROREAD_GEOM
+
 !  Motif translations for Emacs keybindings in an XmText widgit
 !  from part3 of the Motif FAQ - copied from jal
 *XmText.translations: #override\n\
