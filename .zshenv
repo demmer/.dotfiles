@@ -56,7 +56,7 @@ fi
 
 path=(						\
 	~/bin/$ARCH                             \
-	~/bin/                                  \
+	~/bin                                   \
 	/usr/local/bin				\
 	/usr/local/sbin				\
 	/bin					\
