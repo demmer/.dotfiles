@@ -26,4 +26,5 @@ folder-hook dtn set sort=threads
 folder-hook tier set sort=threads
 folder-hook debian set sort=threads
 folder-hook soekris set sort=threads
+folder-hook end2end set sort=threads
 
