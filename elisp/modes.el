@@ -23,18 +23,10 @@
 
 (add-hook 'find-file-hooks 'determine-script-mode)
 
-;;; load html mode
-
-; (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
-; (add-hook 'html-helper-load-hook '(lambda () (load "html-font")))
-
 ;;;text mode
 
 (defun my-text-setup ()
   (interactive)
-;  (define-key indented-text-mode-map "" 'delete-backward-char)
-;  (define-key indented-text-mode-map "\C-m" 'newline-and-indent)
-;  (define-key indented-text-mode-map "\t" 'tab-to-tab-stop)
   (define-key text-mode-map "\C-m" 'newline)
   (auto-fill-mode 1)
   )
