@@ -67,3 +67,13 @@ while (<SSH>) {
     print(F "Subject: $s\n");
     print(F "Status: O\n\n");
 }
+
+close(F);
+open(F, ">$file") || die "can't open output file $file";
+F->autoflush(1);
+print(F "From <error>\n");
+print(F "From: Error\n");
+print(F "Subject: (SSH tunnel died)\n");
+print(F "Status: 0\n\n");
+
+close(F);
