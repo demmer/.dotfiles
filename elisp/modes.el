@@ -219,7 +219,7 @@
   )
 (add-hook 'html-mode-hook 'my-html-setup)
 
-;; setup latex mode
+;; setup tex mode
 (require 'tex-mode)
 (require 'skeleton)
 
@@ -247,18 +247,18 @@
   \n -2 _ \n
   "\\end{" str ?\} > \n)
 
-(define-key latex-mode-map "\C-ca" (lambda () (interactive)
-				     (tex-latex-block-no-options "abstract")))
-(define-key latex-mode-map "\C-cc" (lambda () (interactive)
-				     (tex-latex-block-no-options "center")))
-(define-key latex-mode-map "\C-ce" (lambda () (interactive)
-				     (tex-latex-block-no-options "enumerate")))
-(define-key latex-mode-map "\C-ci" (lambda () (interactive)
-				     (tex-latex-block-no-options "itemize")))
-(define-key latex-mode-map "\C-cs" (lambda () (interactive)
-				     (latex-insert-section "section")))
-(define-key latex-mode-map "\C-cS" (lambda () (interactive)
-				     (latex-insert-section "subsection")))
+(define-key tex-mode-map "\C-ca" (lambda () (interactive)
+				   (tex-latex-block-no-options "abstract")))
+(define-key tex-mode-map "\C-cc" (lambda () (interactive)
+				   (tex-latex-block-no-options "center")))
+(define-key tex-mode-map "\C-ce" (lambda () (interactive)
+				   (tex-latex-block-no-options "enumerate")))
+(define-key tex-mode-map "\C-ci" (lambda () (interactive)
+				   (tex-latex-block-no-options "itemize")))
+(define-key tex-mode-map "\C-cs" (lambda () (interactive)
+				   (latex-insert-section "section")))
+(define-key tex-mode-map "\C-cS" (lambda () (interactive)
+				   (latex-insert-section "subsection")))
 
 ;; setup sh-mode (shell-script-mode)
 (require 'sh-script)
