@@ -42,13 +42,25 @@ else
 	export OSARCH=unk
 fi
 
-# I set my path before all the others to override programs
+#
+# Figure out machine local path based on symlinks in ~/bin/bindirs
+#
+localpath=
+for d in ~/bin/bindirs/*; do
+if [ -h $d ] ; then
+	d=`(cd $d && pwd -r)`
+	localpath=($localpath $d)
+fi
+done
 
+#
+# I set my paths before all the others to override programs
+#
 path=(						\
 	~/bin/$ARCH                             \
 	~/bin                                   \
+	$localpath				\
 	/usr/ucb				\
-	/usr/sww/bin				\
 	/usr/local/bin				\
 	/usr/local/sbin				\
 	/bin					\
@@ -60,10 +72,25 @@ path=(						\
 	/usr/java/jdk/bin			\
 	.					\
       )
+#
+# Similar trick for LD_LIBRARY_PATH
+#
+ld_library_path=
+for d in ~/lib/* ; do
+if [ -d $d ] ; then
+	d=`(cd $d && pwd -r)`
+	ld_library_path=($ld_library_path $d)
+fi
+done
+
+#
+# But it's not autoset like path is
+#
+LD_LIBRARY_PATH=${(j{:})ld_library_path}
 
 # Make sure that these are exported to the environment
 # I know that zsh doesn't do this by default for MANPATH
-export PATH SHELL
+export PATH SHELL LD_LIBRARY_PATH
 
 # less is a much better pager than more
 export MORE=less
@@ -125,8 +152,6 @@ if [ "$DBG" = "" ] ; then
 	export DBG="all"
 fi
 export CLASSPATH=".:$TOSROOT/tools/java"
-
 export JYTHON_HOME="$HOME/work/jython"
-export PATH=$PATH:$JYTHON_HOME
 
 
