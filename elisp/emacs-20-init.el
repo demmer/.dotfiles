@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.11 2001-05-21 18:10:50 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.12 2001-05-21 18:28:33 demmer Exp $
 
 
 (defun memequal (el list)
@@ -151,7 +151,14 @@ This must be bound to a mouse-down event in the mode-line."
   (if (file-exists-p checkstcl)
       (load checkstcl)))
 
-(setq lcvs-log-restrict-to-branch t)
+;; lcvs setup
+(defun my-lcvs-setup ()                                                
+  (set-face-foreground 'lcvs-UP-face "yellow")
+  (setq lcvs-log-restrict-to-branch t)
+)
+(add-hook 'lcvs-mode-hook 'my-lcvs-setup)
+
+;; I should probably have a better place for this...
 (setq diff-switches (list "-u"))
 
 ;; require these features...
