@@ -13,6 +13,9 @@ set spoolfile =$HOME/Mail/inbox
 
 mailboxes =inbox =tinyos =tier =dtn =spam
 
+subscribe tinyos-help tinyos-devel tinyos-internal tinyos-users \
+	  tier dtn-interest ict4b_interest
+
 #
 # Sorting order dependent on the folder
 #
