@@ -46,7 +46,8 @@ $HOME/bin/xoopi-tunnel &
 $HOME/bin/xoopi-mailbox &
 
 # Bring up a console window, an email shell and a work shell
-xterm -C -n "Console" -geometry '=80x12+0+115' &
+xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
+	'tail -f -n 0 /var/log/messages /var/log/secure & clear; zsh' &
 $HOME/bin/xoopi-xmutt &
 colorxterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
 
