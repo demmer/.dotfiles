@@ -4,4 +4,4 @@
 # Try to run MozillaFirebird if it exists in the path, otherwise
 # default to mozilla.
 #
-exec runprog "MozillaFirebird mozilla"
+exec runprog "MozillaFirebird mozilla" $*
