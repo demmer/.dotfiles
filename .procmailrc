@@ -18,6 +18,18 @@ LOGABSTRACT=all
 /dev/null
 
 #
+# Strip out htmlification from the message body and change the
+# Content-Type header
+#
+:0fb
+* ^Content-Type: text/html
+| dehtml.pl
+
+:0fh
+* ^Content-Type: text/html
+| sed 's,Content-Type: text/html, Content-Type: text/plain,g'
+
+#
 # Format headers for other email addresses
 #
 :1f
