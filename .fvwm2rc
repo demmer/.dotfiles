@@ -242,7 +242,7 @@ Key Next  R    N    CursorMove     +10  +10
 
 # application shortcuts
 Key x    R    N    Exec  xterm -geometry 79x28 -n 'Shell' &
-Key t    R    N    Exec  xterm -n "treat" -T "treat" -e ssh treat &
+Key h    R    N    Exec  xterm -n "haight" -T "haight" -e ssh haight &
 Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
 Key m    R    N    Exec  mozilla &    
 
