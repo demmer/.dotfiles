@@ -101,8 +101,8 @@ bind pager T tag-message
 macro index <F5> ":source ~/.muttrc\n" "Reload the muttrc"
 macro pager <F5> ":source ~/.muttrc\n" "Reload the muttrc"
 
-macro index R "|report-spam\ns=spam-certain\n" "mark message as spam"
-macro pager R "|report-spam\ns=spam-certain\n" "mark message as spam"
+macro index R "|report-spam\nd" "mark message as spam"
+macro pager R "|report-spam\nd" "mark message as spam"
 
 #
 # Color overrides if necessary:
