@@ -144,16 +144,18 @@ with tab characters underneath."
 
 (defun apply-c-style-overrides ()
   (interactive)
-  (let ((buffer (expand-file-name (buffer-file-name))))
-    (mapcar
-     (lambda (pair) "" nil
-       (let ((path (expand-file-name (car pair)))
-	     (func (cadr pair)))
-	 (if (string-match (concat "^" path ".*") buffer)
-	     (funcall func)
-	   )))
-     my-c-style-overrides)
-  ))
+  (if (buffer-file-name)
+      (let ((buffer (expand-file-name (buffer-file-name))))
+	(mapcar
+	 (lambda (pair) "" nil
+	   (let ((path (expand-file-name (car pair)))
+		 (func (cadr pair)))
+	     (if (string-match (concat "^" path ".*") buffer)
+		 (funcall func)
+	       )))
+	 my-c-style-overrides)
+	))
+  )
 
 (defun my-c-setup()
   (interactive)
@@ -272,62 +274,65 @@ with tab characters underneath."
 ;;
 (require 'tex-mode)
 (require 'skeleton)
+
+(require 'tex-site)
+(setq font-latex-title-fontity (quote color))
+
+;; (defun latex-insert-section(type)
+;;   "Insert a \\section{} style latex declaration."
+;;   (interactive)
+;;   (let ((section (read-string (format "\\%s: " type))))
+;;     (insert "\\" type "{" section "}\n")))
+
+;; (defun latex-insert-face(face)
+;;   "Insert a \textbf{} style typeface declaration"
+;;   (interactive)
+;;   (insert "\\" face "{}")
+;;   (backward-char 1))
+
+;; (define-skeleton tex-latex-block-no-options
+;;   "Same as tex-latex-block but without any options."
+;;   (let ((choice (completing-read (format "LaTeX block name [%s]: "
+;; 					 latex-block-default)
+;; 				 (mapcar 'list
+;; 					 (append standard-latex-block-names
+;; 						 latex-block-names))
+;; 				 nil nil nil nil latex-block-default)))
+;;     (setq latex-block-default choice)
+;;     (unless (or (member choice standard-latex-block-names)
+;; 		(member choice latex-block-names))
+;;       ;; Remember new block names for later completion.
+;;       (push choice latex-block-names))
+;;     choice)
+;;   \n "\\begin{" str ?\}
+;;   \n -2 _ \n
+;;   "\\end{" str ?\} > \n)
+
+;; (define-key tex-mode-map "\C-cb"
+;;   (lambda () (interactive) (latex-insert-face "textbf")))
+;; (define-key tex-mode-map "\C-ce"
+;;   (lambda () (interactive) (latex-insert-face "emph")))
+;; (define-key tex-mode-map "\C-ci"
+;;   (lambda () (interactive) (latex-insert-face "item")))
+;; (define-key tex-mode-map "\C-ct"
+;;   (lambda () (interactive) (latex-insert-face "texttt")))
+;; (define-key tex-mode-map "\C-c\C-a"
+;;   (lambda () (interactive) (tex-latex-block-no-options "abstract")))
+;; (define-key tex-mode-map "\C-c\C-x"
+;;   (lambda () (interactive) (tex-latex-block-no-options "center")))
+;; (define-key tex-mode-map "\C-c\C-e"
+;;   (lambda () (interactive) (tex-latex-block-no-options "enumerate")))
+;; (define-key tex-mode-map "\C-c\C-i"
+;;   (lambda () (interactive) (tex-latex-block-no-options "itemize")))
+;; (define-key tex-mode-map "\C-c\C-s"
+;;   (lambda () (interactive) (latex-insert-section "section")))
+;; (define-key tex-mode-map "\C-c\C-u"
+;;   (lambda () (interactive) (latex-insert-section "subsection")))
+;; (define-key tex-mode-map "\C-c\C-v"
+;;   (lambda () (interactive) (tex-latex-block-no-options "verbatim")))
+;; (define-key tex-mode-map "\C-c\C-c" 'comment-region)
+
 (require 'bibtex)
-
-(defun latex-insert-section(type)
-  "Insert a \\section{} style latex declaration."
-  (interactive)
-  (let ((section (read-string (format "\\%s: " type))))
-    (insert "\\" type "{" section "}\n")))
-
-(defun latex-insert-face(face)
-  "Insert a \textbf{} style typeface declaration"
-  (interactive)
-  (insert "\\" face "{}")
-  (backward-char 1))
-
-(define-skeleton tex-latex-block-no-options
-  "Same as tex-latex-block but without any options."
-  (let ((choice (completing-read (format "LaTeX block name [%s]: "
-					 latex-block-default)
-				 (mapcar 'list
-					 (append standard-latex-block-names
-						 latex-block-names))
-				 nil nil nil nil latex-block-default)))
-    (setq latex-block-default choice)
-    (unless (or (member choice standard-latex-block-names)
-		(member choice latex-block-names))
-      ;; Remember new block names for later completion.
-      (push choice latex-block-names))
-    choice)
-  \n "\\begin{" str ?\}
-  \n -2 _ \n
-  "\\end{" str ?\} > \n)
-
-(define-key tex-mode-map "\C-cb"
-  (lambda () (interactive) (latex-insert-face "textbf")))
-(define-key tex-mode-map "\C-ce"
-  (lambda () (interactive) (latex-insert-face "emph")))
-(define-key tex-mode-map "\C-ci"
-  (lambda () (interactive) (latex-insert-face "item")))
-(define-key tex-mode-map "\C-ct"
-  (lambda () (interactive) (latex-insert-face "texttt")))
-(define-key tex-mode-map "\C-c\C-a"
-  (lambda () (interactive) (tex-latex-block-no-options "abstract")))
-(define-key tex-mode-map "\C-c\C-x"
-  (lambda () (interactive) (tex-latex-block-no-options "center")))
-(define-key tex-mode-map "\C-c\C-e"
-  (lambda () (interactive) (tex-latex-block-no-options "enumerate")))
-(define-key tex-mode-map "\C-c\C-i"
-  (lambda () (interactive) (tex-latex-block-no-options "itemize")))
-(define-key tex-mode-map "\C-c\C-s"
-  (lambda () (interactive) (latex-insert-section "section")))
-(define-key tex-mode-map "\C-c\C-u"
-  (lambda () (interactive) (latex-insert-section "subsection")))
-(define-key tex-mode-map "\C-c\C-v"
-  (lambda () (interactive) (tex-latex-block-no-options "verbatim")))
-(define-key tex-mode-map "\C-c\C-c" 'comment-region)
-
 (defun my-bibtex-setup()
   (interactive)
   (define-key bibtex-mode-map "\M-q" 'bibtex-fill-entry)
@@ -337,53 +342,10 @@ with tab characters underneath."
 
 (add-hook 'bibtex-mode-hook 'my-bibtex-setup)
 
-;; maybe someday
-;;
-;; (defmacro my-latex-bind-keys (faces blocks sections)
-;;   "Define my latex keyboard shortcuts"
-;;   (mapcar
-;;    (lambda (spec)
-;;      (define-key tex-mode-map (car spec)
-;;        (lambda ()
-;; 	 "Insert a \\{%s } latex face"
-;; 	 (interactive)
-;; 	 (latex-insert-face (cadr spec)))))
-;;    faces)
-;;   (mapcar
-;;    (lambda (spec)
-;;      (define-key tex-mode-map (car spec)
-;;        (lambda () 
-;; 	 "Insert a \\begin{} ... \\end{} latex block"
-;; 	 (interactive)
-;; 	 (tex-latex-block-no-options (cadr spec)))))
-;;    blocks)
-;;   (mapcar
-;;    (lambda (spec)
-;;      (define-key tex-mode-map (car spec)
-;;        (lambda () 
-;; 	 "Insert a \\section{...} style latex region"
-;; 	 (interactive)
-;; 	 (latex-insert-section (cadr spec)))))
-;;    sections))
-
-;; (my-latex-bind-keys (("\C-cb"		"bf")
-;; 		     ("\C-ce"		"em")
-;; 		     ("\C-ci"		"it")
-;; 		     ("\C-ct"		"tt"))
-		    
-;; 		    (("\C-c\C-s"	"section")
-;; 		     ("\C-c\C-S"	"subsection"))
-
-;; 		    (("\C-c\C-c"	"center")
-;; 		     ("\C-c\C-e"	"enumerate")
-;; 		     ("\C-c\C-i"	"itemize")
-;; 		     ("\C-c\C-v"	"verbatim")))
-
 ;; setup sh-mode (shell-script-mode)
 (require 'sh-script)
 (defun my-sh-setup () 
   (interactive)
-  (define-key sh-mode-map "\t" 'self-insert-command)
   (define-key sh-mode-map "\C-c\C-c" 'comment-region) 
   (define-key sh-mode-map "\C-c\C-u" 'uncomment-region)
  )
