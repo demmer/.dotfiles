@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.22 $)
+;; Version: 1.2 ($Revision: 1.23 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1592,22 +1592,22 @@ the value of `foo'."
       (cond
        ;; Rewrite removed files as "U file"
        ((looking-at
-	 (concat "^cvs \\(update\\|server\\): \\(.*\\)"
+	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): \\(.*\\)"
 		 " is no longer \\(pertinent\\|\\(in the repository\\)\\).*\n"))
-	(replace-match "U \\2\n")
+	(replace-match "U \\3 (removed)\n")
 	(setq dont-move t))
 
        ((looking-at
-	 (concat "^cvs \\(update\\|server\\): warning: \\(.*\\)"
+	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): warning: \\(.*\\)"
 		 " is not (any longer) pertinent\n"))
-	(replace-match "U \\2\n")
+	(replace-match "U \\3 (removed)\n")
 	(setq dont-move t))
 
        ;; Rewrite new directories as "U" with a note
        ((looking-at
-	 (concat "^cvs \\(update\\|server\\): "
+	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): "
 		 "New directory `\\(.*\\)' -- ignored\n"))
-	(replace-match "U \\2 (new directory)\n")
+	(replace-match "U \\3 (new directory)\n")
 	(setq dont-move t))
 	
 
