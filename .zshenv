@@ -133,7 +133,7 @@ export CVSROOT_INIGO=:ext:inigo:/repository
 export CVSROOT_PISCO=:ext:pisco:/repository
 export CVSROOT_TIER=:ext:tier.cs.berkeley.edu:/usr/projects/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
-export CVSROOT_DTN=:ext:playground:/usr/src/bundles/orig
+export CVSROOT_DTN=:ext:sandbox:/usr/src/bundles/orig
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
 
 # Host specific overrides
