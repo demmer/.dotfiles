@@ -6,12 +6,13 @@
 
 ## XXX this should be in resources but I don't know how
 set width 60
-set delay 5000
+set delay 5
 set fg black
 set bg grey87
 set font "6x10"
 set default_geometry "=300x70+10+10"
 set hosts ""
+set checkfetch ""
 set usebar 1
 set beep 1
 
@@ -24,6 +25,7 @@ array set argvars {
     -geom		geometry
     -delay		delay
     -host		hosts
+    -checkfetch		checkfetch
     -bar		usebar
     -beep		beep
 }
@@ -50,6 +52,10 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
 }
 
 set hosts [split $hosts ,]
+array set checkfetch_hosts {}
+foreach h [split $checkfetch ,] {
+    set checkfetch_hosts($h) 1
+}
 
 if [info exists env(USER)] {
     set user $env(USER);
@@ -195,7 +201,7 @@ proc spoolfile_loop {} {
     if [info exists update_id] {
 	after cancel update_id
     }
-    after $delay update_spoolfile
+    set update_id [after [expr $delay * 1000] update_spoolfile]
 
     set handle [open "|frm -s new -s unread" RDONLY];
     set lines {}
@@ -209,10 +215,18 @@ proc spoolfile_loop {} {
 }
 
 proc remote_loop {} {
-    global hosts
+    global hosts checkfetch_hosts delay
+
+    set delay_arg "-delay $delay"
 
     foreach host $hosts {
-	set ssh [open "|ssh -v $host yabiff-server < /dev/null" r]
+	set checkfetch ""
+	if {[info exists checkfetch_hosts($host)]} {
+	    set checkfetch "-checkfetch "
+	}
+	set cmd "ssh -v $host yabiff-server $delay_arg $checkfetch < /dev/null"
+	# puts "running $cmd"
+	set ssh [open "|$cmd" r]
 	fconfigure $ssh -blocking false -buffering none
 	fileevent $ssh readable "update_remote $host $ssh"
     }
