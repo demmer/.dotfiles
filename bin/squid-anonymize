@@ -1,0 +1,56 @@
+#!/usr/bin/python
+#
+# Anonymize the ip address in squid logs
+#
+
+import md5, os, re, sys, string, time;
+
+movetemp = 0
+
+if len(sys.argv) == 1:
+    inputf  = sys.stdin
+    outputf = sys.stdout
+
+elif len(sys.argv) == 2:
+    movetemp = 1
+    inputnam = sys.argv[1]
+    inputf = file(inputnam)
+    outputnam = "/tmp/squid-anon-%s.log" % time.time()
+    outputf = file(outputnam, 'w')
+
+else:
+    print "usage: squid-anonymize [ logfile ]"
+
+# squid logs are of the form:
+#
+# 1089149480.478     43 XXX.XXX.XXX.XXX TCP_MISS/200 15257 GET http://some.url.com...
+
+regexp = re.compile("([0-9]+\.[0-9]+\s+[0-9]+\s+)([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)(.*)")
+
+for line in inputf.readlines():
+
+    match = regexp.match(line)
+    if (match == None):
+        print line
+        continue
+    
+    head = match.group(1);
+    addr = match.group(2);
+    tail = match.group(3);
+
+    digest = md5.new(addr).digest()
+
+    addr = "%d.%d.%d.%d" % (ord(digest[0]),
+                            ord(digest[1]),
+                            ord(digest[2]),
+                            ord(digest[3]))
+
+    outputf.write(head)
+    outputf.write(addr)
+    outputf.write(tail)
+    outputf.write('\n')
+
+if movetemp:
+    outputf.close()
+    os.unlink(inputnam)
+    os.rename(outputnam, inputnam)
