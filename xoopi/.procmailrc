@@ -54,7 +54,7 @@ sa-talk
 #
 # Rotate command since I can't run cron
 #
-:0f
+:0bhf
 * ^To: rotate-spool
 | rotate-spool
 
