@@ -684,3 +684,5 @@ of line."
     )
   
   (recenter 0))
+
+(global-set-key "\C-v" 'scroll-up-ctrl-l)
