@@ -141,3 +141,7 @@ export XAUTHORITY
 unset LANG
 export LANG
 
+# TinyOS
+export TOSROOT="$HOME/work/tinyos-1.x"
+export TOSDIR="$TOSROOT/tos"
+export CLASSPATH=".:$TOSROOT/tools/java"
