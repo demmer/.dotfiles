@@ -79,18 +79,21 @@
 (defun c-indent-one-tab()
   (interactive)
   (setq c-basic-offset 8)
+  (setq tab-width 8)
   (setq indent-tabs-mode t)
   )
 
 (defun c-indent-two-spaces()
   (interactive)
   (setq c-basic-offset 2)
+  (setq tab-width 8)
   (setq indent-tabs-mode nil)
   )
 
 (defun c-indent-four-spaces()
   (interactive)
   (setq c-basic-offset 4)
+  (setq tab-width 8)
   (setq indent-tabs-mode nil)
   )
 
@@ -127,8 +130,7 @@ with tab characters underneath."
 
 (defvar my-c-style-overrides)
 (setq my-c-style-overrides
-      '(("~/work/.*DTN" c-indent-four-spaces-with-8-space-tabs)
-	("~/work/nesc" c-indent-two-spaces)
+      '(("~/work/nesc" c-indent-two-spaces)
 	)
       )
 
@@ -171,11 +173,10 @@ with tab characters underneath."
 
 ; setup my auto modes alist
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
-				("\\.C\\'" . c++-mode)
 				("\\.[Hh]\\'" . c++-mode)
 				("\\.c[cx]?x?\\'" . c++-mode)
+				("\\.[Cyx]\\'" . c++-mode)
 				("\\.nc\\'" . nesc-mode)
-				("\\.y\\'" . c++-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
 				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
