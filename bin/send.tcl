@@ -78,6 +78,7 @@ fconfigure $sock -buffering none -encoding binary -translation binary
 set delay [expr int(1000.0 / ((1.0 * $rate) / $pktsz))]
 
 while {1} {
+    puts "sending $pktsz byte packet"
     puts -nonewline $sock $packet
     flush $sock
     after $delay
