@@ -2,8 +2,11 @@
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-alias rmbak='find . -name \*~ -print -exec /bin/rm {} \;'
-alias rmbakl='find . -maxdepth 1 -name \*~ -print -exec /bin/rm {} \;'
+alias findbak='find . -name .snapshot -prune \
+		     -o \( -name \*~ -o -name .\*~ \) -print'
+alias findbakl='findbak -maxdepth 1'
+alias rmbak='findbak -exec /bin/rm {} \;'
+alias rmbakl='findbakl -exec /bin/rm {} \;'
 
 alias startx='startx 2>&1 | tee ~/.err/startx.log'
 alias x='startx'
