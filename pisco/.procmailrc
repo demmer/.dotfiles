@@ -70,10 +70,6 @@ tinyos
 * List-Id: .*ip@
 ip
 
-:0
-* List-Id: Delay Tolerant Network
-dtn
-
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
@@ -88,11 +84,15 @@ dtn
 | formail -D 32768 $MAILDIR/msgid.cache
 
 #
-# Lists that I want to be spooled go here (last)
+# Lists that I do want to be spooled go here
 #
 :0
 * List-Id: TIER 
 tier
+
+:0
+* List-Id: Delay Tolerant Network
+dtn
 
 :0
 * ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
