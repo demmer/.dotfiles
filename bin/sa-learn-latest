@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -x
+
+sa-learn --showdots --ham  --mbox $HOME/Mail/spool
+sa-learn --showdots --spam --mbox $HOME/Mail/spam-certain
