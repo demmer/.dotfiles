@@ -1,0 +1,41 @@
+#!/usr/local/bin/perl -w
+
+select(STDOUT); $| = 1;
+
+%mon = (
+	Jan => 1,
+	Feb => 2,
+	Mar => 3,
+	Apr => 4,
+	May => 5,
+	Jun => 6,
+	Jul => 7,
+	Aug => 8,
+	Sep => 9,
+	Oct => 10,
+	Nov => 11,
+	Dec => 12,
+	);
+
+foreach $f (@ARGV) {
+    print STDERR "$f\n";
+    open (F, "<$f") || die "can't open $f";
+    while (<F>) {
+	if (/^From\s+\S+\s+(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+([0-9]+)\s+\S+\s+([0-9]+)\s+$/) {
+
+	    $M = $2;
+	    $m = $mon{$M};
+	    $d = $3;
+	    $y = $4;
+
+	    $k = $y * 10000 + $m * 100 + $d;
+	    $count{$k}++;
+	}
+    }
+    close F;
+}
+
+foreach $c (sort(keys(%count))) {
+    print "$c\t$count{$c}\n";
+
+}

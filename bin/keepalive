@@ -1,0 +1,8 @@
+#!/bin/sh -f
+
+while [ true ]; do
+      $*	
+      if [ "x$KEEPALIVE_DELAY" != "x" ]; then
+	sleep $KEEPALIVE_DELAY
+      fi
+done

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cmd="(make-frame-on-display \"$DISPLAY\")"
+echo $cmd
+gnudoit $cmd
+

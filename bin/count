@@ -1,0 +1,88 @@
+#!/usr/local/bin/perl
+use strict;
+
+my %array;
+my $debug = 0;
+my $ext = "";
+my $i = 0;
+my $file = "";
+my $num = 0;
+my %my_exts;
+my @curs = ("/","-","\\","|");
+
+my $count = 0;
+
+sub dprint {$debug && print @_;}
+
+sub count_it {
+    opendir (DIR, ".");
+    my @files = grep {!/^\.\.?/ } readdir(DIR);
+    closedir DIR;
+    foreach $file (@files) {
+        if (-d $file && ! -l $file) {
+            !$debug && print "\x8",$curs[$count];
+            $count++;
+            $count %= 4;
+            dprint "directory $file\n";
+            chdir ($file);
+            count_it();
+            chdir ("..");
+        }
+        elsif (-f $file) {
+            dprint "file $file";
+            $num = split (/\./, $file);
+            $ext = ($num != 1) ? (@_[--$num]) : "\x8<none>      "; # egad!
+            dprint "  ext $ext.\n";
+            if ( ( ! $#ARGV ) && ( ! $my_exts{$ext} ) ) {}
+            else {
+                open (FILE, $file);
+                while (<FILE>) { $i++; }
+                $array{$ext} += $i;
+                dprint "$ext\n";
+                $i = 0;
+                close(FILE);
+            }
+        }
+    }
+}
+
+## start the program code here...
+
+($#ARGV < 1) || die "USAGE: $0 [ extension_list ]\n";
+
+# we're using an arg list, so....
+if ( ! $#ARGV ) {
+    (-e $ARGV[0]) || die "The extension_list file must exist.\n";
+    open(F,"$ARGV[0]");
+    while ( <F> ) {
+        my $str = $_;
+        chop($str);
+        $my_exts{$str} = 1;
+        dprint "$str\n";
+    }
+    close(F);
+}
+
+# so, at this point we should have all the desired extensions...
+#my $j;
+#foreach $j ( keys %my_exts ) {
+#    print "ext $j value $my_exts{$j}.\n";
+#}
+
+!$debug && print "|";
+select STDOUT; $| = 1;
+
+count_it ();
+
+!$debug && print "\x8 \n";
+
+# print "$0 by mjd & stp\n\n";
+print "EXTENSION    COUNT\n";
+print "---------    ------\n";
+my $sum = 0;
+foreach $ext (sort ( keys %array ) ) {
+    printf (".%-11s $array{$ext}\n", $ext);
+    $sum += $array{$ext};
+}
+print "---------    ------\n";
+print "   total:    $sum\n";
