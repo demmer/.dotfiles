@@ -54,7 +54,7 @@ html
 # I have no idea why this one needs the full path, but whatever...
 #
 :0 Wh: msgid.lock
-| /usr/sww/bin/formail -D 32768 $MAILDIR/msgid.cache
+| formail -D 32768 $MAILDIR/msgid.cache
 
 #
 # Lists that I want to be spooled go here (last)

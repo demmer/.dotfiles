@@ -65,7 +65,7 @@ WMPID=$!
 # Utility programs
 mozilla & 
 dclock &
-yabiff -geometry $YABIFF_GEOM argus:inbox,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
+yabiff -geometry $YABIFF_GEOM pisco:inbox,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
 gaim &
 
 # Bring up a console window and a work shell
