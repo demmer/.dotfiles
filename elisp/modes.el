@@ -88,9 +88,39 @@
   (setq indent-tabs-mode nil)
   )
 
+(defun c-indent-four-spaces()
+  (interactive)
+  (setq c-basic-offset 4)
+  (setq indent-tabs-mode nil)
+  )
+
+(defun c-indent-line-force-8-space-tabs ()
+  (interactive)
+  (let ((tab-width 8)
+	(c-basic-offset 8)
+	(indent-tabs-mode t))
+    (c-indent-line)
+    ))
+
+(defun c-indent-region-force-8-space-tabs (START END &optional QUIET)
+  (interactive)
+  (let ((tab-width 8)
+	(c-basic-offset 8)
+	(indent-tabs-mode t))
+    (c-indent-region START END QUIET)
+    ))
+
+(defun c-indent-four-spaces-with-8-space-tabs ()
+  (interactive)
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
+  (setq indent-line-function   'c-indent-line-force-8-space-tabs)
+  (setq indent-region-function 'c-indent-region-force-8-space-tabs)
+)
+
 (defvar my-c-style-overrides)
 (setq my-c-style-overrides
-      '(("~/work/.*DTN" c-indent-one-tab)
+      '(("~/work/.*DTN" c-indent-four-spaces-with-8-space-tabs)
 	("~/work/nesc" c-indent-two-spaces)
 	)
       )
@@ -112,7 +142,7 @@
   (interactive)
   (c-add-style "my-c-style" my-c-style t)	; my style above
   (setq indent-tabs-mode nil)	           	; use spaces for tabs
-  (apply-c-style-overrides)
+  (apply-c-style-overrides)                     ; per-project overrides
   )
 
 (add-hook 'c-mode-hook 'my-c-setup)
@@ -230,9 +260,9 @@
     (insert "\\" type "{" section "}\n")))
 
 (defun latex-insert-face(face)
-  "Insert a {\bf } style typeface declaration"
+  "Insert a \textbf{} style typeface declaration"
   (interactive)
-  (insert "{\\" face " }")
+  (insert "\\" face "{}")
   (backward-char 1))
 
 (define-skeleton tex-latex-block-no-options
@@ -254,13 +284,13 @@
   "\\end{" str ?\} > \n)
 
 (define-key tex-mode-map "\C-cb"
-  (lambda () (interactive) (latex-insert-face "bf")))
+  (lambda () (interactive) (latex-insert-face "textbf")))
 (define-key tex-mode-map "\C-ce"
-  (lambda () (interactive) (latex-insert-face "em")))
+  (lambda () (interactive) (latex-insert-face "emph")))
 (define-key tex-mode-map "\C-ci"
-  (lambda () (interactive) (latex-insert-face "it")))
+  (lambda () (interactive) (latex-insert-face "item")))
 (define-key tex-mode-map "\C-ct"
-  (lambda () (interactive) (latex-insert-face "tt")))
+  (lambda () (interactive) (latex-insert-face "texttt")))
 (define-key tex-mode-map "\C-c\C-a"
   (lambda () (interactive) (tex-latex-block-no-options "abstract")))
 (define-key tex-mode-map "\C-c\C-c"
@@ -271,7 +301,7 @@
   (lambda () (interactive) (tex-latex-block-no-options "itemize")))
 (define-key tex-mode-map "\C-c\C-s"
   (lambda () (interactive) (latex-insert-section "section")))
-(define-key tex-mode-map "\C-c\C-S"
+(define-key tex-mode-map "\C-c\C-u"
   (lambda () (interactive) (latex-insert-section "subsection")))
 (define-key tex-mode-map "\C-c\C-v"
   (lambda () (interactive) (tex-latex-block-no-options "verbatim")))
@@ -480,10 +510,10 @@
 )
 (setenv "EMACSPARENT" "1")
 
-; Linux has problems with zsh...
-(if (string-equal (getenv "ARCH") "Linux")
-    (add-hook 'shell-mode-hook 'my-shell-mode-init)
-  )
+;; ; Linux has problems with zsh...
+;; (if (string-equal (getenv "ARCH") "Linux")
+;;     (add-hook 'shell-mode-hook 'my-shell-mode-init)
+;;   )
 
 ;; encryption
 (require 'crypt++)
@@ -498,4 +528,3 @@
 (if (featurep 'uniquify)
     (setq uniquify-buffer-name-style 'post-forward
 	  uniquify-separator ", "))
-
