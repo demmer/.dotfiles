@@ -1,0 +1,5 @@
+#
+# xinitrc file for zabar specific programs
+#
+
+xapm -bg gray87 -geom =$XAPM_GEOM &
