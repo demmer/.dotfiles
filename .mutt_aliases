@@ -202,6 +202,7 @@ alias durst Robert Durst <durst@mitre.org>
 alias kfall Kevin Fall <kfall@intel.com>
 alias kfall-eecs Kevin Fall <kfall@eecs.berkeley.edu>
 alias jeff_allen Jeff Allen <jra@nella.org>
+alias jeriksson Jacob Eriksson <jeriksson@cs.ucr.edu>
 alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
@@ -211,9 +212,11 @@ alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
 alias sushant Sushant Jain <sushjain@cs.washington.edu>
 alias tkoo Tristan Koo <tkoo@ocf.berkeley.edu>
 alias tliu Ting Liu <tliu@cs.princeton.edu>
+alias dtn-bugs dtn-bugs@mailman.dtnrg.org
 alias dtn-dev dtn-dev@mailman.dtnrg.org
 alias dtn-devel dtn-dev@mailman.dtnrg.org
 alias dtn-interest dtn-interest@mailman.dtnrg.org
+alias dtn-users dtn-users@mailman.dtnrg.org
 
 #
 # Tier / ICT4B related
@@ -224,6 +227,7 @@ alias joyojeet Joyojeet Pal <joyojeet@berkeley.edu>
 alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
 alias tap Tapan Parikh <tapan@cs.washington.edu>
 alias tier tier <tier@tier.cs.berkeley.edu>
+alias tier-cellphone-devel tier-cellphone-devel <tier-cellphone-devel@tier.cs.berkeley.edu>
 alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
 alias tier_case_paper <tier_case_paper@tier.cs.berkeley.edu>
 alias cft <tier_case_paper@tier.cs.berkeley.edu>
