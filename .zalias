@@ -62,13 +62,15 @@ alias etag-cwd="findsrc | xargs etags"
 
 alias xargus='xssh argus'
 alias xinigo='xssh inigo'
+alias xpisco='xssh pisco'
 alias xtier='xssh tier'
 alias xxoopi='xssh xoopi'
 alias xzabar='xssh zabar'
 
-alias xa='xssh argus'
-alias xi='xssh inigo'
-alias xx='xssh xoopi'
+alias xa=xargus
+alias xi=xinigo
+alias xp=xpisco
+alias xx=xxoopi
 
 # debian shortcuts
 alias apti='sudo apt-get install'
