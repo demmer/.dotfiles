@@ -110,11 +110,11 @@
 
 (defvar fume-function-name-regexp-c++
   (concat 
-   "^[a-zA-Z0-9:]+[ \t]?"		; type specs; there can be no
+   "^[a-zA-Z0-9_:~]+[ \t]?"		; type specs; there can be no
    "\\([a-zA-Z0-9_:~*]+[ \t]+\\)?"	; more than 3 tokens, right?
    "\\([a-zA-Z0-9_:~*]+[ \t]+\\)?"
    "\\([*&]+[ \t]*\\)?"			; pointer
-   "\\([a-zA-Z0-9_:*]+\\)[ \t]*("	; name
+   "\\([a-zA-Z0-9_:~*]+\\)[ \t]*("	; name
    )
   "Expression to get C++ function names")
 
