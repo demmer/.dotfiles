@@ -74,7 +74,7 @@ elif [ `tty` = "/dev/ttyv0" -a `uname -s` = FreeBSD ]; then
     STARTX=yes
 fi
 
-if $STARTX ; then
+if [ "$STARTX" = "yes" ] ; then
     echo -n "Start X Windows? "
     read -q CHOICE
     if [ $CHOICE = 'y' ]; then
