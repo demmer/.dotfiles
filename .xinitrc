@@ -10,10 +10,15 @@
 #
 
 echo "*******************************************************"
-echo
-echo "*****      Logged in on `hostname` at `date`      *****"
-echo
+echo "*****      Logged in on `hostname`"
+echo "*****      `date`"
 echo "*******************************************************"
+
+#
+# Figure out the canonical hostname
+#
+HOST=`hostname | sed -e 's/\..*//'`
+export HOST
 
 #
 # Load in geometry
@@ -37,12 +42,12 @@ fi
 # Set up ssh-agent
 . $HOME/.ssh-attach
 if [ "$SSH_AUTH_SOCK" = "" ]; then
-	xterm -bg yellow -geom +350+450 -fg black -e $HOME/bin/ssh-init
+	xterm -bg yellow -geom $SSH_INIT_GEOM -fg black -e $HOME/bin/ssh-init
 	. $HOME/.ssh-attach
 fi
 
 # Set the background to a nice graphic
-xv -quit -rmode 4 $HOME/images/gray_rock.gif
+xv -quit -rmode 4 $HOME/.dotfiles/gray_rock.gif
 
 # enable screen saver
 xset s 300
@@ -52,34 +57,36 @@ fvwm2 &
 WMPID=$!
 
 # Utility programs
-mozilla &
-nice dclock &
-nice xpostit+ &
-inigo-mailbox &
-xoopi-tunnels &
-xoopi-mailbox &
-haight-mailbox &
+MozillaFirebird &
+xclock -digital -twelve -padding 3 -geometry =$XCLOCK_GEOM \
+	-bg gray87 -strftime "%b %e %l:%M %p" &
+yabiff -geometry $YABIFF_GEOM -host xoopi,argus &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
-[ -r $HOME/.fetchmailrc ] && xterm -e /bin/sh -c 'fetchmail; sleep 2'  &
-KEEPALIVE_DELAY=5 keepalive x2vnc_buchanan > $HOME/.err/x2vnc.log 2>&1 &
 
-# Bring up a console window, email shells and a work shell
+# Bring up a console window and a work shell
 xterm -title "Console" -n "Console" -geometry =$CONSOLE_GEOM -e /bin/sh -c \
     '[ -f /var/log/messages ] && tail -f -n 0 /var/log/messages & \
      [ -f /var/log/secure ] && tail -f -n 0 /var/log/secure & \
      clear; zsh' &
 xterm -n "Fezzik, it's you . . . true" -geometry =$XTERM_1_GEOM &
 
+# Mail shells
+argus-xmutt &
 xoopi-xmutt &
-haight-xmutt &
 
-# Bring up emacs and two work shells in 2nd screen 
+# Tunnel for urlview
+$HOME/bin/urlview-tunnel-shell xoopi
+
+# Bring up emacs and work shells
 emacs -geometry =$EMACS_XINIT_GEOM -title "Inconceivable" &
-(sleep 5; gnudoit "(make-frame '((width . 80) (height . 65) (left . 2401) (top . 135)))") &
-
 xterm -n "Fezzik, are there rocks up ahead?" -geometry =$XTERM_2_GEOM &
 xterm -n "If there are, we'll all be dead!!" -geometry =$XTERM_3_GEOM &
 xterm -n "Anybody want a peanut?" -geometry =$XTERM_4_GEOM &
+
+# Run any host-specific commands (i.e. xapm on laptops)
+if [ -f $HOME/.xinitrc-$HOST ]; then
+	source $HOME/.xinitrc-$HOST
+fi
 
 # Wait for the window manager to quit
 wait $WMPID
