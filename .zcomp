@@ -88,9 +88,9 @@ compctl -g '*.Z' + -g '.*.Z' + -g '*(/)' zcat zmore uncompress
 compctl -g '^*.zip)' zip
 compctl -g '*.zip' + -g '*(/)' unzip
 compctl -g '^*.gz' gzip
-compctl -g '*.gz' + -g '*(/)' gunzip
+compctl -g '*.gz' + -g '*(/)' gunzip gzcat
 compctl -g '^*.bz2' bzip2
-compctl -g '*.bz2' + -g '*(/)' bunzip2
+compctl -g '*.bz2' + -g '*(/)' bunzip2 bzcat
 compctl -g '^*.Z' compress
 
 compctl -g '*.(tar|gz|tgz)' + -g '*(/)' + -g '*' tar
