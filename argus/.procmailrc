@@ -8,6 +8,20 @@ LOGFILE=$HOME/Mail/procmaillog
 LOGABSTRACT=all
 
 #
+# Kill the really bad spam (10 pts or higher).
+#
+:0
+* ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
+| formail -I "Status: RO" >> $HOME/Mail/spam-certain
+
+#
+# And 5 points or more gets copied to the spam folder.
+#
+:0
+* ^X-Spam-Level: \*\*\*\*\*
+| formail -I "Status: RO" >> $HOME/Mail/spam
+
+#
 # Add a subject line for everything.
 #
 :0fh
@@ -39,7 +53,7 @@ html
 # Finally, get rid of duplicate messages after saving a copy to the spool.
 #
 :0 Wh: msgid.lock
-| formail -D 32768 msgid.cache
+| formail -D 32768 $HOME/Mail/msgid.cache
 
 #
 # Lists that I want to be spooled go here (last)
@@ -47,6 +61,14 @@ html
 :0
 * List-Id: .*tinyos
 tinyos
+
+:0
+* List-Id: TIER 
+tier
+
+:0
+* List-Id: Delay Tolerant Networking
+dtn
 
 #
 # C'est fini.
