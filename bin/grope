@@ -1,0 +1,147 @@
+#!/usr/local/bin/perl -w
+##
+## A front end to glimpse.  Looks in CWD and parents for the glimpse
+## index files.  Then it filters the glimpse output to translate
+## the, potentially long, absolute paths to relative ones.
+##
+## If you're running an automounter, like AMD:
+## This program can do relativation only when it can establish a
+## correspondence between what getcwd reports and the pathnames coming
+## from glimpse.  It does this by trying to "canonicalize" what getcwd
+## says and expecting glimpse output to be canonicalized.  See the
+## comments at the beginning of "mygetcwd" below for how to help this
+## program help you :-)
+##
+##
+## Todo:
+##	- make way for user to turn off the hardcoded glimpse args we use
+##	  or where the glimpse prog is.
+##	- Fix so 'grope -l foo' works.  Currently it says bogus output.
+##
+## Author: Bart Robinson <lomew@cs.utah.edu> - Oct 1996
+## $Id: grope,v 1.1 2002-09-05 20:55:15 miked Exp $
+
+use Cwd;
+
+$ENV{PATH} = "/usr/sbin:/usr/etc:$ENV{PATH}";	# to find 'amq'
+
+##
+## Find where the glimpse index files are.
+##
+$cwd = mygetcwd() . '/';
+for ($dir = $cwd, $count = 0; ; $dir =~ s-[^/]*/$--, $count++) {
+    last if $dir eq "";
+    last if -e "${dir}.glimpse_index";
+}
+die "Couldn't find a glimpse index\n" if $dir eq "";
+($cwdr = $cwd) =~ s/^$dir//;		# cwd relative to $dir
+$dots = '../' x $count;			# how to get to glimpse files
+print STDERR "Found index in $dir ($dots)\n";
+
+##
+## Open the glimpse process and turn the output into relative paths.
+##
+$gotsome = 0;
+@nargv = map { "'$_'" } @ARGV;
+open(GLIMPSE, "glimpse -ynH $dir @nargv |") || die "pipe";
+while (<GLIMPSE>) {
+    ## We have no hope of relativation unless at least the first part of
+    ## the path matches where we found the glimpse files.
+    ## In this case we just print everything out and break out of this loop.
+    if (! s/^$dir//) {
+	do {
+		print;
+		$gotsome++;
+	} while <GLIMPSE>;
+	last;
+    }
+
+    if (! m/([^ ]+): (\d+: .*)/) {
+	warn "bogus output <$_>, ignoring\n";
+	next;
+    }
+    $got = $1;
+    $rest = $2;
+
+    @cwdr = split('/', $cwdr);
+    @got = split('/', $got);
+    $file = pop(@got);
+
+    ## Shift off common components.
+    for ($nshifted = 0; @cwdr && @got && $cwdr[0] eq $got[0]; $nshifted++) {
+	shift(@cwdr);
+	shift(@got);
+    }
+    ## ldots is how to get to the rest of @got.  If we didn't shift anything
+    ## off, then it is the same as $dots.
+    if ($nshifted) {
+	$ldots = '../' x scalar(@cwdr);
+    }
+    else {
+	$ldots = $dots;
+    }
+
+    push(@got, "") if @got;		# so the join below ends with a slash
+    print $ldots, join('/', @got), "$file: $rest\n";
+    $gotsome++;
+}
+close(GLIMPSE) || die "pipe close";
+print STDERR "$gotsome matches\n";
+exit 0;
+
+##
+## Try to figure out the canonical current working directory.
+##
+## The problem is that when you run glimpseindex it stores a bunch of
+## pathnames in the .glimpse_filenames file.  These pathnames may not
+## be valid on other machines, so you should always check and make them
+## valid (use sed or something.)  When the paths are valid then this file
+## can properly canonicalize the getcwd return value and use it to relativize
+## glimpse output.
+##
+## The way we canonicalize is to run the AMD utility 'amq' and see if
+## the output helps us guess how to transform the getcwd return value.
+## For example, on machines that run AMD, getcwd can report something
+## like /a/home/css/ugrad but it really means /home/css/ugrad.
+##
+## This approach will fail when the dir isn't mounted.  For example,
+## if you are working in a local filesystem that is named something
+## different on other machines, it might not be mounted locally.  However,
+## it will get mounted after you run glimpse (so you can try running this prog
+## twice when relativation doesn't happen).
+##
+sub mygetcwd {
+    my $guess;
+    my $max;
+    my $cool;
+    my $real;
+    my $fake;
+    my $host;
+    local(*AMQ);
+
+    $guess = getcwd();
+    return $guess unless $guess =~ m-^/a/-;	# only try for /a/foo/...
+    open(AMQ, "amq|") || return $guess;
+    $max = 0;
+    $cool = "--nomatch--";
+    while (<AMQ>) {
+	($real,$fake) = (split(' '))[0,3];
+	if (substr($guess, 0, length($fake)) eq $fake && length($fake) > $max) {
+	    $max = length($fake);
+	    $cool = $real;
+	}
+    }
+    if ($cool ne "--nomatch--") {
+	substr($guess, 0, $max) = $cool;
+    }
+    return $guess;
+}
+
+__END__
+cwd	/remote/users/ugrad/lomew/flource/oskit/libfdev_linux/include/net/CVS/
+dir	/remote/users/ugrad/lomew/flource/
+cwdr	oskit/libfdev_linux/include/net/CVS/
+$_	/remote/users/ugrad/lomew/flource/oskit/libkern/x86/base_paging_init.c:
+$_	oskit/libkern/x86/base_paging_init.c:
+count	5
+WANT	../../../../libkern/x86/base_paging_init.c
