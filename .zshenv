@@ -145,3 +145,5 @@ export LANG
 export TOSROOT="$HOME/work/tinyos-1.x"
 export TOSDIR="$TOSROOT/tos"
 export CLASSPATH=".:$TOSROOT/tools/java"
+export DBG="all"
+
