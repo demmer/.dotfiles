@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Fri Apr 5, 1996
-;; Version: 3.0 ($Revision: 1.1 $)
+;; Version: 3.0 ($Revision: 1.2 $)
 (defconst ooh-version "3.0")
 ;; Date: Aug 17, 1997
 ;; Keywords: c c++ cpp preprocessor languages
@@ -220,7 +220,7 @@ when WHENCE is 'end."
 	 (concat "#ifndef " sym "\n"
 		 "#define " sym "\n\n"))
 	((eq whence 'end)
-	 (concat "\n\n#endif " comment-start sym comment-end "\n"))))
+	 (concat "\n\n#endif " "/* " sym " */" "\n"))))
 
 (defun ooh-make-guard-sym (filename)
   "For use as a value of `ooh-guard-sym-maker'.
