@@ -43,7 +43,7 @@ folder-hook . set sort=mailbox-order
 folder-hook linux-kernel set sort=threads
 folder-hook netfilter set sort=threads
 
-mailboxes ! =spool =sent =linux-kernel =netfilter
+mailboxes ! =linux-kernel =netfilter
 
 #
 # Suck in aliases
