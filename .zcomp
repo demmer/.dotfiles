@@ -36,8 +36,15 @@ hosts=(							\
 			tahoe				\
                         )
 
-# global match options -- set to do case-insensitive complete
+# global completion options
+
+# case-insensitive 
 compctl -M '' 'm:{a-zA-Z}={A-Za-z}'
+
+# partial completion
+compctl -M 'r:|[.,_-]=* r:|=*'
+
+# application completion options
 
 # man completes to executable command names
 compctl -c man
