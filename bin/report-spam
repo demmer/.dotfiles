@@ -1,3 +1,5 @@
 #!/bin/sh
 
-cat | rehtml.pl | sa-learn --spam --single
+# not really reporting for now since i have to learn in batches anyway
+# cat | rehtml.pl | sa-learn --spam --single
+cat | rehtml.pl | resubject-spam >> $HOME/Mail/spam
