@@ -175,7 +175,6 @@ Mouse   1	R	N	PopUp "Applications"
 Mouse   1	R	C	PopUp "WindowOps"
 Mouse   1	T	N	Move-or-Raise
 Mouse   1	WT	M	Move-or-Raise
-Mouse   1	WT  	C	Move-or-Raise
 Mouse   1	T	C	Move
 Mouse   1       I       A	Iconify
 Mouse   1	WTSF  	S	Resize		
