@@ -53,4 +53,7 @@ sed '
         :c
         s:'"$a"':/*:g
         s:'"$b"':*/:g
+
+	# And C++ style ones as well
+	s://.*:\0:g
 ' $1
