@@ -1,3 +1,7 @@
+##
+## FILE:  .zalias
+## DESC:  alias bindings
+##
 
 alias cp='cp -i'
 alias mv='mv -i'
