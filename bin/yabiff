@@ -1,0 +1,123 @@
+#!/usr/bin/wish
+# yabiff.tcl
+# Author: Bart Robinson <lomew@cs.utah.edu>
+# Translated to Tcl: Anand Ranganathan <anand@cs.utah.edu>
+
+
+## XXX this should be in resources but I don't know how
+set lines 5;
+set line_length 60;
+set beep 0;
+set flash 1;
+set delay 10;
+set delay [expr $delay * 1000];
+set fg black;
+set bg azure3;
+
+if [info exists env(USER)] {
+    set user $env(USER);
+} elseif [info exists env(LOGNAME)] {
+    set user $env(LOGNAME);
+} else {
+    puts stderr "I don't believe we have met.";
+    exit -1;
+}
+if [info exists env(MAIL)] {
+    if [file exists $env(MAIL)] {
+	set spoolfile $env(MAIL);
+    }
+} elseif [file exists "/usr/spool/mail/$user"] {
+    set spoolfile "/usr/spool/mail/$user";
+} elseif [file exists "/usr/mail/$user"] {
+    set spoolfile "/usr/mail/$user";
+} elseif [file exists "/var/mail/$user"] {
+    set spoolfile "var/mail/$user";
+} elseif [file exists "/var/spool/mail/$user"] {
+    set spoolfile "/var/spool/mail/$user";
+}
+
+if [expr ! [info exists spoolfile]] {
+    puts stderr "no spool";
+    exit -1;
+}
+
+set ctime 0;
+
+set hostname [info hostname]
+
+wm title . YaBiff;
+wm geometry . "-10-10"
+text .text -wrap none -setgrid 1 -font "6x13"  -width $line_length\
+    -height $lines -background $bg;
+
+frame .box;
+#button .box.update -text "Update" -padx 2 -pady 2 -command update;
+#button .box.quit -text "Quit" -command exit -padx 2 -pady 2;
+#label .box.time -text "something is wrong";
+#label .box.hostname -text "($hostname)"
+#checkbutton .box.flash_toggle -text "Flash" -variable flash
+#checkbutton .box.beep_toggle -text "Beep" -variable beep
+
+scrollbar .sb -command ".text yview";
+.text configure -yscrollcommand ".sb set";
+
+pack .box -anchor n -fill x
+#pack .box.update -side left
+#pack .box.quit -side left
+#pack .box.time -side left
+#pack .box.hostname -side left
+#pack .box.flash_toggle -side right
+#pack .box.beep_toggle -side right
+pack .sb -side right -fill y
+pack .text -expand yes -fill both
+
+
+proc flash {} {
+    global beep;
+    global flash;
+    global bg;
+    global fg;
+    if {$beep} {
+	bell -displayof .;
+    }
+    if {$flash} {
+	.text configure -foreground $bg -background $fg;
+	after 200 .text configure -foreground $fg -background $bg;
+    }
+}
+
+proc update {args} {
+    global ctime;
+    global spoolfile;
+    global update_id;
+    global delay;
+    if [info exists update_id] {
+	after cancel $update_id;
+    }
+    set update_id [after $delay update];
+#    .box.time configure -text [prettytime];
+    if [expr [file exists $spoolfile] &&\
+	    [expr [file mtime $spoolfile] <= $ctime]] {
+	return;
+    }
+	set ctime [file mtime $spoolfile];
+	.text configure -state normal;
+	.text delete 0.0 end;
+	set handle [open "|frm -s unread" RDONLY];
+	for {gets $handle nfrm_line} {[expr ! [eof $handle]]}\
+	    {gets $handle nfrm_line} {
+	    .text insert 0.0 "$nfrm_line\n";
+	}
+	catch {close $handle};
+	flash;
+	.text configure -state disabled;
+}
+
+proc prettytime {} {
+    set localtime [clock format [clock seconds] -format %I:%M%p];
+    regsub -- {^0} $localtime {} localtime
+    return [string tolower $localtime]
+}
+
+update;
+
