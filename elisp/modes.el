@@ -63,6 +63,7 @@
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
+  (setq comment-use-syntax nil)
   )
 
 (add-hook 'c-mode-common-hook 'my-c-common-setup)
@@ -130,8 +131,9 @@ with tab characters underneath."
 
 (defvar my-c-style-overrides)
 (setq my-c-style-overrides
-      '(("~/work/nesc" c-indent-two-spaces)
-	("~/work/tinyos-1.x" c-indent-two-spaces)
+      '(("~/work/nesc" 		c-indent-two-spaces)
+	("~/work/tinyos-1.x" 	c-indent-two-spaces)
+	("~/work/.*capriccio"	c-indent-two-spaces)
 	)
       )
 
@@ -437,6 +439,7 @@ with tab characters underneath."
 	 )
        ))
 (require 'font-lock)
+
 (defun my-font-lock-init ()
 ;  (setq font-lock-java-member-face 'fl-java-member-face)
 ;  (setq font-lock-java-member-func-face 'fl-java-member-func-face)
@@ -458,7 +461,7 @@ with tab characters underneath."
 	 (cons 'c++-mode 2)
 	 (cons t t)))
   
-  (setq c++-font-lock-extra-types nil)
+  (setq font-lock-multiline t)
   )
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
