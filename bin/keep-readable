@@ -6,7 +6,7 @@ from os.path import join
 path = sys.argv[1]
 last = 0
 
-while True:
+while 1:
     cur = os.stat(path).st_mtime
     if (cur != last):
         last = cur
