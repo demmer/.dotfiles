@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.2 2001-03-03 03:00:09 demmer Exp $
+;; $Id: vc.el,v 1.3 2001-04-25 21:12:10 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -2328,7 +2328,7 @@ menu items."
 		   (message "Redisplaying annotation...done"))))))))
 
 ;;;###autoload
-(defun vc-annotate (ratio)
+(defun vc-annotate (version-prompt)
   "Display the result of the CVS `annotate' command using colors.
 New lines are displayed in red, old in blue.
 A prefix argument specifies a factor for stretching the time scale.
@@ -2341,13 +2341,15 @@ colors. `vc-annotate-background' specifies the background color."
   (vc-ensure-vc-buffer)
   (if (not (eq (vc-backend (buffer-file-name)) 'CVS))
       (error "Sorry, vc-annotate is only implemented for CVS"))
+  (if version-prompt
+      (setq version (read-string "Version: "))
+    (setq version (vc-workfile-version (buffer-file-name))))
   (message "Annotating...")
   (let ((temp-buffer-name (concat "*cvs annotate " (buffer-name) "*"))
-	(temp-buffer-show-function 'vc-annotate-display)
-	(vc-annotate-ratio ratio))
+	(temp-buffer-show-function 'vc-annotate-display))
     (with-output-to-temp-buffer temp-buffer-name
       (call-process "cvs" nil (get-buffer temp-buffer-name) nil
-		    "annotate" "-r" (vc-workfile-version (buffer-file-name))
+		    "annotate" "-r" version
 		    (file-name-nondirectory (buffer-file-name)))))
   (message "Annotating... done"))
 
