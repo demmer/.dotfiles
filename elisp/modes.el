@@ -59,9 +59,6 @@
 				       (statement-cont . 4)
 				       (substatement-open . 0)
 				       ))
-    (c-hanging-comment-starter-p nil)
-    (c-hanging-comment-ender-p nil)
-				       
 ;    (c-comment-only-line-offset    . 0)
 ;    (c-hanging-braces-alist        . ((block-open after)
 ;				      (brace-list-open)))
@@ -120,23 +117,14 @@
   (setq dabbrev-case-fold-search nil
 	   dabbrev-case-replace nil)
 
-(setq-default c-basic-offset 4)
-
-					;  (setq c-auto-newline nil)
-;  (setq c-basic-offset 4)
-;  (setq c-indent-level 4)
-;  (setq c-continued-statement-offset 4)
-;  (setq c-continued-brace-offset 0)
-;  (setq c-brace-offset 0)
-;  (setq c-brace-imaginary-offset 0)
-;  (setq c-argdecl-indent 0)
-;  (setq c-label-offset -2)
-;  (setq c-echo-semantic-information-p nil)
-
+  (setq-default c-basic-offset 4)
   (setq c-electric-pound-behavior '(alignleft))
   (setq c-comment-starting-blank nil)
   (setq c-comment-hanging-indent t)
   (setq c-comment-indenting t)
+  (setq c-hanging-comment-starter-p nil)
+  (setq c-hanging-comment-ender-p nil)
+  
   (define-key c-mode-map "\C-m" 'newline-and-indent)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
 )
