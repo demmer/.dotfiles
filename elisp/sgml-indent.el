@@ -62,15 +62,15 @@ spaces at each open tag."
 	(cond
 	 ((re-search-forward "<[^/][^/> \t]*[ \t]*\\([a-zA-Z_-]*=\".*\"[ \t\n\r]*\\)*"
 			    indent-point t)
+	  
 	  (sgml-indent-debug-message (format "tag matched \"%s\"" (match-string 0)))
-	  (sgml-indent-debug-message (format "looking-at returned %s" (looking-at ">.*-->")))
 	  (goto-char (match-end 0))
+	  
 	  (cond
 	   ((or
 	     (looking-at "/>")
 	     (looking-at ">.*</[^ \t]*>")
-	     (and (string-equal (match-string 0) "<!-- ")
-		  (looking-at ".*-->")))
+	     (looking-at ".*-->"))
 	    
 	    (sgml-indent-debug-message "Found self-closed tag")
 	    ;; self-closed tag or comment - indent to same level as previous tag
