@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.25 $)
+;; Version: 1.2 ($Revision: 1.26 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -763,37 +763,10 @@ Influenced by the `lcvs-log-restrict-to-branch' and
 				   (kill-buffer buf)
 				   working-revision))))))
 		      files)))
-    (message "Logging...")
-    (mapcar* (function (lambda (file rev)
-			 (message (format "file: %s ver: %s" (file-name-nondirectory file) rev))))
-	     files working-revisions)
-    (if (not lcvs-log-restrict-to-changes)
-	(lcvs-do-command "log" "No output" nil (nconc args files))
-      
-      (let ((tmpbuf (get-buffer-create "*CVS-log-temp*")) contents)
-	(save-excursion (set-buffer tmpbuf) (erase-buffer))
-	(mapcar*
-	 (function
-	  (lambda (filename version)
-	    (let ((cmdargs (nconc args (list (concat "-r" version "::")) (list filename))))
-	      (message (format "logging cmd %s " cmdargs))
-	      (lcvs-do-command "log" "No output" nil cmdargs)
-	      (save-excursion
-		(set-buffer "*CVS-log*")
-		(setq contents (buffer-substring (point-min) (point-max)))
-		(set-buffer tmpbuf)
-		(insert contents)
-		))))
-	    files working-revisions)
 
-	(save-excursion
-	  (set-buffer tmpbuf)
-	  (setq contents (buffer-substring (point-min) (point-max)))
-	  (set-buffer "*CVS-log*")
-	  (erase-buffer)
-	  (insert contents)
-	  (kill-buffer tmpbuf)
-	  )))
+    ;; do the actual log command
+    (message "Logging...")
+    (lcvs-do-command "log" "No output" nil (nconc args files))
     
     ;; If we know the working revision and we're just marking one
     ;; file, go mark it and make it visible. Parts stolen from vc.el.
@@ -846,6 +819,7 @@ Influenced by the `lcvs-log-restrict-to-branch' and
 		   (t
 		    (goto-char start)
 		    (recenter 0)))))))))
+
     (if lcvs-log-restrict-to-branch
 	;; Do the substitute-command-keys before going to the other buffer.
 	(let ((msg (substitute-command-keys
@@ -858,13 +832,14 @@ Influenced by the `lcvs-log-restrict-to-branch' and
 	    (set-buffer "*CVS-log*")
 	    (goto-char (point-max))
 	    (insert msg))))
+    
     (if lcvs-log-restrict-to-changes
 	;; Do the substitute-command-keys before going to the other buffer.
 	(save-excursion
 	  (set-buffer "*CVS-log*")
 	  (goto-char (point-max))
 	  (if lcvs-correlate-change-log
-	      (lcvs-correlate-logs)
+	      (lcvs-correlate-logs files working-revisions)
 	    (let ((msg (substitute-command-keys
 			(concat
 			 "\n"
@@ -875,57 +850,118 @@ Influenced by the `lcvs-log-restrict-to-branch' and
 	      ))))
     (message "Logging...done")))
 
-(defun lcvs-correlate-logs ()
-  "Parse the *CVS-log* buffer, reformatting to group checkins by author
-and log message"
+(defvar lcvs-last-update 0
+  "Placeholder variable to keep the timestamp of the last progress update")
+
+(defvar lcvs-update-interval 2
+  "Number of seconds between progress updates")
+  
+(defun lcvs-update-progress (what)
+  "Simple procedure to update progress in the current buffer"
+  (let ((now (nth 1 (current-time))))
+    (if (> (- now lcvs-last-update) 2)
+	(progn
+	  (message "%s... (%d%% complete)" what
+		   (/ (* 100 (- (point) (point-min)))
+		      (- (point-max) (point))))
+	  (setq lcvs-last-update now)))))
+
+(defun lcvs-cleanup-logs (&optional files working-revisions)
+  "Strip out all the RCS crap from the log file, leaving only the
+interesting bits. Useful for lcvs-correlate-logs."
   (interactive)
+
   (save-excursion
     (set-buffer "*CVS-log*")
     (buffer-enable-undo)
-    (make-variable-buffer-local 'kill-whole-line)
     (goto-char (point-min))
-    (let ((buffer-read-only nil)
-	  (kill-whole-line t)
-	  (old-gc-threshold gc-cons-threshold))
+
+    (setq buffer-read-only nil)
+      
+    (make-variable-buffer-local 'kill-whole-line)
+    (setq kill-whole-line t)
+
+    ;; strip out irrelevant log entries
+    (if files
+	(mapcar*
+	 (function
+	  (lambda (file version)
+	    (save-excursion
+	      (if (not (re-search-forward (format "Working file: %s" file) nil t)) nil
+		(if (not (re-search-forward (format "revision %s" version) nil t)) nil
+		  (previous-line 1)
+		  (beginning-of-line)
+		  (let ((beg (point)))
+		    (re-search-forward "^========[=]+\n")
+		    (previous-line 1)
+		    (beginning-of-line)
+		    (kill-region beg (point)))
+		  )))))
+	 files working-revisions))
+	    
+    ;; strip out all the crap, leave just the meat
+    (while (re-search-forward "^RCS file:" nil t)
+      (beginning-of-line)
+
+      (lcvs-update-progress "Stripping RCS junk")
+      
+      (let ((beg (point)) bound filename)
+
+	(search-forward "Working file: ")
+	(setq filename (buffer-substring (point) (line-end-position)))
+	(re-search-forward "^----[-]+\n")
+	(kill-region beg (point))
+	(insert "----------------------------\n")
+	;; Find the bound for this file, then work backwards
+	(save-excursion
+	  (re-search-forward "^========[=]+\n")
+	  (kill-region (match-beginning 0) (match-end 0))
+	  (if (looking-at "^\n") (kill-line))
+
+	  (while (re-search-backward "^revision " bound t)
+	    (forward-word 1)
+	    (forward-char 1)
+	    (insert (format "%s:" filename))
+	    (beginning-of-line)
+	    (insert "CVS ")
+	    (previous-line 1))))
+      )
+    (goto-char (point-max))
+    (insert "----------------------------\n") ;; need one at the end
+    (goto-char (point-min))
+
+  ))
+
+
+(defun lcvs-correlate-logs (&optional files working-revisions)
+  "Parse the *CVS-log* buffer, reformatting to group checkins by author
+and log message"
+  (interactive)
+
+  ;; first some setup stuff
+  (save-excursion
+    (set-buffer "*CVS-log*")
+    (buffer-enable-undo)
+    (goto-char (point-min))
+
+    (let ((old-gc-threshold gc-cons-threshold))
+
+      (setq buffer-read-only nil)
+
       (make-variable-buffer-local 'gc-cons-threshold)
       (setq gc-cons-threshold 100000000)
-      
-      ;; strip out all the crap, leave just the meat
-      (while (re-search-forward "^RCS file:" nil t)
-	(beginning-of-line)
-	(let ((beg (point)) bound filename)
 
-	  (search-forward "Working file: ")
-	  (setq filename (buffer-substring (point) (line-end-position)))
-	  (re-search-forward "^----[-]+\n")
-	  (kill-region beg (point))
-	  (insert "----------------------------\n")
-	  ;; Find the bound for this file, then work backwards
-	  (save-excursion
-	    (re-search-forward "^========[=]+\n")
-	    (kill-region (match-beginning 0) (match-end 0))
-	    (if (looking-at "^\n") (kill-line))
+      (make-variable-buffer-local 'kill-whole-line)
+      (setq kill-whole-line t)
 
-	    (while (re-search-backward "^revision " bound t)
-	      (forward-word 1)
-	      (forward-char 1)
-	      (insert (format "%s:" filename))
-	      (beginning-of-line)
-	      (insert "CVS ")
-	      (previous-line 1))))
-	)
-      (goto-char (point-max))
-      (insert "----------------------------\n");; need one at the end
-      (goto-char (point-min))
+      ;; first some cleanup stuff
+      (lcvs-cleanup-logs files working-revisions)
       
       ;; scan through again -- for each file, scan through the
       ;; remainder to try to find matches. 
-      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept
-		   now lastupdate)
+      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept)
 	(setq regexp (concat "^CVS revision \\([^\:]*\\):\\([^\n]*\\)\n"
 		      "date: \\([^;]*\\);  author: \\([^;]*\\).*\n"))
-
-	(setq lastupdate 0)
 
 	(while (re-search-forward regexp nil t)
 	  (setq file (match-string 1))
@@ -933,21 +969,14 @@ and log message"
 	  (setq date (match-string 3))
 	  (setq author (match-string 4))
 
-	  ;; check if we should do a progress update
-	  (setq now (nth 1 (current-time)))
-	  (if (> (- now lastupdate) 2)
-	      (progn
-		(message "Correlating logs... (%d%% complete)"
-			 (/ (* 100 (- (point) (point-min)))
-			    (- (point-max) (point))))
-		(setq lastupdate now)))
+	  (lcvs-update-progress "Correlating logs")
 
 	  ;; clear all the header stuff once more
 	  (kill-region (match-beginning 0) (match-end 0))
 
 	  (insert (format "file: %s:%s\n" file ver))
 	  (setq filept (point))
-	  (insert (format "date: %s;  author: %s;\n" date author))
+	  (insert (format "date: %s;  author: %s;\n\n" date author))
 
 	  (save-excursion
 	    ;; copy all the log lines into the log variable to do the
@@ -984,7 +1013,9 @@ and log message"
 		      (insert (format "file: %s:%s\n" file2 ver2))))
 	      )))
 	  ))
+      (garbage-collect)
       (setq gc-cons-threshold old-gc-threshold)
+      (setq buffer-read-only t)
     )))
 
 (defun lcvs-show-full-log (arg)
