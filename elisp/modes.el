@@ -90,8 +90,7 @@
   )
 
 (defvar my-c-style-overrides
-  '(("~/work/.*DTN.*" 'c-indent-one-tab)
-    ("~/work/tinyos-1.x/tools/java/net" 'c-indent-two-spaces)
+  '(("~/work/.*DTN.*" c-indent-one-tab)
     )
   )
 
@@ -117,7 +116,14 @@
 
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c++-mode-hook 'my-c-setup)
-(add-hook 'java-mode-hook 'my-c-setup)
+
+(defun my-java-setup()
+  (interactive)
+  (my-c-setup)
+  (c-indent-two-spaces)
+  )
+
+(add-hook 'java-mode-hook 'my-java-setup)
 
 ; load visual-basic mode
 (require 'visual-basic-mode)
