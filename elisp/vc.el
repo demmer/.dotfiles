@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.4 2001-06-26 21:41:59 demmer Exp $
+;; $Id: vc.el,v 1.5 2001-12-19 16:17:30 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -3121,6 +3121,21 @@ Invoke FUNC f ARGS on each non-directory file f underneath it."
 			 (file-symlink-p dirf) ;; Avoid possible loops
 			 (vc-file-tree-walk-internal dirf func args))))))
        (directory-files dir)))))
+
+(defun vc-print-status (verbose)
+  "Show the current checkout status of a file."
+  (interactive "P")
+  (vc-ensure-vc-buffer)
+  (let ((file buffer-file-name))
+    (if (not (eq (vc-backend file) 'CVS))
+	(error "Sorrt, vc-print-status is only implemented for CVS"))
+    (let ((temp-buffer-name (concat "*cvs status " (buffer-name) "*")))
+      (with-output-to-temp-buffer temp-buffer-name
+	(call-process "cvs" nil (get-buffer temp-buffer-name) nil
+		      "status"
+		      (if verbose "-v" "-l") ;; -l is meaningless anyway
+		      (file-name-nondirectory (buffer-file-name))))))
+  )
 
 (provide 'vc)
 
