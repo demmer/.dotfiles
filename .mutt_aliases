@@ -3,6 +3,12 @@
 #
 
 #
+# Me
+#
+alias me Mike Demmer <mike@demmer.nu>
+alias work Mike Demmer <demmer@nbttech.com>
+
+#
 # Family
 #
 alias adam Adam Buchsbaum <alb@research.att.com>
@@ -34,7 +40,7 @@ alias chaffee Gordon Chaffee <chaffee@attbi.com>
 alias czerwin Steve Czerwinski <czerwin@cs.berkeley.edu>
 alias davidwu David Wu <davewu@soda.berkeley.edu>
 alias diana Diana Reed <dreed@girlsms.org>
-alias dsimpson David Simpson <dsimpson@inktomi.com>
+alias dsimpson David Simpson <dave@simpsonhome.com>
 alias dsolomon Debra Solomon <dsolomon@greatschools.net>
 alias elena Elena Jakubiak <elena_jakubiak@hotmail.com>
 alias elliot Elliot Winard <ewinard@macromedia.com>
@@ -144,6 +150,11 @@ alias kingfish alan_margulius, david_ng, dougb, \
 	       scott_pankonin, steve_welch, strange_brew, \
 	       cbeausejour
 
+#
+# Sterling
+#
+alias jay Jason LaTorre <latorrej@sterlingnet.com>
+alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 # Others added by mutt
 #
