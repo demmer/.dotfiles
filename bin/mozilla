@@ -1,0 +1,19 @@
+#!/bin/sh -f
+
+#
+# Try to run MozillaFirebird if it exists in the path, otherwise
+# default to mozilla.
+#
+
+dirs=`echo $PATH | sed 's/:/ /g'`
+
+for dir in $dirs; do
+	[ $dir = $HOME/bin ] && continue
+  	[ -x $dir/MozillaFirebird ] && exec $dir/MozillaFirebird $*
+done
+
+for dir in $dirs; do
+	[ $dir = $HOME/bin ] && continue
+  	[ -x $dir/mozilla ] && exec $dir/mozilla $*
+done
+

@@ -51,10 +51,10 @@ fvwm2 &
 WMPID=$!
 
 # Utility programs
-MozillaFirebird &
+mozilla & 
 xclock -digital -twelve -padding 3 -geometry =$XCLOCK_GEOM \
 	-bg gray87 -strftime "%b %e %l:%M %p" &
-yabiff -geometry $YABIFF_GEOM -host xoopi,argus &
+yabiff -geometry $YABIFF_GEOM -host xoopi,argus -checkfetch argus &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
 
 # Bring up a console window and a work shell

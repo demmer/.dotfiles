@@ -18,7 +18,6 @@ Style "*"	Color black/gray87, \
 #
 # Other General Settings
 #
-
 DeskTopSize 3x2
 HilightColor red gray87
 EdgeScroll 0 0
@@ -111,7 +110,7 @@ AddToMenu Applications "Applications" Title
     + "Emacs"		Exec emacs &
     + "Xmms"  		Exec xmms &
     + "Realplay"	Exec /u/demmer/bin/realplay &
-    + "Mozilla"		Exec MozillaFirebird &
+    + "Mozilla"		Exec mozilla &
     + "Netscape"	Exec netscape &
     + "XV"		Exec xv &
     + "-----------------" Nop
@@ -245,10 +244,12 @@ Key End   R    N    CursorMove     -10  +10
 Key Next  R    N    CursorMove     +10  +10
 
 # application shortcuts
-Key x    R    N    Exec  xterm -geometry 79x28 -n 'Shell' &
-Key h    R    N    Exec  xterm -n "haight" -T "haight" -e ssh haight &
+Key x    R    N    Exec  xterm -n "Shell" -T "Shell" &
 Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
-Key m    R    N    Exec  MozillaFirebird &    
+Key a    R    N    Exec  xterm -n "argus" -T "argus" -e ssh argus &
+Key z    R    N    Exec  xterm -n "zabar" -T "zabar" -e ssh zabar &
+Key t    R    N    Exec  xterm -n "tier" -T "tier" -e ssh tier &
+Key m    R    N    Exec  mozilla &    
 
 # raise / lower windows
 Key space A CM   RaiseLower
@@ -270,7 +271,7 @@ Module FvwmButtons
 *FvwmButtons Xmms 	none Exec exec xmms &
 *FvwmButtons Emacs 	none Exec exec emacs &
 *FvwmButtons Xcalc	none Exec exec xcalc &
-*FvwmButtons Mozilla 	none Exec exec MozillaFirebird &
+*FvwmButtons Mozilla 	none Exec exec mozilla &
 *FvwmButtons ----------
 *FvwmButtons Inigo 	none Exec exec $HOME/bin/xssh inigo &
 *FvwmButtons Argus 	none Exec exec $HOME/bin/xssh argus &
@@ -279,8 +280,3 @@ Module FvwmButtons
 *FvwmButtons Kill 	none Destroy 
 *FvwmButtons Logout 	none Quit
 *FvwmButtons Shutdown 	none Exec exec xterm -e sudo shutdown -h now
-
-
-# Stuff not pulled over from fvwm
-
-#		StubbornPlacement
