@@ -1,0 +1,4 @@
+#!/bin/sh -f
+
+xterm -title "EECS Mail Shell" -geometry $ARGUS_XMUTT_GEOM -e \
+	ssh -t argus mutt &
