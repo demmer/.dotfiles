@@ -1,2 +1,23 @@
 #!/bin/sh
-$HOME/bin/mailbox_tunnel -host xoopi -v 2> $HOME/.err/mailbox_tunnel.log &
+
+mailbox=0
+urlview=0
+
+if [ $# = 0 ]; then
+   mailbox=1
+   urlview=1
+else
+   while [ $# -gt 0 ]; do
+	 if [ "x$1" = "xmailbox" ]; then
+		mailbox=1
+	 fi
+
+	 if [ "x$1" = "xurlview" ]; then
+		urlview=1
+	 fi
+	 shift
+   done
+fi
+
+test $mailbox && $HOME/bin/mailbox_tunnel -host xoopi -v 2> $HOME/.err/mailbox_tunnel.log &
+test $urlview && $HOME/bin/urlview-tunnel -host xoopi &
