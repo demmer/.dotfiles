@@ -18,47 +18,50 @@
 			(".cc" ".h")
 			(".c" ".h")
 			(".tcl" ".cc")
+			("M.nc" ".nc")
+ 			("M.nc" "C.nc")
 			))
 
 (defun CH-buffer-match (name)
   "Matches from CH-buffer pairs, and returns a list of modified buffer
 names. e.g. if passed buffer.C, will return buffer.H and vice versa.
 Uses CH-buffer-pairs to get the pairs of filename extensions. Matches
-buffer copy number as well, so buffer.C<2> will return
-buffer.H<2>.[mjd]"
-  
-  (let (
-	(root (file-name-sans-extension name))
-	(ext (file-name-extension name))
-	(ver) (pt) (test) (exts)
-	)
+buffer copy number as well, so buffer.c<2> will return buffer.h<2>"
 
-    (setq pt (string-match "<" ext))
+  (let ((ver) (pt) (names))
+    ;; strip out the version first, either in <2> or , <dir> style
+    (setq pt (string-match "[<,]" name))
     (cond
      (pt
-      (setq ver (substring ext pt (length ext)))
-      (setq ext (substring ext 0 pt))
+      (setq ver (substring name pt (length name)))
+      (setq name (substring name 0 pt))
       )
      (t
       (setq ver nil)
       ))
-    (setq ext (concat "." ext))
-    (setq test (mapcar
-		(lambda (pair) "" nil
-		  (cond
-		   ((string-equal (car pair) ext)
-		    (cadr pair))
-		   ((string-equal (cadr pair) ext)
-		    (car pair))
-		   (t nil))
-		  )
-		CH-buffer-pairs))
-    (setq exts (remove-if #'null test))
-    (if exts 
-	(mapcar (lambda (ext) "" nil 
-		  (concat root ext ver)) 
-		exts)
-      nil)
+
+    (setq names (mapcar
+		 (lambda (pair) "" nil
+		   (let ((regexp1
+			  (concat "^\\(.*\\)" (regexp-quote (car pair)) "$"))
+			 (regexp2
+			  (concat "^\\(.*\\)" (regexp-quote (cadr pair)) "$")))
+		     (cond
+		      ((string-match regexp1 name)
+		       (concat (match-string 1 name) (cadr pair)))
+		      ((string-match regexp2 name)
+		       (concat (match-string 1 name) (car pair)))
+		      (t nil))
+		     ))
+		 CH-buffer-pairs))
+    
+    (setq names (remove-if #'null names))
+    
+    (if (and names ver)
+	(mapcar (lambda (name) "" nil 
+		  (concat name ver)) 
+		names))
+    names
     )
   )
 
@@ -85,7 +88,15 @@ current directory for buffer.H.[mjd]"
 		) bufferlist)
 	     ) targetlist)
 	  )
-    (setq match (car (remove-if #'null (car matches))))
+
+    ;; grab the first non-null match
+    ;; XXX this is lame but i can't for the life of me figure out how
+    ;; to join a list of lists together
+    (setq match (car (car
+		      (remove-if #'null 
+				 (mapcar (lambda (list) "" nil
+					   (remove-if #'null list))
+					 matches)))))
     (cond
      (match (switch-to-buffer match))
      (t
@@ -95,7 +106,8 @@ current directory for buffer.H.[mjd]"
 	     (lambda (targetname) "" nil
 	       (setq pos (string-match "\<" targetname))
 	       (if pos (setq targetname (substring targetname 0 pos)))
-	       (let ((filename (concat (file-name-directory (buffer-file-name)) targetname)))
+	       (let ((filename (concat (file-name-directory (buffer-file-name))
+				       targetname)))
 		 (if (file-exists-p filename) filename)
 		 )
 	       ) targetlist))
