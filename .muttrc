@@ -2,12 +2,11 @@
 # Mutt Configuration variable settings. See www.mutt.org for manual.
 #
 
-my_hdr From: mike@demmerfamily.com (Michael Demmer)
-# my_hdr From: mjd@acm.org (Michael Demmer)
+my_hdr From: mike@demmer.nu (Michael Demmer)
 
 unset abort_unmodified
 set alias_file=~/.mutt_aliases
-set alternates="mjd@acm.org|mike@demmerfamily.com|miked@tera.com"
+set alternates="mike@demmer.nu|mjd@acm.org|mike@demmerfamily.com|miked@tera.com"
 set askcc                 # prompt for cc when composing
 set attribution="" 
 set auto_tag
@@ -15,7 +14,6 @@ set beep_new
 unset confirmappend
 unset confirmcreate
 set delete=yes
-set dotlock_program="/usr/bin/mutt_dotlock"
 set editor="emacs -nw -q -l ~/elisp/mailonly.el"
 set fast_reply
 set folder_format="%-12f %2N %8s "
