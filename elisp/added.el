@@ -323,25 +323,6 @@ calls with dprintf macro calls. [mjd]"
     (grep grepargs)
 ))
 
-(defun vc-annotate-goto-line (prompt-version)
-  (interactive "P")
-  (let ((opoint (point)) start linenum)
-    (save-excursion
-      (save-restriction
-	(goto-char (point-min))
-	(widen)
-	(beginning-of-line)
-	(setq start (point))
-	(goto-char opoint)
-	(beginning-of-line)
-	(setq linenum (+ 1 (count-lines 1 (point))))
-	))
-    (vc-annotate prompt-version)
-    (other-window 1)
-    (goto-line linenum)
-    (other-window -1)
-    ))
-
 (defun other-window-only ()
   (interactive)
   (other-window 1)
