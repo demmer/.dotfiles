@@ -11,14 +11,14 @@ LOGABSTRACT=all
 # Kill the really bad spam (10 pts or higher).
 #
 :0
-* ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
+* ^X-BTI-AntiSpam: sta:upper
 | formail -I "Status: RO" >> $MAILDIR/spam-certain
 
 #
 # And 5 points or more gets copied to the spam folder.
 #
 :0
-* ^X-Spam-Level: \*\*\*\*\*
+* ^X-BTI-AntiSpam: sta:lower
 | formail -I "Status: RO" >> $MAILDIR/spam
 
 #
@@ -38,7 +38,7 @@ LOGABSTRACT=all
 #
 # Filter out links I don't want to show up in urlview all the time
 #
-:0fh
+:0fhb
 *
 | filter-links
 
