@@ -134,3 +134,8 @@ fi
 
 unset XAUTHORITY
 export XAUTHORITY
+
+# override Linux's annoying UTF-8 crap
+unset LANG
+export LANG
+
