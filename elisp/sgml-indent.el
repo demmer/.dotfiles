@@ -90,11 +90,13 @@
     (if (looking-at "</[^ \t]*>")
 	(setq indent-column (- indent-column sgml-indent-level)))
       
-    (message (format "indenting to column %d" indent-column))
     (setq indent-column (max indent-column 0))
+    (message (format "indenting to column %d" indent-column))
     (if (< indent-column (current-column))
-	(delete-char (- indent-column (current-column)))
-      (indent-to-column (max indent-column 0))
-      )))
+	(save-excursion
+	  (beginning-of-line)
+	  (delete-region (point) indent-point)))
+    (indent-to-column indent-column)
+    ))
 
 (provide 'sgml-indent)
