@@ -210,9 +210,9 @@ alias tier tier <tier@tier.cs.berkeley.edu>
 #
 # Other Mailing Lists
 #
-alias tinyos tinyos <tinyos@millenium.berkeley.edu>
-alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
-alias tinyos-devel tinyos-devel <tinyos-devel@millenium.berkeley.edu>
+alias tinyos tinyos <tinyos@millennium.berkeley.edu>
+alias tinyos-bugs tinyos-bugs <tinyos-bugs@millennium.berkeley.edu>
+alias tinyos-devel tinyos-devel <tinyos-devel@millennium.berkeley.edu>
 
 #
 # EECS overrides and secondary aliases
