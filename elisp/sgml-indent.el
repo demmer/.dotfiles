@@ -21,9 +21,11 @@
 
 (defun sgml-electric-bracket ()
   (interactive)
-  (insert ">")
-  (indent-according-to-mode)
+  (save-excursion
+    (insert ">")
+    (indent-according-to-mode)
   )
+  (forward-char 1))
 
 (defun sgml-indent () 
   (interactive)
@@ -45,8 +47,9 @@
 	
 					; match the tag and any attributes
 	(cond
-	 ((looking-at "<[^/][^ \t]*[ \t]*\\([a-zA-Z_-]*=\".*\"[ \t\n\r]*\\)*")
-	  (message (format "tag matched %s" (buffer-substring (match-beginning 0) (match-end 0))))
+	 ((re-search-forward "<[^/][^> \t]*[ \t]*\\([a-zA-Z_-]*=\".*\"[ \t\n\r]*\\)*"
+			    indent-point t)
+	  (message (format "tag matched %s" (match-string 0)))
 	  (goto-char (match-end 0))
 	  (cond
 	   ((looking-at "/>")
@@ -54,7 +57,7 @@
 					; self-closed tag - indent to same level as previous tag
 	    (setq indent-column prev-indent-column)
 	    )
-	   ((looking-at ">.*</.*>")
+	   ((looking-at ">.*</[^ \t]*>")
 	    (message "Found self-closed tag")
 	    (setq indent-column prev-indent-column)
 	    )
@@ -67,11 +70,12 @@
 					; incomplete tag - indent to same level as first attribute
 	    (message "Found incomplete tag")
 	    (goto-char prev-indent-point)
-	    (re-search-forward "<[a-zA-Z-_]*[ \t]*")
+	    (re-search-forward "<[^ \t]*[ \t]*")
 	    (goto-char (match-end 0))
 	    (setq indent-column (current-column))
 	    )))
-	 ((looking-at "</[a-zA-Z-_]*>")
+
+	 ((looking-at "</[^ \t]*>")
 					; close tag - indent to same level as the tag
 	  (message "Found close tag")
 	  (setq indent-column prev-indent-column)
@@ -80,7 +84,7 @@
       
 					; now need to check if the current line is a close tag
     (goto-char indent-point)
-    (if (looking-at "</[a-zA-Z-_]*>")
+    (if (looking-at "</[^ \t]*>")
 	(setq indent-column (- indent-column sgml-indent-level)))
       
     (message (format "indenting to column %d" indent-column))
