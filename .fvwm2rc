@@ -66,6 +66,7 @@ Style "mailbox"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "dclock"		NoTitle, Sticky, WindowListSkip
 Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
+Style "EveryBuddy"	Sticky
 
 #
 # Function Definitions
