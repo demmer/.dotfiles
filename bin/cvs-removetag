@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+select STDOUT; $| = 1;
+
+open(FIND, "find . -path \"*/CVS/Entries\" |") || die "can't run find";
+
+while (<FIND>) {
+    chomp;
+    $entries = $_;
+    print "$entries\n";
+    
+    rename("$entries", "$entries.old")  || die "can't rename $entries";
+    open(ENTRIES, "$entries.old")       || die "can't open $entries.old";
+    open(NEWENTRIES, "> $entries")      || die "can't reopen $entries";
+
+    $first = 1;
+    while (<ENTRIES>) {
+	$_ =~ s|(/[^/]+/[^/]+/[^/]+)//T(.*)|$1//|;
+	print NEWENTRIES $_;
+    }
+
+    close(ENTRIES);
+    close(NEWENTRIES);
+    unlink("$entries.old") || die "can't unlink";
+}
+    
+open(FIND, "find . -path \"*/CVS/Tag\" -exec rm {} \\;|") ||
+    die "can't run find";
+
