@@ -36,6 +36,7 @@ alias diana Diana Reed <dreed@girlsms.org>
 alias dsimpson David Simpson <dsimpson@inktomi.com>
 alias dsolomon Debra Solomon <dsolomon@greatschools.net>
 alias elliot Elliot Winard <ewinard@macromedia.com>
+alias emil Emil Lissauer <emil_lissauer@hotmail.com>
 alias ericaaustin Erica Austin <supereaa@yahoo.com>
 alias ewesson Elizabeth Wesson <ewesson@battery.com>
 alias glen Glen Sanford <glen@glen.nu>
@@ -64,6 +65,7 @@ alias maggie Maggie Gertz <gertzm@ruderfinn.com>
 alias markf Mark Fritzel <???>
 alias maureen Maureen Morgan <maureenmorgan@hotmail.com>
 alias mattp Matt Podolsky <matt@inktomi.com>
+alias mccanne Steve McCanne <steven@mccanne.com>
 alias michelle Michelle Munson <michelle@michellemunson.com>
 alias michon Mike Michon <mmichon@skew.org>
 alias mjr Michael John Radwin <mjr@acm.org>
@@ -138,26 +140,6 @@ alias kingfish alan_margulius, david_ng, dougb, \
 	       marty, matt_sade, mike_gwynn, peter_rizos, \
 	       scott_pankonin, steve_welch, strange_brew, \
 	       cbeausejour
-
-#
-# Old aliases that probably don't work
-#
-alias amd Adam Doppelt <amd@marimba.com>
-alias caf Michael Cafarella <michaelc@dai.ed.ac.uk>
-alias emil Emil Lissauer <elissau@emory.edu>
-alias eva E. Wong <evawong@u.washington.edu>
-alias fab Fabrizio Vitale <fabv@exchange.microsoft.com>
-alias graham Graham Phillips <GRPHILLIPS@vaxsar.vassar.edu>
-alias jasmina Jasmina Pavlin <Jasmina_Pavlin@ccm.sc.intel.com>
-alias jeremy Jeremy Bernstein <jabernst@student.umass.edu>
-alias kam Kamran Javadizadeh <KJAVA@minerva.cis.yale.edu>
-alias kostadis Kostadis Roussos <kostadis@engr.sgi.com>
-alias marc Marc Zimmerman <mkzim@cs.washington.edu>
-alias meghan Meghan Taira <mdt10@columbia.edu>
-alias mkzim Marc Zimmerman <mkzim@cs.washington.edu>
-alias nick Nicholas E Stern <neste@conncoll.edu>
-alias sara Sara Young <se-young@students.uiuc.edu>
-alias tom Tom Danielson <Thomas_Danielson@brown.edu>
 
 #
 # Others added by mutt
