@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.24 $)
+;; Version: 1.2 ($Revision: 1.25 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -881,47 +881,66 @@ and log message"
   (interactive)
   (save-excursion
     (set-buffer "*CVS-log*")
+    (buffer-enable-undo)
     (make-variable-buffer-local 'kill-whole-line)
     (goto-char (point-min))
     (let ((buffer-read-only nil)
-	  (kill-whole-line t))
+	  (kill-whole-line t)
+	  (old-gc-threshold gc-cons-threshold))
+      (make-variable-buffer-local 'gc-cons-threshold)
+      (setq gc-cons-threshold 100000000)
+      
       ;; strip out all the crap, leave just the meat
       (while (re-search-forward "^RCS file:" nil t)
 	(beginning-of-line)
 	(let ((beg (point)) bound filename)
-	  ;; find the bound for this file
-	  (save-excursion
-	    (re-search-forward "^========[=]+\n")
-	    (kill-region (match-beginning 0) (match-end 0))
-	    (if (looking-at "^\n") (kill-line))
-	    (setq bound (point)))
 
 	  (search-forward "Working file: ")
 	  (setq filename (buffer-substring (point) (line-end-position)))
 	  (re-search-forward "^----[-]+\n")
 	  (kill-region beg (point))
 	  (insert "----------------------------\n")
-	  (while (re-search-forward "^revision " bound t)
-	    (insert (format "%s:" filename))
-	    (beginning-of-line)
-	    (insert "CVS ")
-	    (next-line)))
+	  ;; Find the bound for this file, then work backwards
+	  (save-excursion
+	    (re-search-forward "^========[=]+\n")
+	    (kill-region (match-beginning 0) (match-end 0))
+	    (if (looking-at "^\n") (kill-line))
+
+	    (while (re-search-backward "^revision " bound t)
+	      (forward-word 1)
+	      (forward-char 1)
+	      (insert (format "%s:" filename))
+	      (beginning-of-line)
+	      (insert "CVS ")
+	      (previous-line 1))))
 	)
       (goto-char (point-max))
       (insert "----------------------------\n");; need one at the end
       (goto-char (point-min))
       
       ;; scan through again -- for each file, scan through the
-      ;; remainder to try to find matches
-      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept)
+      ;; remainder to try to find matches. 
+      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept
+		   now lastupdate)
 	(setq regexp (concat "^CVS revision \\([^\:]*\\):\\([^\n]*\\)\n"
 		      "date: \\([^;]*\\);  author: \\([^;]*\\).*\n"))
+
+	(setq lastupdate 0)
 
 	(while (re-search-forward regexp nil t)
 	  (setq file (match-string 1))
 	  (setq ver  (match-string 2))
 	  (setq date (match-string 3))
 	  (setq author (match-string 4))
+
+	  ;; check if we should do a progress update
+	  (setq now (nth 1 (current-time)))
+	  (if (> (- now lastupdate) 2)
+	      (progn
+		(message "Correlating logs... (%d%% complete)"
+			 (/ (* 100 (- (point) (point-min)))
+			    (- (point-max) (point))))
+		(setq lastupdate now)))
 
 	  ;; clear all the header stuff once more
 	  (kill-region (match-beginning 0) (match-end 0))
@@ -965,7 +984,8 @@ and log message"
 		      (insert (format "file: %s:%s\n" file2 ver2))))
 	      )))
 	  ))
-      )))
+      (setq gc-cons-threshold old-gc-threshold)
+    )))
 
 (defun lcvs-show-full-log (arg)
   "Like \\[lcvs-show-log] but ignores `lcvs-log-restrict-to-branch'."
