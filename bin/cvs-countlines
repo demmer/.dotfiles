@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 
 %peeps;
-open (CVS, "/bin/sh -c 'cvs annotate @ARGV 2> /dev/null'|") || die "can't run cvs";
+open (CVS, "/bin/sh -c 'cvs annotate @ARGV 2> /dev/null'|") ||
+    die "can't run cvs";
+
 while(<CVS>) {
     @L = split;
     $who = $L[1];
