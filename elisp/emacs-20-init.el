@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.3 2000-05-11 17:30:10 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.4 2000-05-24 20:50:55 demmer Exp $
 
 
 (defun memequal (el list)
@@ -29,14 +29,14 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
 
 (defun remove-el (el list)
   "Remove el from list"
-  (message (format "removing %s from %s" el list))
   (if (null list) nil
-    (if (equal el (car list))
-	(remove-el el (cdr list))
-      (setq lastlist (cons el (remove-el el (cdr list)))))
-    nil)
+    (let ((first (car list)))
+      (if (equal el first)
+	  (remove-el el (cdr list))
+ 	(cons first (remove-el el (cdr list)))))
+    )
   )
-   
+
 ;;; Set up our load path
 (append-no-dup (format "%s/elisp" *HOME*) load-path)
 
@@ -146,6 +146,7 @@ This must be bound to a mouse-down event in the mode-line."
 (load "mwheel")
 (load "~/work/am-1/checkstcl/checkstcl.el")
 
+(setq lcvs-log-restrict-to-branch t)
 
 ;; require these features...
 (require 'complete)
@@ -162,6 +163,11 @@ This must be bound to a mouse-down event in the mode-line."
 
 (setq gnus-nntp-server nil)
 (setq gnus-select-method '(nntp "news.berkeley.edu"))
+
+; (remove-el ".log" completion-ignored-extensions)
+; (remove-el ".log" PC-ignored-extensions)
+(custom-set-variables
+ '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".fasl" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".dvi" ".fmt" ".class" ".fas" ".lib" ".x86f" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".T"))))
 
 ;; clear the last message
 (message "")
