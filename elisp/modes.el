@@ -76,12 +76,15 @@
 ; load visual-basic mode
 (require 'visual-basic-mode)
 
+; and nesc mode
+(require 'nesc-mode)
+
 ; setup my auto modes alist
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
 				("\\.C\\'" . c++-mode)
 				("\\.[Hh]\\'" . c++-mode)
 				("\\.c[cx]?x?\\'" . c++-mode)
-				("\\.nc\\'" . c++-mode)
+				("\\.nc\\'" . nesc-mode)
 				("\\.y\\'" . c++-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
