@@ -4,7 +4,7 @@
 
 unset abort_unmodified
 set alias_file=~/.mutt_aliases
-set alternates="mike@demmer.nu|mike@demmerfamily.com|demmer@cs.berkeley.edu"
+set alternates=".*@demmer.nu|mike@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 set askcc                 # prompt for cc when composing
 set attribution="" 
 set auto_tag
