@@ -342,26 +342,6 @@ calls with dprintf macro calls. [mjd]"
     (other-window -1)
     ))
 
-(load "zenirc")
-(defun make-zenirc-frame () 
-  (interactive)
-  (let ((ctl-frame 
-	 (make-frame (list '(width . 112) '(height . 14) '(minibuffer . nil))))
-	)
-    (modify-frame-parameters ctl-frame (list '(left . 1) 
-					     '(top . 1015) 
-					     '(menu-bar-lines . 0)
-					     '(title . "Zenirc")
-					     ))
-    (other-frame 1)
-    (zenirc)
-    (switch-to-buffer "*zenirc*")
-    (insert "/join #ff")
-    (zenirc-send-line)
-    (delete-other-windows)
-    (other-frame -1)
-    ))
-
 (defun other-window-only ()
   (interactive)
   (other-window 1)
@@ -373,43 +353,14 @@ calls with dprintf macro calls. [mjd]"
   (compile-internal (concat "grope " sym) "No more grope hits" "grope"
                     nil grep-regexp-alist))
 
-(defun am-1-dir ()
+;; pulled from comment.el
+(defun uncomment-region ()
+  "Stupid uncommenting procedure"
   (interactive)
-  (if (string-match "\\(.*\\)am-1.*" buffer-file-name)
-      (let* ((base(substring buffer-file-name (match-beginning 1) (match-end 1)))
-	    (dir1 (format "%sam-1/" base))
-	    (dir2 (format "%s%s/am-1/" base (getenv "ARCH"))))
+  (comment-region (region-beginning) (region-end) -1))
 
-	(cond
-	 ((file-readable-p (format "%sbin/amsh" dir1)) dir1)
-	 ((file-readable-p (format "%sbin/amsh" dir2)) dir2)
-	 (t nil)))
-    nil))
-  
-(defun pump-dir ()
+;; pulled from tera-added.el
+(defun line-to-top-of-window nil
+  "Move the line the cursor is on to the top of the current window"
   (interactive)
-  (if (string-match "\\(.*\\)pump.*" buffer-file-name)
-      (let ((dir
-	    (format "%s%s/pump"
-		    (substring buffer-file-name 
-			       (match-beginning 1) (match-end 1))
-		    (getenv "ARCH"))))
-	(if (file-directory-p dir) dir nil))
-    nil))
-  
-
-;; Try to make the compile command do the right thing for amsh
-(defun amsh-compile-command-hook ()
-  (interactive)
-  (let ((amdir	 (am-1-dir))
-	(pumpdir (pump-dir))
-	(dir)
-	)
-    (if (null amdir) (setq dir pumpdir) (setq dir amdir))
-    (if (null dir) nil
-      (make-local-variable 'compile-command)
-      (setq compile-command (format "cd %s; make" dir))
-      )))
-
-(add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
-(add-hook 'makefile-mode-hook 'amsh-compile-command-hook)
+  (recenter 0))
