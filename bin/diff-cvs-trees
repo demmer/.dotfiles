@@ -2,7 +2,8 @@
 # silly script to run diff in such a way as to report only meaningful
 # differences between two CVS trees
 
-diff --exclude CVS --exclude .glimpse\* --ignore-matching-lines=\$Id $*
+diff -r --exclude \*.o --exclude CVS --exclude .glimpse\* \
+	--ignore-matching-lines=\$Id $*
 
 
 	
