@@ -256,6 +256,9 @@
 (append ".class" completion-ignored-extensions)
 (append ".T" completion-ignored-extensions)
 
+; and ignore case
+(setq completion-ignore-case t)
+
 ; ediff: use the minibar instead of a separate little window
 (require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
