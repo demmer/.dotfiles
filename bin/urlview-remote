@@ -2,7 +2,7 @@
 
 pipe=`ls -1t /tmp/urlview-pipe* | head -1`;
 
-if [ -p $pipe ] ; then
+if [ -p "$pipe" ] ; then
    echo $1 > $pipe
 else
    echo "ERROR: $pipe not readable"
