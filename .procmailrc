@@ -48,6 +48,12 @@ LOGABSTRACT=all
 }
 
 #
+# Send periodic mail to the inbox w/o spooling
+:0
+* Subject:.*(security run|daily run|weekly run|monthly run) output
+$DEFAULT
+
+#
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
 :0c
