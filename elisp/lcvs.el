@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.29 $)
+;; Version: 1.2 ($Revision: 1.30 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1834,7 +1834,7 @@ the value of `foo'."
       (cond
        ;; Rewrite removed files as "U file"
        ((looking-at
-	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): \\(.*\\)"
+	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): `?\\([^']*\\)'?"
 		 " is no longer \\(pertinent\\|\\(in the repository\\)\\).*\n"))
 	(replace-match "U \\3 (removed)\n")
 	(setq dont-move t))
