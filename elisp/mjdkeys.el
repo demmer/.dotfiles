@@ -105,3 +105,7 @@ k;;;
 (global-set-key "\C-c\C-u" 'uncomment-region)
 (global-set-key "\M-\C-l" 'lcvs-examine)
 (global-set-key "\C-xO" 'other-window-only)
+
+(global-set-key "\C-x\C-c" (lambda () (interactive) 
+			     (if (y-or-n-p "Really quit? ")
+				 (save-buffers-kill-emacs))))
