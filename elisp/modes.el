@@ -194,7 +194,7 @@
 
 ;; setup sgml mode
 (require 'sgml-mode)
-(defun my-sgml-setup() (auto-fill-mode 0))
+(defun my-sgml-setup() (interactive) (auto-fill-mode 0))
 (add-hook 'sgml-mode-hook 'my-sgml-setup)
 			 
 ;; suck in sgml-indent
