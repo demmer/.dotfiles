@@ -52,10 +52,10 @@ compctl -g '*(*)' + -g '*(-/)' strip gprof
 # Run ghostscript on postscript files, but if no postscript file matches what
 # we already typed, complete directories as the postscript file may not be in
 # the current directory.
-compctl -g '*.ps' + -g '*(-/)' gs ghostview gv
+compctl -g '*.ps' + -g '*(-/)' gs ghostview gv pstopdf
 
 # Same for pdf files
-compctl -g '*.pdf' + -g '*(-/)' acroread xpdf
+compctl -g '*.pdf' + -g '*(-/)' acroread xpdf gv pdftops
 
 # Similar things for tex, texinfo and dvi files.
 compctl -g '*.tex*' + -g '*(-/)' tex latex texi2dvi
@@ -98,12 +98,12 @@ compctl -g '*.(tar|gz|tgz)' + -g '*(/)' + -g '*' tar
 # find -exec completes as a commandline
 compctl -f -x 'r[-exec,;]' -l '' -- find
 
+# Java stuff
+compctl -g '*.java' + -g '*(/)' javac javadoc
+
 ## DEFAULT COMPLETION
 #  complete filenames and path arguments
 compctl -D -f -x 's[-I][-L]' -f
-
-# Java stuff
-compctl -g '*.java' + -g '*(/)' javac javadoc
 
 compctl -k dict_names l
 compctl -k dir_names g
