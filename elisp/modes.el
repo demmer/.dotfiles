@@ -318,7 +318,7 @@
 ;(setq font-lock-support-mode 'lazy-lock-mode)
 
 ;;; Suck in prefix
-(require 'prefix)
+;; (require 'prefix)
 
 (setq termtype (getenv "TERM"))         ; get our terminal type
 
