@@ -27,7 +27,6 @@
 
 ; (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 ; (add-hook 'html-helper-load-hook '(lambda () (load "html-font")))
-; (add-hook 'html-helper-mode-hook '(lambda () (font-lock-mode 1)))
 
 ;;;text mode
 
@@ -97,10 +96,7 @@
 ;  (define-key c++-mode-map "\M-p" 'c-file-header)
 ;  (define-key c++-mode-map "\M-l" 'correct-comment-line)
 
-  (cond (window-system
-	 (font-lock-mode 1)
-	 (setq font-lock-keywords c++-font-lock-keywords-2)
-	 (font-lock-fontify-buffer))))
+  )
 
 (defun my-c-setup ()
   (interactive)
@@ -110,9 +106,7 @@
   (setq using-c-comments t)
   (make-variable-buffer-local 'c-comment-cplusplus)
   (setq c-comment-cplusplus nil)
-  (cond (window-system
-	 (font-lock-mode 1)
-	 (setq font-lock-keywords c-font-lock-keywords))))
+  )
 
 
 (defun my-cc-common-setup ()
@@ -151,11 +145,27 @@
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c-mode-common-hook 'my-cc-common-setup)
 
+; Try to make the compile command do the right thing for amsh
+(defun amsh-compile-command-hook ()
+  (interactive)
+  (if (string-match ".*am-1.*" (file-name-directory buffer-file-name))
+      (let ((directory))
+	(setq directory (format "%s../ffn/bin/%s" 
+				(file-name-directory buffer-file-name)
+				(getenv "ARCH")))
+	(if (file-directory-p directory)
+	    (progn
+	      (make-local-variable 'compile-command)
+	      (setq compile-command (format "cd %s; make" directory)))
+	  ))
+    ))
+
+(add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
+
 ; load the java-mode 
 ;(load "java-mode")
 
-; setup the alist
-
+; setup my auto modes alist
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
 				("\\.C\\'" . c++-mode)
 				("\\.[Hh]\\'" . c++-mode)
@@ -176,8 +186,7 @@
 (defun my-perl-setup ()
   (interactive)
   (define-key perl-mode-map "\C-m" 'newline-and-indent)
-  (cond (window-system
-	 (font-lock-mode 1))))
+)
 
 (add-hook 'perl-mode-hook 'my-perl-setup)
 
@@ -186,7 +195,6 @@
   (interactive)
   (define-key tcl-mode-map "\C-m" 'newline-and-indent)
   (make-local-variable 'paragraph-start)
-  (font-lock-mode t)
   (setq paragraph-start (concat page-delimiter "\\|$"))
   )
 (add-hook 'tcl-mode-hook 'my-tcl-setup)
@@ -198,9 +206,7 @@
   (define-key lisp-mode-map "" 'delete-backward-char)
   (define-key lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
-  (cond (window-system
-	 (font-lock-mode 1)
-	 (setq font-lock-keywords lisp-font-lock-keywords))))
+)
 
 (add-hook 'lisp-mode-hook 'my-lisp-setup)
 
@@ -209,9 +215,7 @@
   (define-key emacs-lisp-mode-map "" 'delete-backward-char)
   (define-key emacs-lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key emacs-lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
-  (cond (window-system
-	 (font-lock-mode 1)
-	 (setq font-lock-keywords lisp-font-lock-keywords))))
+)
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-setup)
 
@@ -306,7 +310,13 @@
   (setq font-lock-constant-face 'fl-keyword-face)
   (setq flyspell-incorrect-face 'fl-misspelled-face)
   (setq flyspell-duplicate-face 'fl-misspelled-face)
-  (setq search-highlight t))
+  (setq search-highlight t)
+
+  (setq font-lock-maximum-decoration				      
+	(list
+	 (cons 'c++-mode 2)
+	 (cons t t))
+  ))
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
 ;(require 'lazy-lock)
@@ -356,3 +366,36 @@
 (require 'vc)
 (define-key vc-prefix-map "a" 'vc-annotate-goto-line)
 (define-key vc-prefix-map "e" 'ediff-revision)
+
+; fixes so shell-mode works with zsh
+(require 'comint)
+(require 'rlogin)
+
+(defun shell-mode-newline ()
+  (interactive)
+  (insert "")
+  (comint-send-input)
+  )
+
+(defun shell-newline-filter (string)
+  (let* ((point-marker (point-marker))
+         (end (process-mark (get-buffer-process (current-buffer))))
+         (beg (or (and (boundp 'comint-last-output-start)
+                       comint-last-output-start)
+                  (- end (length string)))))
+    (goto-char beg)
+    (while (search-forward "\\n" end t)
+      (delete-char -2))
+    (goto-char point-marker)))
+
+(defun my-shell-mode-init ()
+  (add-hook 'comint-output-filter-functions 'shell-newline-filter)
+  (add-hook 'comint-output-filter-functions 'rlogin-carriage-filter)
+  (define-key shell-mode-map "\C-m" 'shell-mode-newline)
+)
+(setenv "EMACSPARENT" "1")
+
+; Linux has problems with zsh...
+(if (string-equal (getenv "ARCH") "Linux")
+    (add-hook 'shell-mode-hook 'my-shell-mode-init)
+  )
