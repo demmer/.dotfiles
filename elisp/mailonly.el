@@ -38,7 +38,7 @@
 		       auto-mode-alist))
 ; and one for mutt
 (setq auto-mode-alist (append
-		       '(("mutt-[a-z]*-[0-9]+-[0-9]+\\'" . text-mode))
+		       '(("mutt.*\\'" . text-mode))
 		       auto-mode-alist))
 (setq dabbrev-case-fold-search nil
       dabbrev-case-replace nil)
