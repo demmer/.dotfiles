@@ -75,8 +75,9 @@ xterm -n "Fezzik, it's you . . . true" -geometry =$XTERM_1_GEOM &
 argus-xmutt &
 xoopi-xmutt &
 
-# Tunnel for urlview
+# Tunnels for urlview
 $HOME/bin/urlview-tunnel-shell xoopi
+$HOME/bin/urlview-tunnel-shell argus
 
 # Bring up emacs and work shells
 emacs -geometry =$EMACS_XINIT_GEOM -title "Inconceivable" &
