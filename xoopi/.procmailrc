@@ -13,6 +13,17 @@ LOGABSTRACT=all
 sa-talk
 
 #
+# Annoying aol mail bounces that don't get kicked by spamassassin
+#
+:0
+* ^From: .*MAILER-DAEMON@aol\.com
+{
+	:0 B bh
+	* ^X-Mailer: .*Outlook
+	| formail -I "Status: RO" >> $HOME/Mail/spam
+}
+
+#
 # Anti-spam filter
 #
 :0fw: spamassassin.lock
@@ -23,21 +34,21 @@ sa-talk
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*\*\*\*
-spam-certain
+| formail -I "Status: RO" >> $HOME/Mail/spam-certain
 
 #
 # And anything to p@demmerfamily.com
 #
 :0
 * ^To: .*p@demmerfamily\.com 
-spam-certain
+| formail -I "Status: RO" >> $HOME/Mail/spam-certain
 
 #
 # And 5 points or more gets copied to the spam folder.
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*
-spam
+| formail -I "Status: RO" >> $HOME/Mail/spam
 
 #
 # Automatic email delivery testing
