@@ -39,13 +39,14 @@ while ($#ARGV >= 0) {
 }
 
 debug("opening ssh connection...");
-open(SSH, "ssh -x -n $host bin/mailbox_scan unread delay $delay |") || die "can't run pipe";
+open(SSH, "ssh -t -x -n $host bin/mailbox_scan unread delay $delay |") || die "can't run pipe";
 
 debug("done");
 
 $first = 1;
+
 while (<SSH>) {
-    chomp;
+    s/[\r\n]*$//;
 
     debug "got line $_\n";
     if ($first == 1) {
@@ -55,7 +56,7 @@ while (<SSH>) {
     }
     
     if (! /[A-Za-z0-9]/) {
-	debug ("read blank line...");
+	debug ("read blank line...\n");
 	close(F);
 	$first = 1;
 	next;

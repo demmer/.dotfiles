@@ -38,7 +38,7 @@ if ($verbose) {
     $vflag = "-v";
 }
 
-$cmd="ssh -x -n $host bin/urlview-pipe $vflag -host $localhost";
+$cmd="ssh -t -x -n $host bin/urlview-pipe $vflag -host $localhost";
 debug("running '$cmd' ...");
 
 open(SSH, "$cmd |") || die "can't run pipe";
