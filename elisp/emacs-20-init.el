@@ -135,12 +135,12 @@ This must be bound to a mouse-down event in the mode-line."
 ;; load in other files
 (load "modes")
 (load "mjdkeys")
-(load "lcvs")
 (load "mwheel")
 (load "ff-stuff")
 (load "added")
 
 ;; lcvs setup
+(load "lcvs")
 (defun my-lcvs-setup ()                                                
   (set-face-foreground 'lcvs-UP-face "yellow")
   (setq lcvs-log-restrict-to-branch t)
