@@ -1,0 +1,3 @@
+update -d
+log -N
+diff -uw
