@@ -1,0 +1,5 @@
+#!/usr/local/bin/zsh
+
+res=`grep $*`
+echo $res
+eval $res 
