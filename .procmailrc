@@ -1,0 +1,41 @@
+VERBOSE=no
+MAILDIR=/home/miked/Mail
+LOGFILE=/home/miked/Mail/procmaillog
+LOGABSTRACT=all
+
+:0
+* ^Subject: WW?AA?NN?TT?EE?DD? 97 PP?ee?oo?pp?ll?ee?
+/dev/null
+
+:0
+* ^Subject:.*ACM TechNews.*
+technews
+
+:3c
+! ^From:.*mike@demmerfamily.com
+! ^From:.*mjd@acm.org
+! ^From:.*miked@tera.com
+| /home/miked/bin/spoolmail
+
+# :3:
+# * ^Subject: CVS Commit
+# ! ^From:.*asaph
+# ! ^To:.*asaph
+# cvs
+
+# :1cD:
+# * ^Subject: PAGE([:. ]|$)
+# ! 2064239375@page.nextel.com
+
+:1f
+* ^Received:.*for <mjd@acm\.org>
+| formail -I "Via: ACM"
+
+:1f
+* ^To:.*@tera\.com 
+| formail -I "Via: TERA"
+
+:1f
+* ^Cc:.*@tera\.com 
+| formail -I "Via: TERA"
+
