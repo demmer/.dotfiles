@@ -37,8 +37,8 @@
 	    (dir2 (format "%s%s/am-1/" base (getenv "ARCH"))))
 
 	(cond
-	 ((file-readable-p (format "%sbin/amsh" dir1)) dir1)
-	 ((file-readable-p (format "%sbin/amsh" dir2)) dir2)
+	 ((file-readable-p (format "%sGNUmakefile" dir1)) dir1)
+	 ((file-readable-p (format "%sGNUmakefile" dir2)) dir2)
 	 (t nil)))
     nil))
   
