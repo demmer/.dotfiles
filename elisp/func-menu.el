@@ -197,7 +197,6 @@
 (defun fume--find-next-function-name ()
   (let (char)
     ;; Search for the function
-    (message "Searching for function...")
     (cond
      ((re-search-forward
        fume--function-name-regexp
@@ -228,7 +227,6 @@
 		(forward-sexp))
 	    )
 	  (setq name (buffer-substring beg (point)))
-	  (message (concat "name = " name))
 	  (cond
 	   ((or
 	     (string-equal name "if")
