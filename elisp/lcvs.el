@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.27 $)
+;; Version: 1.2 ($Revision: 1.28 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -671,9 +671,7 @@ To disable the confirmation, you can set `lcvs-remove-confirm' to nil."
       ;; Otherwise remove the files
       (mapcar (function (lambda (e)
 			  (let ((file (car e)))
-			    (if (file-directory-p file)
-				(delete-directory file)
-			      (delete-file file))
+			    (shell-command (format "rm -rf %s" file))
 			    (lcvs-remove-file-line file)
 			    )))
 	      files))))
