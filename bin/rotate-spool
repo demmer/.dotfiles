@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# First off, echo out any input
+cat
+
 echo "Rotating Mail spool and sent files..."
 
 month=`date '+%m'`
@@ -29,11 +32,18 @@ if [ -f sent-$date ] ; then
    exit 1
 fi
 
+if [ -f spam-$date ]; then
+   echo "ERROR: spam-$date exists!!!"
+fi
+
 mv spool spool-$date
 echo "Moved spool to spool-$date"
 
 mv sent sent-$date
 echo "Moved sent to sent-$date"
+
+mv spam-certain spam-$date
+echo "Moved spam-certain to spam-$date"
 
 rm -f procmaillog.old
 mv procmaillog procmaillog.old
