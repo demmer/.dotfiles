@@ -1,5 +1,10 @@
 .glimpse*
 *~
+*.d
 *.class
 *.elc
+*.lo
+*.pdf
+autom4te.cache/*
 CVS/*
+
