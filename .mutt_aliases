@@ -225,9 +225,11 @@ alias tinyos-devel tinyos-devel <tinyos-devel@millennium.berkeley.edu>
 #
 # EECS overrides and secondary aliases
 #
+alias bruce Bruce Beattie <bruce@eecs.berkeley.edu>
 alias eric Eric Brewer <brewer@eecs.berkeley.edu>
 alias mdw Matt Welsh <mdw@eecs.harvard.edu>
 
 #
 # Others added by mutt
 #
+alias brenda_mainland Brenda Mainland <brenda.k.mainland@intel.com>
