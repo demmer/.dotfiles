@@ -166,6 +166,9 @@ export XAUTHORITY
 unset LANG
 export LANG
 
+# tex search path
+export TEXINPUTS=".:/usr/share/texmf//:~/.dotfiles/latex//:"
+
 # TinyOS / Java / Jython
 export JAVA_HOME="/opt/IBMJava2-141"
 export TOSROOT="$HOME/work/tinyos-1.x"
