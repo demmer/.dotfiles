@@ -38,7 +38,7 @@ IconFont    *schoolbook-medium-i-normal--18*
 # Pager Settings
 #
 Module FvwmPager * *
-*FvwmPagerGeometry 195x100-1+1
+*FvwmPagerGeometry =120x75-0+0
 *FvwmPagerFore grey87
 *FvwmPagerBack black
 *FvwmPagerHilight grey40
@@ -65,7 +65,9 @@ Style "xpostit+"	NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "PostItNote"	NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "mailbox"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "yabiff"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
+Style "xapm"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "dclock"		NoTitle, Sticky, WindowListSkip
+Style "xclock"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
 Style "EveryBuddy"	Sticky
@@ -84,8 +86,8 @@ Key F1 A N      GotoPage 0 0
 Key F2 A N      GotoPage 1 0
 Key F3 A N      GotoPage 2 0
 Key F4 A N      GotoPage 0 1
-Key F5 A N      GotoPage 1 1
-Key F6 A N      GotoPage 2 1
+# Key F5 A N      GotoPage 1 1 # I like this one for browser reload
+# Key F6 A N      GotoPage 2 1
 
 Key 1 R N      GotoPage 0 0
 Key 2 R N      GotoPage 1 0
@@ -109,7 +111,7 @@ AddToMenu Applications "Applications" Title
     + "Emacs"		Exec emacs &
     + "Xmms"  		Exec xmms &
     + "Realplay"	Exec /u/demmer/bin/realplay &
-    + "Mozilla"		Exec mozilla &
+    + "Mozilla"		Exec MozillaFirebird &
     + "Netscape"	Exec netscape &
     + "XV"		Exec xv &
     + "-----------------" Nop
@@ -127,8 +129,7 @@ AddToMenu WindowOps "Window Operations" Title
     + "Maximize"		Maximize
     + "Maximize Vertical"	Maximize 0 100
     + "-----------------"	Nop
-    + "Reread .fvwm2rc"		Restart fvwm2
-    + "Run fvwm1"		Restart fvwm
+    + "Reload"			Restart
 
 #
 # Define Functions
@@ -170,9 +171,11 @@ Mouse   0	4	A	Iconify
 Mouse   0	2	A	Maximize
 
 
-Mouse   1	R	A	PopUp "Applications"
+Mouse   1	R	N	PopUp "Applications"
+Mouse   1	R	C	PopUp "WindowOps"
 Mouse   1	T	N	Move-or-Raise
-Mouse   1	WT	M	Raise
+Mouse   1	WT	M	Move-or-Raise
+Mouse   1	WT  	C	Move-or-Raise
 Mouse   1	T	C	Move
 Mouse   1       I       A	Iconify
 Mouse   1	WTSF  	S	Resize		
@@ -246,7 +249,7 @@ Key Next  R    N    CursorMove     +10  +10
 Key x    R    N    Exec  xterm -geometry 79x28 -n 'Shell' &
 Key h    R    N    Exec  xterm -n "haight" -T "haight" -e ssh haight &
 Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
-Key m    R    N    Exec  mozilla &    
+Key m    R    N    Exec  MozillaFirebird &    
 
 # raise / lower windows
 Key space A CM   RaiseLower
@@ -260,28 +263,23 @@ Module FvwmButtons
 *FvwmButtonsBack grey60
 *FvwmButtonsFont lucidasanstypewriter-bold-12
 
-*FvwmButtonsGeometry =100x545-1+125
+*FvwmButtonsGeometry =80x320-0+76
 *FvwmButtonsRows 19
- 
-*FvwmButtons Reload 	none Restart fvwm
+
+*FvwmButtons Reload 	none Restart
 *FvwmButtons Shell 	none Exec exec xterm -title "Shell" -geometry 80x28 &
 *FvwmButtons Xmms 	none Exec exec xmms &
 *FvwmButtons Emacs 	none Exec exec emacs &
-*FvwmButtons Mutt 	none Exec exec HOME/bin/xmutt &
-*FvwmButtons Calculator none Exec exec xcalc &
-*FvwmButtons Netscape 	none Exec exec netscape &
-*FvwmButtons Mozilla 	none Exec exec mozilla &
+*FvwmButtons Xcalc	none Exec exec xcalc &
+*FvwmButtons Mozilla 	none Exec exec MozillaFirebird &
 *FvwmButtons ----------
 *FvwmButtons Inigo 	none Exec exec $HOME/bin/xssh inigo &
-*FvwmButtons Treat 	none Exec exec $HOME/bin/xssh treat &
-*FvwmButtons Playa-Proxy none Exec exec $HOME/bin/xssh playa-proxy &
-*FvwmButtons Sfssh 	none Exec exec $HOME/bin/xssh sfssh &
-*FvwmButtons Lares 	none Exec exec $HOME/bin/xssh lares &
+*FvwmButtons Argus 	none Exec exec $HOME/bin/xssh argus &
 *FvwmButtons ----------
 *FvwmButtons Close 	none Delete
 *FvwmButtons Kill 	none Destroy 
 *FvwmButtons Logout 	none Quit
-*FvwmButtons Shutdown 	none Exec shutdown -h now
+*FvwmButtons Shutdown 	none Exec exec xterm -e sudo shutdown -h now
 
 
 # Stuff not pulled over from fvwm
