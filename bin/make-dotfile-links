@@ -17,7 +17,7 @@ echo "Making links for $host..."
 #
 # first the easy ones
 #
-for f in bin elisp ; do
+for f in bin elisp online ; do
 	echo .dotfiles/$f
 	rm -rf $f
 	ln -s .dotfiles/$f $f
