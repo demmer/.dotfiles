@@ -105,6 +105,7 @@ AddToMenu Applications "Applications" Title
     + "Emacs"		Exec emacs &
     + "Xmms"  		Exec xmms &
     + "Realplay"	Exec /u/demmer/bin/realplay &
+    + "Mozilla"		Exec mozilla &
     + "Netscape"	Exec netscape &
     + "XV"		Exec xv &
     + "-----------------" Nop
@@ -263,7 +264,7 @@ Module FvwmButtons
 *FvwmButtons Mutt 	none Exec exec HOME/bin/xmutt &
 *FvwmButtons Calculator none Exec exec xcalc &
 *FvwmButtons Netscape 	none Exec exec netscape &
-*FvwmButtons Windows 	none Module FvwmWinList
+*FvwmButtons Mozilla 	none Exec exec mozilla &
 *FvwmButtons ----------
 *FvwmButtons Close 	none Delete
 *FvwmButtons Kill 	none Destroy 
