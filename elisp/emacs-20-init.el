@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: 
+;;; $Id: emacs-20-init.el,v 1.3 2000-05-11 17:30:10 demmer Exp $
 
 
 (defun memequal (el list)
@@ -37,10 +37,6 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
     nil)
   )
    
-; (setq l (list 'a 'b 'c 'd 'e 'f))
-; (remove-el 'c l)
-; (setq debug-on-error t)
-
 ;;; Set up our load path
 (append-no-dup (format "%s/elisp" *HOME*) load-path)
 
