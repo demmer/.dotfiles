@@ -154,7 +154,7 @@
 			      auto-mode-alist))
 
 ;;; Setup perl mode
-
+(require 'perl-mode)
 (defun my-perl-setup ()
   (interactive)
   (define-key perl-mode-map "\C-m" 'newline-and-indent)
@@ -253,11 +253,9 @@
        (make-face 'fl-comment-face)
        (if (face-differs-from-default-p 'fl-comment-face) nil
 	 (set-face-foreground 'fl-comment-face "medium spring green")
-	 (set-face-font 'fl-comment-face (face-font 'italic))
 	 )       
        (make-face 'fl-doc-string-face)
        (if (face-differs-from-default-p 'fl-doc-string-face) nil
-	 (set-face-font 'fl-doc-string-face (face-font 'italic))
 	 (set-face-foreground 'fl-doc-string-face "LavenderBlush1")
 	 )
        (make-face 'fl-string-face)
@@ -267,24 +265,20 @@
        (make-face 'fl-function-name-face)
        (if (face-differs-from-default-p 'fl-function-name-face) nil
 	 (set-face-foreground 'fl-function-name-face "MediumPurple1")
-	 (set-face-font 'fl-function-name-face (face-font 'bold))
 	 )
        (make-face 'fl-keyword-face)
        (if (face-differs-from-default-p 'fl-keyword-face) nil
-	 (set-face-font 'fl-keyword-face (face-font 'bold-italic))
 	 (set-face-foreground 'fl-keyword-face "RoyalBlue1")
 	 )
 
        (make-face 'fl-type-face)
        (if (face-differs-from-default-p 'fl-type-face) nil
-	 (set-face-font 'fl-type-face (face-font 'italic))
 	 (set-face-foreground 'fl-type-face "dodger blue")
 	 )
        
        (make-face 'fl-misspelled-face)
        (if (face-differs-from-default-p 'fl-misspelled-face) nil
 	 (set-face-underline-p 'fl-misspelled-face t)
-	 (set-face-font 'fl-misspelled-face (face-font 'italic))
 	 (set-face-foreground 'fl-misspelled-face "grey87")
 	 )
        ))
@@ -357,6 +351,7 @@
 (define-key vc-prefix-map "e" 'ediff-revision)
 (define-key vc-prefix-map "s" 'vc-print-status)
 (define-key vc-prefix-map "?" 'vc-print-status)
+(setq vc-follow-symlinks t)
 
 ; fixes so shell-mode works with zsh
 (require 'comint)
