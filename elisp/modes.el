@@ -95,6 +95,8 @@
   )
 
 (defun c-indent-line-force-8-space-tabs ()
+  "Indents one line after temporarily setting c-basic-offset
+and tab-width to 8."
   (interactive)
   (let ((tab-width 8)
 	(c-basic-offset 8)
@@ -103,6 +105,8 @@
     ))
 
 (defun c-indent-region-force-8-space-tabs (START END &optional QUIET)
+  "Indents a region after temporarily setting c-basic-offset and
+tab-width to 8."
   (interactive)
   (let ((tab-width 8)
 	(c-basic-offset 8)
@@ -111,6 +115,9 @@
     ))
 
 (defun c-indent-four-spaces-with-8-space-tabs ()
+  "Sets indent-line-function and indent-region-function to make the
+basic indentaion appear to be four spaces but actually be 8 spaces
+with tab characters underneath."
   (interactive)
   (setq c-basic-offset 4)
   (setq tab-width 4)
