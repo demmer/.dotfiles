@@ -1,6 +1,6 @@
-#!/bin/sh
+l#!/bin/sh
 
-if [ ! -d ./Cache ]; then
+if [ ! -f ./bookmarks.html ]; then
    echo "Run this from the mozilla profile directory"
    exit 1
 fi
