@@ -47,24 +47,10 @@
 (add-hook 'text-mode-hook 'my-text-setup)
 
 ;;; Setup c/c++/java mode
-
-(defconst my-c-style
-  '((c-basic-offset		. 4)
-    (c-hanging-comment-ender-p	. nil)
-    (c-offsets-alist
-     . ((substatement-open	. 0)		;don't indent braces!
-	(inline-open		. 0)		;don't indent braces, please.
-	(label 			. -1000)	;flush labels left
-	(statement-cont		. c-lineup-math)))))
-
-(defconst my-java-style
-  '((c-basic-offset		. 2)
-    (c-hanging-comment-ender-p	. nil)
-    (c-offsets-alist
-     . ((substatement-open	. 0)		;don't indent braces!
-	(inline-open		. 0)		;don't indent braces, please.
-	(label 			. -1000)	;flush labels left
-	(statement-cont		. c-lineup-math)))))
+(require 'c-mode)
+(require 'cc-mode)
+(require 'cc-vars)
+(require 'dabbrev)
 
 (defun my-c-common-setup ()
   (interactive)
@@ -82,22 +68,56 @@
 
 (add-hook 'c-mode-common-hook 'my-c-common-setup)
 
-(defun my-c-setup ()
+(defconst my-c-style
+  '((c-basic-offset		. 4)
+    (c-hanging-comment-ender-p	. nil)
+    (c-offsets-alist
+     . ((substatement-open	. 0)		;don't indent braces!
+	(inline-open		. 0)		;don't indent braces, please.
+	(label 			. -1000)	;flush labels left
+	(statement-cont		. c-lineup-math)))))
+
+(defun c-indent-one-tab()
+  (interactive)
+  (setq c-basic-offset 8)
+  (setq indent-tabs-mode t)
+  )
+
+(defun c-indent-two-spaces()
+  (interactive)
+  (setq c-basic-offset 2)
+  (setq indent-tabs-mode nil)
+  )
+
+(defvar my-c-style-overrides
+  '(("~/work/.*DTN.*" 'c-indent-one-tab)
+    ("~/work/tinyos-1.x/tools/java/net" 'c-indent-two-spaces)
+    )
+  )
+
+(defun apply-c-style-overrides ()
+  (interactive)
+  (let ((buffer (expand-file-name (buffer-file-name))))
+    (mapcar
+     (lambda (pair) "" nil
+       (let ((path (expand-file-name (car pair)))
+	     (func (cadr pair)))
+	 (if (string-match (concat "^" path ".*") buffer)
+	     (funcall func)
+	   )))
+     my-c-style-overrides)
+  ))
+
+(defun my-c-setup()
   (interactive)
   (c-add-style "my-c-style" my-c-style t)	; my style above
   (setq indent-tabs-mode nil)	           	; use spaces for tabs
+  (apply-c-style-overrides)
   )
 
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c++-mode-hook 'my-c-setup)
-
-(defun my-java-setup ()
-  (interactive)
-  (c-add-style "my-java-style" my-java-style t)	; my style above
-  (setq indent-tabs-mode t)
-  )
-  
-(add-hook 'java-mode-hook 'my-java-setup)
+(add-hook 'java-mode-hook 'my-c-setup)
 
 ; load visual-basic mode
 (require 'visual-basic-mode)
@@ -366,7 +386,7 @@
 (resize-minibuffer-mode t)
 
 ;; More descriptive names than foo<2>
-(load "uniquify" t t)
+(require 'uniquify)
 (if (featurep 'uniquify)
     (setq uniquify-buffer-name-style 'post-forward
 	  uniquify-separator ", "))
