@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.34 $)
+;; Version: 1.2 ($Revision: 1.35 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1031,7 +1031,7 @@ and log message"
 	    ;; comparison but don't erase them from the buffer
 	    (let ((beg (point)) end)
 	      (while (not (looking-at "^[-=]+\n"))
-		(next-line))
+		(next-line 1))
 	      (setq end (point))
 	      (setq log (buffer-substring beg end))
 	      )
@@ -1047,7 +1047,7 @@ and log message"
 	      ;; comparison but don't erase them from the buffer
 	      (let ((beg (match-beginning 0)) (logbeg (point)))
 		(while (not (looking-at "^[-=]+\n"))
-		  (next-line))
+		  (next-line 1))
 		(setq log2 (buffer-substring logbeg (point)))
 
 		;; now, if they match, clear out the contents of the
@@ -1055,7 +1055,7 @@ and log message"
 		(if (and (string= log log2)
 			 (string= author author2))
 		    (save-excursion
-		      (next-line)
+		      (next-line 1)
 		      (kill-region beg (point))
 		      (goto-char filept)
 		      (insert (format "file: %s:%s\n" file2 ver2))))
