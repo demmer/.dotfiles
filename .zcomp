@@ -76,3 +76,6 @@ zstyle ':completion:*' hosts $hosts
 
 # complete kill by jobs
 zstyle ':completion:*:kill:*' command jobs
+
+# xssh 
+compdef _hosts xssh
