@@ -2,13 +2,6 @@
 ## FILE:  .zcomp
 ## DESC:  zsh conditional completion settings
 ##
-## USAGE: zsh
-## 
-## DATE:  Sat May 27 17:33:51 1995
-## 
-## Modification history:
-##    jal   Sat May 27 17:33:54 1995   made header
-##
 
 # This file gives some examples of compctl commands. The name zcomp
 # does not mean anything to zsh, you can either put the compctl commands

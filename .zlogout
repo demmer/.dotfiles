@@ -2,13 +2,6 @@
 ## FILE:  .zlogout
 ## DESC:  zsh init file; sourced at logout by login shells
 ##
-## USAGE: zsh -l
-## 
-## DATE:  Sat May 27 17:41:09 1995
-## 
-## Modification history:
-##    jal   Sat May 27 17:41:12 1995   made header
-##
 
 # set the "print" command
 if [ "$TERM" = "xterm" ]; then

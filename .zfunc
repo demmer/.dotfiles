@@ -2,13 +2,6 @@
 ## FILE:  .zfunc
 ## DESC:  zsh function definitions
 ##
-## USAGE: zsh
-## 
-## DATE:  Sat May 27 17:35:07 1995
-## 
-## Modification history:
-##    jal   Sat May 27 17:35:10 1995   made header
-##
 
 function lc {
 	unset dict_names
