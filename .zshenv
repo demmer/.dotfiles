@@ -127,12 +127,19 @@ export EMACSLOCKDIR=$HOME/.emacslockdir
 # needed for su to still grab my .emacs
 export EMACSHOME=$HOME
 
-export CVS_RSH=ssh
+# Handy to have these readily available
+export CVSROOT_INIGO=:ext:inigo:/repository
+export CVSROOT_TIER=:ext:tier.cs.berkeley.edu:/usr/projects/ICT/repository
+export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
+export CVSROOT_DTN=ext:playground:/usr/src/bundles/orig
+
 if [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
 else 
-    export CVSROOT=:ext:inigo:/repository  
+    export CVSROOT=$CVSROOT_INIGO
 fi
+
+export CVS_RSH=ssh
 
 unset XAUTHORITY
 export XAUTHORITY
@@ -141,12 +148,16 @@ export XAUTHORITY
 unset LANG
 export LANG
 
-# TinyOS
+# TinyOS / Java / Jython
+export JAVA_HOME="/opt/IBMJava2-141"
 export TOSROOT="$HOME/work/tinyos-1.x"
 export TOSDIR="$TOSROOT/tos"
-export CLASSPATH=".:$TOSROOT/tools/java"
 if [ "$DBG" = "" ] ; then
 	export DBG="all"
 fi
+export CLASSPATH=".:$TOSROOT/tools/java"
+
+export JYTHON_HOME="$HOME/work/jython"
+export PATH=$PATH:$JYTHON_HOME
 
 
