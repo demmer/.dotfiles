@@ -48,9 +48,12 @@ while True:
         # timeout kicked, adjust on next loop
         continue
 
+    if (readyerr != []):
+        print errp.readline();
+        sys.exit(1)
+
     fd = readyrd[0];
     line = fd.readline();
-    #print "line: " + line;
     
     m = exp.match(line);
     if (m == None):
@@ -62,8 +65,6 @@ while True:
     totalbits += string.atoi(bytes) * 8.0;
     
 # If we got here, there was a problem with tcpdump
-    
-        
 for line in err:
     print line;
 
