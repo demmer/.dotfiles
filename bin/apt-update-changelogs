@@ -10,29 +10,31 @@ input = sys.stdin.readlines();
 packages = []
 
 for l in input:
-    p = re.compile("^Inst ((\S)\S+) \[.*\] \((\S+)");
+    p = re.compile("^Inst ((\S)\S+) \[(.*)\] \((\S+)");
     m = p.match(l);
     if (m == None):
         continue
 
     pkg = m.group(1);
     ltr = m.group(2);
-    ver = m.group(3);
-    packages.append((pkg, ltr, ver));
+    old = m.group(3);
+    new = m.group(4);
+    packages.append((pkg, ltr, old, new));
 
 packages.sort()
 
-for (pkg, ltr, ver) in packages:
-    url = urlpat % (ltr, pkg, pkg, ver)
+for (pkg, ltr, old, new) in packages:
+    print "%s (%s -> %s)" % (pkg, old, new) ,
+    
+    url = urlpat % (ltr, pkg, pkg, new)
 
     try:
         log = urlopen(url);
     except HTTPError, e:
-        print "%s (%s)" % (pkg, ver)
-        print "(no changelog)\n"
+        print "\n(no changelog)\n"
         continue
 
-    pkgpat = re.compile("^%s \((.*)\)" % pkg);
+    pkgpat = re.compile("^%s \((.*)\) (.*)" % pkg);
     whitepat = re.compile("^\s+$");
     
     for l in log:
@@ -40,8 +42,12 @@ for (pkg, ltr, ver) in packages:
             continue
 
         m = pkgpat.match(l);
-        if (m and m.group(1) != ver):
-            break
+        if (m):
+            if (m.group(1) != new):
+                break
+            else:
+                print m.group(2);
+                continue
 
         print l ,
 
