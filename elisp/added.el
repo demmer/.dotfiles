@@ -1,4 +1,4 @@
-y(defun requote (start end)
+(defun requote (start end)
   "Requotes the selected text, mail style. [AMD]"
   (interactive "r")
   (save-excursion
