@@ -1,0 +1,21 @@
+#
+# .muttrc for xoopi
+#
+
+#
+# First suck in the generic stuff
+#
+source ~/.muttrc.generic
+
+my_hdr From: mike@demmer.nu (Michael Demmer)
+
+#
+# Sorting order dependent on the folder
+#
+folder-hook . set sort=mailbox-order
+folder-hook linux-kernel set sort=threads
+folder-hook netfilter set sort=threads
+folder-hook sa-talk set sort=threads
+
+mailboxes ! =linux-kernel =netfilter =sa-talk
+

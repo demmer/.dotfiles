@@ -1,0 +1,114 @@
+VERBOSE=no
+MAILDIR=$HOME/Mail
+LOGFILE=$HOME/Mail/procmaillog
+LOGABSTRACT=all
+
+#
+# Mailing lists I subscribe to go into separate folders before the spamassassin
+# checks. This is to avoid polluting the bayes database with traffic from the 
+# sa-talk list.
+#
+:0
+* List-Id: .*spamassassin-talk
+sa-talk
+
+#
+# Anti-spam filter
+#
+:0fw
+| $HOME/sa/usr/bin/spamassassin -a
+
+#
+# Kill the really bad spam (8 pts or higher). The echo line accomplishes
+# the same as /dev/null while letting me see how good it's doing.
+#
+:0
+* ^X-Spam-Level: \*\*\*\*\*\*\*\*
+| echo -n "." >> $HOME/Mail/spamcount
+
+#
+# And anything to p@demmerfamily.com
+#
+:0
+* ^To: .*p@demmerfamily\.com 
+| echo -n "." >> $HOME/Mail/spamcount
+
+#
+# And 5 points or more gets copied to the spam folder.
+#
+:0
+* ^X-Spam-Level: \*\*\*\*\*
+spam
+
+#
+# Automatic email delivery testing
+#
+:0
+* ^To: test-delivery.*
+/dev/null
+
+#
+# Rotate command since I can't run cron
+#
+:0f
+* ^To: rotate-spool
+| rotate-spool
+
+#
+# Add a subject line for everything.
+#
+:0fh
+* ^Subject:[ ]*$
+| formail -I "Subject: (none)"
+
+#
+# Save a copy of html mail unmodified, just in case.
+#
+:0c
+* ^content-type: text/html
+html
+
+#
+# Strip out htmlification from the message body and change the
+# Content-Type header
+#
+:0bhf
+* ^content-type: text/html
+| dehtml.pl
+
+#
+# Modify the subject line for other email addresses
+#
+:0
+* ^Received:.*for <mjd@acm\.org>
+{
+    :0c
+    * .*
+    | formail -x Subject > /tmp/subject
+
+    :0f
+    * .*
+    | formail -i "Subject: [acm]`(cat /tmp/subject && rm -f /tmp/subject)`"
+}
+
+#
+# Send periodic mail to the inbox w/o spooling
+:0
+* Subject:.*(security run|daily run|weekly run|monthly run) output
+$DEFAULT
+
+#
+# Save a copy of all mail into the spool mailbox, marking as already read.
+#
+:0c
+| formail -I "Status: RO" >> $HOME/Mail/spool
+
+#
+# Finally, get rid of duplicate messages after saving a copy to the spool.
+#
+:0 Wh: msgid.lock
+| formail -D 32768 msgid.cache
+
+#
+# C'est fini.
+#
