@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.21 $)
+;; Version: 1.2 ($Revision: 1.22 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -67,12 +67,6 @@
 ;; - Emacs: how to indicate when process is running.  On XEmacs it is in the
 ;;   mode line.
 ;;
-;; - Change directory prompting to default to cwd and have previous
-;;   one in history.  This is a god damn hassle on Emacs since
-;;   history isn't god damn integrated with read-file-name (dammit).
-;;
-;; - Do something with the "New directory `foo' -- ignored" messages.
-;;
 ;; - Think more about how dont-use-existing should work.  Could ask "reuse
 ;;   buffer foo" then say "use g to refresh".  Maybe lcvs-update should just
 ;;   always do it, but examine would reuse/ask.
@@ -97,12 +91,9 @@
 ;;   against last checkin (gordon) also against last last checkin.  This is
 ;;   is hard since "the previous version" is tricky to compute.
 ;;
-;; - Have a regexp to match/notmatch some files that lcvs-examine would update
-;;   automatically (andrew).  This could be done with a postprocessing stage
-;;   That collects the files and calls lcvs-update-some-files with them.
-;;
 ;; - Have space and backspace scroll a diff/log/status/etc window if visible
 
+
 ;; User vars.
 
 (defvar lcvs-cvs-command "cvs"
@@ -1439,7 +1430,8 @@ the value of `foo'."
 	(lcvs-change-this-file-state newstate))))
 
 (defun lcvs-remove-file-line (file)
-  ;; Delete lines in the buffer that match a filename.
+  ;; Delete lines in the buffer that match a filename, allowing for a
+  ;; parenthesized comment on the file line.
   ;; Removes from marked files too.
   (save-excursion
     (goto-char (point-min))
