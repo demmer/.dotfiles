@@ -1,6 +1,17 @@
 <GROUP>
 	NAME="friends"
 	<CONTACT>
+		NAME="Aidan"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="inktukar"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
 		NAME="brianwoolee"
 		DEFAULT_PROTOCOL="Yahoo"
 		LANGUAGE=""
@@ -23,17 +34,6 @@
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
-		NAME="fka3"
-		DEFAULT_PROTOCOL="Yahoo"
-		LANGUAGE=""
-		TRIGGER_TYPE=""
-		TRIGGER_ACTION=""
-		TRIGGER_PARAM=""
-		<ACCOUNT Yahoo>
-			NAME="fka3"
-		</ACCOUNT>
-	</CONTACT>
-	<CONTACT>
 		NAME="geoff_hardy"
 		DEFAULT_PROTOCOL="Yahoo"
 		LANGUAGE=""
@@ -42,6 +42,9 @@
 		TRIGGER_PARAM=""
 		<ACCOUNT Yahoo>
 			NAME="geoff_hardy"
+		</ACCOUNT>
+		<ACCOUNT AIM>
+			NAME="geoff7532"
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
@@ -153,6 +156,17 @@
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
+		NAME="rdemmer316"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="rdemmer316"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
 		NAME="Tim Moynagh"
 		DEFAULT_PROTOCOL="MSN"
 		LANGUAGE=""
@@ -247,6 +261,17 @@
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
+		NAME="jason_latorre_at_work"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="jason_latorre_at_work"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
 		NAME="johnsonliquor"
 		DEFAULT_PROTOCOL="Yahoo"
 		LANGUAGE=""
@@ -260,17 +285,6 @@
 </GROUP>
 <GROUP>
 	NAME="Unknown"
-	<CONTACT>
-		NAME="geoff7532"
-		DEFAULT_PROTOCOL="AIM"
-		LANGUAGE=""
-		TRIGGER_TYPE=""
-		TRIGGER_ACTION=""
-		TRIGGER_PARAM=""
-		<ACCOUNT AIM>
-			NAME="geoff7532"
-		</ACCOUNT>
-	</CONTACT>
 	<CONTACT>
 		NAME="InkSpyro"
 		DEFAULT_PROTOCOL="AIM"
@@ -297,17 +311,6 @@
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
-		NAME="ink2val"
-		DEFAULT_PROTOCOL="AIM"
-		LANGUAGE=""
-		TRIGGER_TYPE=""
-		TRIGGER_ACTION=""
-		TRIGGER_PARAM=""
-		<ACCOUNT AIM>
-			NAME="ink2val"
-		</ACCOUNT>
-	</CONTACT>
-	<CONTACT>
 		NAME="InktoKarl"
 		DEFAULT_PROTOCOL="AIM"
 		LANGUAGE=""
@@ -316,17 +319,6 @@
 		TRIGGER_PARAM=""
 		<ACCOUNT AIM>
 			NAME="InktoKarl"
-		</ACCOUNT>
-	</CONTACT>
-	<CONTACT>
-		NAME="mdipetrillo"
-		DEFAULT_PROTOCOL="AIM"
-		LANGUAGE=""
-		TRIGGER_TYPE=""
-		TRIGGER_ACTION=""
-		TRIGGER_PARAM=""
-		<ACCOUNT AIM>
-			NAME="mdipetrillo"
 		</ACCOUNT>
 	</CONTACT>
 	<CONTACT>
