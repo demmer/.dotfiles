@@ -19,5 +19,8 @@ else
    done
 fi
 
-test $mailbox = 1 && xterm -e $HOME/bin/mailbox_tunnel -host xoopi 2> $HOME/.err/mailbox_tunnel.log &
-test $urlview = 1 && xterm -e $HOME/bin/urlview-tunnel -host xoopi &
+test $mailbox = 1 && xterm -iconic -e \
+	$HOME/bin/mailbox_tunnel -host xoopi 2> $HOME/.err/mailbox_tunnel.log &
+
+test $urlview = 1 && xterm -iconic -e \
+	$HOME/bin/urlview-tunnel -host xoopi &
