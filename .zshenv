@@ -76,12 +76,15 @@ path=(						\
 # Similar trick for LD_LIBRARY_PATH
 #
 ld_library_path=
+
+if [ -d ~/lib ]; then
 for d in ~/lib/* ; do
-if [ -d $d ] ; then
-	d=`(cd $d && pwd -r)`
-	ld_library_path=($ld_library_path $d)
-fi
+	if [ -d $d ] ; then
+		d=`(cd $d && pwd -r)`
+		ld_library_path=($ld_library_path $d)
+	fi
 done
+fi
 
 #
 # But it's not autoset like path is
