@@ -47,7 +47,6 @@
 (add-hook 'text-mode-hook 'my-text-setup)
 
 ;;; Setup c/c++/java mode
-(require 'c-mode)
 (require 'cc-mode)
 (require 'cc-vars)
 (require 'dabbrev)
@@ -331,10 +330,10 @@
 ;       (load (concat term-file-prefix "vt200") nil t)))
 
 ; extensions of files I don't want to open
-(append ".class" completion-ignored-extensions)
-(append ".T" completion-ignored-extensions)
-(append ".lo" completion-ignored-extensions)
-
+(setq completion-ignored-extensions (append completion-ignored-extensions
+					    '(".class"
+					      ".T"
+					      ".lo")))
 ; and ignore case
 (setq completion-ignore-case t)
 
