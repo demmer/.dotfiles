@@ -9,17 +9,22 @@ cd $HOME/.phoenix/default
 DIR=`ls -1`
 cd $DIR
 
-echo "Setting up CVS links in `pwd`..."
+if [ -d CVS ]; then
+   echo "mozilla setup already done in `pwd`"
+   exit 1
+fi
+
+echo "setting up CVS \"links\" in `pwd`..."
 
 movefiles() {
 	srcdir=$1
 	dstdir=$2
-	echo "movefiles $srcdir $dstdir"
-	for f in `(cd $srcdir && ls -1d *)` ; do
+	for f in `(cd $srcdir && ls -1d * .*)` ; do
 		[ $f = "." ] && continue
 		[ $f = ".." ] && continue
 		echo $dstdir/$f
-		rm -rf $dstdir/$f
+		rm -rf $dstdir/$f.orig
+		[ -f $dstdir/$f ] && mv $dstdir/$f $dstdir/$f.orig
 		mv $srcdir/$f $dstdir/$f
 	done
 }
