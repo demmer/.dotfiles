@@ -19,7 +19,7 @@ set fast_reply
 set folder_format="%N %-12f %8s "
 set history=50
 set include=yes
-set index_format="%Z %-4C %{%b %d} %-18F (%c) %s"
+set index_format="%Z %-4C %{%b %d} %-18.18F (%c) %s"
 set mail_check=2
 unset move
 set postpone=no
