@@ -1,0 +1,8 @@
+Cache*
+XUL*
+cook*.txt
+*.db
+*.rdf
+*.dat
+install.log
+prefs.js
