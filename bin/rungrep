@@ -13,6 +13,8 @@ if ($file eq "") {
     $file = $ENV{HOME} . "/.xinitrc";
 }
 
+$ENV{RUNGREP} = 1;
+
 open(FILE, "< $file") || die "can't open $file";
     
 while (<FILE>) {

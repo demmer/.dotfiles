@@ -15,7 +15,11 @@ set width 60
 set delay 5
 set fg black
 set bg grey87
-set font "6x10"
+if {$tcl_platform(os) == "Darwin"} {
+    set font "Arial"
+} else {
+    set font "6x10"
+}
 set default_geometry "=300x70+10+10"
 set usebar 1
 set beep 1

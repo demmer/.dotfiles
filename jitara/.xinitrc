@@ -73,4 +73,4 @@ xterm &
 quartz-wm
 
 # kill yabiff
-ps auxww | grep yabiff | $HOME/bin/awkill
+[ "$RUNGREP" = "1" ] || ps auxww | grep yabiff | $HOME/bin/awkill
