@@ -1,0 +1,5 @@
+#!/bin/sh
+set -x
+sudo modprobe usb-storage
+sleep 2
+sudo mount -t vfat -o ro -o uid=demmer /dev/sda2 /mnt/ipod

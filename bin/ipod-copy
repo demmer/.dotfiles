@@ -1,0 +1,145 @@
+#!/usr/bin/perl
+
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
+
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
+
+# Based on mp3id 0.4
+
+use Cwd;
+use File::Copy;
+use Getopt::Long;
+use MPEG::MP3Info qw(:all);
+use IO::Handle;
+
+use_winamp_genres();
+
+my @files;
+
+GetOptions( \%opt, 
+    "checkcache|c",
+    "dest|d=s",
+    "force|f",
+    "help|h",
+    "<>", \&optfiles 
+);
+
+sub optfiles {
+    push @files, shift;
+}
+
+die "usage: ipod-copy [options] <files>\n".
+    "\n".
+    "Options:\n".
+    "    --checkcache|-c    validate the cache file\n".
+    "    --dest|-d <dir>     destination directory\n".
+    "    --force|-f          ignore cache and force update\n".
+    "    --help|-h           this help info\n".
+    "\n"
+    if ($opt{help} || !$opt{dest} || (!$opt{checkcache} && !@files));
+
+$checkcache = $opt{checkcache};
+$destdir = $opt{dest};
+$force = $opt{force};
+
+$sep = "==>";
+
+%cache = {};
+%rcache = {};
+
+if (!$force) {
+    $cachefile = "$destdir/.ipod_copy_cache";
+
+    # read the contents
+    if (open(CACHE, $cachefile)) {
+	while (<CACHE>) {
+	    chomp;
+	    ($src, $dst) = split($sep);
+	    $cache{$src} = $dst;
+
+	    if ($checkcache) {
+		if ($rcache{$dst}) {
+		    print "*** error: duplicate mapping for $dst:\n";
+		    print "           $rcache{$dst}\n";
+		    print "           $src\n";
+		} else {
+		    $rcache{$dst} = $src;
+		}
+	    }
+	}
+	close(CACHE);
+    }
+
+    if ($checkcache) {
+	exit 0;
+    }
+
+    # and open for append
+    if (!open(CACHE, ">>", $cachefile)) {
+	print("ERROR: can't open cachefile $cachefile for append\n");
+	exit(1);
+    }
+
+    # no buffering please
+    CACHE->autoflush(1);
+}
+
+foreach $file ( @files ) {
+    if ($cache{$file}) {
+	$dst = $cache{$file};
+	if (-f $dst) {
+	    print "skipping $dst (cached)\n";
+	} else {
+	    print "*** error: cache entry $dst does not exist!!\n";
+	}
+	next;
+    }
+    
+    my $info = get_mp3info($file);
+    my $tag  = get_mp3tag($file);
+    my $artist   = $tag->{ARTIST};
+    my $album    = $tag->{ALBUM};
+    my $title    = $tag->{TITLE};
+
+    my $dir;
+    my $name;
+    if (! $artist || ! $album || ! $title) {
+	($ipoddir, $ipodfile) = split('/', $file);
+	dir if (!$ipoddir || !$file);
+	$dir = "$destdir/Unknown/$ipoddir";
+	$name = $ipodfile;
+    } else {
+	$artist =~ s|/|-|g;
+	$album  =~ s|/|-|g;
+	$title  =~ s|/|-|g;
+	
+	$dir = "$opt{dest}/$artist/$album";
+	if ($tag->{TRACKNUM}) {
+	    $name = sprintf "%02d - $title.mp3", $tag->{TRACKNUM};
+	} else {
+	    $name = "$title.mp3";
+	}
+    }
+
+    my $src = $file;
+    my $dst = "$dir/$name";
+    $dst =~ s/\//\\/g if $MSDOS;
+
+    system "mkdir -p \"$dir\"";
+
+    if (! -f $dst) {
+	print "copying  $dst...\n";
+	copy($src, $dst) || print "*** error copying: $!\n";
+    } else {
+	print "skipping $dst (already exists)\n";
+    }
+
+    if (!$force) {
+	$cache{$src} = $dst;
+	print CACHE "$src$sep$dst\n";
+    }
+}
+
+exit(0);

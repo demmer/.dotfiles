@@ -1,0 +1,14 @@
+#!/bin/sh
+
+base=/mnt/ipod/iPod_Control/Music
+cd $base
+for d in * ; do
+    echo ""
+    echo "updating $base/$d..."
+    echo ""
+    ipod-copy -d ~/music $d/*
+    if [ $? != 0 ]; then
+	echo "error in ipod-copy, bailing"
+	exit 1
+    fi
+done
