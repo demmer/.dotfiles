@@ -2,6 +2,13 @@
 # yabiff-server
 # Author: Mike Demmer <mike@demmer.nu>
 
+set debug 0
+
+proc dprint {s} {
+    global debug
+    if {$debug} { puts $s }
+}
+
 # XXX param
 set delay 5 
 set delay [expr $delay * 1000]
@@ -40,11 +47,13 @@ set mtime 0
 proc checktime {} {
     global ctime mtime
     global spoolfile
+    dprint "checktime $ctime $mtime"
     if [file exists $spoolfile] {
 	file stat $spoolfile stat
 	if {$stat(mtime) > $mtime || $stat(ctime) > $ctime} {
 	    set mtime $stat(mtime)
 	    set ctime $stat(ctime)
+	    dprint "checktime changed: $ctime $mtime"
 	    return 1
 	}
     }
@@ -66,9 +75,9 @@ proc scan {} {
 	    set l [gets $fd]
 	    
 	    if [regexp \
-		    {^From (\S+) \w\w\w \w\w\w \d\d \d\d:\d\d:\d\d \d\d\d\d$} \
+		    {^From (\S+)\s+.+\d\d:\d\d:\d\d \d\d\d\d$} \
 		    $l match f] {
-
+		dprint "From $f"
 		set from $f
 		set subject ""
 		set status ""
@@ -89,6 +98,8 @@ proc scan {} {
 	    regexp {^Subject: (.*)$} $l match subject
 	    regexp {^Status: (\w*)$} $l match status
 	}
+
+	dprint "end of headers: $from $subject $status"
 
 	# output what we got
 	if {($from != "") && ($status != "RO")} {
