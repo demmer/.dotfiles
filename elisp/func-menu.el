@@ -242,7 +242,6 @@
 	       (t
 		(setq name (buffer-substring beg end))
 		))
-	      (goto-char temp)
 ;	      (message (format "Found tcl func \"%s\" keyword \"%s\"" name keyword))
 	    ))
 	   
@@ -250,6 +249,7 @@
 	    (setq name (buffer-substring beg end)))
 	   )
 
+	  (goto-char end)
 	  (cond
 	   ((or
 	     (string-equal name "if")
