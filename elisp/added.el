@@ -17,6 +17,7 @@
 (setq CH-buffer-pairs '((".C" ".H")
 			(".cc" ".h")
 			(".c" ".h")
+			(".tcc" ".h")
 			(".tcl" ".cc")
 			("M.nc" ".nc")
  			("M.nc" "C.nc")
@@ -355,7 +356,11 @@ and selects that window."
 
     (unwind-protect
 	(progn
+	  (set-buffer grope-buf)
+	  (message "calling first-error")
 	  (first-error)
+	  (message "returned from first-error")
+	  (sit-for 1)
 	  (while t
 	    (while (re-search-forward from (line-end-position) t)
 	      (replace-highlight (match-beginning 0) (match-end 0))
@@ -496,3 +501,25 @@ to match the current line in the source file."
 ;; i do replace-string a lot
 (defalias 'rs 'replace-string)
 
+;; conversion function from // style comments to /* style
+(defun c-convert-block-comments (from to)
+  (interactive "r")
+
+  ;; do the end comment first since point will move
+  (newline-and-indent)
+  (previous-line 1)
+  (goto-char to)
+  (indent-according-to-mode)
+  (insert " */")
+
+  ;; now replace all the //
+  (replace-string "//" " *" nil from to)
+  
+  ;; finally the start comment
+  (goto-char from)
+  (indent-according-to-mode)
+  (insert "/*")
+  (newline)
+  (insert " ") ;; indent does strange things in comment mode
+  (indent-according-to-mode)
+  )
