@@ -1,0 +1,132 @@
+#!/usr/local/bin/tclsh8.3
+# yabiff-server
+# Author: Mike Demmer <mike@demmer.nu>
+
+# XXX param
+set delay 5 
+set delay [expr $delay * 1000]
+
+if [info exists env(USER)] {
+    set user $env(USER);
+} elseif [info exists env(LOGNAME)] {
+    set user $env(LOGNAME);
+} else {
+    puts stderr "I don't believe we have met.";
+    exit -1;
+}
+
+if [info exists env(MAIL)] {
+    if [file exists $env(MAIL)] {
+	set spoolfile $env(MAIL);
+    }
+} elseif [file exists "/var/mail/$user"] {
+    set spoolfile "/var/mail/$user";
+} elseif [file exists "/var/spool/mail/$user"] {
+    set spoolfile "/var/spool/mail/$user";
+}
+
+if {! [info exists spoolfile]} {
+    puts stderr "no spool";
+    exit -1;
+}
+
+if {! [file readable $spoolfile]} {
+    puts stderr "$spoolfile unreadable"
+    exit -1;
+}
+
+set ctime 0
+set mtime 0
+proc checktime {} {
+    global ctime mtime
+    global spoolfile
+    if [file exists $spoolfile] {
+	file stat $spoolfile stat
+	if {$stat(mtime) > $mtime || $stat(ctime) > $ctime} {
+	    set mtime $stat(mtime)
+	    set ctime $stat(ctime)
+	    return 1
+	}
+    }
+    return 0
+}
+
+proc scan {} {
+    global spoolfile
+
+    set from ""
+    set subject ""
+    set status ""
+    
+    set fd [open $spoolfile r]
+    while {! [eof $fd]} {
+	
+	# read until we get a mbox message boundary
+	while {! [eof $fd]} {
+	    set l [gets $fd]
+	    
+	    if [regexp \
+		    {^From (\S+) \w\w\w \w\w\w \d\d \d\d:\d\d:\d\d \d\d\d\d$} \
+		    $l match f] {
+
+		set from $f
+		set subject ""
+		set status ""
+
+		break
+	    }
+
+	}
+
+	# now parse through headers until we get a blank line
+	while {! [eof $fd]} {
+	    set l [gets $fd]
+	    if [regexp {^$} $l] {
+		break
+	    }
+		
+	    regexp {^From: (.*)$} $l match from
+	    regexp {^Subject: (.*)$} $l match subject
+	    regexp {^Status: (\w*)$} $l match status
+	}
+
+	# output what we got
+	if {($from != "") && ($status != "RO")} {
+
+	    # try to pretty up the from address
+	    regexp {([^<\[]*)[<\]]} $from match from
+	    set from [string trim $from {\" }]
+	    regexp {=\?[^\?]+\?[^\?]+\?([^\?]+)\?=} $from match from
+
+	    if [regexp {(\w+), (\w+)} $from match last first] {
+		set from "$first $last"
+	    }
+	    
+	    set subject [string tolower $subject]
+	    puts "$from >> $subject"
+
+	    # clean house
+ 	    set from ""
+ 	    set subject ""
+ 	    set status ""
+	}
+
+	# and loop to the next message
+    }
+
+    # period to end the list
+    puts "."
+    
+    close $fd
+}
+
+while {1} {
+    set doscan [checktime]
+    if {$doscan} {
+	scan
+    } else {
+	puts "ping"
+    }
+    flush stdout
+    after $delay
+}
