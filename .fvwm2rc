@@ -27,6 +27,11 @@ MenuStyle * mwm
 MenuStyle * Foreground black, BackGround gray87
 
 #
+# Make a "click" 200 ms to help tune Move-or-Raise
+#
+ClickTime 200
+
+#
 # Font Settings
 #
 WindowFont  *schoolbook-bold-r-normal--14*
@@ -72,11 +77,6 @@ Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
 Style "EveryBuddy"	Sticky
 Style "Ayttm"		Sticky
 Style "gaim"	 	Sticky
-
-#
-# Function Definitions
-#
-AddToFunc Move-or-Raise "I" Raise + "M" Move + "D" Lower
 
 #
 # Key Bindings
@@ -133,11 +133,18 @@ AddToMenu WindowOps "Window Operations" Title
     + "Reload"			Restart
 
 #
-# Define Functions
+# Define Functions. Note that the + items seem to need to be on their
+# own lines for this to work.
 #
-AddToFunc Move-or-Raise "C" Raise
+# Modifiers:
+# I immediate
+# C click
+# M movement
+# D double-click
+#
+AddToFunc Move-or-Raise "C" Raise 
 			+ "M" Move
-			+ "D" Raise
+ 			+ "D" Raise
 
 #
 # Define mouse bindings
@@ -175,7 +182,7 @@ Mouse   0	2	A	Maximize
 Mouse   1	R	N	PopUp "Applications"
 Mouse   1	R	C	PopUp "WindowOps"
 Mouse   1	T	N	Move-or-Raise
-Mouse   1	WT	M	Raise
+Mouse   1	WT	M	Move-or-Raise
 Mouse   1	T	C	Move
 Mouse   1       I       A	Iconify
 Mouse   1	WTSF  	S	Resize		
