@@ -292,7 +292,7 @@ proc remote_loop {} {
 	if {$host != [info hostname]} {
 	    append cmd "ssh -v $host "
 	}
-	append cmd "yabiff-server $delay_arg $spool_arg < /dev/null"
+	append cmd "yabiff-remote $delay_arg $spool_arg < /dev/null"
 	dprint "running $cmd"
 	set ssh [open "|$cmd" r]
 	fconfigure $ssh -blocking false -buffering none
