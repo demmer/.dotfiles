@@ -96,6 +96,10 @@ xpostit+*saveNotes:             true
 ! Xmms
 xmms*geometry:			=-1-1
 
+! Xpdf
+xpdf.geometry:			=BASE_GEOM-5-5
+xpdf.zoom:			page
+
 !  Motif translations for Emacs keybindings in an XmText widgit
 !  from part3 of the Motif FAQ - copied from jal
 *XmText.translations: #override\n\
