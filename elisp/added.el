@@ -29,7 +29,8 @@ buffer.H<2>.[mjd]"
   (let (
 	(root (file-name-sans-extension name))
 	(ext (file-name-extension name))
-	(ver) (pt) (test))
+	(ver) (pt) (test) (exts)
+	)
 
     (setq pt (string-match "<" ext))
     (cond
@@ -68,7 +69,8 @@ looks in the buffer list for the corresponding buffer.H<2> or looks in the
 current directory for buffer.H.[mjd]"
   (interactive)
   (let ((targetlist (CH-buffer-match (buffer-name)))
-	(bufferlist (buffer-list)))
+	(bufferlist (buffer-list))
+	(matches) (match) (pos) (file))
     
     ;; Try to find an open buffer that matches a name from the list
     (setq matches
