@@ -162,25 +162,12 @@ alias shooters jodavis, meghan, vechio, roncu, peck
 # Kingfish
 #
 alias alan_margulius Alan Margulius <margulius@earthlink.net>
-alias cbeausejour Christian Beausejour <cbeausejour@lbl.gov>
 alias dougb Doug Byles <dougb@nibbi.com>
-alias ecampeau Eric Campeau <ECampeau@lbl.gov>
-alias jeff <JeffK@getmewired.com>
 alias john_reid <johnmichaelreid@yahoo.com>
 alias marc_silverberg Marc Silverberg <marc.silverberg@gator.com>
-alias marty Marty Meuller <MJMueller@d11.uscg.mil>
 alias matt_sade Matthew Sade <matthewsade@yahoo.com>
-alias mike_gwynn Mike Gwynn <mjg@usms.com>
 alias peter_rizos Peter Rizos <prizos@yahoo.com>
-alias scott_pankonin Scott Pankonin <pankonin@pacbell.net>
 alias steve_welch Steve Welch <SWelch@ArcherNorris.com>
-alias strange_brew <strange_brew_racing@msn.com>
-
-alias kingfish alan_margulius, david_ng, dougb, \
-	       ecampeau, jeff, john_reid, marc_silverberg, \
-	       marty, matt_sade, mike_gwynn, peter_rizos, \
-	       scott_pankonin, steve_welch, strange_brew, \
-	       cbeausejour
 
 #
 # Riverbed
@@ -213,9 +200,15 @@ alias dtn-dev dtn-dev@mailman.dtnrg.org
 alias dtn-devel dtn-dev@mailman.dtnrg.org
 
 #
-# Mailing Lists
+# Tier / ICT4B related
 #
+alias jen_bussell Jen Bussell <jbussell@berkeley.edu>
+alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
 alias tier tier <tier@tier.cs.berkeley.edu>
+
+#
+# Other Mailing Lists
+#
 alias tinyos tinyos <tinyos@millenium.berkeley.edu>
 alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
 
@@ -223,7 +216,6 @@ alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
 # EECS overrides and secondary aliases
 #
 alias eric Eric Brewer <brewer@eecs.berkeley.edu>
-
 
 #
 # Others added by mutt
