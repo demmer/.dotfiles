@@ -12,14 +12,14 @@ LOGABSTRACT=all
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
-| formail -I "Status: RO" >> $HOME/Mail/spam-certain
+| formail -I "Status: RO" >> $MAILDIR/spam-certain
 
 #
 # And 5 points or more gets copied to the spam folder.
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*
-| formail -I "Status: RO" >> $HOME/Mail/spam
+| formail -I "Status: RO" >> $MAILDIR/spam
 
 #
 # Add a subject line for everything.
@@ -47,13 +47,14 @@ html
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
 :0c
-| formail -I "Status: RO" >> $HOME/Mail/spool
+| formail -I "Status: RO" >> $MAILDIR/spool
 
 #
 # Finally, get rid of duplicate messages after saving a copy to the spool.
+# I have no idea why this one needs the full path, but whatever...
 #
 :0 Wh: msgid.lock
-| formail -D 32768 $HOME/Mail/msgid.cache
+| /usr/sww/bin/formail -D 32768 $MAILDIR/msgid.cache
 
 #
 # Lists that I want to be spooled go here (last)
@@ -70,6 +71,20 @@ tier
 * List-Id: Delay Tolerant Networking
 dtn
 
+:0
+* ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
+cs-crap
+
+:0
+* ^To.*(cs|eecs)-(grads|dept)(|-food|-jobs)
+cs-crap
+
+:0
+* ^To(soda|dept)-info
+cs-crap
+
 #
 # C'est fini.
 #
+:0
+inbox
