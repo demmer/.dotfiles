@@ -1,4 +1,4 @@
-VERBOSE=yes
+VERBOSE=no
 MAILDIR=/home/miked/Mail
 LOGFILE=/home/miked/Mail/procmaillog
 LOGABSTRACT=all
