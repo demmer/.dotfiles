@@ -132,7 +132,6 @@ This must be bound to a mouse-down event in the mode-line."
 (load "modes")
 (load "mjdkeys")
 (load "mwheel")
-(load "ff-stuff")
 (load "added")
 
 ;; lcvs setup

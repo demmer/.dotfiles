@@ -136,7 +136,6 @@ This must be bound to a mouse-down event in the mode-line."
 (load "modes")
 (load "mjdkeys")
 (load "mwheel")
-(load "ff-stuff")
 (load "added")
 
 ;; For emacs 20 I made some vc customizations that are addressed in
