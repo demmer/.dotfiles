@@ -1,6 +1,7 @@
-#
-# .zshrc
-#
+##
+## FILE:  .zshrc
+## DESC:  zsh init file; sourced by interactive shells
+##
 
 # search path for the cd command
 cdpath=(.)
