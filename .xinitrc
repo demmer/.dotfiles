@@ -25,6 +25,13 @@ if [ -n "$X11HOME" ]; then
 fi
 
 #
+# Do any requested xmodmap operations
+#
+if [ -f $HOME/.xmodmaprc ]; then
+	xmodmap $HOME/.xmodmaprc
+fi
+
+#
 # Load the X defaults after substituting geometry bindings
 #
 if [ -f $HOME/.Xdefaults.in ]; then
@@ -79,8 +86,8 @@ xterm -n "No more rhymes now, I mean it!!" -geometry =$XTERM_4_GEOM &
 xterm -n "Anybody want a peanut?" -geometry =$XTERM_5_GEOM &
 
 # Run any host-specific commands (i.e. xapm on laptops)
-if [ -f $HOME/.xinitrc-$HOST ]; then
-	source $HOME/.xinitrc-$HOST
+if [ -f "$HOME/.xinitrc-$HOST" ]; then
+	source "$HOME/.xinitrc-$HOST"
 fi
 
 # Wait for the window manager to quit
