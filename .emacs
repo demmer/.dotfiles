@@ -5,7 +5,10 @@
 
 (message "Loading .emacs...")
 
-(defvar *HOME* (getenv "HOME"))
+(defvar *HOME* (getenv "EMACSHOME"))
+(if (null *HOME*)
+    (setq *HOME* (getenv "HOME")))
+
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message (getenv "USER"))
 
