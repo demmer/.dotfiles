@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for h in $* ; do
+    xterm -n $h -T $h -e ssh $h &
+done
