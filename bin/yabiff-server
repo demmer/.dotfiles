@@ -153,7 +153,7 @@ proc scan {spool spoolfile} {
 	    }
 	    
 	    set subject [string tolower $subject]
-	    if {$spool == "@"} {
+	    if {$spool == "@" || $spool == "inbox"} {
 		puts "$from >> $subject"
 	    }
 	    incr nlines
@@ -180,7 +180,7 @@ proc scan {spool spoolfile} {
     set mtime($spoolfile) $stat(mtime)
     set ctime($spoolfile) $stat(ctime)
 
-    if {$spool != "@"} {
+    if {$spool != "@" && $spool != "inbox"} {
 	puts "yabiff count $spool $nlines"
     }
 }

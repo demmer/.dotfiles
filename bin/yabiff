@@ -67,7 +67,7 @@ foreach arg $rest {
 
     set spoolcount 0
     foreach spool $spools {
-	if {$spool == "@" || $spool == "@F"} {
+	if {$spool == "@" || $spool == "inbox" || $spool == "@F"} {
 	    continue
 	}
 	incr spoolcount
@@ -135,7 +135,7 @@ if {$hostspools == {}} {
 	frame $frame -background $bg -bd 0 -height 0
 	pack $frame -expand yes -fill both -side top
 
-	if {$spools != "@"} {
+	if {$spools != "@" && $spools != "inbox"} {
 	    set sideframe ".sideframe-$host"
 	    frame $sideframe -background $bg -bd 0 -width 1
 	    pack $sideframe -in $frame -side left -expand no -fill y
@@ -150,8 +150,8 @@ if {$hostspools == {}} {
 
 	foreach spool $spools {
 	    if {$spool == "@F"} continue;
-	    if {$spool == "@"} {
-		set text ".text-$host-$spool"
+	    if {$spool == "@" || $spool == "inbox"} {
+		set text ".text-$host-@"
 		text $text -wrap none -font $font -background $bg -bd 1 -height 0
 		pack $text -in $frame -expand yes -fill both -side right 
 	    } else {
