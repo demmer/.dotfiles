@@ -14,9 +14,12 @@
 # * ^[Cc]ontent-[Tt]ype: text/html
 # | dehtml.pl
 
+use MIME::Base64;
+
 $hdr  = "";
 $html = "";
 $body = "";
+$is_b64 = 0;
 
 $host = `hostname`;
 chomp $host;
@@ -28,7 +31,11 @@ while (<>) {
     last if /^$/;
 
     # Fix the content type
-    s|[Cc]ontent-[Tt]ype: text/html|Content-Type: multipart/mixed; boundary="$bound"|;
+    s|^Content-Type: text/html|Content-Type: multipart/mixed; boundary="$bound"|i;
+
+    if (s/^Content-Transfer-Encoding: base64/Content-Transfer-Encoding:/i) {
+	$is_b64 = 1;
+    }
     
     $hdr .= $_;
 }
@@ -39,6 +46,9 @@ while (<>) {
 
 if (open(TMP, "> $tmpf")) {
     $newhtml = $html;
+    if ($is_b64) {
+	$newhtml = decode_base64($newhtml);
+    }
     $newhtml =~ s/=\n//g;
     print(TMP $newhtml);
     close(TMP);
@@ -69,6 +79,9 @@ print($body);
 
 print("--$bound\n");
 print("Content-Type: text/html; charset=us-ascii\n");
+if ($is_b64) {
+    print("Content-Transfer-Encoding: base64\n");
+}
 print("Content-Disposition: attachment; filename=\"original.html\"\n");
 print("\n");
 print($html);
