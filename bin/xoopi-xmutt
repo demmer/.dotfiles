@@ -1,4 +1,4 @@
 #!/bin/sh -f
 
-xterm -title "Mail Shell" -geometry 80x52+1+310 -e \
+xterm -title "Xoopi Mail Shell" -geometry 80x52+1+310 -e \
 	ssh -t xoopi bin/mutt &
