@@ -64,6 +64,7 @@ Style "xbiff"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "xpostit"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "mailbox"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "dclock"		NoTitle, Sticky, WindowListSkip
+Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
 
 #
@@ -242,7 +243,7 @@ Key Next  R    N    CursorMove     +10  +10
 Key x    R    N    Exec  xterm -geometry 79x28 -n 'Shell' &
 Key t    R    N    Exec  xterm -n "treat" -T "treat" -e ssh treat &
 Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
-Key n    R    N    Exec  netscape &    
+Key m    R    N    Exec  mozilla &    
 
 # raise / lower windows
 Key space A CM   RaiseLower

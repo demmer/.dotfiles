@@ -6,7 +6,6 @@
 ## USAGE: zsh
 ## 
 ## DATE:  Sat May 27 17:22:34 1995
-## $Id: .zshenv,v 1.1 2002-07-21 16:16:58 miked Exp $
 ## 
 ## Modification history:
 ##    jal   Sat May 27 17:22:37 1995   made header
@@ -25,19 +24,29 @@ if [ "$USER" = "" ]; then
 fi
 
 # Defines the platform that we are running on
-if [ -x /bin/uname ]; then
-	export OSARCH=`/bin/uname -s`-`/bin/uname -r`
-	case "$OSARCH" in
-	SunOS-5*)
-		export ARCH=solaris
+UNAME=`which uname`
+if [ -x $UNAME ]; then
+	export OSARCH=`$UNAME -s`-`$UNAME -r`
+  	case "$OSARCH" in
+  	SunOS-5*)
+  		export ARCH=solaris
+  		;;
+  	SunOS-4*)
+  		export ARCH=sunos
+  		;;
+	FreeBSD-4*)
+		export ARCH=FreeBSD4
 		;;
-	SunOS-4*)
-		export ARCH=sunos
-		;;
-	*)
-		export ARCH=`uname -s`
-		;;
-	esac
+  	FreeBSD-3*)
+  		export ARCH=FreeBSD3
+  		;;
+  	FreeBSD-2*)
+  		export ARCH=FreeBSD2
+  		;;
+  	*)
+  		export ARCH=`$UNAME -s`
+  		;;
+  	esac
 else
 	export ARCH=unk
 	export OSARCH=unk
@@ -46,12 +55,14 @@ fi
 # I set my path before all the others to override programs
 
 path=(						\
-        ~/bin					\
+	~/bin/$ARCH                             \
+	~/bin/                                  \
+	/usr/local/bin				\
+	/usr/local/sbin				\
 	/bin					\
 	/sbin					\
 	/usr/bin				\
 	/usr/sbin				\
-	/usr/local/bin				\
 	/usr/X11R6/bin				\
 	/usr/games				\
 	.					\
@@ -64,15 +75,13 @@ path=(						\
 export PATH SHELL
 
 # LD_LIBRARY_PATH settings - should be architecture dependent
-ld_library_path=(				\
-		 /usr/lib			\
-		 /usr/lib/java/lib/		\
-		 /usr/lib/java/lib/i586		\
- 		 )
+#  ld_library_path=(				\
+#  		 /usr/lib			\
+#  		 /usr/lib/java/lib/		\
+#  		 /usr/lib/java/lib/i586		\
+#   		 )
 			 
-export LD_LIBRARY_PATH=${(j{:})ld_library_path}
-
-export PERL5LIB=/usr/local/lib/perl5
+#  export LD_LIBRARY_PATH=${(j{:})ld_library_path}
 
 # less is a much better pager than more
 export MORE=less
@@ -103,12 +112,23 @@ export INDEXPATH=/u/system/admin/users:/u/system/admin/inventory
 source ~/.zalias
 source ~/.zfunc
 
-# TEX stuff 
-export TEXINPUTS=.:~/latex:
-
 # added by AMD
 # export nobeep
 
 export EDITOR='vi'
 export VISUAL='vi'
-export AUTOUNSUBSCRIBE="*"
+
+export ENSCRIPT_2SIDED='-p - -2r'
+
+export HOSTNAME=`echo $HOST | sed 's/\..*//g'`
+export EMACSLOCKDIR=$HOME/.emacslockdir
+
+export CVS_RSH=ssh
+if [ -d /repository/CVSROOT ]; then
+    export CVSROOT=/repository
+else 
+    export CVSROOT=:ext:inigo.demmer.nu:/repository  
+fi
+
+unset XAUTHORITY
+export XAUTHORITY

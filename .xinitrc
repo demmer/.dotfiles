@@ -35,24 +35,30 @@ fi
 # Set the background to a nice graphic
 xv -quit -rmode 4 $HOME/images/gray_rock.gif
 
+# enable screen saver
+xset s 300
+
 # Bring up the window manager and save its process id
 fvwm2 &
 WMPID=$!
 
 # Utility programs
 nice dclock &
-$HOME/bin/inigo-mailbox &
-$HOME/bin/xoopi-tunnel &
-$HOME/bin/xoopi-mailbox &
+inigo-mailbox &
+xoopi-tunnel &
+xoopi-mailbox &
+keepalive everybuddy &
 
 # Bring up a console window, an email shell and a work shell
 xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
 	'tail -f -n 0 /var/log/messages /var/log/secure & clear; zsh' &
-$HOME/bin/xoopi-xmutt &
+xoopi-xmutt &
 colorxterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
 
 # Bring up emacs and two work shells in 2nd screen 
 emacs -geometry '=82x65+1280+115' -title "Inconceivable" &
+# (sleep 4; gnudoit "(make-frame '((left . 1870) (top . 115)))") &
+
 colorxterm -n "Fezzik, are there rocks up ahead?" -geometry '=80x32+1870+115' &
 colorxterm -n "If there are, we'll all be dead!!" -geometry '=80x32+1870+568' &
 

@@ -5,7 +5,6 @@
 ## USAGE: zsh
 ## 
 ## DATE:  2/16/94
-## $Id: .zshrc,v 1.1 2002-08-06 16:12:53 miked Exp $
 ## 
 ## Modification history:
 ##    jal   Sat May 27 17:28:10 1995   made header
@@ -32,10 +31,9 @@ cdpath=(.)
 # ignore these extensions when completing filenames
 fignore=(\~)
 
-# use hard limits, except for a smaller stack and no core dumps
+# use hard limits, except for a smaller stack
 unlimit
 limit stack 8192
-limit core 0
 limit -s
 
 # left prompt
@@ -68,13 +66,13 @@ setopt \
   autopushd \
   autoresume \
   braceccl \
+  clobber \
   correct \
   extendedglob \
   histignoredups \
   listtypes \
   longlistjobs \
   nobeep \
-  noclobber \
   nohistbeep \
   nohup \
   nolistbeep \
@@ -104,7 +102,6 @@ if [ "$ARCH" = "IRIX" -o "$ARCH" = "HP-UX" ]; then
 	stty intr '^C' erase '^?' kill '^U' susp '^Z' echoe
 fi
 
-eval `dircolors ~/.dir_colors`
 ## FUNCTIONS FOR INTERACTIVE SHELLS ONLY
 
 ## xterm specific functions

@@ -2,28 +2,15 @@
 ## FILE:  .zlogin
 ## DESC:  zsh init file; sourced by login shells
 ##
-## USAGE: zsh -l
-## 
-## DATE:  10/4/94
-## $Id: .zlogin,v 1.2 2002-04-03 16:23:22 miked Exp $
-## 
-## Modification history:
-##    jal   Sat May 27 17:29:40 1995   made header
-##    mjd   Sept. 29 1995 modified
-
-###################################################
-# Aliases only for the login shell                #
-###################################################
-
-scl() { screen -R; logout }
-xst() { startup $*; logout }
 
 ###################################################
 # Programs to run at login                        #
 ###################################################
 
-/bin/uname -snmr
-/usr/bin/frm -s new -s old
+uname -snmr
+if [ -x `which frm` ]; then
+	frm -s new -s old
+fi
 
 ###################################################
 # Environment variables describing my preferences #
@@ -49,23 +36,12 @@ if [ "$TERM" = "dec-vt220" ]; then
 	export TERM=vt220
 fi
 
-# cheap solaris hacks
-if [ "$ARCH" = "solaris" ]; then
-	if [ "$TERM" = "sun" -a `tty` != "/dev/console" ]; then
-		export TERM="network"
-	fi
-fi
-
-
 #####################################################
 # Prompt the user for initial information gathering #
 #####################################################
 
-## create a netscape disk cache directory
-mkdir -p /tmp/netscape-$LOGNAME
-
-## check about starting X
-# . .prompt-startx
+## Make sure the error directory exists
+mkdir -p ~/.err
 
 ## load ssh environment if it doesn't exist
 if [ "$SSH_AUTH_SOCK" = "" ]; then
@@ -85,9 +61,26 @@ if [ "$TERM" = "dialup" -o "$TERM" = "network" -o "$TERM" = "ansi" ]; then
 	export XONXOFF
 fi
 
-# run my overrided version of newmail that supports ringing the bell
-# newmail -i 15
-
 # always set the display when logging in from these hosts
 AUTO_DISPLAY_HOSTS="vissini fezzik"
 
+#
+# Prompt the user about starting X windows
+#
+STARTX=no
+if [ `tty` = "/dev/tty1" -a "$TERM" = "linux" ]; then
+    STARTX=yes
+elif [ `tty` = "/dev/ttyv0" -a `uname -s` = FreeBSD ]; then
+    STARTX=yes
+fi
+
+if $STARTX ; then
+    echo -n "Start X Windows? "
+    read -q CHOICE
+    if [ $CHOICE = 'y' ]; then
+	   echo "Starting X Windows..."
+	   startx 2>>! ~/.err/startx
+	   sleep 1
+	   logout
+    fi
+fi
