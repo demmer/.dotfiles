@@ -50,6 +50,7 @@
 (require 'cc-mode)
 (require 'cc-vars)
 (require 'dabbrev)
+(require 'once-only-header)
 
 (defun my-c-common-setup ()
   (interactive)
@@ -64,6 +65,7 @@
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
   (setq comment-use-syntax nil)
+  (ooh-maybe-insert-cpp-guard)
   )
 
 (add-hook 'c-mode-common-hook 'my-c-common-setup)
@@ -72,10 +74,13 @@
   '((c-basic-offset		. 4)
     (c-hanging-comment-ender-p	. nil)
     (c-offsets-alist
-     . ((substatement-open	. 0)		;don't indent braces!
-	(inline-open		. 0)		;don't indent braces, please.
-	(label 			. -1000)	;flush labels left
-	(statement-cont		. c-lineup-math)))))
+     . ((substatement-open	. 0)		; don't indent braces!
+	(inline-open		. 0)		; don't indent braces, please.
+	(label 			. -1000)	; flush labels left
+	(statement-cont		. c-lineup-math); line up statements with = signs
+	(innamespace		. 0)		; no indent for namespaces
+	(inextern-lang		. 0)		; or extern language
+	))))
 
 (defun c-indent-one-tab()
   (interactive)
@@ -179,6 +184,7 @@ with tab characters underneath."
 				("\\.[Hh]\\'" . c++-mode)
 				("\\.c[cx]?x?\\'" . c++-mode)
 				("\\.[Cyxi]\\'" . c++-mode)
+				("\\.tcc\\'" . c++-mode)
 				("\\.nc\\'" . nesc-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
@@ -494,7 +500,8 @@ with tab characters underneath."
 (setq completion-ignored-extensions (append completion-ignored-extensions
 					    '(".class"
 					      ".T"
-					      ".lo")))
+					      ".lo"
+					      ".d")))
 ; and ignore case
 (setq completion-ignore-case t)
 
@@ -558,3 +565,7 @@ with tab characters underneath."
 (if (featurep 'uniquify)
     (setq uniquify-buffer-name-style 'post-forward
 	  uniquify-separator ", "))
+
+;; Hooks for the electric buffer menu
+(require 'ebuff-menu)
+(define-key electric-buffer-menu-mode-map "\C-s" 'isearch-forward)
