@@ -24,13 +24,6 @@ sa-talk
 }
 
 #
-# Anti-spam filter
-#
-:0fw: spamassassin.lock
-#| $HOME/sa/usr/bin/spamassassin -a
-| $HOME/sa/usr/bin/spamc -p 17600
-
-#
 # Kill the really bad spam (10 pts or higher). 
 #
 :0
@@ -45,10 +38,10 @@ sa-talk
 | formail -I "Status: RO" >> $HOME/Mail/spam-certain
 
 #
-# And 5 points or more gets copied to the spam folder.
+# And 4 points or more gets copied to the spam folder.
 #
 :0
-* ^X-Spam-Level: \*\*\*\*\*
+* ^X-Spam-Level: \*\*\*\*
 | formail -I "Status: RO" >> $HOME/Mail/spam
 
 #
