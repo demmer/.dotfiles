@@ -1,10 +1,10 @@
 ;;; lcvs.el --- a little CVS mode, or lomew's CVS mode
 
-;; Copyright (C) 1997-2001 Bart Robinson <lomew@cs.utah.edu>
+;; Copyright (C) 1997-2002 Bart Robinson <lomew@pobox.com>
 
-;; Author: Bart Robinson <lomew@cs.utah.edu>
+;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2
+;; Version: 1.2 ($Revision: 1.13 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jan 24, 2000
 ;; Keywords: cvs
@@ -43,6 +43,8 @@
 ;; - chokes when using CVS_RSH=ssh and get prompted for passwd
 ;; - fix add to cd to dir -- ie handle adding with slash in name,
 ;;   seems to work fine for me with cvs-1.10
+;; - clear the mark list after operations on marked files.  commit and
+;;   update do this but add doesn't, for example.
 
 ;; ASSUMPTIONS:
 ;; - We assume that all files in a directory have the same branch tag.
@@ -88,9 +90,6 @@
 ;;   cursor and update that 
 ;;
 ;; - More flexible marking - subdir, all locally modified, region
-;;
-;; - Save commit message on message ring and allow M-p/n to cycle in
-;;   commit-mode.  vc-mode does this.
 ;;
 ;; - Have a diff mode that shows the log message at the top of the diff (hard)
 ;;   This is very useful when working on branches since the log messages
@@ -162,6 +161,7 @@ To see the whole log, use \\[lcvs-show-full-log].")
     ("^C[ *].*" . lcvs-C-face)
     ("^cvs update.*" . lcvs-other-face)))
 
+
 ;; Internal Vars.
 
 ;; Specifies what to search for when looking for the filename
@@ -283,6 +283,10 @@ For commit-mode buffers.")
   "The submode for `lcvs-mode' for this buffer.")
 (make-variable-buffer-local 'lcvs-submode)
 
+(defvar lcvs-sticky-tag nil
+  "The tag to update against.  This is remembered for diffs, etc.")
+(make-variable-buffer-local 'lcvs-sticky-tag)
+
 
 ;; User functions.
 
@@ -350,7 +354,7 @@ For commit-mode buffers.")
   "Call \"cvs -nq update\" in DIR and then call `lcvs-mode' (which see).
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 examine even if there is an examine buffer hanging around for DIR."
-  (interactive (lcvs-examine-update-common-get-args "examine"))
+  (interactive (lcvs-examine-update-common-get-args 'examine))
   (setq lcvs-last-dir dir)
   (lcvs-examine-update-common 'examine dir dont-use-existing))
 
@@ -358,14 +362,14 @@ examine even if there is an examine buffer hanging around for DIR."
   "Call \"cvs -q update -dP\" in DIR and then call `lcvs-mode' (which see).
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 update even if there is an update buffer hanging around for DIR."
-  (interactive (lcvs-examine-update-common-get-args "update"))
+  (interactive (lcvs-examine-update-common-get-args 'update))
   (setq lcvs-last-dir dir)
   (lcvs-examine-update-common 'update dir dont-use-existing))
 
 (defun lcvs-examine-or-update (dir &optional dont-use-existing)
   "LVCS examine or update based on the current value of `lcvs-submode'.
 It doesn't make sense to call this outside of an LCVS buffer."
-  (interactive (lcvs-examine-update-common-get-args (symbol-name lcvs-submode)))
+  (interactive (lcvs-examine-update-common-get-args lcvs-submode))
   (setq lcvs-last-dir dir)
   (lcvs-examine-update-common lcvs-submode dir dont-use-existing))
 
@@ -378,7 +382,10 @@ then call this.
 The hook `lcvs-mode-hook', if set, is run upon entry.
 
 The following keys have meaning in an `lcvs-mode' buffer:
-\\{lcvs-mode-map}"
+\\{lcvs-mode-map}
+Some of the commands can work on marked files via a \\[universal-argument]
+prefix; consult the individual documentation for each command
+via `describe-key' on \\[describe-key]"
   ;; XXX/BRR completions would be nice, but are hassle since I have to
   ;; define a keymap
   (interactive "SSubmode (examine or update): ")
@@ -418,6 +425,21 @@ For update mode buffers."
 		(setq regexps (cdr regexps))))
 	  (setq buffer-read-only t)))))
 
+;; XXX/BRR this can be annoying with cvs versions newer than 1.10 due to
+;; the way files that have been changed in your checkout and in the repository.
+;; In 1.10 they are reported as C files, but newer versions try to do the merge
+;; and report M if there were no conflicts and C if there truly were, but is
+;; inconsistent with local and remote repositories.
+;; This means if you want to know if a file has been changed in the the
+;; repository and in your checkout, you have to look at the lines around the
+;; M line for things like "merging differences between blah" -- you can't
+;; just look at the line for C or M.  So when you sort the buffer these lines
+;; are moved away and it is harder to tell.
+;; I've sent a patch to the cvs list which has been apparently ignored.
+;; A workaround I haven't implemented is to have a filter on the cvs proc
+;; to rewrite these ambiguous M files as C files.
+;;
+;; (sort of) fixed by demmer with the process filtering
 (defun lcvs-sort ()
   "Sort the CVS output in this buffer.
 This is useful to get all the M, U, etc files together and the new directory
@@ -659,7 +681,7 @@ the file on this line."
   (message "Diffing...done"))
 
 (defun lcvs-diff-head (arg)
-  "Diff some files against the HEAD revision or the head of the current branch.
+  "Diff some files against the HEAD revision.
 Use this when files have been checked in by someone else and you want
 to see what has changed before you update your copies.  See also
 `lcvs-diff-base'.
@@ -867,9 +889,18 @@ a CVS process."
 
 ;; The committing major mode
 
+(defvar lcvs-commit-msgs (make-ring 10))
+(defvar lcvs-commit-msgs-index nil)
+(make-variable-buffer-local 'lcvs-commit-msgs-index)
+
+(defvar lcvs-commit-initial-buffer-contents "")
+(make-variable-buffer-local 'lcvs-commit-initial-buffer-contents)
+
 (defvar lcvs-commit-mode-map
   (let ((map (make-sparse-keymap 'lcvs-commit-mode-map)))
     (define-key map "\C-c\C-c" 'lcvs-commit-finish)
+    (define-key map "\M-p" 'lcvs-commit-insert-prev-commit-msg)
+    (define-key map "\M-n" 'lcvs-commit-insert-next-commit-msg)
     map)
   "Keymap for `lcvs-commit-mode'")
 
@@ -885,6 +916,7 @@ This mode is not meant to be user invoked."
   (use-local-map lcvs-commit-mode-map)
   (setq major-mode 'lcvs-commit-mode)
   (setq mode-name "CVS-Commit")
+  (setq lcvs-commit-msgs-index nil)
 
   ;; Insert "CVS: ..." stuff to show them what files they're affecting.
   (insert "CVS: ")(insert-char ?- 70)(insert "\n")
@@ -900,17 +932,155 @@ This mode is not meant to be user invoked."
   (lcvs-commit-insert-matching-files ?A "Added")
   (lcvs-commit-insert-matching-files ?R "Removed")
   (insert "CVS: ")(insert-char ?- 70)(insert "\n")
-  (if (file-readable-p "CVS/Template")
-      (insert-file-contents "CVS/Template"))
+  (lcvs-maybe-insert-template)
+  (setq lcvs-commit-initial-buffer-contents (buffer-string))
   (set-buffer-modified-p nil)
 
   ;; XXX/BRR shouldn't hardcode binding.
   (message "Type C-c C-c when done.")
   (run-hooks 'text-mode-hook))
 
+(defun lcvs-maybe-insert-template ()
+  ;; Look for a template to insert.
+  ;; This is for the CVSROOT/rcsinfo feature of cvs.
+
+  ;; First look in CVS/Template.  This will exist if rcsinfo
+  ;; specifies a template but the repository is remote.
+  (let ((cvs-template-filename (concat (file-name-as-directory "CVS")
+				       "Template")))
+    (if (file-readable-p cvs-template-filename)
+	(insert-file-contents cvs-template-filename)
+      ;; Otherwise check if the repository is local and use CVSROOT/rcsinfo
+      ;; to find the template.
+      (let* ((rcsinfo (lcvs-load-rcsinfo))
+	     (templates (lcvs-apply-rcsinfo
+			 rcsinfo
+			 (lcvs-get-directories (mapcar 'car
+						       lcvs-commit-files)))))
+	(if templates
+	    (progn
+	      (if (not (lcvs-all-same-elements templates))
+		  (insert "CVS: WARNING: files matched different "
+			  "templates in CVSROOT/rcsinfo, using first"))
+	      (insert-file-contents (car templates))))))))
+
+(defun lcvs-load-rcsinfo ()
+  ;; Load the CVSROOT/rcsinfo file into an alist ((pattern . template) ...)
+  ;; Return the alist
+  ;; Return nil if we can't find it, can't parse it, etc.
+  (let (result local-cvsroot)
+    ;; Look for a local CVS/Root.  It must start with a slash or :local:
+    (let ((cvsroot-contents (lcvs-get-special-file-contents-as-one-line
+			     "Root")))
+      (if cvsroot-contents
+	  (if (string-match "^:local:\\(.*\\)" cvsroot-contents)
+	      (setq local-cvsroot (match-string 1 cvsroot-contents))
+	    (if (file-name-absolute-p cvsroot-contents)
+		(setq local-cvsroot cvsroot-contents)))))
+    (if local-cvsroot
+	;; Now look for the rcsinfo file.
+	;; This is normally in $CVSROOT/CVSROOT/rcsinfo
+	;; see cvs/src/parseinfo.c for the format of these files
+	(let ((rcsinfo-filename (concat (file-name-as-directory local-cvsroot)
+					(file-name-as-directory "CVSROOT")
+					"rcsinfo")))
+	  (if (file-readable-p rcsinfo-filename)
+	      (let ((tempbuf (get-buffer-create " *CVS-rcsinfo*"))
+		    done)
+		(save-excursion
+		  (set-buffer tempbuf)
+		  (erase-buffer)
+		  (insert-file-contents rcsinfo-filename)
+		  (goto-char (point-min))
+		  (while (not (eobp))
+		    (if (and (not (looking-at "^#"))
+			     (looking-at "\\s-*\\(\\S-+\\)\\s-+\\(.*\\)"))
+			(let ((exp (lcvs-emacsify-regexp (match-string 1)))
+			      (value (lcvs-expand local-cvsroot (match-string 2))))
+			  ;; Append since order matters.
+			  (setq result (append result (list (cons exp value))))))
+		    (forward-line)))
+		(kill-buffer tempbuf)))))
+    result))
+
+(defun lcvs-expand (cvsroot str)
+  ;; Expand env vars and ~user things in STR.
+  ;; Use param CVSROOT for $CVSROOT
+  (let ((current-root (getenv "CVSROOT"))
+	result)
+    (unwind-protect
+	(progn
+	  (setenv "CVSROOT" cvsroot)
+	  (setq result (expand-file-name (substitute-in-file-name str))))
+      (setenv "CVSROOT" current-root))
+    result))
+
+(defun lcvs-get-directories (files)
+  ;; For each file, get the directory it is in relative to $CVSROOT.
+  ;; Algorithm:
+  ;;   We want to prepend something from the CVS/Repository to each file.
+  ;;   If the CVS/Repository is relative, that is our prefix.
+  ;;   Else, get the CVS/Root, remove the :local: prefix if present and
+  ;;   remove this from the CVS/Repository, that is our prefix.
+
+  (let ((repos (lcvs-get-special-file-contents-as-one-line "Repository"))
+	prefix)
+    (if repos
+	(progn
+	  ;; Absolute path, we need to modify it according to CVS/Root
+	  (if (file-name-absolute-p repos)
+	      (let ((root (lcvs-get-special-file-contents-as-one-line "Root")))
+		(if root
+		    (progn
+		      (if (string-match "^:local:\\(.*\\)" root)
+			  (setq root (match-string 1 root)))
+		      (replace-in-string repos
+					 (concat "^" (regexp-quote root))
+					 "")))))
+	  (setq prefix (file-name-as-directory repos))))
+    (if prefix
+	(mapcar (lambda (f)
+		  (concat prefix f))
+		files)
+      ;; No prefix probably means no CVS/Repository, they're fucked but
+      ;; don't do anything.
+      files)))
+
+(defun lcvs-apply-rcsinfo (rcsinfo files)
+  ;; Apply the rules in RCSINFO to FILES, returning any matches.
+  ;; RCSINFO looks like ((exp . value) (exp . value)...)
+  ;; Return the list of VALUEs whose EXPs match a file.
+  ;; Two special EXPS:
+  ;;	ALL - always matches, used in addition to any matches
+  ;;	DEFAULT - used if no matches
+
+  (let (matches)
+    ;; First, get the matches.
+    (while files
+      (let ((file (car files))
+	    (info rcsinfo))
+	(while info
+	  (let* ((elem (car info))
+		 (exp (car elem))
+		 (value (cdr elem)))
+	    (if (string-match exp file)
+		(setq matches (cons value matches))))
+	  (setq info (cdr info))))
+      (setq files (cdr files)))
+    ;; If no matches, add the DEFAULT value.
+    (if (not matches)
+	(let ((default (assoc "DEFAULT" rcsinfo)))
+	  (if default
+	      (setq matches (list (cdr default))))))
+    ;; If there is an ALL rule, add it in.
+    (let ((all (assoc "ALL" rcsinfo)))
+      (if all
+	  (setq matches (cons (cdr default) matches))))
+    matches))
+
 (defun lcvs-commit-insert-matching-files (char desc)
   (if (rassoc char lcvs-commit-files)
-      (progn
+      (let ((prefix "CVS:    "))
 	(insert "CVS: " desc " Files:\n")
 	;; This is a lame place to put this, but that is close to what cvs does.
 	;; We don't look in the CVS/Entries file but assume the CVS/Tag file
@@ -918,8 +1088,9 @@ This mode is not meant to be user invoked."
 	(let ((tag (lcvs-sticky-tag (car (car lcvs-commit-files)))))
 	  (if tag
 	      (insert "CVS:  Tag: " tag "\n")))
-	(insert "CVS:    ")
+	(insert prefix)
 	(let ((cur lcvs-commit-files)
+	      (curcol (current-column))
 	      pair)
 	  (while cur
 	    (setq pair (car cur))
@@ -927,12 +1098,15 @@ This mode is not meant to be user invoked."
 	    (let ((file (car pair))
 		  (state (cdr pair)))
 	      (if (equal state char)
-		  (insert file " "))))
-	  (insert "\n"))
-	(let ((end (point)))
-	  (beginning-of-line -1)
-	  (let ((fill-prefix "CVS:    "))
-	    (fill-region (point) end))))))
+		  (progn
+		    (if (> (+ curcol (length file) 1)
+			   fill-column)
+			(progn
+			  (insert "\n" prefix)
+			  (setq curcol (length prefix))))
+		    (insert file " ")
+		    (setq curcol (+ curcol (length file) 1))))))
+	  (insert "\n")))))
 
 (defun lcvs-commit-finish ()
   ;; Finish up the commit by grabbing the commit string and calling cvs commit.
@@ -960,6 +1134,7 @@ This mode is not meant to be user invoked."
       ;; file, mainly so the commitlog remains concise and usable.
       (pop-to-buffer parent)
       (message "Committing...")
+      (ring-insert lcvs-commit-msgs msg)
       (setq status (lcvs-do-command-quietly "commit" nil
 					    (nconc (list "-m" msg)
 						   justfiles)))
@@ -988,8 +1163,84 @@ This mode is not meant to be user invoked."
 		"\n")
 	(error "Commit failed, see %s buffer for details." commit-bufname)))))
 
+(defun lcvs-commit-insert-prev-commit-msg (arg)
+  "Cycle backwards thru commit message history."
+  (interactive "*p")
+  (let ((len (ring-length lcvs-commit-msgs)))
+    (if (= len 0)
+	(error "Empty commit message string")
+      (erase-buffer)
+      (insert lcvs-commit-initial-buffer-contents)
+      ;; Initialize the index on the first use of this command
+      ;; so that the first M-p gets index 0, and the first M-n gets
+      ;; index -1.
+      (if (null lcvs-commit-msgs-index)
+	  (setq lcvs-commit-msgs-index
+		(if (> arg 0) -1
+		  (if (< arg 0) 1 0))))
+      (setq lcvs-commit-msgs-index
+	    (mod (+ lcvs-commit-msgs-index arg) len))
+      (message "Commit Msg %d" (1+ lcvs-commit-msgs-index))
+      (insert (ring-ref lcvs-commit-msgs lcvs-commit-msgs-index)))))
+
+(defun lcvs-commit-insert-next-commit-msg (arg)
+  "Cycle forwards thru commit message history."
+  (interactive "*p")
+  (lcvs-commit-insert-prev-commit-msg (- arg)))
+
 
 ;; Internal functions.
+
+(defun lcvs-get-special-file-contents (filename)
+  ;; Get the contents of CVS/<filename>
+  (let ((filename (concat (file-name-as-directory "CVS") filename))
+	result)
+    (if (file-readable-p filename)
+	(let ((tempbuf (get-buffer-create (concat " *" filename "*"))))
+	  (save-excursion
+	    (set-buffer tempbuf)
+	    (erase-buffer)
+	    (insert-file-contents filename)
+	    (goto-char (point-min))
+	    (setq result (buffer-substring (point-min) (point-max))))
+	  (kill-buffer tempbuf)))
+    result))
+
+(defun lcvs-get-special-file-contents-as-one-line (filename)
+  ;; Get the contents of CVS/<filename> as a single line.
+  ;; This basically gets you the first line.
+  (let ((contents (lcvs-get-special-file-contents filename)))
+    (if contents
+	(progn
+	  (string-match ".*" contents)
+	  (match-string 0 contents)))))
+
+(defun lcvs-emacsify-regexp (exp)
+  ;; Convert a CVS-style regular expression into Emacs-style.
+  ;; CVS-style is egrep-style
+  ;; We basically just fix the parens and bars to be quoted,
+  ;; we don't handle the fancy stuff.
+  (setq exp (replace-in-string exp "\\(^\\|[^\\]\\)(" "\\1\\\\("))
+  (setq exp (replace-in-string exp "\\([^\\]\\))" "\\1\\\\)"))
+  (setq exp (replace-in-string exp "\\([^\\]\\)|" "\\1\\\\|"))
+  exp)
+
+(defun lcvs-all-same-elements (list)
+  ;; Return non-nil if all elements in LIST are the same
+  (let ((first (car list))
+	(result t))
+    (setq list (cdr list))
+    (while list
+      (if (not (equal (car list) first))
+	  (setq result nil
+		list nil)
+	(setq list (cdr list))))
+    result))
+
+(defun lcvs-head-arg ()
+  ;; Return an arg referring to the HEAD, this might be a tag.
+  (or lcvs-sticky-tag
+      '("-rHEAD")))
 
 (defun lcvs-set-view-mode (win buf)
   ;; Turn view-mode on for BUF in window WIN, making sure quitting it
@@ -1047,7 +1298,8 @@ This mode is not meant to be user invoked."
   (let ((buf (get-file-buffer file)))
     (if (and buf
 	     (file-exists-p file)
-	     (not (verify-visited-file-modtime buf)))
+	     (not (verify-visited-file-modtime buf))
+	     (not (buffer-modified-p buf)))
 	(save-excursion
 	  (set-buffer buf)
 	  (revert-buffer nil t)))))
