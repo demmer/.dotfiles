@@ -1,0 +1,25 @@
+#!/bin/sh -f
+
+CMD='ssh -q treat-batch mailbox unread count delay=1'
+RED='< /dev/null > /dev/null'
+
+    main_opts=""
+bugzilla_opts="-geometry 29x27+650+1  mailbox=/u/demmer/Mail/bugzilla 	notext"
+    root_opts="-geometry 29x27+681+1  mailbox=/u/demmer/Mail/root 	notext"
+  conews_opts="-geometry 29x27+650+29 mailbox=/u/demmer/Mail/conews 	notext"
+periodic_opts="-geometry 29x27+681+29 mailbox=/u/demmer/Mail/periodic 	notext"
+
+if [ $# = 0 ]; then
+   boxes="main bugzilla root conews periodic"
+else
+   boxes=""
+   while [ $# -gt 0 ]; do
+	 boxes="$boxes $1"
+	 shift
+   done
+fi
+
+for box in $boxes; do
+    eval "opts=\$${box}_opts"
+    $CMD $opts $RED &
+done

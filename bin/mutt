@@ -1,0 +1,9 @@
+#!/bin/csh
+
+setenv TERMINFO ~/.terminfo
+if ($TERM == "xterm") then
+    setenv TERM xterm-color
+endif
+stty stop  "^\'"           # unset ctrl-s
+stty lnext "^\'"           # unset ctrl-v
+exec /usr/bin/mutt $argv

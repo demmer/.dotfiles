@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ssh -f -o BatchMode=yes inigo mailbox -geometry 50x55+598+1 notext unread count 

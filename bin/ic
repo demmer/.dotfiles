@@ -1,0 +1,11 @@
+#!/usr/local/bin/perl
+
+while (<>) {
+    chomp();
+    next if $_ eq "";
+    last if $_ eq ".";
+    last if $_ eq "q";
+    last if $_ eq "quit";
+    $x = eval($_);
+    print "$x\n";
+}
