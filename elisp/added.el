@@ -323,7 +323,7 @@ calls with dprintf macro calls. [mjd]"
   (let ((ctl-frame 
 	 (make-frame (list '(width . 112) '(height . 14) '(minibuffer . nil))))
 	)
-    (modify-frame-parameters ctl-frame (list '(left . 1605) 
+    (modify-frame-parameters ctl-frame (list '(left . 1) 
 					     '(top . 1015) 
 					     '(menu-bar-lines . 0)
 					     '(title . "Zenirc")
