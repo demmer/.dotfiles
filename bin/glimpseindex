@@ -11,5 +11,5 @@ if [ ! -f ./.glimpse_exclude -a -f $HOME/.glimpse_exclude ]; then
 	cat .glimpse_exclude
 fi
 
-runprog glimpseindex -B -M 128 -n -o -H . -t .
+runprog glimpseindex $* -B -M 128 -n -o -H . -t .
 
