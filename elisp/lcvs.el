@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.15 $)
+;; Version: 1.2 ($Revision: 1.16 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -188,6 +188,18 @@ a `U' line so you can update it in lcvs, not having to go to a shell.")
 ;; an update mode buffer.
 (defvar lcvs-dirty-regexps '("^\\([UP]\\)[ *]"
 			     "^cvs update: warning: .* was lost"))
+
+;; Regexp for lines to filter out of the examine output
+(defvar lcvs-examine-ignore-regexp "^\\(RCS file:\\|retrieving revision\\|.*conflicts\\)")
+
+;; Regexp to identify a file that needs to be flagged as a conflict
+;; (see lcvs-examine-filter)
+(defvar lcvs-examine-merge-regexp "^Merging differences between .* and .* into \\(.*\\)\n$")
+
+;; Temporary variable used to hold the file name that's being merged
+;; and may need to be flagged as a conflict (see lcvs-examine-filter),
+(defvar lcvs-examine-merge-file nil)
+(make-variable-buffer-local 'lcvs-examine-merge-file)
 
 (defvar lcvs-examine-explanations
   '((?U . "File has been changed in repository and needs to be updated")
@@ -799,10 +811,11 @@ Influenced by the `lcvs-log-restrict-to-branch' variable."
 		    (goto-char (point-min))
 		    (recenter 0))
 		   ;; If the whole entry fits into the window,
-		   ;; display it centered
+		   ;; display it at the bottom of the window
 		   ((< (1+ lines) (window-height))
-		    (goto-char start)
-		    (recenter (1- (- (/ (window-height) 2) (/ lines 2)))))
+		    (goto-char end)
+		    (previous-line (- (window-height) 2))
+		    (recenter 0))
 		   ;; Otherwise (the entry is too large for the window),
 		   ;; display from the start
 		   (t
@@ -1670,5 +1683,58 @@ the value of `foo'."
 		  (condition-case nil
 		      (lcvs-next-line)
 		    (error nil)))))))))
+
+
+(defun lcvs-examine-filter (proc msg) 
+  (save-excursion
+    (set-buffer (process-buffer proc))
+    (setq buffer-read-only nil)
+    (goto-char (point-max))
+    (save-excursion (insert msg))
+    (beginning-of-line)
+    
+    (while (looking-at "^.+\n")
+      (lcvs-examine-filter-handle-line)
+      )
+    
+    (setq buffer-read-only t)
+    )
+  )
+
+(defun lcvs-examine-filter-handle-line ()
+  (let ((delete-line nil))
+    (cond
+     
+     ((looking-at lcvs-examine-ignore-regexp) 
+      (setq delete-line t))
+
+     ((looking-at lcvs-examine-merge-regexp)
+      (if lcvs-examine-merge-file
+	  (message (format "WARNING: lcvs-examine-merge-file non-nil: %s"
+			   lcvs-examine-merge-file)))
+      (setq lcvs-examine-merge-file 
+	    (buffer-substring (match-beginning 1) (match-end 1)))
+      (setq delete-line t)
+      )
+     
+     ((and lcvs-examine-merge-file
+	   (looking-at (format "^M \\(.*/\\)*%s" lcvs-examine-merge-file)))
+      (delete-char 1)
+      (insert "C")
+      (setq lcvs-examine-merge-file nil))
+     
+     ((and lcvs-examine-merge-file
+	   (looking-at (format "^C \\(.*/\\)*%s" lcvs-examine-merge-file)))
+      (setq lcvs-examine-merge-file nil))
+    
+     )
+    
+    (if delete-line
+	(let ((beg (point)))
+	  (next-line)
+	  (delete-region beg (point)))
+      (next-line))
+    )
+  )
 
 ;;; lcvs.el ends here 
