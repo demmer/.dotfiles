@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+while (($key,$value) = each %ENV) {
+    next if ($key !~ /GEOM/);
+
+    $GEOM{$key} = $value;
+}
+
+while (<>) {
+    while (($key,$value) = each %GEOM) {
+	s/$key/$value/g;
+    }
+    print $_;
+}
+
