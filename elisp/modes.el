@@ -333,3 +333,10 @@
 
 ;; minibuffer
 (resize-minibuffer-mode t)
+
+;; More descriptive names than foo<2>
+(load "uniquify" t t)
+(if (featurep 'uniquify)
+    (setq uniquify-buffer-name-style 'post-forward
+	  uniquify-separator ", "))
+
