@@ -288,7 +288,11 @@ proc remote_loop {} {
 
     foreach {host spools spoolcount} $hostspools {
 	set spool_arg "-spools [join $spools ,]"
-	set cmd "ssh -v $host yabiff-server $delay_arg $spool_arg < /dev/null"
+	set cmd ""
+	if {$host != [info hostname]} {
+	    append cmd "ssh -v $host "
+	}
+	append cmd "yabiff-server $delay_arg $spool_arg < /dev/null"
 	dprint "running $cmd"
 	set ssh [open "|$cmd" r]
 	fconfigure $ssh -blocking false -buffering none
