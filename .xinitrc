@@ -46,7 +46,7 @@ WMPID=$!
 mozilla &
 nice dclock &
 inigo-mailbox &
-xoopi-tunnel &
+xoopi-tunnels &
 xoopi-mailbox &
 haight-mailbox &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
