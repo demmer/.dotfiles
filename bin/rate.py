@@ -13,8 +13,13 @@ sys.argv.pop(0);
 
 cmd = "tcpdump -n -ttt -l ";
 
+printbytes = 0;
+
 for a in sys.argv:
-    cmd += a + " ";
+    if (a == "-B"):
+	printbytes = 1;
+    else:
+        cmd += a + " ";
 
 print "Cmd is: "+cmd;
 
@@ -28,6 +33,13 @@ totalbits = 0;
 t0 = time.time();
 tlast = t0;
 
+if (printbytes):
+    bps = "Bps";
+    convert = 1.0;
+else:
+    bps = "bps";
+    convert = 8.0;
+
 while True:
     tnow = time.time();
     timeout = 2.0 - (tnow - tlast);
@@ -36,8 +48,8 @@ while True:
         newrate = totalbits / 2.0;
 
         rate = (rate * 0.1) + (newrate * 0.9)
-        
-        print "%f bps" % rate
+       
+        print "%f %s" % (rate, bps)
 
         tlast = tnow;
         timeout = 2.0;
@@ -66,7 +78,7 @@ while True:
     if (debug):
         print "dbg: tdiff %s bytes %s" % (tdiff, bytes)
 
-    totalbits += string.atoi(bytes) * 8.0;
+    totalbits += string.atoi(bytes) * convert;
     
 # If we got here, there was a problem with tcpdump
 for line in err:
