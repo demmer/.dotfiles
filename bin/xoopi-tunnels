@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $HOME/bin/mailbox_tunnel -host xoopi -v 2> $HOME/.err/mailbox_tunnel.log
+$HOME/bin/mailbox_tunnel -host xoopi -v 2> $HOME/.err/mailbox_tunnel.log &
