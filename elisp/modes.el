@@ -1,23 +1,41 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;; mode defaults ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; script mode
-
+;;
+;; figure out the right script mode based on the magic string
+;;
 (defun determine-script-mode ()
-  (goto-char (point-min))
-  (cond
-    ((looking-at "#![ \n\t]*/[^ \n\t]*perl")
-        (perl-mode))
-    ((looking-at "#![ \n\t]*/[^ \n\t]*tclsh")
-        (tcl-mode))
-    ((looking-at "#![ \n\t]*/[^ \n\t]*make")
-        (makefile-mode))
-    ((looking-at "#![ \n\t]*/[^ \n\t]*awk")
-        (awk-mode))
-  ))
+  (save-excursion
+    (goto-char (point-min))
+    (if (looking-at "#!")
+	(progn
+	  (cond
+	   ((looking-at "#![ \n\t]*/[^ \n\t]*perl")  (perl-mode))
+	   ((looking-at "#![ \n\t]*/[^ \n\t]*tclsh") (tcl-mode))
+	   ((looking-at "#![ \n\t]*/[^ \n\t]*make")  (makefile-mode))
+	   ((looking-at "#![ \n\t]*/[^ \n\t]*awk")   (awk-mode))
+	   )
+	  t)
+      nil)
+    ))
 
 (add-hook 'find-file-hooks 'determine-script-mode)
 
-;;;text mode
+;;
+;; make sure script files are executable
+;;
+(defun determine-and-set-executable ()
+  (interactive)
+  (let ((file (buffer-file-name))
+	(script-p (determine-script-mode)))
+    (if (and script-p (not (file-executable-p (buffer-file-name))))
+	(progn
+	  (shell-command (format "/bin/chmod +x %s" file))
+	  (message (format "Wrote %s (and added executable permissions)" file))))
+      ))
+
+(add-hook 'after-save-hook 'determine-and-set-executable)
+
+;;; Setup text mode
 
 (defun my-text-setup ()
   (interactive)
