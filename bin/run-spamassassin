@@ -1,9 +1,0 @@
-#!/bin/sh
-
-PROG=`which spamassassin`
-
-if [ ! "x$PROG" = "x" ]; then
-   exec $PROG $*
-else
-   exec cat
-fi
