@@ -84,6 +84,11 @@ elif [ `tty` = "/dev/ttyv0" -a `uname -s` = FreeBSD ]; then
 fi
 
 if [ "$STARTX" = "yes" ] ; then
+    if [ -r ~/.fetchmailrc ]; then
+	echo "starting fetchmail..."
+	fetchmail
+    fi
+
     echo -n "Start X Windows? "
     read -q CHOICE
     if [ $CHOICE = 'y' ]; then
