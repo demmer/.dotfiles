@@ -12,7 +12,7 @@ source ~/.mutt_aliases_eecs
 #
 alias me 	Michael Demmer <mike@demmer.nu>
 alias me-eecs 	Michael Demmer <demmer@eecs.berkeley.edu>
-alias me-nbt 	Michael Demmer <demmer@nbttech.com>
+alias me-nbt 	Michael Demmer <demmer@riverbed.com>
 
 #
 # Family
@@ -180,25 +180,31 @@ alias kingfish alan_margulius, david_ng, dougb, \
 	       cbeausejour
 
 #
-# NBT
+# Riverbed
 #
-alias alan Alan Saldich <alan@nbttech.com>
-alias arvind Arvind Jain <arvind@nbttech.com>
-alias bart Bart Robinson <lomew@nbttech.com>
-alias dave David Wu <davidwu@nbttech.com>
-alias davidwu David Wu <davidwu@nbttech.com>
-alias irene Irene Yam <irene@nbttech.com>
-alias jerry Jerry Kenelly <jerry@nbttech.com>
-alias lomew Bart Robinson <lomew@nbttech.com>
-alias mccanne Steve McCanne <mccanne@nbttech.com>
-alias nitin Nitin Gupta <ngupta@nbttech.com>
-alias ngupta Nitin Gupta <ngupta@nbttech.com>
+alias alan Alan Saldich <alan@riverbed.com>
+alias arvind Arvind Jain <arvind@riverbed.com>
+alias bart Bart Robinson <lomew@riverbed.com>
+alias dave David Wu <davidwu@riverbed.com>
+alias davidwu David Wu <davidwu@riverbed.com>
+alias irene Irene Yam <irene@riverbed.com>
+alias jerry Jerry Kenelly <jerry@riverbed.com>
+alias lomew Bart Robinson <lomew@riverbed.com>
+alias mccanne Steve McCanne <mccanne@riverbed.com>
+alias nitin Nitin Gupta <ngupta@riverbed.com>
+alias ngupta Nitin Gupta <ngupta@riverbed.com>
 
 #
 # Sterling
 #
 alias jay Jason LaTorre <latorrej@sterlingnet.com>
 alias patsy Patsy Manning <manningp@sterlingnet.com>
+
+#
+# DTN related
+#
+alias durst Robert Durst <durst@mitre.org>
+alias kscott Keith Scott <kscott@mitre.org>
 
 #
 # Mailing Lists
