@@ -34,11 +34,11 @@ case "$ARCH" in
 	alias pg="pscompat -e | grep "
 	;;
       *)
-        alias mine="ps -ux"
-        alias minew="ps -uxww"
-	alias other="ps -aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
-	alias proc="ps -auxww | egrep "
-	alias pg="ps -auxww | grep "
+        alias mine="ps ux"
+        alias minew="ps uxww"
+	alias other="ps aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
+	alias proc="ps auxww | egrep "
+	alias pg="ps auxww | grep "
 	;;
 esac
 
