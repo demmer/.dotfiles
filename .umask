@@ -1,3 +1,4 @@
 $HOME/www/*		022
 $HOME/public		000
-*			077
+$HOME/personal		077
+*			022
