@@ -7,6 +7,7 @@
 # Programs to run at login                        #
 ###################################################
 
+cat -s /etc/motd
 uname -snmr
 frm -s new -s old 2> /dev/null
 
