@@ -2,6 +2,7 @@
 
 for d in `/bin/ls -1td /tmp/ssh-* 2>/dev/null` ; do
     f=`/bin/ls $d/*agent* 2>/dev/null`
+    echo "checking $f..."
     SSH_AUTH_SOCK=$f
     export SSH_AUTH_SOCK
     ssh-add -l >/dev/null 2>/dev/null
