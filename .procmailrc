@@ -4,11 +4,14 @@ LOGFILE=$HOME/Mail/procmaillog
 LOGABSTRACT=all
 
 #
-# Anti-spam filters
+# Anti-spam filter
 #
-:0
-* ^Subject: WW?AA?NN?TT?EE?DD? 97 PP?ee?oo?pp?ll?ee?
-/dev/null
+:0fw
+| $HOME/sa/usr/bin/spamassassin -a
+
+:0:
+* ^X-Spam-Status: Yes
+spam
 
 #
 # Automatic email delivery testing
@@ -16,6 +19,13 @@ LOGABSTRACT=all
 :0
 * ^To: test-delivery.*
 /dev/null
+
+#
+# Rotate command since I can't run cron
+#
+:0f
+* ^To: rotate-spool
+| rotate-spool
 
 #
 # Add a subject line for everything.
@@ -29,7 +39,7 @@ LOGABSTRACT=all
 # Content-Type header
 #
 :0bhf
-* ^[Cc]ontent-[Tt]ype: text/html
+* ^content-type: text/html
 | dehtml.pl
 
 #
@@ -46,6 +56,17 @@ LOGABSTRACT=all
     * .*
     | formail -i "Subject: [acm]`(cat /tmp/subject && rm -f /tmp/subject)`"
 }
+
+#
+# Send mailing list traffic to separate mailboxes before spooling a copy
+#
+:0
+* ^X-Mailing-List: linux-kernel@vger.kernel.org
+linux-kernel
+
+:0
+* ^X-Envelope-To: netfilter@demmer.nu
+netfilter
 
 #
 # Send periodic mail to the inbox w/o spooling
