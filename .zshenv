@@ -85,7 +85,7 @@ for d in ~/lib/* ; do
 done
 fi
 
-manpath=`manpath`
+manpath=`manpath 2> /dev/null`
 if [ -d ~/man ]; then
 for d in ~/man/* ; do
 	if [ -d $d ] ; then
