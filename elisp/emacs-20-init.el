@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.14 2002-01-16 20:55:29 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.15 2002-03-06 16:47:56 demmer Exp $
 
 
 (defun memequal (el list)
@@ -134,23 +134,12 @@ This must be bound to a mouse-down event in the mode-line."
     (server-start)
   )
 
-;; setup for zenirc
-(load "zenirc")
-(setq zenirc-timestamp t)
-
 ;; load in other files
 (load "modes")
-(load "comment")
 (load "mjdkeys")
-(load "tera-added")
 (load "lcvs")
 (load "mwheel")
-
-(let ((checkstcl "~/work/am-1/checkstcl/checkstcl.el"))
-  (if (file-exists-p checkstcl)
-      (load checkstcl)))
-(setq checkstcl-unique-buffer-name t)
-
+(load "ff-stuff")
 (load "added")
 
 ;; lcvs setup
