@@ -16,43 +16,49 @@
 
 (setq CH-buffer-pairs '((".C" ".H")
 			(".cc" ".h")
+			(".c" ".h")
 			))
 
 (defun CH-buffer-match (name)
-  "Matches from CH-buffer pairs, and returns the modified buffer name.
-e.g. if passed buffer.C, will return buffer.H and vice versa.
-Uses CH-buffer-pairs to get the pairs of filename extensions.
-Matches buffer copy number as well, so buffer.C<2> will return buffer.H<2>.[mjd]"
-  (let ((root) (ext) (ver) (pt) (test))
-    (setq pt (string-match "\\." name))
-    (cond (pt
-		 (setq root (substring name 0 pt))
-		 (setq ext (substring name pt (length name)))
-		 (setq pt (string-match"\<" ext))
-		 (cond
-		  (pt
-		   (setq ver (substring ext pt (length ext)))
-		   (setq ext (substring ext 0 pt))
-		   )
-		  (t
-		   (setq ver nil)
-		   )
+  "Matches from CH-buffer pairs, and returns a list of modified buffer
+names. e.g. if passed buffer.C, will return buffer.H and vice versa.
+Uses CH-buffer-pairs to get the pairs of filename extensions. Matches
+buffer copy number as well, so buffer.C<2> will return
+buffer.H<2>.[mjd]"
+  
+  (let (
+	(root (file-name-sans-extension name))
+	(ext (file-name-extension name))
+	(ver) (pt) (test))
+
+    (setq pt (string-match "<" ext))
+    (cond
+     (pt
+      (setq ver (substring ext pt (length ext)))
+      (setq ext (substring ext 0 pt))
+      )
+     (t
+      (setq ver nil)
+      ))
+    (setq ext (concat "." ext))
+    (setq test (mapcar
+		(lambda (pair) "" nil
+		  (cond
+		   ((string-equal (car pair) ext)
+		    (cadr pair))
+		   ((string-equal (cadr pair) ext)
+		    (car pair))
+		   (t nil))
 		  )
-		 (setq test (mapcar
-				   (lambda (pair) "" nil
-					(cond
-					 ((string-equal (car pair) ext)
-					  (cadr pair))
-					 ((string-equal (cadr pair) ext)
-					  (car pair))
-					 (t nil))
-					)
-				   CH-buffer-pairs))
-		 (setq ext (car (remove-if #'null test)))
-		 (if ext (concat root ext ver) nil)
-		 )
-		(t nil))
-    ))
+		CH-buffer-pairs))
+    (setq exts (remove-if #'null test))
+    (if exts 
+	(mapcar (lambda (ext) "" nil 
+		  (concat root ext ver)) 
+		exts)
+      nil)
+    )
+  )
 
 (defun switch-CH-buffer ()
   "Switches to an open buffer or finds the file according to the settings
@@ -61,32 +67,41 @@ pair table functionality. If the buffer is of the form buffer.C<2>, first
 looks in the buffer list for the corresponding buffer.H<2> or looks in the
 current directory for buffer.H.[mjd]"
   (interactive)
-  (let ((name (CH-buffer-match (buffer-name))))
-    (if name
-	   (let ((list) (current))
-		(setq list (buffer-list))
-		(setq current (car list))
-		(while current ;; scan through open buffers
-		  (cond ((string= name (buffer-name current))
-			    (switch-to-buffer current)
-			    (setq current nil))
-			   (t
-			    (setq list (cdr list))
-			    (setq current (car list))
-			    (if (not current) ;; get the file from disk
-				   (let ((pos))
-					(setq pos (string-match "\<" name))
-					(find-file 
-					 (substring name 0
-							  (cond
-							   ((equal pos nil) (length name))
-							   (t pos))))
-					 )) ;; let if 
-				 )) ;; t cond
-		  )) ;; while, let
-	 (message "Not a switchable buffer")
-	 ))) ;; if let defun
-
+  (let ((targetlist (CH-buffer-match (buffer-name)))
+	(bufferlist (buffer-list)))
+    
+    ;; Try to find an open buffer that matches a name from the list
+    (setq matches
+	  (mapcar 
+	   (lambda (targetname) "" nil
+	     (mapcar 
+	      (lambda (buffer) "" nil
+		(if (string= targetname (buffer-name buffer))
+		    buffer
+		  nil)
+		) bufferlist)
+	     ) targetlist)
+	  )
+    (setq match (car (remove-if #'null (car matches))))
+    (cond
+     (match (switch-to-buffer match))
+     (t
+      ;; Otherwise try to open a file in the current directory
+      (setq files 
+	    (mapcar
+	     (lambda (targetname) "" nil
+	       (setq pos (string-match "\<" targetname))
+	       (if pos (setq targetname (substring targetname 0 pos)))
+	       (let ((filename (concat (file-name-directory (buffer-file-name)) targetname)))
+		 (if (file-exists-p filename) filename)
+		 )
+	       ) targetlist))
+      (setq file (car (remove-if #'null files)))
+      (if file
+	  (find-file file)
+	(message "Not a switchable buffer"))
+      ))
+    ))
 
 (defun open-include ()
   "Searches forward and backward for quotes, and then tries to
