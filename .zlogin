@@ -79,6 +79,5 @@ if [ "$STARTX" = "yes" ] ; then
 	   echo "Starting X Windows..."
 	   startx 2>>! ~/.err/startx
 	   sleep 1
-	   logout
     fi
 fi
