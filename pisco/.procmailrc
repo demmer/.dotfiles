@@ -77,14 +77,14 @@ ip
 | formail -I "Status: RO" >> $MAILDIR/spool
 
 #
-# Finally, get rid of duplicate messages after saving a copy to the spool.
+# Get rid of duplicate messages after saving a copy to the spool.
 # I have no idea why this one needs the full path, but whatever...
 #
 :0 Wh: msgid.lock
 | formail -D 32768 $MAILDIR/msgid.cache
 
 #
-# Lists that I do want to be spooled go here
+# Split off into the mailing lists that I do want spooled.
 #
 :0
 * List-Id: TIER 
