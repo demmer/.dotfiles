@@ -1,5 +1,9 @@
-#!/bin/sh
+#!/usr/bin/perl
 
-res=`grep $*`
-echo $res
-eval $res 
+open GREP, "grep @ARGV |";
+
+while (<GREP>) {
+	print $_;
+	chomp;
+	system("$_");
+}
