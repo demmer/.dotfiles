@@ -17,7 +17,7 @@ echo "*******************************************************"
 #
 # Figure out the canonical hostname
 #
-HOST=`hostname | sed -e 's/\..*//'`
+HOST=`/bin/hostname | sed -e 's/\..*//'`
 export HOST
 
 #
@@ -81,7 +81,8 @@ $HOME/bin/urlview-tunnel-shell xoopi
 emacs -geometry =$EMACS_XINIT_GEOM -title "Inconceivable" &
 xterm -n "Fezzik, are there rocks up ahead?" -geometry =$XTERM_2_GEOM &
 xterm -n "If there are, we'll all be dead!!" -geometry =$XTERM_3_GEOM &
-xterm -n "Anybody want a peanut?" -geometry =$XTERM_4_GEOM &
+xterm -n "No more rhymes now, I mean it!!" -geometry =$XTERM_4_GEOM &
+xterm -n "Anybody want a peanut?" -geometry =$XTERM_5_GEOM &
 
 # Run any host-specific commands (i.e. xapm on laptops)
 if [ -f $HOME/.xinitrc-$HOST ]; then
