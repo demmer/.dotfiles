@@ -9,8 +9,31 @@ proc dprint {s} {
     if {$debug} { puts $s }
 }
 
-# XXX param
-set delay 5 
+#
+# Arguments
+#
+set delay 5
+set checkfetch 0
+
+for {set i 0} {$i < [llength $argv]} {incr i} {
+    set arg [lindex $argv $i]
+
+    switch -- $arg {
+	-delay {
+	    set delay [lindex $argv [incr i]]
+	}
+
+	-checkfetch {
+	    set checkfetch 1
+	}
+
+	default {
+	    puts "ERROR -- unknown argument $arg"
+	    exit 1
+	}
+    }
+}
+
 set delay [expr $delay * 1000]
 
 if [info exists env(USER)] {
@@ -125,19 +148,46 @@ proc scan {} {
 	# and loop to the next message
     }
 
-    # period to end the list
-    puts "."
-    
     close $fd
 }
 
+proc checkfetch {} {
+    set pid ""
+    if [catch {
+	set fd [open "~/.fetchmail.pid"]
+	set pid [gets $fd]
+	set pid [lindex $pid 0]; # file contains: pid delay
+	close $fd
+    } err] {
+	puts "yabiff >> (fetchmail pid unreadable)"
+	return 1
+    }
+
+    if {! [file exists /proc/$pid]} {
+	puts "yabiff >> (fetchmail pid $pid died)"
+	return 1
+    }
+
+    return 0
+}
+
 while {1} {
+    set checkfetch_output 0
+    if {$checkfetch} {
+	set checkfetch_output [checkfetch]
+    }
+
     set doscan [checktime]
     if {$doscan} {
 	scan
+    }
+
+    if {$doscan || $checkfetch_output} {
+	puts "."
     } else {
 	puts "ping"
     }
+    
     flush stdout
     after $delay
 }
