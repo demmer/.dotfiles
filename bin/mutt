@@ -6,4 +6,4 @@ if ($TERM == "xterm") then
 endif
 stty stop  "^\'"           # unset ctrl-s
 stty lnext "^\'"           # unset ctrl-v
-exec /usr/bin/mutt $argv
+exec /usr/local/bin/mutt $argv
