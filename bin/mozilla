@@ -6,7 +6,7 @@
 #
 
 FIREFOXARGS=
-if [ $1 = '-remote' ]; then
+if [ '$1' = '-remote' ]; then
    FIREFOXARGS='-a firefox '
 fi
 
