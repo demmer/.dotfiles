@@ -90,6 +90,8 @@
 				("\\.mdn\\'" . sgml-mode)
 				("\\.xsl\\'" . sgml-mode)
 				("\\.cls\\'" . visual-basic-mode)
+				("\\.bas\\'" . visual-basic-mode)
+				("\\.frm\\'" . visual-basic-mode)
 				)
 			      auto-mode-alist))
 
