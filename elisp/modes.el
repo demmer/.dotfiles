@@ -348,6 +348,8 @@
 (require 'vc)
 (define-key vc-prefix-map "a" 'vc-annotate-goto-line)
 (define-key vc-prefix-map "e" 'ediff-revision)
+(define-key vc-prefix-map "s" 'vc-print-status)
+(define-key vc-prefix-map "?" 'vc-print-status)
 
 ; fixes so shell-mode works with zsh
 (require 'comint)
