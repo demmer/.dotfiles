@@ -418,19 +418,6 @@ For update mode buffers."
 		(setq regexps (cdr regexps))))
 	  (setq buffer-read-only t)))))
 
-;; XXX/BRR this can be annoying with cvs versions newer than 1.10 due to
-;; the way files that have been changed in your checkout and in the repository.
-;; In 1.10 they are reported as C files, but newer versions try to do the merge
-;; and report M if there were no conflicts and C if there truly were, but is
-;; inconsistent with local and remote repositories.
-;; This means if you want to know if a file has been changed in the the
-;; repository and in your checkout, you have to look at the lines around the
-;; M line for things like "merging differences between blah" -- you can't
-;; just look at the line for C or M.  So when you sort the buffer these lines
-;; are moved away and it is harder to tell.
-;; I've sent a patch to the cvs list which has been apparently ignored.
-;; A workaround I haven't implemented is to have a filter on the cvs proc
-;; to rewrite these ambiguous M files as C files.
 (defun lcvs-sort ()
   "Sort the CVS output in this buffer.
 This is useful to get all the M, U, etc files together and the new directory
