@@ -9,8 +9,9 @@ input = sys.stdin.readlines();
 
 packages = []
 
+p = re.compile("^Inst ((\S)\S+) \[(.*)\] \((\S+)");
+
 for l in input:
-    p = re.compile("^Inst ((\S)\S+) \[(.*)\] \((\S+)");
     m = p.match(l);
     if (m == None):
         continue
