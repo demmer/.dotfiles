@@ -237,7 +237,6 @@
 		(forward-sexp -1)
 		(setq name (concat (buffer-substring (point) temp)
 				   (buffer-substring beg end)))
-		(message "Setting name to %s" name)
 		)
 	       
 	       (t
@@ -254,7 +253,6 @@
 	     (string-equal name "while")
 	     (string-equal name "for")
 	     (string-equal name "synchronized"))
-	    (message "skipping since name \"%s\" is keyword" name)
 	    (cons name beg)
 	    )
 	   (t (cons name beg))
