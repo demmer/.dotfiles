@@ -183,11 +183,8 @@ with tab characters underneath."
 				("\\(M\\|m\\|GNUm\\)ake\\(file\\|rules\\)\\(\\..*\\)?\\'" .
 				 makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
-				("\\.mdn\\'" . sgml-mode)
 				("\\.xsl\\'" . sgml-mode)
-				("\\.cls\\'" . visual-basic-mode)
-				("\\.bas\\'" . visual-basic-mode)
-				("\\.frm\\'" . visual-basic-mode)
+				("\\.\\(cls\\|bas\\|frm\\)\\'" . visual-basic-mode)
 				)
 			      auto-mode-alist))
 
