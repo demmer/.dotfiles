@@ -1,6 +1,8 @@
 #!/bin/sh
 
+which=-$1
+
 set -x
 
-sa-learn --showdots --ham  --mbox $HOME/Mail/spool
-sa-learn --showdots --spam --mbox $HOME/Mail/spam-certain
+sa-learn --showdots --ham  --mbox $HOME/Mail/spool$which
+sa-learn --showdots --spam --mbox $HOME/Mail/spam$which
