@@ -55,9 +55,7 @@ alias clog="cvs log"
 alias killscape="ps auxww |grep netscape | awk '{print \$2}' | xargs kill -KILL; rm -f ~/.netscape/lock"
 alias killzilla="ps auxww | grep -i mozilla | awk '{print \$2}' | xargs kill -KILL; find ~/.mozilla -name lock -exec rm {} \;"
 
-alias glimpseindex="glimpseindex -B -M 128 -n -o"
-alias glimpseindex-cwd="glimpseindex  -H . -t ."
-alias gcwd=glimpseindex-cwd
+alias gcwd=glimpseindex
 
 alias findsrc="find . -name \*.h -or -name \*.c -or -name \*.cc"
 alias etag-cwd="findsrc | xargs etags"
