@@ -6,4 +6,11 @@ if ($TERM == "" || $TERM == "xterm") then
 endif
 stty stop  "^\'"           # unset ctrl-s
 stty lnext "^\'"           # unset ctrl-v
-exec /usr/local/bin/mutt $argv
+
+foreach dir (`echo $PATH | sed 's/:/ /g'`)
+	if ($dir == $HOME/bin) continue
+  	if (-x $dir/mutt) exec $dir/mutt $argv
+end
+
+echo "can't find mutt in $PATH"
+exit 1
