@@ -64,6 +64,7 @@ Style "xpostit"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "xpostit+"	NoTitle, HandleWidth 0, Sticky, WindowListSkip
 Style "PostItNote"	NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "mailbox"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
+Style "yabiff"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "dclock"		NoTitle, Sticky, WindowListSkip
 Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
