@@ -257,6 +257,7 @@ Key x    R    N    Exec  xterm -n "Shell" -T "Shell" &
 Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
 Key a    R    N    Exec  xterm -n "argus" -T "argus" -e ssh argus &
 Key p    R    N    Exec  xterm -n "pisco" -T "pisco" -e ssh pisco &
+Key s    R    N    Exec  xterm -n "sandbox" -T "sandbox" -e ssh sandbox &
 Key z    R    N    Exec  xterm -n "zabar" -T "zabar" -e ssh zabar &
 Key t    R    N    Exec  xterm -n "tier"  -T "tier" -e ssh tier &
 Key m    R    N    Exec  mozilla &    
