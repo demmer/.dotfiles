@@ -26,8 +26,8 @@ movefiles() {
 }
 
 
-movefiles $HOME/.dotfiles/mozilla-stuff/chrome chrome
-rm -rf $HOME/.dotfiles/mozilla-stuff/chrome
+# movefiles $HOME/.dotfiles/mozilla-stuff/chrome chrome
+# rm -rf $HOME/.dotfiles/mozilla-stuff/chrome
 
 # Move all the other files, including the CVS dir into this
 movefiles $HOME/.dotfiles/mozilla-stuff .
