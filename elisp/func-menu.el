@@ -83,7 +83,7 @@
 (defvar fume-sort-p t
   "*Set this to nil if you don't want any sorting (faster).") 
 
-(defvar fume-max-items 22
+(defvar fume-max-items 30
   "*Maximum number of elements in a menu.")
 
 ;; Every fume-function-name-regexp-<language> should uniqily identify
@@ -207,35 +207,57 @@
 	(goto-char (scan-sexps (point) 1))
 	(setq char (following-char)))
       ;; Skip this function name if it is a prototype declaration.
-      
-;      (if (eq char ?\;)
       (if (and (not (eq major-mode 'oopascal-mode)) (eq char ?\;))
 	  (fume--find-next-function-name)
-	(let (beg)
+
+	(let (beg end name)
 	  ;; Get the function name and position
+	  (setq end (point))
 	  (forward-sexp -1)
-	  (let (toClass)
-	    ; include class name
+	  (setq beg (point))
+	  (setq name nil)
+	  
+	  (cond 
+	   
+	   ((eq major-mode 'c++-mode)
+	    
 	    (if (eq (preceding-char) ?\:)
-		(setq toClass 1)
-	      (setq toClass 0))
-	    (if (eq toClass 1)	  
 		(forward-sexp -1))
 	    (setq beg (point))
-	    (forward-sexp)
-	    (if (eq toClass 1)	  
-		(forward-sexp))
-	    )
-	  (setq name (buffer-substring beg (point)))
+	    (setq name (buffer-substring beg end)))
+	   
+	   ((eq major-mode 'tcl-mode)
+	    
+	    (forward-sexp -1)
+	    (let (keyword temp)
+	      (setq keyword (buffer-substring (point) beg))
+	      (cond
+	       ((string-equal keyword "method ")
+		(setq temp (point))
+		(forward-sexp -1)
+		(setq name (concat (buffer-substring (point) temp)
+				   (buffer-substring beg end)))
+		(message "Setting name to %s" name)
+		)
+	       
+	       (t
+		(setq name (buffer-substring beg end))
+		))))
+	   
+	   (t
+	    (setq name (buffer-substring beg end)))
+	   )
+
 	  (cond
 	   ((or
 	     (string-equal name "if")
 	     (string-equal name "while")
 	     (string-equal name "for")
 	     (string-equal name "synchronized"))
+	    (message "skipping since name \"%s\" is keyword" name)
 	    (cons name beg)
 	    )
-	   (t (cons (buffer-substring beg (point)) beg))
+	   (t (cons name beg))
 	   ))))
      (t
       (message "Scanning buffer. (100%%) done.")
