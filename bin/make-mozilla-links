@@ -1,13 +1,9 @@
 #!/bin/sh
 
-if [ ! -d $HOME/.phoenix/default ]; then
-   echo "Run mozilla once to create profile then re-run $0"
+if [ ! -d ./Cache ]; then
+   echo "Run this from the mozilla profile directory"
    exit 1
 fi
-
-cd $HOME/.phoenix/default
-DIR=`ls -1`
-cd $DIR
 
 if [ -d CVS ]; then
    echo "mozilla setup already done in `pwd`"
@@ -31,7 +27,7 @@ movefiles() {
 
 
 movefiles $HOME/.dotfiles/mozilla-stuff/chrome chrome
-rmdir $HOME/.dotfiles/mozilla-stuff/chrome
+rm -rf $HOME/.dotfiles/mozilla-stuff/chrome
 
 # Move all the other files, including the CVS dir into this
 movefiles $HOME/.dotfiles/mozilla-stuff .
