@@ -66,3 +66,7 @@ alias make='gmake'
 alias xargus='xssh argus'
 alias xinigo='xssh inigo'
 alias xxoopi='xssh xoopi'
+
+alias a='xssh argus'
+alias i='xssh inigo'
+alias xx='xssh xoopi'
