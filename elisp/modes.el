@@ -90,7 +90,7 @@
   )
 
 (defvar my-c-style-overrides
-  '(("~/work/.*DTN.*" c-indent-one-tab)
+  '(("~/work/.*DTN" c-indent-one-tab)
     )
   )
 
