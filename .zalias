@@ -1,0 +1,101 @@
+
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias rmplain='find . -name \*~ -print -exec /bin/rm {} \;'
+alias rmdot='find . -name .\*~ -print -exec /bin/rm {} \;'
+alias rmbak='rmplain; rmdot'
+alias rmbakl='/bin/rm -f *~; /bin/rm -f .*~; echo > /dev/null'
+alias openwin='/usr/openwin/bin/openwin -dev /dev/fb defdepth $FBBITS >>&! ~/.err/openwin;exit'
+
+alias prex='cat ~/.err/startx >> ~/.err/startx.log'
+alias startx-8='prex;/usr/X11R6/bin/startx  -- -bpp 8  >! ~/.err/startx 2>&1'
+alias startx-16='prex;/usr/X11R6/bin/startx -- -bpp 24 >! ~/.err/startx 2>&1'
+alias startx-32='prex;/usr/X11R6/bin/startx -- -bpp 32 >! ~/.err/startx 2>&1'
+alias startx=startx-32
+
+alias pcount='cat *.[CH] | wc -l'
+
+alias ztkl='zwrite tkl'
+alias z='zwrite'
+
+alias ls='ls --color=auto'
+
+alias more='less'
+#alias less='more_or_less'
+alias m='more'
+alias l='less'
+alias e='emacs'
+alias cls='ls *.[CH]'
+alias jls='ls *.{java,class}'
+alias rgb='/usr/lib/X11/rgb.txt'
+alias sourcelpr='/usr/bin/pr -f README Makefile *.[HChcpil] *.cc | lpr -Pcis'
+alias prsrc='/usr/local/bin/enscript README Makefile *.[HC] *.[hc] *.cc -Pcis'
+alias pop='popmail -s'
+
+alias gp='pushd . > /dev/null; cd /pro/gp/c++/src'
+alias back='popd > /dev/null'
+alias remake='\rm *.class;javac *.java'
+
+alias hotlocal='setenv CLASSPATH ~/java/classes'
+alias hotremote='unsetenv CLASSPATH'
+alias qt='xanim +Ae +Ak \!*'
+
+alias xelm='colorxterm -title "Mail Shell" -geometry 80x52+1+310 -e elm &'
+alias frm='frm -s new -s unread'
+
+#  architecture dependant
+if [ "$ARCH" = "solaris" ]; then
+	alias mine="ps -fu $LOGNAME"
+	alias other="ps -ef | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
+elif [ "$ARCH" = "Linux" ]; then
+	alias mine="ps -aux | fgrep $LOGNAME"
+	alias other="ps -aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
+elif [ "$ARCH" = "sunos" ]; then
+	alias mine="ps -aux | fgrep $LOGNAME"
+	alias other="ps -aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
+else
+	alias psu='echo "Unknown architecture."'
+	alias notme='echo "Unknown architecture."'
+fi
+alias pg='ps auxww | grep'
+alias av='appletviewer'
+alias ad='appletviewer -debug'
+alias jc='javac'
+
+alias cknews='/usr/local/bin/rn -c -s30'
+
+alias PissOffEnvall='echo I Am A Gimp | figlet | zwrite ewm'
+
+alias lpq1='lpq -Pps1'
+alias lpq2='lpq -Pps2'
+alias lpq3='lpq -Pps3'
+alias lpq4='lpq -Pps4'
+alias lpq5='lpq -Pps5'
+alias lpqcis='lpq -Pcis'
+
+alias lpr1='lpr -Pps1'
+alias lpr2='lpr -Pps2'
+alias lpr3='lpr -Pps3'
+alias lpr4='lpr -Pps4'
+alias lpr5='lpr -Pps5'
+alias lprcis='lpr -Pcis'
+
+alias fn='finger -p'
+
+# useful shortcuts based on lsh's gfx command to list machines in labs
+alias ai='gfx -f ~/.ai_machines'
+alias sysa='gfx -f ~/.sysa_machines'
+alias sysb='gfx syslabb'
+
+alias du_='du -k | grep -v "/[^/]*/"'
+
+alias goeng='rlogin -l demmermj sun30.engin.brown.edu'
+
+alias xcslogin='xterm -title "CS Mail Shell" -geometry '=80x42+1+291' -e $HOME/bin/cslogin stuff &'
+
+
+alias vncon='killall -CONT vncviewer'
+alias vncoff='kilalll -STOP vncviewer'
+alias xzabar='xssh zabar'
+alias statd=statd
