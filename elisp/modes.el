@@ -305,6 +305,7 @@
 ; extensions of files I don't want to open
 (append ".class" completion-ignored-extensions)
 (append ".T" completion-ignored-extensions)
+(append ".lo" completion-ignored-extensions)
 
 ; and ignore case
 (setq completion-ignore-case t)
