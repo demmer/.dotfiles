@@ -203,7 +203,7 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 # Mailing Lists
 #
-alias tier TIER <ict4b_interest@listlink.berkeley.edu>
+alias tier tier <tier@tier.cs.berkeley.edu>
 alias tinyos tinyos <tinyos@millenium.berkeley.edu>
 alias tinyos-bugs tinyos-bugs <tinyos-bugs@millenium.berkeley.edu>
 
