@@ -150,6 +150,7 @@ Should be a list of strings."
 ;	       "destructor" "itcl_class" "loop" "for_array_keys"
 ;	       "for_recursive_glob" "for_file"))
      (concat "\\<\\("
+	     "Class\\|slot\\|array_slot\\|"
 	     "break\\|c\\(ase\\|on\\(structor\\|tinue\\)\\)\\|"
 	     "de\\(fault\\|structor\\)\\|"
 	     "e\\(lse\\(\\|if\\)\\|rror\\|val\\|xit\\)\\|"
