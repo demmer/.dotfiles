@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.1 2000-05-11 17:20:31 demmer Exp $
+;; $Id: vc.el,v 1.2 2001-03-03 03:00:09 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -2347,7 +2347,8 @@ colors. `vc-annotate-background' specifies the background color."
 	(vc-annotate-ratio ratio))
     (with-output-to-temp-buffer temp-buffer-name
       (call-process "cvs" nil (get-buffer temp-buffer-name) nil
-		    "annotate" (file-name-nondirectory (buffer-file-name)))))
+		    "annotate" "-r" (vc-workfile-version (buffer-file-name))
+		    (file-name-nondirectory (buffer-file-name)))))
   (message "Annotating... done"))
 
 (defun vc-annotate-car-last-cons (a-list)
