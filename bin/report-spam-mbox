@@ -37,9 +37,20 @@ for f in `ls`; do
 done
 echo
 
+echo "Adding to blacklist..."
+for f in `ls new`; do
+	if [ -f $f ]; then
+		echo -n "$f... "
+		cat $f | spamassassin --add-to-blacklist
+	fi
+done
+echo
+
+echo "Running sa-learn..."	
 sa-learn --spam --dir new
 
 cd /
 rm -rf $TMP
 
 rm -i $MBOX
+touch $MBOX
