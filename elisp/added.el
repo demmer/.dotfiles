@@ -101,23 +101,30 @@ current directory for buffer.H.[mjd]"
     (cond
      (match (switch-to-buffer match))
      (t
-      ;; Otherwise try to open a file in the current directory
-      (setq files 
+      ;; Otherwise build a list of candidate files
+      (setq files
 	    (mapcar
 	     (lambda (targetname) "" nil
 	       (setq pos (string-match "\<" targetname))
 	       (if pos (setq targetname (substring targetname 0 pos)))
-	       (let ((filename (concat (file-name-directory (buffer-file-name))
-				       targetname)))
-		 (if (file-exists-p filename) filename)
-		 )
-	       ) targetlist))
-      (setq file (car (remove-if #'null files)))
-      (if file
-	  (find-file file)
-	(message "Not a switchable buffer"))
-      ))
-    ))
+	       (concat (file-name-directory (buffer-file-name)) targetname))
+	     targetlist))
+      
+      ;; See if one exists
+      (setq file (car (remove-if #'null (mapcar (lambda (filename) "" nil
+						  (if (file-exists-p filename)
+						      filename)
+						  )
+						files))))
+
+      ;; If one exists, or the user wants one, open it, if not, see if
+      ;; we want it to be created
+      (if file (find-file file)
+	(if (y-or-n-p "Create new file? ")
+	    (find-file (read-from-minibuffer "Filename: " (car files)))
+	  (message "Not a switchable buffer")))
+      )
+    )))
 
 (defun open-include ()
   "Searches forward and backward for quotes, and then tries to
