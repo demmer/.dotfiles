@@ -253,6 +253,7 @@ Key p    R    N    Exec  xterm -n "pisco" -T "pisco" -e ssh pisco &
 Key z    R    N    Exec  xterm -n "zabar" -T "zabar" -e ssh zabar &
 Key t    R    N    Exec  xterm -n "tier"  -T "tier" -e ssh tier &
 Key m    R    N    Exec  mozilla &    
+Key space R   N	   Exec  xset dpms force off &
 
 # raise / lower windows
 Key space A CM   RaiseLower
