@@ -5,4 +5,16 @@
 # default to mozilla.
 #
 
-exec runprog "firefox mozilla" $*
+FIREFOXARGS=
+if [ $1 = '-remote' ]; then
+   FIREFOXARGS='-a firefox '
+fi
+
+firefox=`which firefox`
+
+if [ ! "$firefox" = "" ]; then
+   echo $firefox $FIREFOXARGS $*
+   exec $firefox $FIREFOXARGS $*
+else   
+   exec runprog "mozilla" $*
+fi
