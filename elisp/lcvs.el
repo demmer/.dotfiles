@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.18 $)
+;; Version: 1.2 ($Revision: 1.19 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1572,6 +1572,12 @@ the value of `foo'."
 (defvar lcvs-conflict nil)
 (make-variable-buffer-local 'lcvs-conflict)
 
+(defun lcvs-kill-entire-line ()
+  "Kill the entire line containing point."
+  (interactive)
+  (beginning-of-line)
+  (kill-line 1))
+
 (defun lcvs-fix-lines (beg)
   ;; Fix up stuff that we insert, rewriting some things.
   (goto-char beg)
@@ -1602,12 +1608,12 @@ the value of `foo'."
 		    "rcsmerge: warning: conflicts during merge")
 		  "\\|")
 		 "[^\n]*\n"))
-	(kill-entire-line)
+	(lcvs-kill-entire-line)
 	(setq dont-move t))
 
        ;; Rewrite M lines from merges as C lines.
        ((looking-at "^Merging differences[^\n]*\n")
-	(kill-entire-line)
+	(lcvs-kill-entire-line)
 	(setq dont-move t)
 	(setq lcvs-conflict t))
 
