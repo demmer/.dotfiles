@@ -38,7 +38,9 @@ while (<>) {
 }
 
 if (open(TMP, "> $tmpf")) {
-    print(TMP $html);
+    $newhtml = $html;
+    $newhtml =~ s/=\n//g;
+    print(TMP $newhtml);
     close(TMP);
 }
 
