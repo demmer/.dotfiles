@@ -143,6 +143,7 @@ export CVSROOT_TIER=:ext:tier.cs.berkeley.edu:/usr/projects/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
 export CVSROOT_DTN=:ext:sandbox:/usr/src/bundles/orig
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
+export CVSROOT_LLADD=:ext:cvs-sourceforge:/cvsroot/lladd
 
 # Host specific overrides
 if [ $HOST = pisco ]; then
