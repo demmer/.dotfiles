@@ -10,7 +10,7 @@ fi
 
 rm -f /tmp/firewall
 sed "s/block known hacker addresses/&\n\
-       \t\$IPTABLES -A FIREWALL -s $addr -j REJECT/" < /etc/firewall > /tmp/firewall
+       \t\$IPTABLES -A BLOCKED -s $addr -j REJECT/" < /etc/firewall > /tmp/firewall
 sudo mv -f /tmp/firewall /etc/init.d/firewall
 sudo /bin/sh /etc/init.d/firewall reload
       
