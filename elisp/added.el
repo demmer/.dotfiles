@@ -308,10 +308,63 @@ and selects that window."
   )
 
 (require 'compile)
+
+(defvar grope-history nil)
+(defvar grope-replace-history nil)
+
+(defun grope-process-setup ()
+  "Set up `compilation-exit-message-function' for `grope'."
+  (set (make-local-variable 'compilation-exit-message-function)
+       (lambda (status code msg)
+	 (if (eq status 'exit)
+	     (cond ((zerop code)
+		    '("finished (matches found)\n" . "matched"))
+		   ((= code 1)
+		    '("finished with no matches found\n" . "no match"))
+		   (t
+		    (cons msg code)))
+	   (cons msg code)))))
+
 (defun grope (sym)
-  (interactive (list (read-string "Grope for: " (current-word))))
-  (compile-internal (concat "grope \"" sym "\"") "No more grope hits" "grope"
-                    nil grep-regexp-alist))
+  (interactive
+   (list (read-from-minibuffer "Grope for: "
+			       (current-word) nil nil 'grope-history)))
+
+  (let* ((compilation-process-setup-function 'grep-process-setup))
+    (compile-internal (concat "grope \"" sym "\"")
+		      "No more grope hits" "grope"
+		      nil grep-regexp-alist)))
+
+(defun grope-replace (from to)
+  (interactive
+   (let (from to)
+     (setq from (read-from-minibuffer "Grope replace: "
+				      (current-word) nil nil 'grope-history))
+     (setq to   (read-from-minibuffer (format "Grope replace: %s with: " from)
+				      nil nil nil 'grope-replace-history))
+     (list from to)))
+
+  (let (grope-buf grope-proc elapsed)
+    ;; run grope, wait for it to complete
+    (setq grope-buf (grope from))
+    (setq grope-proc (get-buffer-process grope-buf))
+
+    (message "Waiting for grope process...")
+    (while (eq (process-status grope-proc) 'run)
+      (sit-for 1))
+
+    (unwind-protect
+	(progn
+	  (first-error)
+	  (while t
+	    (while (re-search-forward from (line-end-position) t)
+	      (replace-highlight (match-beginning 0) (match-end 0))
+	      (if (y-or-n-p (format "Replace %s with %s? " from to))
+		  (replace-match to t))
+	      )
+	    (next-error)))
+      (replace-dehighlight))
+    ))
 
 ;; pulled from tera-added.el
 (defun line-to-top-of-window nil
@@ -442,3 +495,4 @@ to match the current line in the source file."
 
 ;; i do replace-string a lot
 (defalias 'rs 'replace-string)
+
