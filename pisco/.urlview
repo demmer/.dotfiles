@@ -12,6 +12,9 @@ IGNORE http://tier.cs.berkeley.edu/pipermail/tier
 IGNORE http://tier.cs.berkeley.edu/mailman/listinfo/tier-private
 IGNORE http://tier.cs.berkeley.edu/mailman/private/tier-private
 
+IGNORE http://mailman.dtnrg.org/mailman/listinfo/dtn-dev
+IGNORE http://mailman.dtnrg.org/pipermail/dtn-dev/
+
 IGNORE mailto:subscribe-ip@v2.listbox.com
 IGNORE http://v2.listbox.com/subscribe/?listname=ip@v2.listbox.com
 IGNORE mailto:unsubscribe-ip@v2.listbox.com
