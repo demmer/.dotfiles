@@ -10,21 +10,6 @@
 ##    jal   Sat May 27 17:28:10 1995   made header
 ##
 
-
-# set the xterm window to my hostname
-#if [ "$TERM" = "xterm" ]; then
-#	print -n "]0;"$HOST""
-#	print -n "]2;$USER@$HOST   "`pwd`""
-#	eval `resize`
-#fi
-
-# Fix wierd TERM stuff
-if [ "$TERM" = "dumb" ]; then
-	echo "Resetting TERM from dumb to xterm"
-	TERM=xterm
-	export TERM
-fi
-
 # search path for the cd command
 cdpath=(.)
 
@@ -110,12 +95,11 @@ fi
 ## xterm specific functions
 if [ "$TERM" = "xterm" ]; then
 
-
 # change the title of an xterm
 #   usage: xtitle <title>
-#function xtitle {
-#	print -n "]0;$*"
-#}
+function xtitle {
+	print -n "]0;$*"
+}
 
 ## before each prompt, make the xterm's title display some info
 #function precmd {
