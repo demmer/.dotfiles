@@ -59,6 +59,7 @@ colorxterm -n "If there are, we'll all be dead!!" -geometry '=80x32+1870+568' &
 
 # linux specific stuff
 nice ical -iconic &
+mozilla -iconic &
 
 # Wait for the window manager to quit
 wait $WMPID
