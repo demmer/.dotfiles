@@ -23,6 +23,8 @@ if [ "$USER" = "" ]; then
 	export USER=$LOGNAME
 fi
 
+
+
 # Defines the platform that we are running on
 UNAME=`which uname`
 if [ -x $UNAME ]; then
@@ -119,6 +121,9 @@ export ENSCRIPT_2SIDED='-p - -2r'
 
 export HOSTNAME=`echo $HOST | sed 's/\..*//g'`
 export EMACSLOCKDIR=$HOME/.emacslockdir
+
+# needed for su to still grab my .emacs
+export EMACSHOME=$HOME
 
 export CVS_RSH=ssh
 if [ -d /repository/CVSROOT ]; then
