@@ -58,17 +58,6 @@
 				       (statement-cont . 4)
 				       (substatement-open . 0)
 				       ))
-;    (c-comment-only-line-offset    . 0)
-;    (c-hanging-braces-alist        . ((block-open after)
-;				      (brace-list-open)))
-;    (c-hanging-colons-alist        . ((member-init-intro before)
-;				      (inher-intro)
-;				      (case-label after)
-;				      (label after)
-;				      (access-key after)))
-;    (c-cleanup-list                . (scope-operator
-;				      empty-defun-braces
-;				      defun-close-semi))
     )
   "My C Programming Style")
 
@@ -82,16 +71,8 @@
   (make-variable-buffer-local 'c-comment-cplusplus)
   (setq c-comment-cplusplus t)
 
-  ;; commenting keybindings
   (define-key c++-mode-map "\M-9" 'box-enterexit)
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
-;  (define-key c++-mode-map "\C-x\C-q" 'toggle-and-chmod-read-only)
-;  (define-key c++-mode-map "\M-m" 'comment-any-function)
-;  (define-key c++-mode-map "\M-h" 'box-func-header)
-;  (define-key c++-mode-map "\M-c" 'comment-member-class)
-;  (define-key c++-mode-map "\M-p" 'c-file-header)
-;  (define-key c++-mode-map "\M-l" 'correct-comment-line)
-
   )
 
 (defun my-c-setup ()
@@ -131,9 +112,6 @@
 (add-hook 'c++-mode-hook 'my-c++-setup)
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c-mode-common-hook 'my-cc-common-setup)
-
-; load the java-mode 
-;(load "java-mode")
 
 ; setup my auto modes alist
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
