@@ -97,3 +97,4 @@
 			       (if (y-or-n-p "Really quit? ")
 				   (save-buffers-kill-emacs)))))
 (global-set-key "\C-x " 'next-error)
+(global-set-key "\M-m" 'man)
