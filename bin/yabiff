@@ -4,6 +4,12 @@
 # Translated to Tcl: Anand Ranganathan <anand@cs.utah.edu>
 # Reworked and added ssh connection support by Mike Demmer <mike@demmer.nu>
 
+set debug 0
+proc dprint {s} {
+    global debug
+    if {$debug} { puts $s }
+}
+
 ## XXX this should be in resources but I don't know how
 set width 60
 set delay 5
@@ -11,8 +17,6 @@ set fg black
 set bg grey87
 set font "6x10"
 set default_geometry "=300x70+10+10"
-set hosts ""
-set checkfetch ""
 set usebar 1
 set beep 1
 
@@ -24,8 +28,6 @@ array set argvars {
     -geometry		geometry
     -geom		geometry
     -delay		delay
-    -host		hosts
-    -checkfetch		checkfetch
     -bar		usebar
     -beep		beep
 }
@@ -34,27 +36,47 @@ proc usage {} {
     global argvars
     puts -nonewline "usage: yabiff "
     foreach arg [array names argvars] {
-	puts "\[ $arg \] "
+	puts -nonewline "\[ $arg val \] "
     }
-    puts ""
+    puts "host1:spool1\[,spool2,...\] host2:spool1\[,...\]"
     exit 1
 }
 
+set rest {}
 for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
-    set val [lindex $argv [incr i]]
     if {! [info exists argvars($arg)]} {
-	puts stderr "unknown argument $arg"
-	usage
+	lappend rest $arg
+	continue
     }
 
+    set val [lindex $argv [incr i]]
     set $argvars($arg) $val
 }
 
-set hosts [split $hosts ,]
-array set checkfetch_hosts {}
-foreach h [split $checkfetch ,] {
-    set checkfetch_hosts($h) 1
+set max_spool_count -1
+
+foreach arg $rest {
+    set L [split $arg :]
+    if {[llength $L] != 2} {
+	puts "Error: host spec '$arg' malformed"
+	usage
+    }
+    set host [lindex $L 0]
+    set spools [split [lindex $L 1] ,]
+
+    set spoolcount 0
+    foreach spool $spools {
+	if {$spool == "@" || $spool == "@F"} {
+	    continue
+	}
+	incr spoolcount
+    }
+    lappend hostspools $host $spools $spoolcount
+    
+    if {$spoolcount > $max_spool_count} {
+	set max_spool_count $spoolcount
+    }
 }
 
 if [info exists env(USER)] {
@@ -66,7 +88,7 @@ if [info exists env(USER)] {
     exit -1;
 }
 
-if {$hosts == ""} {
+if {$hostspools == {}} {
     # no host specified, look for a spoolfile
     if [info exists env(MAIL)] {
 	if [file exists $env(MAIL)] {
@@ -91,26 +113,55 @@ if {$hosts == ""} {
 wm title . YaBiff;
 wm geometry . $geometry
 
+set bar_width 2
+
+set labelfont [font create -size 6]
+
 if {$usebar} {
-    set bar_width 2
-    text .bar -wrap none -font $font \
-	    -width $bar_width -background $bg -bd 1
+    text .bar -width $bar_width -background $bg -bd 1 -font $labelfont
     pack .bar -side left -expand no -fill y
-} else {
-    set bar_width 0
 }
 
 set g [split $geometry {=x+}]
 set y [lindex $g 2]
 
-if {$hosts == ""} {
+
+if {$hostspools == {}} {
     text $text -wrap none -font $font -background $bg -bd 1 -height 0
     pack $text -expand yes -fill both -side top 
 } else {
-    foreach host $hosts {
-	set text ".text-$host"
-	text $text -wrap none -font $font -background $bg -bd 1 -height 0
-	pack $text -expand yes -fill both -side top 
+    foreach {host spools spoolcount} $hostspools {
+	set frame ".frame-$host"
+	frame $frame -background $bg -bd 0 -height 0
+	pack $frame -expand yes -fill both -side top
+
+	if {$spools != "@"} {
+	    set sideframe ".sideframe-$host"
+	    frame $sideframe -background $bg -bd 0 -width 1
+	    pack $sideframe -in $frame -side left -expand no -fill y
+	}
+
+	# This is a shitty hack b/c I don't understand how to make
+	# pack do what I want it to
+	while {$spoolcount < $max_spool_count} {
+	    lappend spools "fake$spoolcount"
+	    incr spoolcount
+	}
+
+	foreach spool $spools {
+	    if {$spool == "@F"} continue;
+	    if {$spool == "@"} {
+		set text ".text-$host-$spool"
+		text $text -wrap none -font $font -background $bg -bd 1 -height 0
+		pack $text -in $frame -expand yes -fill both -side right 
+	    } else {
+		set label ".label-$host-$spool"
+		incr spoolcount
+		label $label -height 1 -width 1 -background $bg -bd 0 -font $labelfont
+		pack $label -in $sideframe -expand no -fill none -pady 1
+	    }
+	}
+
     }
 }
 
@@ -146,35 +197,51 @@ set nlines_total 0
 proc refresh {host lines} {
     global fg bg beep usebar
     global nlines_total
-    upvar \#0 nlines_$host nlines_host
 
     if {$host == ""} {
 	set text .text
     } else {
-	set text .text-$host
+	set text ".text-$host-@"
     }
 
     $text configure -state normal
     $text delete 0.0 end
 
+    set nlines 0
+    set first 1
+    # don't put a newline after the last one
+    foreach line $lines {
+	dprint "$host: $line"
+	if [regexp {yabiff count (\S+) (\d+)} $line match spool count] {
+	    set label ".label-$host-$spool"
+	    if {$count > 0} {
+		$label configure -bg $fg
+	    } else {
+		$label configure -bg $bg
+	    }
+		
+#	    incr nlines $count
+	    continue
+	}
+
+	if {$first} {
+	    $text insert 0.0 $line
+	    set first 0
+	} else {
+	    $text insert 0.0 "$line\n"
+	}
+    }
+
     # adjust the global line count to tell if there's any new messages
     # in any window
-    set nlines [llength $lines]
+    upvar \#0 nlines_$host nlines_host
     if {![info exists nlines_host]} {
 	set nlines_host 0
     }
-
     set old_nlines_total $nlines_total
     set nlines_total [expr $nlines_total - $nlines_host + $nlines]
     set nlines_host $nlines
-
-    # don't put a newline after the last one
-    $text insert 0.0 "[lindex $lines 0]"
-    for {set i 1} {$i < $nlines} {incr i} {
-	set line [lindex $lines $i]
-	$text insert 0.0 "$line\n";
-    }
-
+    
     if {$beep && ($nlines_total > $old_nlines_total)} {
 	bell -displayof .;
     }
@@ -215,17 +282,14 @@ proc spoolfile_loop {} {
 }
 
 proc remote_loop {} {
-    global hosts checkfetch_hosts delay
+    global hostspools delay
 
     set delay_arg "-delay $delay"
 
-    foreach host $hosts {
-	set checkfetch ""
-	if {[info exists checkfetch_hosts($host)]} {
-	    set checkfetch "-checkfetch "
-	}
-	set cmd "ssh -v $host yabiff-server $delay_arg $checkfetch < /dev/null"
-	# puts "running $cmd"
+    foreach {host spools spoolcount} $hostspools {
+	set spool_arg "-spools [join $spools ,]"
+	set cmd "ssh -v $host yabiff-server $delay_arg $spool_arg < /dev/null"
+	dprint "running $cmd"
 	set ssh [open "|$cmd" r]
 	fconfigure $ssh -blocking false -buffering none
 	fileevent $ssh readable "update_remote $host $ssh"
@@ -237,6 +301,8 @@ proc update_remote {host ssh} {
     
     # something should be readable here
     set ret [gets $ssh line]
+    dprint "update_remote $host $ret"
+
     if {$ret == -1} {
 	refresh $host {"(error: ssh tunnel died)"}
 	close $ssh
@@ -245,6 +311,7 @@ proc update_remote {host ssh} {
     
     # if it's a ping, just loop and block again
     if {$line == "ping"} {
+	dprint "ping from $host"
 	return
     }
     
@@ -264,6 +331,8 @@ proc update_remote {host ssh} {
     # output what we got
     refresh $host $lines
 }
+
+
 
 if [info exists spoolfile] {
     spoolfile_loop
