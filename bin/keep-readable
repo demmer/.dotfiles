@@ -1,0 +1,16 @@
+#!/usr/bin/python
+
+import sys, os, time, stat
+from os.path import join
+
+path = sys.argv[1]
+last = 0
+
+while True:
+    cur = os.stat(path).st_mtime
+    if (cur != last):
+        last = cur
+        for file in os.listdir(path):
+            s = os.stat(join(path,file))
+            os.chmod(join(path,file), s.st_mode | stat.S_IROTH | stat.S_IRGRP)
+    time.sleep(1)
