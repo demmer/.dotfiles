@@ -9,6 +9,11 @@ while {![eof stdin]} {
 	continue
     }
 
+    if [catch {expr $l}] {
+	puts "warning: skipping '$l' (not a number)"
+	continue
+    }
+
     lappend L $l
     set tot [expr $tot + $l]
 }
@@ -18,10 +23,10 @@ set mean [expr $tot / $cnt]
 
 set stddev 0
 foreach e $L {
-    set diff [expr $e - $mean]
+    # need to force it to use floating point, otherwise it may overflow
+    set diff [expr (1.0 * $e) - (1.0 * $mean)]
     set stddev [expr $stddev + ($diff * $diff)]
 }
-
 set stddev [expr sqrt($stddev) / $cnt]
 
 set L [lsort -integer $L]
