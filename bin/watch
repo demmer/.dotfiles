@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# 
+# watch: simple program to passively monitor the existance of
+# another process and send mail if it dies
+#
+
+PERIOD=5
+
+if [ "x$WATCHING" = "x" ]; then
+
+#
+# parent, set up, fork, and return
+#
+
+WATCHING=$1
+if [ "x$WATCHING" = "x" ]; then
+	echo "usage: watch <pid>"
+	exit 1
+fi
+
+
+if [ ! -d /proc/$WATCHING ]; then
+	echo "$WATCHING not a valid pid"
+	exit 1
+fi
+
+if [ "x$USER" = "x" ]; then
+	echo "USER variable not set"
+	exit 1
+fi
+
+# prefer mailx if it exists
+if [ -x /bin/mailx ] ; then
+	MAIL=/bin/mailx
+else
+	MAIL=mail
+fi
+
+export WATCHING USER MAIL
+
+$0 < /dev/null > /dev/null &
+
+echo "watching $WATCHING"
+
+else
+
+#
+# child, enter the loop and actually watch the process
+#
+
+while [ true ] ; do
+	if [ ! -d /proc/$WATCHING ]; then
+		break
+	fi
+	sleep $PERIOD
+done
+
+$MAIL -s "watch: pid $WATCHING failed" demmer@cs.berkeley.edu  <<EOF
+
+watch started at $STARTED
+process $WATCHING failed at `date`
+
+EOF
+
+fi
