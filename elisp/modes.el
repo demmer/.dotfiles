@@ -182,6 +182,7 @@ with tab characters underneath."
 				("\\.nc\\'" . nesc-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
+				("\\.z[A-Za-z0-9]*\\'" . shell-script-mode)
 				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
 				("\\(M\\|m\\|GNUm\\)ake\\(file\\|rules\\)\\(\\..*\\)?\\'" .
 				 makefile-mode)
