@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.5 2000-06-08 17:50:01 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.6 2000-08-23 15:31:37 demmer Exp $
 
 
 (defun memequal (el list)
@@ -49,6 +49,7 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
 ;;; some defaults
 (setq text-mode-hook 'turn-on-auto-fill)
 (setq line-number-mode t)
+(setq column-number-mode t)
 (setq delete-auto-save-files t)
 
 (setq require-final-newline 'ask)
