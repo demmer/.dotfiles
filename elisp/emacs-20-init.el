@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.6 2000-08-23 15:31:37 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.7 2000-09-18 18:07:42 demmer Exp $
 
 
 (defun memequal (el list)
@@ -149,6 +149,7 @@ This must be bound to a mouse-down event in the mode-line."
       (load checkstcl)))
 
 (setq lcvs-log-restrict-to-branch t)
+(setq diff-switches (list "-u"))
 
 ;; require these features...
 (require 'complete)
