@@ -13,6 +13,9 @@
 (setq which-emacs "emacs-19")
 (load-file "~/elisp/mjdkeys.elc")
 
+; i don't want exit confirmation, and always save buffers
+(global-set-key "\C-x\C-c" (lambda () (interactive) (save-buffers-kill-emacs t)))
+
 ; I like this function
 (defun line-to-top-of-window nil
   "Move the line the cursor is on to the top of the current window"
