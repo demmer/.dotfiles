@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 use Time::Local;
 
+$mailprog = "mailx";
 
 sub usage () {
     print "Usage: birthday [ reminder | check ]\n";
@@ -88,7 +89,7 @@ if (! $msg eq "") {
     }
 
     if ($mode eq "reminder") {
-	open MSG, "| mail -s \"Birthday Reminder\" $mailto" || \
+	open MSG, "| $mailprog -s \"Birthday Reminder\" $mailto" || \
 	    die "can't open pipe to mail";
 	print MSG "\n$msg";
 	close MSG;
