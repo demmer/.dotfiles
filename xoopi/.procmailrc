@@ -68,6 +68,13 @@ pair-notices
 | formail -I "Subject: (none)"
 
 #
+# Filter out links I don't want to show up in urlview all the time
+#
+:0fh
+*
+| filter-links
+
+#
 # Save a copy of html mail unmodified, just in case.
 #
 :0c
