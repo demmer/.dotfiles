@@ -1,9 +1,29 @@
 #!/usr/bin/perl
 
-open GREP, "grep @ARGV |";
+if ($#ARGV > 1) {
+    print "usage: rungrep <pattern> <file>\n";
+    exit(1);
+}
 
-while (<GREP>) {
-	print $_;
-	chomp;
-	system("$_");
+
+$pat = $ARGV[0];
+$file = $ARGV[1];
+
+if ($file eq "") {
+    $file = $ENV{HOME} . "/.xinitrc";
+}
+
+open(FILE, "< $file") || die "can't open $file";
+    
+while (<FILE>) {
+    if (/$pat/) {
+	$cmd = $_;
+	chomp($cmd);
+	while ($cmd =~ s/\\\s*$//) {
+	    $_ = <FILE>;
+	    s/^\s+/ /;
+	    $cmd = $cmd . $_;
+	}
+	system($cmd);
+    }
 }
