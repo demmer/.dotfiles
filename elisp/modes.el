@@ -36,7 +36,6 @@
 ;  (define-key indented-text-mode-map "\C-m" 'newline-and-indent)
 ;  (define-key indented-text-mode-map "\t" 'tab-to-tab-stop)
   (define-key text-mode-map "\C-m" 'newline)
-;  (flyspell-mode)
   (auto-fill-mode 1)
   )
 (add-hook 'text-mode-hook 'my-text-setup)
@@ -133,25 +132,6 @@
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c-mode-common-hook 'my-cc-common-setup)
 
-; Try to make the compile command do the right thing for amsh
-(defun amsh-compile-command-hook ()
-  (interactive)
-  (if (string-match ".*am-1.*" (file-name-directory buffer-file-name))
-      (let ((directory))
-	(setq directory (file-name-directory 
-			 (file-truename 
-			  (format "%s../ffn/bin/%s/GNUMakerules" 
-				  (file-name-directory buffer-file-name)
-				  (getenv "ARCH")))))
-	(if (file-directory-p directory)
-	    (progn
-	      (make-local-variable 'compile-command)
-	      (setq compile-command (format "cd %s; make" directory)))
-	  ))
-    ))
-
-(add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
-
 ; load the java-mode 
 ;(load "java-mode")
 
@@ -165,7 +145,7 @@
 				("\\.html$" . html-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
-				("\\.[A-Za-z]*rc" . shell-script-mode)
+				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
 				("\\GNUmakerules\\'" . makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
 				)
@@ -231,6 +211,13 @@
   )
 (add-hook 'html-mode-hook 'my-html-setup)
 
+;; setup sh-mode (shell-script-mode)
+(defun my-sh-setup () 
+  (interactive)
+  (define-key sh-mode-map "\t" 'self-insert-command)
+  )
+(add-hook 'sh-mode-hook 'my-sh-setup)
+
 ;;; elisp debugging
 (autoload 'edebug-defun "edebug" "debugger for elisp" t)
 (autoload 'edebug-all-defuns "edebug" "debugger for elisp" t)
@@ -238,6 +225,8 @@
 (define-key emacs-lisp-mode-map "\C-xx" 'edebug-defun)
 (setq debugger 'edebug-debug)
 (setq max-lisp-eval-depth 10000)
+
+;; Set up the various faces for hilighting
 
 (cond (window-system
        (set-face-foreground 'bold "MediumPurple1")
@@ -306,8 +295,6 @@
   (setq font-lock-reference-face 'fl-type-face)
   (setq font-lock-builtin-face 'fl-keyword-face)
   (setq font-lock-constant-face 'fl-keyword-face)
-  (setq flyspell-incorrect-face 'fl-misspelled-face)
-  (setq flyspell-duplicate-face 'fl-misspelled-face)
   (setq search-highlight t)
 
   (setq font-lock-maximum-decoration				      
@@ -345,12 +332,6 @@
 (autoload 'ispell-buffer "ispell" "Check spelling of every word in buffer" t)
 (autoload 'ispell-message "ispell" "Check spelling of mail/news message" t)
 (setq ispell-program-name "ispell")
-
-; webster: from gwk
-
-(autoload 'webster "webster-19" "look up a word in Webster's 9th edition" t)
-(setq webster-host "citi.umich.edu") ; [your local webster-server].
-(setq webster-port "2627") ;[if 2627 is not your port]
 
 ; extensions of files I don't want to open
 (append-no-dup ".class" completion-ignored-extensions)
@@ -399,3 +380,4 @@
 (if (string-equal (getenv "ARCH") "Linux")
     (add-hook 'shell-mode-hook 'my-shell-mode-init)
   )
+
