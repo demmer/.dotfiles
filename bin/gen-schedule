@@ -81,8 +81,8 @@ print "
 <title>Schedule</title>
 </head>
 <body bgcolor=\"#ffffff\">
-<font size=-2>
-<table border=1 cellspacing=0 align=\"center\" width=\"80%\">
+<font size=-2 face=arial>
+<table border=1 cellspacing=0 align=\"center\" width=\"70%\">
 
 <tr bgcolor=\"#E0E0E0\" align=\"center\" height=\"5%\">
 <td bgcolor=\"#FFFFFF\" width=\"8%\">&nbsp;</td>
@@ -105,8 +105,7 @@ for ($hr = 9; $hr < 18; $hr++) {
 	}
 	
 	print "<tr bgcolor=\"#FFFFFF\" align=\"center\" height=\"5%\">\n";
-	
-	print "<td bgcolor=\"#E0E0E0\">$prettyhr:$min</td>\n";
+	print "<td bgcolor=\"#E0E0E0\">$prettyhr:$min<br></td>\n";
 	
 	foreach $day ("M", "Tu", "W", "Th", "F") {
 	    $key = "$day-$hr-$min";
