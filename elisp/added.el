@@ -17,6 +17,7 @@
 (setq CH-buffer-pairs '((".C" ".H")
 			(".cc" ".h")
 			(".c" ".h")
+			(".tcl" ".cc")
 			))
 
 (defun CH-buffer-match (name)
