@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<gconf>
+        <entry name="monospace_font_name" mtime="1112635090" type="string">
+                <stringvalue>Monospace 10</stringvalue>
+        </entry>
+        <entry name="font_name" mtime="1112635070" type="string">
+                <stringvalue>Sans 10</stringvalue>
+        </entry>
+</gconf>
