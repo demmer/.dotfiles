@@ -34,36 +34,26 @@ fi
 
 # Set the background to a nice graphic
 xv -quit -rmode 4 $HOME/images/gray_rock.gif
-#xsetroot -solid grey40
 
 # Bring up the window manager and save its process id
 fvwm2 &
 WMPID=$!
 
-# SSH tunnels
-xterm -iconic -title playa-proxy -e ssh playa-proxy &
-xterm -iconic -title alabama-vnc -e ssh -L 5900:alabama:5900 treat &
-
-# run dclock and mailbox
+# Utility programs
 nice dclock &
-# nice mailbox unread count &
 $HOME/bin/inigo-mailbox &
-$HOME/bin/treat-mailboxes &
+$HOME/bin/xoopi-tunnel &
+$HOME/bin/xoopi-mailbox &
 
 # Bring up a console window, an email shell and a work shell
 xterm -C -n "Console" -geometry '=80x12+0+115' &
 $HOME/bin/xoopi-xmutt &
-$HOME/bin/treat-xmutt &
 colorxterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
 
 # Bring up emacs and two work shells in 2nd screen 
 emacs -geometry '=82x65+1280+115' -title "Inconceivable" &
 colorxterm -n "Fezzik, are there rocks up ahead?" -geometry '=80x32+1870+115' &
 colorxterm -n "If there are, we'll all be dead!!" -geometry '=80x32+1870+568' &
-
-# linux specific stuff
-nice ical -iconic &
-mozilla -iconic &
 
 # Wait for the window manager to quit
 wait $WMPID
