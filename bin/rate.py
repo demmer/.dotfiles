@@ -7,10 +7,11 @@ from select import select;
 import time;
 import string;
 
+debug = 0
 
 sys.argv.pop(0);
 
-cmd = "tcpdump -n -ttt -l -v ";
+cmd = "tcpdump -n -ttt -l ";
 
 for a in sys.argv:
     cmd += a + " ";
@@ -19,7 +20,7 @@ print "Cmd is: "+cmd;
 
 inp, outp, errp = os.popen3(cmd);
 
-exp = re.compile('(\d+).*len (\d+)\)$');
+exp = re.compile('(\d+)[^:]*: . \d+:\d+\((\d+)\)');
 
 rate = 0.0;
 totalbits = 0;
@@ -61,6 +62,9 @@ while True:
     
     tdiff = m.group(1);
     bytes = m.group(2);
+
+    if (debug):
+        print "dbg: tdiff %s bytes %s" % (tdiff, bytes)
 
     totalbits += string.atoi(bytes) * 8.0;
     
