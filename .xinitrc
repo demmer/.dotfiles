@@ -63,6 +63,3 @@ nice ical -iconic &
 # Wait for the window manager to quit
 wait $WMPID
 
-# Make sure the keyboard is ok after leaving X.
-fix kbd -a
-
