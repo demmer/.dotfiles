@@ -85,6 +85,9 @@
 (global-set-key "\M-?" 'grope)
 (global-set-key "\M-;" 'visit-tags-table)
 (global-set-key "\M-," (lambda () (interactive) (find-tag "" t)))
-(global-set-key "\C-x\C-c" (lambda () (interactive) 
-			     (if (y-or-n-p "Really quit? ")
-				 (save-buffers-kill-emacs))))
+(global-set-key "\C-x\C-c" (lambda () (interactive)
+			     (if (> (length (frame-list)) 1)
+				 (delete-frame)
+			       (if (y-or-n-p "Really quit? ")
+				   (save-buffers-kill-emacs)))))
+
