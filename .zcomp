@@ -67,7 +67,9 @@ users=(
 zstyle ':completion:*' users $users
 
 # Hostnames pulled from ssh known hosts
-_ssh_known_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*})
+if [ -f $HOME/.ssh/known_hosts ]; then
+	_ssh_known_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*})
+fi
 hosts=(
     "$_ssh_known_hosts[@]"
     localhost
