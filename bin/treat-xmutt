@@ -1,3 +1,3 @@
 #!/bin/sh -f
 
-colorxterm -title "Treat Mail Shell" -geometry 80x52+1+303 -e ssh -t treat bin/mutt &
+xterm -title "Treat Mail Shell" -geometry 80x52+1+303 -e ssh -t treat bin/mutt &

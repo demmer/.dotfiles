@@ -1,4 +1,4 @@
 #!/bin/sh -f
 
-colorxterm -title "Mail Shell" -geometry 80x52+1+310 -e ssh -t \
+xterm -title "Mail Shell" -geometry 80x52+1+310 -e ssh -t \
   -o ForwardAgent=no -o ForwardX11=no inigo ~/bin/mutt &

@@ -1,3 +1,3 @@
 #!/bin/sh -f
 
-colorxterm -title "Mail Shell" -geometry 80x52+1+310 -e ssh -t -v inigo-192 ~/bin/mutt &
+xterm -title "Mail Shell" -geometry 80x52+1+310 -e ssh -t -v inigo-192 ~/bin/mutt &
