@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.5 2001-12-19 16:17:30 demmer Exp $
+;; $Id: vc.el,v 1.6 2002-06-06 22:21:33 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -2352,6 +2352,27 @@ colors. `vc-annotate-background' specifies the background color."
 		    "annotate" "-r" version
 		    (file-name-nondirectory (buffer-file-name)))))
   (message "Annotating... done"))
+
+;; Little wrapper around vc-annotate to move the point in the
+;; annotation window to match the current line in the source file.
+(defun vc-annotate-goto-line (prompt-version)
+  (interactive "P")
+  (let ((opoint (point)) start linenum)
+    (save-excursion
+      (save-restriction
+	(goto-char (point-min))
+	(widen)
+	(beginning-of-line)
+	(setq start (point))
+	(goto-char opoint)
+	(beginning-of-line)
+	(setq linenum (+ 1 (count-lines 1 (point))))
+	))
+    (vc-annotate prompt-version)
+    (other-window 1)
+    (goto-line linenum)
+    (other-window -1)
+    ))
 
 (defun vc-annotate-car-last-cons (a-list)
   "Return car of last cons in association list A-LIST."
