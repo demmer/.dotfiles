@@ -258,7 +258,7 @@ Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
 Key a    R    N    Exec  xterm -n "argus" -T "argus" -e ssh argus &
 Key p    R    N    Exec  xterm -n "pisco" -T "pisco" -e ssh pisco &
 Key s    R    N    Exec  xterm -n "sandbox" -T "sandbox" -e ssh sandbox &
-Key z    R    N    Exec  xterm -n "zabar" -T "zabar" -e ssh zabar &
+Key w    R    N    Exec  xterm -n "wangari" -T "wangari" -e ssh wangari &
 Key t    R    N    Exec  xterm -n "tier"  -T "tier" -e ssh tier &
 Key m    R    N    Exec  mozilla &    
 Key space R   N	   Exec  xset dpms force off &
@@ -291,4 +291,4 @@ Module FvwmButtons
 *FvwmButtons Close 	none Delete
 *FvwmButtons Kill 	none Destroy 
 *FvwmButtons Logout 	none Quit
-*FvwmButtons Shutdown 	none Exec exec xterm -e sudo shutdown -h now
+#*FvwmButtons Shutdown 	none Exec exec xterm -e '/bin/sh -c "echo -n shutdown? ; sleep 10; read x; if [ x$x = xyes ] ; then echo sudo shutdown -h now ; fi"'
