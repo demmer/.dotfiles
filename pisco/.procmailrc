@@ -106,11 +106,11 @@ tier
 cs-crap
 
 :0
-* ^To.*(cs|eecs)-(grads|dept)(|-food|-jobs)
+* ^TO_.*(cs|eecs)-(grads|dept)(|-food|-jobs)
 cs-crap
 
 :0
-* ^To.*(soda|dept)-info
+* ^TO_.*(soda|dept)-info
 cs-crap
 
 #
