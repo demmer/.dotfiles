@@ -199,6 +199,7 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 # DTN related
 #
 alias durst Robert Durst <durst@mitre.org>
+alias jeff_allen Jeff Allen <jra@nella.org>
 alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
@@ -216,7 +217,9 @@ alias dtn-interest dtn-interest@mailman.dtnrg.org
 #
 alias jen_bussell Jen Bussell <jbussell@berkeley.edu>
 alias jordan_hayes Jordan Hayes <jordan@thinkbank.com>
+alias joyojeet Joyojeet Pal <joyojeet@berkeley.edu>
 alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
+alias tap Tapan Parikh <tapan@cs.washington.edu>
 alias tier tier <tier@tier.cs.berkeley.edu>
 alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
 
@@ -244,6 +247,4 @@ alias osprelims archanag, bowei, dmolnar, get, jwhui, pio, xuw
 #
 # Others added by mutt
 #
-alias brenda_mainland Brenda Mainland <brenda.k.mainland@intel.com>
-alias joyojeet Joyojeet Pal <joyojeet@berkeley.edu>
-alias tap Tapan Parikh <tapan@cs.washington.edu>
+alias me-intel Michael Demmer <michael.j.demmer@intel.com>
