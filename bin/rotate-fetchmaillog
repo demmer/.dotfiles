@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm -f $HOME/.fetchmaillog.old
+cp $HOME/.fetchmaillog $HOME/.fetchmaillog.old
+cat /dev/null > .fetchmaillog
