@@ -61,7 +61,7 @@ WMPID=$!
 mozilla & 
 xclock -digital -twelve -padding 3 -geometry =$XCLOCK_GEOM \
 	-bg gray87 -strftime "%b %e %l:%M %p" &
-yabiff -geometry $YABIFF_GEOM argus:@,@F,tier,dtn,tinyos xoopi:@,sa-talk &
+yabiff -geometry $YABIFF_GEOM argus:@,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
 gaim &
 
 # Bring up a console window and a work shell
