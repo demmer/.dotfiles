@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.33 $)
+;; Version: 1.2 ($Revision: 1.34 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -945,24 +945,43 @@ interesting bits. Useful for lcvs-correlate-logs."
 	(kill-region beg (point))
 	(insert "===================================")
 	(insert "===================================\n")
-	;; Find the bound for this file, then work backwards
+
 	(save-excursion
+	  ;; Find the bound for this file
 	  (re-search-forward "^========[=]+\n")
 	  (kill-region (match-beginning 0) (match-end 0))
 	  (if (looking-at "^\n") (kill-line))
+	  (setq bound (point))
 
-	  (while (re-search-backward "^====[=]+\nrevision " bound t)
+	  ;; add the filename to any subsequent revisions
+ 	  (save-excursion
+ 	    (while (re-search-backward "^revision " beg t)
+ 	      (replace-match (format "CVS revision %s:" filename) nil nil)))
+	    
+	  ;; and the first log entry
+	  (while (re-search-backward "^====[=]+\nrevision " beg t)
 	    (forward-word 1)
 	    (forward-char 1)
 	    (insert (format "%s:" filename))
 	    (beginning-of-line)
 	    (insert "CVS ")
-	    (previous-line 1))))
-      )
+	    (previous-line 1))
+	  
+	  )))
+    
     (goto-char (point-max))
     (insert "===================================")
     (insert "===================================\n") ;; need one at the end
     (goto-char (point-min))
+    
+    ;; finally change ----- to ======
+    (save-excursion
+      (while (re-search-forward "^----[-]+" nil t)
+	(beginning-of-line)
+	(kill-line)
+	(insert "===================================")
+	(insert "===================================\n")
+	))
   ))
 
 (defun lcvs-correlate-logs (&optional files working-revisions)
