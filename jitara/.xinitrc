@@ -25,7 +25,7 @@ cd $HOME
 if [ -z "$XINITLOG" ]; then
        XINITLOG=1
        export XINITLOG
-       /bin/sh $HOME/.xinitrc | tee $HOME/.err/startx.log 2>&1
+       exec /bin/sh $HOME/.xinitrc | tee $HOME/.err/startx.log 2>&1
 fi
 
 #
@@ -39,6 +39,12 @@ if [ -n "$X11HOME" ]; then
 fi
 
 #
+# Set up path to include fink installed apps
+#
+PATH=$PATH:/sw/bin
+PATH=$PATH:$HOME/bin
+
+#
 # Do any requested xmodmap operations
 #
 if [ -f $HOME/.xmodmaprc ]; then
@@ -48,12 +54,12 @@ fi
 #
 # Load the X defaults after substituting geometry bindings
 #
-PATH=$PATH:$HOME/bin
 if [ -f $HOME/.Xdefaults.in ]; then
 	rm -f $HOME/.Xdefaults
 	subst-geometry < $HOME/.Xdefaults.in > $HOME/.Xdefaults
 	xrdb -load $HOME/.Xdefaults
 fi
+
 
 # Set up ssh-agent
 . $HOME/.ssh-attach
@@ -71,6 +77,7 @@ xmutts
 xterm &
 
 quartz-wm
+# fvwm2 
 
 # kill yabiff
 [ "$RUNGREP" = "1" ] || ps auxww | grep yabiff | $HOME/bin/awkill
