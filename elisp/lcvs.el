@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.30 $)
+;; Version: 1.2 ($Revision: 1.31 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -866,6 +866,10 @@ Influenced by the `lcvs-log-restrict-to-branch' and
 	(save-excursion
 	  (set-buffer "*CVS-log*")
 	  (goto-char (point-max))
+
+	  ;; first some cleanup stuff
+	  (lcvs-cleanup-logs files working-revisions)
+      
 	  (if lcvs-correlate-change-log
 	      (lcvs-correlate-logs files working-revisions)
 	    (let ((msg (substitute-command-keys
@@ -946,7 +950,7 @@ interesting bits. Useful for lcvs-correlate-logs."
 	  (kill-region (match-beginning 0) (match-end 0))
 	  (if (looking-at "^\n") (kill-line))
 
-	  (while (re-search-backward "^revision " bound t)
+	  (while (re-search-backward "^----[-]+\nrevision " bound t)
 	    (forward-word 1)
 	    (forward-char 1)
 	    (insert (format "%s:" filename))
@@ -982,9 +986,6 @@ and log message"
       (make-variable-buffer-local 'kill-whole-line)
       (setq kill-whole-line t)
 
-      ;; first some cleanup stuff
-      (lcvs-cleanup-logs files working-revisions)
-      
       ;; scan through again -- for each file, scan through the
       ;; remainder to try to find matches. 
       (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept)
