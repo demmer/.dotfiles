@@ -3,20 +3,6 @@
 #
 
 #
-# Inktomi aliases to get tab completion. Put first so other aliases
-# take precedence.
-#
-source ~/.mutt_inktomi_aliases
-source ~/.mutt_inktomi_list_aliases
-
-#
-# Inktomi aliases that I think should be there but aren't.
-#
-alias ericl Eric Lundstedt <elundste@inktomi.com>
-alias ccutright Catherine Cutright <cutright@inktomi.com>
-alias t anoop, koichi, sreedhar
-
-#
 # Family
 #
 alias adam Adam Buchsbaum <alb@research.att.com>
@@ -34,52 +20,63 @@ alias family mom, dad, matt, nana, jab, jimi, meanne, adam, mary
 #
 # Friends
 #
+alias aidan Aidan Rogers <aidan@yoyo.org>
+alias abigail Abigail Rogers <abigail@yoyo.org>
 alias amanda Amanda Eaken <aeaken@transact.org>
-alias apurva Apurva Dave <apurva@inktomi.com>
+alias anoop Anoop Reddy <anoopkreddy@hotmail.com>
+alias apurva Apurva Dave <apurva@apurva.net>
 alias aswan Andrew Swan <aswan@cs.berkeley.edu>
 alias becca Rebecca Silbermann <Rebecca_Silbermann@hotmail.com>
 alias bigs John Pottebaum <jsp@pixar.com>
 alias chaffee Gordon Chaffee <chaffee@attbi.com>
 alias czerwin Steve Czerwinski <czerwin@cs.berkeley.edu>
+alias davidwu David Wu <davewu@soda.berkeley.edu>
 alias diana Diana Reed <dreed@girlsms.org>
 alias dsimpson David Simpson <dsimpson@inktomi.com>
 alias dsolomon Debra Solomon <dsolomon@greatschools.net>
 alias elliot Elliot Winard <ewinard@macromedia.com>
+alias ericaaustin Erica Austin <supereaa@yahoo.com>
 alias ewesson Elizabeth Wesson <ewesson@battery.com>
 alias glen Glen Sanford <glen@glen.nu>
-alias gk Gautam Kachroo <gk@inktomi.com>
+alias gk Gautam Kachroo <???>
+alias harry Harry Yoon <alsoharry@yahoo.com>
 alias heather Heather Ingate <oliphant23@aol.com>
 alias hoofar Hoofar Razavi <hoofar@hoofar.com>
 alias jake Jake Cockrell <jcockrell@macromedia.com>
 alias jenmart Jennifer Martinez <JeMartinez@tribune.com>
 alias jessie Jessica Beckett <jbeckett@mac.com>
-alias jevans Jim Evans <jevans@cray.com>
+alias jevans Jim Evans <jim@cowlove.com>
+alias joanna Joanna Parks <jparks@inktomi.com>
 alias jon Jon Salky <jon@salky.com>
 alias jonah Jonah Staw <jonah.staw@frogdesign.com>
 alias josh Joshua Woolley <Joshua_Woolley@hotmail.com>
 alias jsp John Pottebaum <jsp@pixar.com>
 alias kathy Kathy Robertson <ski_winnie@hotmail.com>
 alias kevin Kevin Janiak <kevin@highschoolalumni.com>
-alias kim Kimberly Cullen <kim@asaponline.org>
+alias kim Kimberly Cullen <kimberlycullen@hotmail.com>
 alias kirsten Kirsten Thornton <kirsten.thornton@accenture.com>
 alias kristy Kristy Cockrell <k_cockrell@excite.com>
 alias lance Lance Berc <lance@al.org>
 alias lucas Lucas Standaert <lucas@cray.com>
 alias luke Luke D'Alessandro <Luke_Dalessandro@hotmail.com>
-alias markf Mark Fritzel <mark@asaponline.org>
+alias markf Mark Fritzel <???>
 alias maureen Maureen Morgan <maureenmorgan@hotmail.com>
 alias mattp Matt Podolsky <matt@inktomi.com>
 alias michelle Michelle Munson <michelle@michellemunson.com>
 alias mjr Michael John Radwin <mjr@acm.org>
 alias molly Molly Brown <mollybro@microsoft.com>
 alias nancychaffee <nancyk@home.net>
-alias neal Neal Cardwell <neal@inktomi.com>
+alias neal Neal Cardwell <neal@flophouse.com>
 alias nlucks Ned Lucks <nlucks@stanfordalumni.org>
 alias noah Noah Treuhaft <treuhaft@cs.berkeley.edu>
+alias nova Nova Brown <nova@supadupanova.com>
+alias pava David Pava <davidpava@yahoo.com>
 alias rachel Rachel Benson <rachelbenson@yahoo.com>
+alias rfromm Rich Fromm <rfromm@avocadolounge.com>
 alias robin Robin Alper <robinalper@earthlink.net>
 alias shawna Shawna Kaplan <shawna_kaplan@yahoo.com>
-alias stemm Mark Stemm <stemm@inktomi.com>
+alias smoot Steve Smoot <smoot@alum.mit.edu>
+alias stemm Mark Stemm <stemm@markstemm.org>
 alias tami Tami Downes <howie75@hotmail.com>
 alias tate Tate Hausman <mrhausman@yahoo.com>
 alias tex Michael Horn <mhorn@classroom.com>
@@ -139,15 +136,7 @@ alias kingfish alan_margulius, david_ng, dougb, \
 	       cbeausejour
 
 #
-# ASAP People
-#
-alias john_kittredge John Kittredge <john@asaponline.org>
-alias michael_taylor Michael Taylor <mltaylor01@attbi.com>
-alias daniel_tompos Daniel Tompos <daniel@asaponline.org>
-alias anthony_kelani Anthony Kelani <anthony@asaponline.org>
-
-#
-# Old ones that may not work
+# Old aliases that probably don't work
 #
 alias amd Adam Doppelt <amd@marimba.com>
 alias caf Michael Cafarella <michaelc@dai.ed.ac.uk>
@@ -166,15 +155,6 @@ alias mkzim Marc Zimmerman <mkzim@cs.washington.edu>
 alias nick Nicholas E Stern <neste@conncoll.edu>
 alias sara Sara Young <se-young@students.uiuc.edu>
 alias tom Tom Danielson <Thomas_Danielson@brown.edu>
-
-#
-# inktomi mailing lists
-#
-alias media-content-injector <media-content-injector@inktomi.com>
-alias media-defensive-mdn <media-defensive-mdn@inktomi.com>
-alias media-multicast <media-multicast@inktomi.com>
-alias media-packet-pump <media-packet-pump@inktomi.com>
-alias media-routing <media-routing@inktomi.com>
 
 #
 # Others added by mutt
