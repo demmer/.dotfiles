@@ -138,7 +138,7 @@ proc scan {spool spoolfile} {
 	dprint "end of headers: $from $subject $status"
 
 	# output what we got
-	if {($from != "") && ($status != "RO")} {
+	if {($from != "") && ($status != "RO") && ($status != "OR")} {
 
 	    # try to pretty up the from address
 	    regexp {([^<\[]*)[<\]](.*)[>\]]} $from match from fromaddr
