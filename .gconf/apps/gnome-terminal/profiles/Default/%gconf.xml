@@ -1,40 +1,25 @@
 <?xml version="1.0"?>
 <gconf>
-        <entry name="allow_bold" mtime="1112634144" type="bool" value="false">
+        <entry name="font" mtime="1112635577" type="string">
+                <stringvalue>LucidaTypewriterMike Bold 12</stringvalue>
         </entry>
-        <entry name="use_theme_colors" mtime="1077662309" muser="demmer" type="bool" value="false">
+        <entry name="use_system_font" mtime="1112635553" type="bool" value="false">
         </entry>
-        <entry name="foreground_color" mtime="1077661784" muser="demmer" type="string">
-                <stringvalue>#FFFFFF</stringvalue>
+        <entry name="exit_action" mtime="1112635150" type="string">
+                <stringvalue>close</stringvalue>
         </entry>
-        <entry name="background_color" mtime="1077661784" muser="demmer" type="string">
-                <stringvalue>#000000</stringvalue>
-        </entry>
-        <entry name="use_system_font" mtime="1112634137" muser="demmer" type="bool" value="false">
-        </entry>
-        <entry name="font" mtime="1112634398" muser="demmer" type="string">
-                <stringvalue>LucidaTypewriterMike Bold 8</stringvalue>
-        </entry>
-        <entry name="default_show_menubar" mtime="1077661481" muser="demmer" type="bool" value="false">
-        </entry>
-        <entry name="palette" mtime="1077664873" muser="demmer" type="string">
-                <stringvalue>#000000:#670000:#006700:#FFFF4E:#000067:#670067:#319CE1:#FDFDFD:#2A2A2A:#FF0000:#00FF00:#FFFF00:#0000FF:#FF00FF:#00FFFF:#C2C2C2</stringvalue>
-        </entry>
-        <entry name="title" mtime="1077662287" muser="demmer" type="string">
-                <stringvalue>Mail Shell</stringvalue>
-        </entry>
-        <entry name="title_mode" mtime="1077662320" muser="demmer" type="string">
+        <entry name="title_mode" mtime="1112635147" type="string">
                 <stringvalue>replace</stringvalue>
         </entry>
-        <entry name="backspace_binding" mtime="1077662415" muser="demmer" type="string">
-                <stringvalue>ascii-del</stringvalue>
+        <entry name="palette" mtime="1112636857" type="string">
+                <stringvalue>#000000000000:#CDCB00000000:#0000CDCB0000:#CDCBCDCB0000:#1E1A908FFFFF:#CDCB0000CDCB:#0000CDCBCDCB:#E5E2E5E2E5E2:#4CCC4CCC4CCC:#FFFF00000000:#0000FFFF0000:#FFFFFFFF0000:#46458281B4AE:#FFFF0000FFFF:#0000FFFFFFFF:#FFFFFFFFFFFF</stringvalue>
         </entry>
-        <entry name="delete_binding" mtime="1077662418" muser="demmer" type="string">
-                <stringvalue>escape-sequence</stringvalue>
+        <entry name="background_color" mtime="1112636167" type="string">
+                <stringvalue>#000000</stringvalue>
         </entry>
-        <entry name="scrollbar_position" mtime="1077662421" muser="demmer" type="string">
-                <stringvalue>hidden</stringvalue>
+        <entry name="foreground_color" mtime="1112636167" type="string">
+                <stringvalue>#FFFFFF</stringvalue>
         </entry>
-        <entry name="cursor_blink" mtime="1077751305" muser="demmer" type="bool" value="false">
+        <entry name="use_theme_colors" mtime="1112635110" type="bool" value="false">
         </entry>
 </gconf>
