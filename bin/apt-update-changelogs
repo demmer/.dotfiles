@@ -1,0 +1,48 @@
+#!/usr/bin/python
+
+import sys, re
+from urllib2 import *;
+
+urlpat = "http://packages.debian.org/changelogs/pool/main/%s/%s/%s_%s/changelog";
+
+input = sys.stdin.readlines();
+
+packages = []
+
+for l in input:
+    p = re.compile("^Inst ((\S)\S+) \[.*\] \((\S+)");
+    m = p.match(l);
+    if (m == None):
+        continue
+
+    pkg = m.group(1);
+    ltr = m.group(2);
+    ver = m.group(3);
+    packages.append((pkg, ltr, ver));
+
+packages.sort()
+
+for (pkg, ltr, ver) in packages:
+    url = urlpat % (ltr, pkg, pkg, ver)
+
+    try:
+        log = urlopen(url);
+    except HTTPError, e:
+        print "%s (%s)" % (pkg, ver)
+        print "(no changelog)\n"
+        continue
+
+    pkgpat = re.compile("^%s \((.*)\)" % pkg);
+    whitepat = re.compile("^\s+$");
+    
+    for l in log:
+        if (whitepat.match(l)):
+            continue
+
+        m = pkgpat.match(l);
+        if (m and m.group(1) != ver):
+            break
+
+        print l ,
+
+    print "\n"
