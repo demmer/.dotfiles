@@ -1,0 +1,56 @@
+#!/usr/bin/perl
+
+select STDOUT; $| = 1;
+
+use IO::Handle;
+
+# option defaults
+
+$host = "localhost";
+$verbose = 0;
+
+sub usage {
+    my($err) = @_;
+    print "$0: $err.\n";
+    print "Usage: [-v] [-host host] \n";
+    exit 1;
+}
+
+sub debug {
+    if ($verbose) {
+        print(STDERR "@_\n");
+    }
+}
+
+LOOP:
+while ($#ARGV >= 0) {
+    $arg = $ARGV[0]; shift;
+    if ($arg eq "-v")	{ $verbose = 1; next LOOP;}
+    
+    if ($#ARGV < 0) { usage("invalid number of arguments"); }
+    $val = $ARGV[0]; shift;
+    if ($arg eq "-host")	{ $host = $val; }
+    else			{ usage("invalid argument $arg"); }
+}
+
+$file = "/tmp/urlview-pipe-$host-$ENV{USER}";
+
+debug ("file: $file");
+
+if (-p $file) {
+   unlink($file) || print "ERROR: can't rm $file";
+}
+
+system("mkfifo $file");
+
+while (1) {
+      debug("open $file");
+      open(FIFO, $file) || last;
+      debug("read $file");
+      $l = <FIFO>;
+      debug("got $l");
+      print "URL $l\n" || last;
+      close FIFO;
+}
+
+system("rm $file");
