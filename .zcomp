@@ -23,17 +23,11 @@
 # introduction for some explanation or the manual for a detailed
 # description.
 
-ftphosts=(						\
-                        $HOST				\
-                        rtfm.mit.edu			\
-			mirrors.aol.com			\
-			ftp.uwp.edu			\
-                        wuarchive.wustl.edu		\
-                        )
-
 hosts=(							\
-			postoffice.brown.edu		\
-			tahoe				\
+			inigo.demmer.nu			\
+			largo.millennium.berkeley.edu	\
+			playground.intel-research.net	\
+			xoopi.pair.com			\
                         )
 
 # global completion options
@@ -61,7 +55,7 @@ compctl -g '*(*)' + -g '*(-/)' strip gprof
 compctl -g '*.ps' + -g '*(-/)' gs ghostview gv
 
 # Same for pdf files
-compctl -g '*.pdf' + -g '*(-/)' acroread
+compctl -g '*.pdf' + -g '*(-/)' acroread xpdf
 
 # Similar things for tex, texinfo and dvi files.
 compctl -g '*.tex*' + -g '*(-/)' tex latex texi2dvi
@@ -73,18 +67,14 @@ compctl -g '*.fig' + -g'*(-/)' xfig
 # Anything after nohup is a command by itself with its own completion
 compctl -l '' nohup exec
 
-# If the command is rsh, make the first argument complete to hosts
+# If the command is rsh/ssh, make the first argument complete to hosts
 # and treat the rest of the line as a command on its own.
-compctl -k hosts -x 'p[2,-1]' -l '' -- rsh
-compctl -k hosts -x 'c[-1,-l]' -u  -- rlogin
+compctl -k hosts -x 'p[2,-1]' -l '' -- rsh ssh
 compctl -x 'n[-1,@]' -k hosts -- finger
 
-# If the command is telnet (or the like), complete to hostnames
-# that I frequent.
-compctl -k hosts telnet xr xt ping
-
-# some ftp hosts that I frequent
-compctl -k ftphosts ftp aftp ncftp
+# If the command is ssh (or the like), complete to hostnames that I
+# frequent.
+compctl -k hosts ping xssh ssh traceroute
 
 # kill takes signal names as the first argument after -, but job names after %
 compctl -j -P % -x 's[-] p[1]' -k signals -- kill
@@ -112,14 +102,8 @@ compctl -f -x 'r[-exec,;]' -l '' -- find
 #  complete filenames and path arguments
 compctl -D -f -x 's[-I][-L]' -f
 
-
 # Java stuff
-compctl -g '*.java' + -g '*(/)' javac
-compctl -g '*.java' + -g '*(/)' javadoc
-
-compctl -g '*.html' + -g '*(/)' appletviewer
-
-compctl -g '*.iv' + -g '*(/)' SceneViewer
+compctl -g '*.java' + -g '*(/)' javac javadoc
 
 compctl -k dict_names l
 compctl -k dir_names g
