@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# = 0 ]; then
+   echo "usage: $0 [host]"
+   exit 1
+fi
+
+host=$1
+
+xterm -iconic -title "urlview $host" -e \
+	$HOME/bin/urlview-tunnel -host $host 2> $HOME/.err/urlview-$host.log &
