@@ -9,12 +9,12 @@ source ~/.muttrc.generic
 
 my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 
-mailboxes ! =tinyos
+mailboxes ! =tinyos =tier
 
 #
 # Sorting order dependent on the folder
 #
 folder-hook . set sort=mailbox-order
 folder-hook tinyos set sort=threads
-
+folder-hook tier set sort=threads
 
