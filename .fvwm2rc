@@ -146,6 +146,8 @@ AddToFunc Move-or-Raise "C" Raise
 			+ "M" Move
  			+ "D" Raise
 
+AddToFunc Resize-Now "I" Resize
+
 #
 # Define mouse bindings
 #
@@ -185,13 +187,11 @@ Mouse   1	T	N	Move-or-Raise
 Mouse   1	WT	M	Move-or-Raise
 Mouse   1	T	C	Move
 Mouse   1       I       A	Iconify
-Mouse   1	WTSF  	S	Resize		
+Mouse   1	WTSF  	S	Resize-Now	
 
 Mouse   2	R	A	PopUp "WindowOps"
-Mouse   2	I	A	Move
-Mouse   2	W	M	Move
-Mouse   2	T	M	Move
-Mouse   2	T	A	Move
+Mouse   2	IT	A	Move
+Mouse   2	WT	M	Move
 
 Mouse   3	R	A	Module FvwmWinList Transient
 Mouse   3	I	A	Iconify
