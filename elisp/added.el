@@ -439,3 +439,6 @@ to match the current line in the source file."
     (insert buf)
     (goto-char (point-min))
     ))
+
+;; i do replace-string a lot
+(defalias 'rs 'replace-string)
