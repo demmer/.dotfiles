@@ -105,6 +105,14 @@ MANPATH=${(j{:})manpath}
 # I know that zsh doesn't do this by default for MANPATH
 export PATH SHELL LD_LIBRARY_PATH MANPATH
 
+#
+# On OS X, fink wants us to source an init script to set up path,
+# environment, etc
+#
+if [ -f /sw/bin/init.sh ]; then
+	. /sw/bin/init.sh
+fi
+
 # less is a much better pager than more
 export MORE=less
 export PAGER=less
