@@ -1,5 +1,5 @@
 #
-# .procmailrc for argus
+# .procmailrc for pisco
 #
 
 VERBOSE=no
@@ -44,6 +44,21 @@ html
 | dehtml.pl
 
 #
+# Mailing lists I don't care to spool
+#
+:0
+* ^List-Id:.*debian-devel.lists.debian.org
+debian
+
+:0
+* ^List-Id:.*debian-security.lists.debian.org
+debian
+
+:0
+* ^TO_.*soekris-tech@lists.soekris.com
+soekris
+
+#
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
 :0c
@@ -80,7 +95,7 @@ cs-crap
 cs-crap
 
 :0
-* ^To(soda|dept)-info
+* ^To.*(soda|dept)-info
 cs-crap
 
 #
