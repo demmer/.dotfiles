@@ -9,4 +9,5 @@
 autom4te.cache/*
 CVS/*
 TAGS
+tags
 doxygen/*
