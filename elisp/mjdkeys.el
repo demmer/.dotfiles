@@ -31,7 +31,13 @@
 ;;; amd: fix backspace
 (global-set-key "\C-h" 'backward-delete-char)
 (global-set-key "\M-\C-h" 'backward-kill-word)
+
+;;; i mistype the help commands a lot
+(global-set-key "\C-xh" 'help-command)
 (global-set-key "\C-X\C-h" 'help-command)
+(global-set-key "\C-X\C-h\C-f" 'describe-function)
+(global-set-key "\C-X\C-h\C-k" 'describe-key)
+(global-set-key "\C-X\C-h\C-v" 'describe-variable)
 
 ;;; amd: my tab shortcuts
 (global-set-key "\M-\\" 'indent-region)
