@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.32 $)
+;; Version: 1.2 ($Revision: 1.33 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1841,7 +1841,7 @@ the value of `foo'."
 	(setq dont-move t))
 
        ((looking-at
-	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): warning: \\(.*\\)"
+	 (concat "^cvs\\(pserver\\)? \\(update\\|server\\): warning: `?\\([^']*\\)'?"
 		 " is not (any longer) pertinent\n"))
 	(replace-match "U \\3 (removed)\n")
 	(setq dont-move t))
