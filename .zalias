@@ -66,6 +66,15 @@ alias xtier='xssh tier'
 alias xxoopi='xssh xoopi'
 alias xzabar='xssh zabar'
 
-alias a='xssh argus'
-alias i='xssh inigo'
+alias xa='xssh argus'
+alias xi='xssh inigo'
 alias xx='xssh xoopi'
+
+# debian shortcuts
+alias apti='sudo apt-get install'
+alias aptu='sudo apt-get update'
+alias aptU='sudo apt-get upgrade'
+alias apts='apt-cache search'
+alias aptq='sudo apt-get upgrade -s'
+alias dls='dpkg -l'
+
