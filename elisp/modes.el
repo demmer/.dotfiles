@@ -149,6 +149,7 @@
 				("\\GNUmakerules\\'" . makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
 				("\\.mdn\\'" . sgml-mode)
+				("\\.xsl\\'" . sgml-mode)
 				)
 			      auto-mode-alist))
 
