@@ -183,7 +183,7 @@ with tab characters underneath."
 				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
 				("\\(M\\|m\\|GNUm\\)ake\\(file\\|rules\\)\\(\\..*\\)?\\'" .
 				 makefile-mode)
-				("\\.make\\'" . makefile-mode)
+				("\\.make\\(\\|.in\\)\\'" . makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
 				("\\.xsl\\'" . sgml-mode)
 				("\\.\\(cls\\|bas\\|frm\\)\\'" . visual-basic-mode)
