@@ -17,8 +17,10 @@ sub usage {
 }
 
 sub debug {
+    my($msg) = @_;
+    
     if ($verbose) {
-	print(STDERR "@_\n");
+	print(STDERR "$msg\r\n");
     }
 }
 
@@ -46,12 +48,14 @@ open(SSH, "$cmd |") || die "can't run pipe";
 debug("ssh succeeded");
 
 while (<SSH>) {
-    chomp;
-    debug "got line $_\n";
+    s/^\s*//; # strip all whitespace at the beginning
+    s/\s*$//; # and end
+    debug "got line '$_'";
 
     if (/URL/) {
-	s/URL //;
+	s/URL\s*//;
 	next if ($_ eq "");
+	debug "url is '$_'";
 	$cmd = "mozilla -remote 'openUrl($_,new-tab)'";
 	debug "$cmd\n";
 	system $cmd;
