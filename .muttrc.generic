@@ -105,6 +105,8 @@ macro pager <F5> ":source ~/.muttrc\n" "Reload the muttrc"
 macro index R "|report-spam\nd" "mark message as spam"
 macro pager R "|report-spam\nd" "mark message as spam"
 
+macro index S "T.*\ns=spam" "save all messages to spam folder"
+
 #
 # Color overrides if necessary:
 # To get cyan    use yellow
