@@ -128,8 +128,11 @@ proc scan {} {
 	if {($from != "") && ($status != "RO")} {
 
 	    # try to pretty up the from address
-	    regexp {([^<\[]*)[<\]]} $from match from
+	    regexp {([^<\[]*)[<\]](.*)[>\]]} $from match from fromaddr
 	    set from [string trim $from {\" }]
+	    if {$from == ""} {
+		set from $fromaddr
+	    }
 	    regexp {=\?[^\?]+\?[^\?]+\?([^\?]+)\?=} $from match from
 
 	    if [regexp {(\w+), (\w+)} $from match last first] {
