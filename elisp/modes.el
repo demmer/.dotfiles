@@ -219,6 +219,47 @@
   )
 (add-hook 'html-mode-hook 'my-html-setup)
 
+;; setup latex mode
+(require 'tex-mode)
+(require 'skeleton)
+
+(defun latex-insert-section(type)
+  "Insert a \\section{} style latex declaration."
+  (interactive)
+  (let ((section (read-string (format "\\%s: " type))))
+    (insert "\\" type "{" section "}\n")))
+
+(define-skeleton tex-latex-block-no-options
+  "Same as tex-latex-block but without any options."
+  (let ((choice (completing-read (format "LaTeX block name [%s]: "
+					 latex-block-default)
+				 (mapcar 'list
+					 (append standard-latex-block-names
+						 latex-block-names))
+				 nil nil nil nil latex-block-default)))
+    (setq latex-block-default choice)
+    (unless (or (member choice standard-latex-block-names)
+		(member choice latex-block-names))
+      ;; Remember new block names for later completion.
+      (push choice latex-block-names))
+    choice)
+  \n "\\begin{" str ?\}
+  \n -2 _ \n
+  "\\end{" str ?\} > \n)
+
+(define-key latex-mode-map "\C-ca" (lambda () (interactive)
+				     (tex-latex-block-no-options "abstract")))
+(define-key latex-mode-map "\C-cc" (lambda () (interactive)
+				     (tex-latex-block-no-options "center")))
+(define-key latex-mode-map "\C-ce" (lambda () (interactive)
+				     (tex-latex-block-no-options "enumerate")))
+(define-key latex-mode-map "\C-ci" (lambda () (interactive)
+				     (tex-latex-block-no-options "itemize")))
+(define-key latex-mode-map "\C-cs" (lambda () (interactive)
+				     (latex-insert-section "section")))
+(define-key latex-mode-map "\C-cS" (lambda () (interactive)
+				     (latex-insert-section "subsection")))
+
 ;; setup sh-mode (shell-script-mode)
 (require 'sh-script)
 (defun my-sh-setup () 
