@@ -461,14 +461,15 @@ with tab characters underneath."
 	 (cons 'c++-mode 2)
 	 (cons t t)))
 
-  (setq c++-font-lock-extra-types (append '("std"
-					    "u_char")
-					  c++-font-lock-extra-types))
-  
   (setq font-lock-multiline t)
   )
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
+
+(setq c++-font-lock-extra-types (append '("std"
+					  "u_char")
+					c++-font-lock-extra-types))
+
 ;(require 'lazy-lock)
 ;(setq font-lock-support-mode 'lazy-lock-mode)
 
