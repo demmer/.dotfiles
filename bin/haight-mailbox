@@ -1,8 +1,13 @@
 #!/bin/sh
 
 PROG='mailbox'
+
 if [ "$HOST" != "haight.nbttech.com" ]; then
 	PROG='ssh -q haight -o BatchMode=yes mailbox'
 fi
 
-$PROG -geometry =270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer &
+OPTS="-geometry 270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer"
+RED="< /dev/null > /dev/null"
+
+
+echo $PROG $OPTS $RED
