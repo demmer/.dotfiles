@@ -1,4 +1,4 @@
 #!/bin/sh
-exec awk '{print $2}' | xargs kill
+exec awk '{print $2}' | xargs kill $*
 
 
