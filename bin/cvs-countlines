@@ -12,5 +12,5 @@ while(<CVS>) {
 }
 
 foreach $who (sort { $peeps{$b} <=> $peeps{$a} } keys %peeps) {
-    printf("%10s: %s\n", $who, $peeps{$who});
+    printf("%10s: %7s\n", $who, $peeps{$who});
 }
