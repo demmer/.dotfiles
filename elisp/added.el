@@ -21,7 +21,7 @@
 			("M.nc" ".nc")
  			("M.nc" "C.nc")
 			))
-
+(require 'cl)
 (defun CH-buffer-match (name)
   "Matches from CH-buffer pairs, and returns a list of modified buffer
 names. e.g. if passed buffer.C, will return buffer.H and vice versa.
@@ -258,32 +258,6 @@ and selects that window."
   (forward-paragraph 1)
   (shift-region from (point)))
 
-
-(defun printf-dprintf ()
-  "Dumb elisp function that searches through a document replacing printf
-calls with dprintf macro calls. [mjd]"
-  (interactive)
-  (let ((pos (point)) (count 0) (total (buffer-size)))
-    (goto-line 1)
-    (message "Converting printf to dprintf (%3d%%) done."
-		   (fume--relative-position))
-    (while (search-forward " printf" nil t)
-	 (progn
-	   (backward-word 1)
-	   (insert "d")
-	   (search-forward "(")
-	   (insert "(")
-	   (search-forward ";")
-	   (backward-char 1)
-	   (insert ")")
-	   (setq count (+ count 1))
-	   ))
-	 (message "Done . . . converted %d instances." count)
-	 (goto-char pos)
-	 )
-  
-  )
-
 (defun backward-line (&optional num)
   (interactive)
   (forward-line (if num (- num) -1)))
@@ -324,14 +298,6 @@ calls with dprintf macro calls. [mjd]"
   (let ((str) (grepargs))
     (setq str (read-from-minibuffer "grep in ~/work/am-1/tcl/*/*.tcl: "))
     (setq grepargs (concat "grep -n -e " str " ~/work/am-1/tcl/*/*.tcl"))
-    (grep grepargs)
-))
-
-(defun am-grep () 
-  (interactive)
-  (let ((str) (grepargs))
-    (setq str (read-from-minibuffer "grep in source in ~/work/am-1: "))
-    (setq grepargs (concat "find ~/work/am-1 -name \\*.cc -or -name \\*.h -or -name \\*.tcl | xargs grep -n -e " str))
     (grep grepargs)
 ))
 
@@ -380,7 +346,6 @@ Then it does not try to move vertically."
     (old-next-line (if arg arg 1))))
 
 (require 'vc)
-
 (defun vc-annotate-goto-line (prompt-version)
 "Wrapper around vc-annotate to move the point in the annotation window
 to match the current line in the source file."
@@ -449,3 +414,16 @@ to match the current line in the source file."
       (setq end (point))
       (buffer-substring-no-properties beg end))
     ))
+
+;; don't scatter backup files all over the filesystem
+(require 'dired)
+(defun my-make-backup-file-name (file-name)
+  "Create the non-numeric backup file name for `file-name`."
+  (let ((dir "~/.emacs.d/backups/"))
+    (if (not (file-exists-p dir))
+	(make-directory dir t)))
+  (concat (expand-file-name "~/.emacs.d/backups/")
+	  (dired-replace-in-string "/" "|" file-name)
+	  "~"))
+
+(setq make-backup-file-name-function 'my-make-backup-file-name)
