@@ -137,7 +137,7 @@ This must be bound to a mouse-down event in the mode-line."
 
 ;; lcvs setup
 (load "lcvs")
-(defun my-lcvs-setup ()                                                
+(defun my-lcvs-setup ()
   (set-face-foreground 'lcvs-UP-face "yellow")
   (setq lcvs-log-restrict-to-branch t)
 )
@@ -149,21 +149,15 @@ This must be bound to a mouse-down event in the mode-line."
 ;; require these features...
 (require 'complete)
 (partial-completion-mode)
-
-; (require 'crypt++)
-; (require 'zwrite)
+(append-no-dup ".T" completion-ignored-extensions)
 
 (require 'compile)
 (setq compile-command '"make")
+(setq compilation-scroll-output t)
 
 ;;; stuff that, for one reason or another, must come last
 (setq gc-cons-threshold 200000)
 (setq default-major-mode 'text-mode)
-
-(setq compilation-scroll-output t)
-
-(custom-set-variables
- '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".fasl" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".dvi" ".fmt" ".class" ".fas" ".lib" ".x86f" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".T"))))
 
 ;; clear the last message
 (message "")
