@@ -2,7 +2,20 @@
 
 echo "Rotating Mail spool and sent files..."
 
-date=`date -v-5d '+%Y-%m'`
+month=`date '+%m'`
+month=`expr $month - 1`
+year=`date '+%Y'`
+
+if [ $month = 0 ]; then
+	month=12
+	year=`expr $year - 1`
+fi
+
+if [ $month -lt 10 ]; then
+	month=0$month
+fi
+
+date=$year-$month
 
 cd $HOME/Mail
 
