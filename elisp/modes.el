@@ -178,7 +178,7 @@ with tab characters underneath."
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
 				("\\.[Hh]\\'" . c++-mode)
 				("\\.c[cx]?x?\\'" . c++-mode)
-				("\\.[Cyx]\\'" . c++-mode)
+				("\\.[Cyxi]\\'" . c++-mode)
 				("\\.nc\\'" . nesc-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
