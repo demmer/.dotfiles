@@ -6,13 +6,8 @@ alias rmplain='find . -name \*~ -print -exec /bin/rm {} \;'
 alias rmdot='find . -name .\*~ -print -exec /bin/rm {} \;'
 alias rmbak='rmplain; rmdot'
 alias rmbakl='/bin/rm -f *~; /bin/rm -f .*~; echo > /dev/null'
-alias openwin='/usr/openwin/bin/openwin -dev /dev/fb defdepth $FBBITS >>&! ~/.err/openwin;exit'
 
-alias prex='cat ~/.err/startx >> ~/.err/startx.log'
-alias startx-8='prex;/usr/X11R6/bin/startx  -- -bpp 8  >! ~/.err/startx 2>&1'
-alias startx-16='prex;/usr/X11R6/bin/startx -- -bpp 24 >! ~/.err/startx 2>&1'
-alias startx-32='prex;/usr/X11R6/bin/startx -- -bpp 32 >! ~/.err/startx 2>&1'
-alias startx=startx-32
+alias startx='startx 2>&1 | tee ~/.err/startx.log'
 
 alias pcount='cat *.[CH] | wc -l'
 
