@@ -130,7 +130,7 @@
 
 (defvar fume-function-name-regexp-tcl
   (concat
-   "^[ \t]?\\([a-zA-Z0-9]+[ \t]*method\\|proc\\)[ \t]*"   ; classname method or proc
+   "^[ \t]?\\([-a-zA-Z0-9_]+[ \t]*method\\|proc\\)[ \t]*"   ; classname method or proc
    "[a-zA-Z0-9_]*[ \t]*"                                  ; func name
    "\\({([- \tA-Za-z_0-9]*)?}\\)?"                        ; optional args
    "[ \t]*{"
@@ -241,7 +241,10 @@
 	       
 	       (t
 		(setq name (buffer-substring beg end))
-		))))
+		))
+	      (goto-char temp)
+;	      (message (format "Found tcl func \"%s\" keyword \"%s\"" name keyword))
+	    ))
 	   
 	   (t
 	    (setq name (buffer-substring beg end)))
