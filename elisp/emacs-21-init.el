@@ -2,8 +2,6 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-21-init.el,v 1.1 2002-04-04 18:23:01 demmer Exp $
-
 
 (defun memequal (el list)
   "[Jak] Returns non-nil if ELT is an element of LIST.  Comparison
@@ -56,7 +54,6 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
 (setq delete-auto-save-files t)
 
 (setq require-final-newline 'ask)
-(setq compile-command '"make")
 
 ;;; show the time
 (load "time" t t)
@@ -96,33 +93,29 @@ This must be bound to a mouse-down event in the mode-line."
 ;;; some look and feel stuff
 (cond (window-system
        ;; cool fontification always
+       (tool-bar-mode -1)
        (scroll-bar-mode -1)
+       (blink-cursor-mode -1)
        (global-font-lock-mode t)
        (load "func-menu")
        (transient-mark-mode 1)
        (set-face-foreground 'region "ivory")
        (set-face-background 'region "royal blue")))
 
+(defvar my-frame-params '((auto-raise . nil)
+			(menu-bar-lines . 1)
+			(horizontal-scroll-bars . nil)
+			(vertical-scroll-bars . nil)
+			))
 
-;;; initial frame appearance (geometry overridden by X)
-(setq initial-frame-alist  (append ;(x-parse-geometry "=80X40+1154+85")
-				   '((auto-raise . nil)
-				     (menu-bar-lines . 1)
-				     (horizontal-scroll-bars . nil)
-				     (vertical-scroll-bars . nil)
-				     )
-				   initial-frame-alist))
+;;; initial frame appearance (geometry set by X)
+(setq initial-frame-alist (append my-frame-params initial-frame-alist))
 
 ;;; other frame appearance
-(setq default-frame-alist (append ;(x-parse-geometry "80x40+1540+85")
-				   '((auto-raise . nil)
-				     (menu-bar-lines . 1)
-				     (horizontal-scroll-bars . nil)
-				     (vertical-scroll-bars . nil)
-				     )
-				  default-frame-alist))
+(setq default-frame-alist (append my-frame-params initial-frame-alist))
 
 ;; timestamp customizations
+(require 'time-stamp)
 (setq time-stamp-start "[Mm]odified:[     ]+\\\\?[\"<]+")
 (setq time-stamp-format "%b %d, %y %I:%M%p by %u")
 ;; (append-no-dup 'time-stamp write-file-hooks)
@@ -137,12 +130,12 @@ This must be bound to a mouse-down event in the mode-line."
 ;; load in other files
 (load "modes")
 (load "mjdkeys")
-(load "lcvs")
 (load "mwheel")
 (load "ff-stuff")
 (load "added")
 
 ;; lcvs setup
+(load "lcvs")
 (defun my-lcvs-setup ()                                                
   (set-face-foreground 'lcvs-UP-face "yellow")
   (setq lcvs-log-restrict-to-branch t)
@@ -159,19 +152,15 @@ This must be bound to a mouse-down event in the mode-line."
 ; (require 'crypt++)
 ; (require 'zwrite)
 
+(require 'compile)
+(setq compile-command '"make")
+
 ;;; stuff that, for one reason or another, must come last
 (setq gc-cons-threshold 200000)
 (setq default-major-mode 'text-mode)
 
-(setq zenirc-server-default "irc.ffnet.com")
-
-(setq gnus-nntp-server nil)
-(setq gnus-select-method '(nntp "nntp.concentric.net"))
-
 (setq compilation-scroll-output t)
 
-; (remove-el ".log" completion-ignored-extensions)
-; (remove-el ".log" PC-ignored-extensions)
 (custom-set-variables
  '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".fasl" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".dvi" ".fmt" ".class" ".fas" ".lib" ".x86f" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".T"))))
 
