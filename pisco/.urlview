@@ -9,6 +9,8 @@ IGNORE http://iris.eecs.berkeley.edu/idsg/SpamAssassin/
 IGNORE http://tier.cs.berkeley.edu/mailman/listinfo/tier
 IGNORE http://tier.cs.berkeley.edu/mailman/private/listinfo/tier-private/
 IGNORE http://tier.cs.berkeley.edu/pipermail/tier
+IGNORE http://tier.cs.berkeley.edu/mailman/listinfo/tier-private
+IGNORE http://tier.cs.berkeley.edu/mailman/private/tier-private
 
 IGNORE mailto:subscribe-ip@v2.listbox.com
 IGNORE http://v2.listbox.com/subscribe/?listname=ip@v2.listbox.com
