@@ -77,6 +77,9 @@ alias xi=xinigo
 alias xp=xpisco
 alias xx=xxoopi
 
+alias script='SCRIPTPARENT=1 script'
+alias enscriptclean='enscript -B'
+
 # debian shortcuts
 alias apti='sudo apt-get install'
 alias aptrm='sudo apt-get remove'
