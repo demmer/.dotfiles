@@ -1,4 +1,17 @@
 #!/bin/sh
-ssh-agent
+
 . $HOME/.ssh-attach
+
+if [ "x$SSH_AGENT_PID" != "x" ]; then
+        kill -s 0 $SSH_AGENT_PID > /dev/null 2> /dev/null
+	if [ $? = 0 ]; then
+		exit 0
+	fi	
+fi
+
+cd /
+eval `ssh-agent`
 ssh-add
+
+echo SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+echo SSH_AGENT_PID=$SSH_AGENT_PID
