@@ -2,7 +2,7 @@
 # yabiff-server
 # Author: Mike Demmer <mike@demmer.nu>
 
-set debug 0
+set debug 1
 
 proc dprint {s} {
     global debug
@@ -72,25 +72,24 @@ foreach spool [split $spools ,] {
     }
     lappend newspools $spool $spoolfile
 
+    set atime($spoolfile) 0
     set ctime($spoolfile) 0
     set mtime($spoolfile) 0
 }
 set spools $newspools
 
 proc checktime {spoolfile} {
-    global ctime mtime
-    dprint "checktime $spoolfile $ctime($spoolfile) $mtime($spoolfile)"
+    global atime ctime mtime
+    dprint "checktime $spoolfile $atime($spoolfile) $ctime($spoolfile) $mtime($spoolfile)"
     
     if [file exists $spoolfile] {
 	file stat $spoolfile stat
 	if {$stat(mtime) > $mtime($spoolfile) || \
 		$stat(ctime) > $ctime($spoolfile)} {
-#	    file atime $spoolfile $stat(atime)
-	    file mtime $spoolfile $stat(mtime)
-	    file stat $spoolfile stat
+	    set atime($spoolfile) $stat(atime)
 	    set mtime($spoolfile) $stat(mtime)
 	    set ctime($spoolfile) $stat(ctime)
-	    dprint "checktime changed: $ctime($spoolfile) $mtime($spoolfile)"
+	    dprint "checktime changed: $atime($spoolfile) $ctime($spoolfile) $mtime($spoolfile)"
 	    return 1
 	}
     }
@@ -169,6 +168,18 @@ proc scan {spool spoolfile} {
     }
 
     close $fd
+
+    # update the times, then reset the internal statistics
+    global atime ctime mtime
+    file atime $spoolfile $atime($spoolfile)
+    file mtime $spoolfile $mtime($spoolfile)
+    dprint "checktime setting times $atime($spoolfile) $mtime($spoolfile)"
+
+    file stat $spoolfile stat
+    set atime($spoolfile) $stat(atime)
+    set mtime($spoolfile) $stat(mtime)
+    set ctime($spoolfile) $stat(ctime)
+
     if {$spool != "@"} {
 	puts "yabiff count $spool $nlines"
     }
