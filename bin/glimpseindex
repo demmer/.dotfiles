@@ -1,0 +1,15 @@
+#!/bin/sh -f
+
+#
+# Cons up the arguments I like for glimpseindex and copy
+# .glimpse_exclude from $HOME.
+#
+
+if [ ! -f ./.glimpse_exclude -a -f $HOME/.glimpse_exclude ]; then
+	echo ".glimpse_exclude:"
+	ln -s $HOME/.glimpse_exclude .
+	cat .glimpse_exclude
+fi
+
+runprog glimpseindex -B -M 128 -n -o -H . -t .
+
