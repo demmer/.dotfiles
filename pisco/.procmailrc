@@ -103,6 +103,14 @@ dtn
 dtn
 
 :0
+* List-Post: <mailto:dtn-users@mailman.dtnrg.org>
+dtn
+
+:0
+* From:.*dtn-commits@dtnrg.org
+dtn-commits
+
+:0
 * ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
 cs-crap
 

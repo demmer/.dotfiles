@@ -11,7 +11,8 @@ my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 
 set spoolfile =$HOME/Mail/inbox
 
-mailboxes =inbox =tier =dtn =tinyos =cs-crap =spam-maybe =end2end =ip =debian =soekris =bytesforall
+mailboxes =inbox =tier =dtn =dtn-commits =tinyos =cs-crap =spam-maybe \
+          =end2end =ip =bytesforall =debian =soekris
 
 subscribe tinyos-help tinyos-devel tinyos-internal tinyos-users \
 	  tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
