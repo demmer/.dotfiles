@@ -1,0 +1,7 @@
+#!/bin/sh
+
+PROG=`which spamassassin`
+
+if [ ! "x$PROG" = "x" ]; then
+   exec $PROG $*
+fi
