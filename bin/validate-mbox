@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+# look for suspicious blank lines in email headers
+
+$line1 = <STDIN>;
+$line2 = <STDIN>;
+
+while ($line3 = <STDIN>) {
+    if ($line2 =~ /^$/ &&
+	$line1 =~ /^.*:/ &&
+ 	$line3 =~ /^.*:/)
+    {
+	print "----------------------\n";
+	print $line1;
+	print $line2;
+	print $line3;
+    }
+
+    $line1 = $line2;
+    $line2 = $line3;
+}
