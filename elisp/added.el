@@ -367,3 +367,41 @@ Then it does not try to move vertically."
       (end-of-line)
     (old-next-line (if arg arg 1))))
 
+(require 'vc)
+
+(defun vc-annotate-goto-line (prompt-version)
+"Wrapper around vc-annotate to move the point in the annotation window
+to match the current line in the source file."
+  (interactive "P")
+  (let ((opoint (point)) start linenum)
+    (save-excursion
+      (save-restriction
+	(goto-char (point-min))
+	(widen)
+	(beginning-of-line)
+	(setq start (point))
+	(goto-char opoint)
+	(beginning-of-line)
+	(setq linenum (+ 1 (count-lines 1 (point))))
+	))
+    (vc-annotate prompt-version)
+    (other-window 1)
+    (goto-line linenum)
+    (other-window -1)
+    ))
+
+(defun vc-print-status (verbose)
+  "Show the current checkout status of a file."
+  (interactive "P")
+  (vc-ensure-vc-buffer)
+  (let ((file buffer-file-name))
+    (if (not (eq (vc-backend file) 'CVS))
+	(error "Sorrt, vc-print-status is only implemented for CVS"))
+    (let ((temp-buffer-name (concat "*cvs status " (buffer-name) "*")))
+      (with-output-to-temp-buffer temp-buffer-name
+	(call-process "cvs" nil (get-buffer temp-buffer-name) nil
+		      "status"
+		      (if verbose "-v" "-l") ;; -l is meaningless anyway
+		      (file-name-nondirectory (buffer-file-name))))))
+  )
+
