@@ -1,14 +1,6 @@
-##
-## FILE:  .zshrc
-## DESC:  zsh init file; sourced by interactive shells
-##
-## USAGE: zsh
-## 
-## DATE:  2/16/94
-## 
-## Modification history:
-##    jal   Sat May 27 17:28:10 1995   made header
-##
+#
+# .zshrc
+#
 
 # search path for the cd command
 cdpath=(.)
