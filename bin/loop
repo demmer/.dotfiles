@@ -1,7 +1,10 @@
 #!/bin/sh
 
+prog=$1
+shift
+
 while [ true ] ; do
       clear
-      $*
+      $prog $*
       sleep 1
 done
