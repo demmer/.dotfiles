@@ -27,11 +27,13 @@
   (interactive)
   (let ((file (buffer-file-name))
 	(script-p (determine-script-mode)))
-    (if (and script-p (not (file-executable-p (buffer-file-name))))
+    (if (and script-p
+	     (file-executable-p "/bin/chmod")
+	     (not (file-executable-p (buffer-file-name))))
 	(progn
 	  (shell-command (format "/bin/chmod +x %s" file))
-	  (message (format "Wrote %s (and added executable permissions)" file))))
-      ))
+	  (message (format "Wrote %s (and added exec permissions)" file))))
+    ))
 
 (add-hook 'after-save-hook 'determine-and-set-executable)
 
