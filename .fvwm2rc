@@ -71,6 +71,7 @@ Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
 Style "EveryBuddy"	Sticky
 Style "Ayttm"		Sticky
+Style "gaim"	 	Sticky
 
 #
 # Function Definitions
