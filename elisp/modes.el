@@ -207,21 +207,27 @@
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-setup)
 
+;; suck in sgml-indent
+(require 'sgml-indent)
+
 ;; setup html mode
 (defun html-insert-lt ()(interactive)(insert "&lt;"))
 (defun html-insert-gt ()(interactive)(insert "&gt;"))
 (defun html-insert-nbsp ()(interactive)(insert "&nbsp;"))
+(defun html-insert-red ()(interactive)
+  (insert "<font color=\"red\"></font>")
+  (forward-char -7)
+  )
 
 (defun my-html-setup()
   (interactive)
   (define-key html-mode-map "\C-c<" 'html-insert-lt)
   (define-key html-mode-map "\C-c>" 'html-insert-gt)
   (define-key html-mode-map "\C-c " 'html-insert-nbsp)
+  (define-key html-mode-map "\C-cr" 'html-insert-red)
+  (setq indent-line-function 'indent-to-left-margin)
   )
 (add-hook 'html-mode-hook 'my-html-setup)
-
-;; suck in sgml-indent
-(require 'sgml-indent)
 
 ;;; elisp debugging
 (autoload 'edebug-defun "edebug" "debugger for elisp" t)
@@ -305,8 +311,10 @@
   (setq font-lock-maximum-decoration				      
 	(list
 	 (cons 'c++-mode 2)
-	 (cons t t))
-  ))
+	 (cons t t)))
+  
+  (setq c++-font-lock-extra-types nil)
+  )
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
 ;(require 'lazy-lock)
