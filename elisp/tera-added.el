@@ -1,27 +1,4 @@
 
-;(load "/usr/local/lib/xemacs-19.15/lisp/packages/gnuserv.el")
-;(setq server-kill-quietly t)
-;(server-start)
-;(setq gnuserv-frame (selected-frame))	; comment to get new frame per edit
-
-(defun gnuserv-select-frame ()
-  "Select current frame for gnu server"
-  (interactive)
-  (setq gnuserv-frame (selected-frame))
-  (message "current frame selected for gnuserv")
-  )
-
-(defun server-finish ()
-   "Finish server buffer, kill it, and get back to where you were."
-   (interactive)
-   (let ((oldbuf (buffer-name))
-	 (file (buffer-file-name)))
-     (server-edit)
-     (setq file (concat file "~"))
-     (if (file-exists-p file)
-	 (delete-file file)))
-   )
-
 (load "utilities")
 
 ; (load-library "setkeys.el")
