@@ -51,7 +51,9 @@ keepalive everybuddy &
 
 # Bring up a console window, an email shell and a work shell
 xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
-	'tail -f -n 0 /var/log/messages /var/log/secure & clear; zsh' &
+    '[ -f /var/log/messages ] && tail -f -n 0 /var/log/messages & \
+     [ -f /var/log/secure ] && tail -f -n 0 /var/log/secure & \
+     clear; zsh' &
 xoopi-xmutt &
 xterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
 
