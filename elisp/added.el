@@ -375,12 +375,14 @@ calls with dprintf macro calls. [mjd]"
 (defun am-1-dir ()
   (interactive)
   (if (string-match "\\(.*\\)am-1.*" buffer-file-name)
-      (let ((dir
-	    (format "%s%s/am-1/"
-		    (substring buffer-file-name 
-			       (match-beginning 1) (match-end 1))
-		    (getenv "ARCH"))))
-	(if (file-directory-p dir) dir nil))
+      (let* ((base(substring buffer-file-name (match-beginning 1) (match-end 1)))
+	    (dir1 (format "%sam-1/" base))
+	    (dir2 (format "%s%s/am-1/" base (getenv "ARCH"))))
+
+	(cond
+	 ((file-readable-p (format "%sbin/amsh" dir1)) dir1)
+	 ((file-readable-p (format "%sbin/amsh" dir2)) dir2)
+	 (t nil)))
     nil))
   
 (defun pump-dir ()
@@ -409,3 +411,4 @@ calls with dprintf macro calls. [mjd]"
       )))
 
 (add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
+(add-hook 'makefile-mode-hook 'amsh-compile-command-hook)
