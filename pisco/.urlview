@@ -1,3 +1,9 @@
 EXPERT
 REGEXP ((ht|f)t(p|ps):(//)?[^ >\"\t]*|www\\.[-a-z0-9.]+)[^ .,;\t>\n\">)]
 COMMAND /bin/sh -c "firefox -remote 'openUrl("%s", new-tab)' || sleep 5"
+
+IGNORE http://iris.eecs.berkeley.edu/
+IGNORE http://iris.eecs.berkeley.edu/idsg/SpamAssassin/
+IGNORE http://tier.cs.berkeley.edu/mailman/listinfo/tier/
+IGNORE http://tier.cs.berkeley.edu/mailman/private/listinfo/tier-private/
+IGNORE http://tier.cs.berkeley.edu/pipermail/tier/
