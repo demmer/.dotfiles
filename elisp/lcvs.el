@@ -1356,13 +1356,13 @@ the value of `foo'."
       )
      
      ((and lcvs-examine-merge-file
-	   (looking-at (format "^M .*/%s" lcvs-examine-merge-file)))
+	   (looking-at (format "^M \\(.*/\\)*%s" lcvs-examine-merge-file)))
       (delete-char 1)
       (insert "C")
       (setq lcvs-examine-merge-file nil))
      
      ((and lcvs-examine-merge-file
-	   (looking-at (format "^C .*/%s" lcvs-examine-merge-file)))
+	   (looking-at (format "^C \\(.*/\\)*%s" lcvs-examine-merge-file)))
       (setq lcvs-examine-merge-file nil))
     
      )
