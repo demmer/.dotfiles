@@ -35,8 +35,9 @@ set to_chars=" ++CF"	   #Who is the message to?  Chars represent:
 			   #1st if not to you, 2nd if only to you
 			   #3rd if to you+others, 4th if you in Cc:
 			   #5th if from you
-set tmpdir="/tmp/mutt"
 set print_command="enscript -1R -P lp"
+
+# mailboxes ! =bugzilla =root =bonsai =freebsd
 
 #
 # Suck in aliases
