@@ -58,6 +58,10 @@ debian
 * ^TO_.*soekris-tech@lists.soekris.com
 soekris
 
+:0
+* ^TO_.*end2end-interest@postel.org
+end2end
+
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
@@ -83,7 +87,7 @@ tinyos
 tier
 
 :0
-* List-Id: Delay Tolerant Networking
+* List-Id: Delay Tolerant Network
 dtn
 
 :0
