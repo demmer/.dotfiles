@@ -6,7 +6,7 @@ my_hdr From: mike@demmer.nu (Michael Demmer)
 
 unset abort_unmodified
 set alias_file=~/.mutt_aliases
-set alternates="mike@demmer.nu|mjd@acm.org|mike@demmerfamily.com|miked@tera.com"
+set alternates="mike@demmer.nu|mjd@acm.org|mike@demmerfamily.com|miked@tera.com|demmer@ffnet.com|demmer@inktomi.com"
 set askcc                 # prompt for cc when composing
 set attribution="" 
 set auto_tag
@@ -16,7 +16,7 @@ unset confirmcreate
 set delete=yes
 set editor="emacs -nw -q -l ~/elisp/mailonly.el"
 set fast_reply
-set folder_format="%-12f %2N %8s "
+set folder_format="%N %-12f %8s "
 set history=50
 set include=yes
 set index_format="%Z %-4C %{%b %d} %-18F (%l) %s"
@@ -27,7 +27,7 @@ set postponed="=postponed"
 set record="=sent"
 set reverse_alias
 set reverse_name
-set sort=date-sent
+set sort=date
 set status_format="-%r-%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t?Tag:%t?%?p? Post:%p?%?b? Inc:%b? %?l? %l?]-%>-(%P)---"
 set status_on_top
 set timeout=30
@@ -35,6 +35,8 @@ set to_chars=" ++CF"	   #Who is the message to?  Chars represent:
 			   #1st if not to you, 2nd if only to you
 			   #3rd if to you+others, 4th if you in Cc:
 			   #5th if from you
+set tmpdir="/tmp/mutt"
+set print_command="enscript -1R -P lp"
 
 #
 # Suck in aliases
@@ -90,6 +92,7 @@ bind pager g group-reply
 bind pager < top
 bind pager > bottom
 bind pager T tag-message
+
 
 #
 # Colors:
