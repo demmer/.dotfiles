@@ -70,6 +70,7 @@ Style "xclock"		NoTitle, Sticky, HandleWidth 0, WindowListSkip
 Style "xmms"		NoTitle, Sticky
 Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
 Style "EveryBuddy"	Sticky
+Style "Ayttm"		Sticky
 
 #
 # Function Definitions
