@@ -253,6 +253,7 @@ with tab characters underneath."
   (define-key html-mode-map "\C-c>" 'html-insert-gt)
   (define-key html-mode-map "\C-c " 'html-insert-nbsp)
   (define-key html-mode-map "\C-cr" 'html-insert-red)
+  (define-key html-mode-map ">" 'self-insert-command)
   (setq indent-line-function 'indent-to-left-margin)
   )
 (add-hook 'html-mode-hook 'my-html-setup)
