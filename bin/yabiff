@@ -14,6 +14,27 @@ set delay [expr $delay * 1000];
 set fg black;
 set bg grey87;
 set font "6x13"
+set geometry "+10+10"
+set remotehost ""
+
+for {set i 0} {$i < [llength $argv]} {incr i} {
+    set arg [lindex $argv $i]
+    switch -- $arg {
+	"-geometry" - "-geom" {
+	    incr i
+	    set geometry [lindex $argv $i]
+	}
+	"-host" {
+	    incr i
+	    set remotehost [lindex $argv $i]
+	}
+	default {
+	    puts stderr "unknown argument $arg"
+	    exit 1
+	}
+    }
+}
+
 
 if [info exists env(USER)] {
     set user $env(USER);
@@ -24,7 +45,8 @@ if [info exists env(USER)] {
     exit -1;
 }
 
-if {[llength $argv] == 0} {
+if {$remotehost == ""} {
+    # no host specified, look for a spoolfile
     if [info exists env(MAIL)] {
 	if [file exists $env(MAIL)] {
 	    set spoolfile $env(MAIL);
@@ -43,13 +65,10 @@ if {[llength $argv] == 0} {
 	puts stderr "no spool";
 	exit -1;
     }
-
-} else {
-    set remotehost [lindex $argv 0]
 }
 
 wm title . YaBiff;
-wm geometry . "-10-10"
+wm geometry . $geometry
 
 set bar_width 2
 
@@ -63,7 +82,7 @@ text .text -wrap none -setgrid 1 -font $font \
 
 frame .box -bd 0
 
-pack .box -anchor n -fill x
+pack .box -anchor n -fill both
 pack .bar -side left -expand no -fill y
 pack .text -expand yes -fill both
 
