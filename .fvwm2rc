@@ -254,8 +254,8 @@ Module FvwmButtons
 *FvwmButtonsBack grey60
 *FvwmButtonsFont lucidasanstypewriter-bold-12
 
-*FvwmButtonsGeometry =100x355-1+125
-*FvwmButtonsRows 13
+*FvwmButtonsGeometry =100x545-1+125
+*FvwmButtonsRows 19
  
 *FvwmButtons Reload 	none Restart fvwm
 *FvwmButtons Shell 	none Exec exec xterm -title "Shell" -geometry 80x28 &
@@ -265,6 +265,12 @@ Module FvwmButtons
 *FvwmButtons Calculator none Exec exec xcalc &
 *FvwmButtons Netscape 	none Exec exec netscape &
 *FvwmButtons Mozilla 	none Exec exec mozilla &
+*FvwmButtons ----------
+*FvwmButtons Inigo 	none Exec exec $HOME/bin/xssh inigo &
+*FvwmButtons Treat 	none Exec exec $HOME/bin/xssh treat &
+*FvwmButtons Playa-Proxy none Exec exec $HOME/bin/xssh playa-proxy &
+*FvwmButtons Sfssh 	none Exec exec $HOME/bin/xssh sfssh &
+*FvwmButtons Lares 	none Exec exec $HOME/bin/xssh lares &
 *FvwmButtons ----------
 *FvwmButtons Close 	none Delete
 *FvwmButtons Kill 	none Destroy 
