@@ -466,8 +466,7 @@ with tab characters underneath."
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
 
-(setq c++-font-lock-extra-types (append '("std"
-					  "u_char")
+(setq c++-font-lock-extra-types (append '("std" "u_char" "u_int")
 					c++-font-lock-extra-types))
 
 ;(require 'lazy-lock)
