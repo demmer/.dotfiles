@@ -10,6 +10,6 @@ if [ ! "$HOST" = "haight" ]; then
 	RED='< /dev/null > /dev/null'
 fi
 
-OPTS="-geometry 270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer"
+OPTS="-geometry $HAIGHT_MAILBOX_GEOM unread count delay=1 mailbox=/var/mail/demmer"
 
 exec $PROG $OPTS $RED &

@@ -7,4 +7,4 @@ if [ ! "$HOST" = "haight" ]; then
 	PROG="ssh -t haight mutt"
 fi
 
-xterm -title "Haight Mail Shell" -geometry 80x52+1+330 -e $PROG &
+xterm -title "Haight Mail Shell" -geometry $HAIGHT_XMUTT_GEOM -e $PROG &

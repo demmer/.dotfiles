@@ -1,4 +1,4 @@
 #!/bin/sh
 
-mailbox -geometry =270x70+812+1 unread count delay=1 \
-	mailbox=/tmp/mail-xoopi-$USER &
+exec mailbox -geometry =$XOOPI_MAILBOX_GEOM unread count delay=1 \
+	mailbox=/tmp/mail-xoopi-$USER
