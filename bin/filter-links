@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+while(<>) {
+    foreach $link ("iris.eecs.berkeley.edu/idsg/SpamAssassin",
+		   "tier.cs.berkeley.edu/mailman/listinfo/tier",
+		   "tier.cs.berkeley.edu/pipermail/tier")
+    {
+	s|http://$link|http: //$link|; 
+    }
+
+    print $_;
+}
