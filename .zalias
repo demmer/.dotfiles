@@ -98,3 +98,6 @@ alias statd=statd
 alias xinigo='xssh inigo'
 alias xtreat='xssh treat'
 alias xpowell='xssh powell'
+
+alias glimpseindex="glimpseindex -B -M 4 -n -o"
+alias glimpseindex-cwd="glimpseindex  -H . -t ."
