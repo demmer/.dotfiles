@@ -4,9 +4,9 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.14 $)
+;; Version: 1.2 ($Revision: 1.15 $)
 (defconst lcvs-version "1.2")
-;; Date: Apr 23, 2003
+;; Date: Jul 10, 2003
 ;; Keywords: cvs
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -26,10 +26,23 @@
 ;;; Commentary:
 
 ;; INSTALLATION
-;;	load-path, autoloads, etc
-;;	Warning about byte-compiling:
-;;	- If this is byte compiled on XEmacs, it won't work correctly on Emacs
-;;	  It will fail in mysterious ways.  I haven't tried the reverse.
+;;
+;; Put this in some directory, for example, ~/emacs/.  Add this directory
+;; to your load-path:
+;;	(setq load-path (cons (expand-file-name "~/emacs") load-path))
+;;
+;; Add an autoload so this file gets loaded when lcvs commands are invoked:
+;;	(autoload 'lcvs-examine "lcvs" nil t)
+;;	(autoload 'lcvs-update "lcvs" nil t)
+;;
+;; To get the most out of the diff-mode we use do this
+;;	(add-hook 'diff-mode-hook 'turn-on-font-lock)
+;;
+;; WARNING: If this is byte compiled on XEmacs, it won't work
+;; correctly on Emacs It will fail in mysterious ways.  I haven't
+;; tried the reverse (this might not still be the case, I haven't
+;; tried it recently.)
+;;
 
 ;; FEATURES
 ;; Why not PCL-CVS?
@@ -41,8 +54,6 @@
 ;; - ** If kill a line/region with marked files then the marks stay on
 ;;   the mark list.  Also undo issues.
 ;; - chokes when using CVS_RSH=ssh and get prompted for passwd
-;; - fix add to cd to dir -- ie handle adding with slash in name,
-;;   seems to work fine for me with cvs-1.10
 
 ;; ASSUMPTIONS:
 ;; - We assume that all files in a directory have the same branch tag.
@@ -60,13 +71,7 @@
 ;;   one in history.  This is a god damn hassle on Emacs since
 ;;   history isn't god damn integrated with read-file-name (dammit).
 ;;
-;; - Deal with the "New directory `foo' -- ignored" and "no longer
-;;   pertinent" messages, especially the latter since they require you
-;;   to go to a shell and do the update.  Put the new dir ones at the
-;;   bottom and rewrite the "no longer pertinent" ones as "U
-;;   filename", since that is how added files are handled.  Could do
-;;   this with an input filter (see amsh.el and doc) or by a post-
-;;   processing stage.
+;; - Do something with the "New directory `foo' -- ignored" messages.
 ;;
 ;; - Think more about how dont-use-existing should work.  Could ask "reuse
 ;;   buffer foo" then say "use g to refresh".  Maybe lcvs-update should just
@@ -116,10 +121,18 @@ file to be logged and passes the tag within to log.
 To see the whole log, use \\[lcvs-show-full-log].")
 
 (defvar lcvs-use-view-mode nil
-  "*If non nil, lcvs will use view-mode in log, diff, etc, buffers.")
+  "*If non nil, lcvs will use view-mode in log, status, etc, buffers.")
+
+(defvar lcvs-use-diff-mode t
+  "*If non nil, lcvs will put diff buffers into diff-mode (if available).")
 
 (defvar lcvs-revert-confirm t
   "*If non-nil, reverting files will require confirmation.")
+
+(defvar lcvs-translate-update-output t
+  "*If non-nil, lcvs will translate cvs update output in examine mode.
+This rewrites things like `file is no longer in the repository' as
+a `U' line so you can update it in lcvs, not having to go to a shell.")
 
 (defvar lcvs-UP-face
   (let ((face (make-face 'lcvs-UP-face)))
@@ -176,18 +189,6 @@ To see the whole log, use \\[lcvs-show-full-log].")
 (defvar lcvs-dirty-regexps '("^\\([UP]\\)[ *]"
 			     "^cvs update: warning: .* was lost"))
 
-;; Regexp for lines to filter out of the examine output
-(defvar lcvs-examine-ignore-regexp "^\\(RCS file:\\|retrieving revision\\|.*conflicts\\)")
-
-;; Regexp to identify a file that needs to be flagged as a conflict
-;; (see lcvs-examine-filter)
-(defvar lcvs-examine-merge-regexp "^Merging differences between .* and .* into \\(.*\\)\n$")
-
-;; Temporary variable used to hold the file name that's being merged
-;; and may need to be flagged as a conflict (see lcvs-examine-filter),
-(defvar lcvs-examine-merge-file nil)
-(make-variable-buffer-local 'lcvs-examine-merge-file)
-
 (defvar lcvs-examine-explanations
   '((?U . "File has been changed in repository and needs to be updated")
     (?A . "File has been added but not committed to the repository")
@@ -208,7 +209,7 @@ To see the whole log, use \\[lcvs-show-full-log].")
   "An alist to map the first column of \"cvs update\" output into English.")
 
 (defvar lcvs-view-mode-commands
-  '("annotate" "diff" "log" "stat")
+  '("annotate" "log" "stat")
   "List of CVS commands that get their output put into view-mode.")
 
 ;; The last dir we examined/updated.
@@ -336,9 +337,8 @@ For commit-mode buffers.")
 	(pop-to-buffer buf)
 	(goto-char (point-min))
 	(setq proc (apply 'start-process procname buf cmd))
-	(set-process-sentinel proc 'lcvs-sentinel)
-	(if (eq mode 'examine) (set-process-filter proc 'lcvs-examine-filter))
-	))))
+	(set-process-filter proc (function lcvs-filter))
+	(set-process-sentinel proc (function lcvs-sentinel))))))
 
 (defun lcvs-examine-update-common-get-args (submode)
   (list (expand-file-name
@@ -422,21 +422,6 @@ For update mode buffers."
 		(setq regexps (cdr regexps))))
 	  (setq buffer-read-only t)))))
 
-;; XXX/BRR this can be annoying with cvs versions newer than 1.10 due to
-;; the way files that have been changed in your checkout and in the repository.
-;; In 1.10 they are reported as C files, but newer versions try to do the merge
-;; and report M if there were no conflicts and C if there truly were, but is
-;; inconsistent with local and remote repositories.
-;; This means if you want to know if a file has been changed in the the
-;; repository and in your checkout, you have to look at the lines around the
-;; M line for things like "merging differences between blah" -- you can't
-;; just look at the line for C or M.  So when you sort the buffer these lines
-;; are moved away and it is harder to tell.
-;; I've sent a patch to the cvs list which has been apparently ignored.
-;; A workaround I haven't implemented is to have a filter on the cvs proc
-;; to rewrite these ambiguous M files as C files.
-;;
-;; (sort of) fixed by demmer with the process filtering
 (defun lcvs-sort ()
   "Sort the CVS output in this buffer.
 This is useful to get all the M, U, etc files together and the new directory
@@ -444,7 +429,7 @@ messages at the bottom."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (re-search-forward lcvs-update-regexp)
+    (re-search-forward "^$")
     (beginning-of-line)
     (unwind-protect
 	(let ((beg (point)))
@@ -713,16 +698,13 @@ the file on this line."
   (interactive "P")
   (if (not (eq lcvs-submode 'examine))
       (error "Diffing BASE against HEAD is nonsensical in update mode"))
-  (let ((tag (lcvs-sticky-tag (car (car (lcvs-get-relevant-files arg))))))
-    (if (null tag)
-	(setq tag "HEAD"))
-    (message "Diffing...")
-    (lcvs-do-command "diff"
-		     (format "No differences with %s" tag)
-		     nil
-		     (append (list"-N" "-rBASE" (format "-r%s" tag))
+  (message "Diffing...")
+  (lcvs-do-command "diff"
+		   "No differences with the HEAD"
+		   nil
+		   (append '("-N" "-rBASE") (lcvs-head-arg)
 			   (mapcar 'car (lcvs-get-relevant-files arg))))
-    (message "Diffing...done")))
+  (message "Diffing...done"))
 
 ;; There isn't an easy way to do diff-base and diff-head.
 ;;
@@ -817,11 +799,10 @@ Influenced by the `lcvs-log-restrict-to-branch' variable."
 		    (goto-char (point-min))
 		    (recenter 0))
 		   ;; If the whole entry fits into the window,
-		   ;; display it at the bottom of the window
+		   ;; display it centered
 		   ((< (1+ lines) (window-height))
-		    (goto-char end)
-		    (previous-line (- (window-height) 2))
-		    (recenter 0))
+		    (goto-char start)
+		    (recenter (1- (- (/ (window-height) 2) (/ lines 2)))))
 		   ;; Otherwise (the entry is too large for the window),
 		   ;; display from the start
 		   (t
@@ -1506,6 +1487,10 @@ the value of `foo'."
 	   (lambda (buf)
 	     (save-excursion
 	       (set-buffer buf)
+	       (if (and lcvs-use-diff-mode
+			(string-equal cmd "diff")
+			(fboundp 'diff-mode))
+		   (diff-mode))
 	       (setq default-directory cwd)
 	       (if (zerop (lcvs-buffer-size buf))
 		   (insert default-output))
@@ -1564,6 +1549,82 @@ the value of `foo'."
       (redraw-modeline all)
     nil))
 
+(defun lcvs-filter (proc string)
+  ;; This is called when there is new input.  The input can be
+  ;; any size and may have partial lines.  See the Elisp manual
+  ;; where it describes process filters for an explanation of the
+  ;; marker magic here.
+  (with-current-buffer (process-buffer proc)
+    (let ((moving (= (point) (process-mark proc)))
+	  (buffer-read-only nil)
+	  beg)
+      (save-excursion
+	;; Insert the text, advancing the process marker and fixing lines.
+	(goto-char (process-mark proc))
+	(setq beg (point))
+	(insert string)
+	(set-marker (process-mark proc) (point))
+	(if (and (eq lcvs-submode 'examine)
+		 lcvs-translate-update-output)
+	    (lcvs-fix-lines beg)))
+      (if moving (goto-char (process-mark proc))))))
+
+(defvar lcvs-conflict nil)
+(make-variable-buffer-local 'lcvs-conflict)
+
+(defun lcvs-fix-lines (beg)
+  ;; Fix up stuff that we insert, rewriting some things.
+  (goto-char beg)
+  (beginning-of-line)			; in case last insert had partial line
+  (let ((stuff-to-do t)
+	prev-point dont-move)
+    (while stuff-to-do
+      (setq dont-move nil)
+
+      (cond
+       ;; Rewrite removed files as "U file"
+       ((looking-at
+	 (concat "^cvs \\(update\\|server\\): \\(.*\\)"
+		 " is no longer \\(pertinent\\|\\(in the repository\\)\\).*\n"))
+	(replace-match "U \\2\n")
+	(setq dont-move t))
+
+       ;; Ignore RCS noise
+       ((looking-at
+	 (concat "^"
+		 (mapconcat
+		  (lambda (s)
+		    (concat "\\(" s "\\)"))
+		  '("RCS file: .*,v"
+		    "retrieving revision .*[0-9]"
+		    ;; Don't worry, CVS prints a msg about conflicts
+		    ;; as well, we're just removing the RCS msg.
+		    "rcsmerge: warning: conflicts during merge")
+		  "\\|")
+		 "[^\n]*\n"))
+	(kill-entire-line)
+	(setq dont-move t))
+
+       ;; Rewrite M lines from merges as C lines.
+       ((looking-at "^Merging differences[^\n]*\n")
+	(kill-entire-line)
+	(setq dont-move t)
+	(setq lcvs-conflict t))
+
+       ((and lcvs-conflict (looking-at "^C "))
+	(setq lcvs-conflict nil))
+
+       ((and lcvs-conflict (looking-at "^M "))
+	(replace-match "C ")
+	(setq lcvs-conflict nil)))
+
+      ;; Move forward.  If point changes we have more stuff to do.
+      (if dont-move
+	  nil
+	(setq prev-point (point))
+	(forward-line)
+	(setq stuff-to-do (> (point) prev-point))))))
+
 (defun lcvs-sentinel (proc msg)
   ;; Tell the user the process is done.
   (let* ((buf (process-buffer proc))
@@ -1609,58 +1670,5 @@ the value of `foo'."
 		  (condition-case nil
 		      (lcvs-next-line)
 		    (error nil)))))))))
-
-
-(defun lcvs-examine-filter (proc msg) 
-  (save-excursion
-    (set-buffer (process-buffer proc))
-    (setq buffer-read-only nil)
-    (goto-char (point-max))
-    (save-excursion (insert msg))
-    (beginning-of-line)
-    
-    (while (looking-at "^.+\n")
-      (lcvs-examine-filter-handle-line)
-      )
-    
-    (setq buffer-read-only t)
-    )
-  )
-
-(defun lcvs-examine-filter-handle-line ()
-  (let ((delete-line nil))
-    (cond
-     
-     ((looking-at lcvs-examine-ignore-regexp) 
-      (setq delete-line t))
-
-     ((looking-at lcvs-examine-merge-regexp)
-      (if lcvs-examine-merge-file
-	  (message (format "WARNING: lcvs-examine-merge-file non-nil: %s"
-			   lcvs-examine-merge-file)))
-      (setq lcvs-examine-merge-file 
-	    (buffer-substring (match-beginning 1) (match-end 1)))
-      (setq delete-line t)
-      )
-     
-     ((and lcvs-examine-merge-file
-	   (looking-at (format "^M \\(.*/\\)*%s" lcvs-examine-merge-file)))
-      (delete-char 1)
-      (insert "C")
-      (setq lcvs-examine-merge-file nil))
-     
-     ((and lcvs-examine-merge-file
-	   (looking-at (format "^C \\(.*/\\)*%s" lcvs-examine-merge-file)))
-      (setq lcvs-examine-merge-file nil))
-    
-     )
-    
-    (if delete-line
-	(let ((beg (point)))
-	  (next-line)
-	  (delete-region beg (point)))
-      (next-line))
-    )
-  )
 
 ;;; lcvs.el ends here 
