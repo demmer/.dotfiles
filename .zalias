@@ -8,6 +8,7 @@ alias rmbak='rmplain; rmdot'
 alias rmbakl='/bin/rm -f *~; /bin/rm -f .*~; echo > /dev/null'
 
 alias startx='startx 2>&1 | tee ~/.err/startx.log'
+alias x='startx'
 
 alias pcount='cat *.[CH] | wc -l'
 
@@ -92,5 +93,8 @@ alias xcslogin='xterm -title "CS Mail Shell" -geometry '=80x42+1+291' -e $HOME/b
 
 alias vncon='killall -CONT vncviewer'
 alias vncoff='kilalll -STOP vncviewer'
-alias xzabar='xssh zabar'
 alias statd=statd
+
+alias xinigo='xssh inigo'
+alias xtreat='xssh treat'
+alias xpowell='xssh powell'
