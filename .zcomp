@@ -73,3 +73,6 @@ hosts=(
     localhost
 )
 zstyle ':completion:*' hosts $hosts
+
+# complete kill by jobs
+zstyle ':completion:*:kill:*' command jobs
