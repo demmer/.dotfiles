@@ -489,19 +489,19 @@ to match the current line in the source file."
 
 (setq make-backup-file-name-function 'my-make-backup-file-name)
 
-;; silly little hook for sending cs268 summaries
-(defun cs268-summary ()
+;; silly little hook for sending cs264 summaries
+(defun cs264-summary ()
   (interactive)
   (let ((name (file-name-nondirectory (buffer-file-name)))
 	(buf  (buffer-substring (point-min) (point-max))))
-    (string-match "[0-9]+-[0-9]+-\\(.*\\).txt" name)
+    (string-match "\\(.*\\).txt" name)
     (setq name (substring name (match-beginning 1) (match-end 1)))
     (mail-other-window)
-    (insert "Ion Stoica <istoica@cs.berkeley.edu>")
+    (insert "cs264@imail.eecs.berkeley.edu")
     (insert "\nBcc: demmer@cs.berkeley.edu")
     (next-line)
     (end-of-line)
-    (insert (format "cs268-Paper-Review: %s" name))
+    (insert (format "Paper Summary: %s" name))
     (goto-char (point-max))
     (insert buf)
     (goto-char (point-min))
