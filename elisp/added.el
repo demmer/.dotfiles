@@ -335,7 +335,6 @@ calls with dprintf macro calls. [mjd]"
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (message (format "linenum is %s" linenum))
     (vc-annotate nil)
     (other-window 1)
     (goto-line linenum)
