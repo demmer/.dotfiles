@@ -9,9 +9,10 @@ bugzilla_opts="-geometry 29x27+650+1  mailbox=/u/demmer/Mail/bugzilla 	notext"
     root_opts="-geometry 29x27+681+1  mailbox=/u/demmer/Mail/root 	notext"
   bonsai_opts="-geometry 29x27+650+29 mailbox=/u/demmer/Mail/bonsai 	notext"
  freebsd_opts="-geometry 29x27+681+29 mailbox=/u/demmer/Mail/freebsd 	notext"
+   xoopi_opts="-geometry 270x43+812+62 mailbox=/tmp/mail-xoopi-demmer"
 
 if [ $# = 0 ]; then
-   boxes="main bugzilla root bonsai freebsd"
+   boxes="main bugzilla root bonsai freebsd xoopi"
 else
    boxes=""
    while [ $# -gt 0 ]; do
