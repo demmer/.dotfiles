@@ -145,13 +145,6 @@
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c-mode-common-hook 'my-cc-common-setup)
 
-; Fix the shitty xml mode
-(defun my-sgml-setup () 
-  (interactive)
-  (setq indent-tabs-mode nil)
-  )
-(add-hook 'sgml-mode-hook 'my-sgml-setup)
-
 ; Try to make the compile command do the right thing for amsh
 (defun amsh-compile-command-hook ()
   (interactive)
@@ -238,7 +231,9 @@
   (define-key html-mode-map "\C-c " 'html-insert-nbsp)
   )
 (add-hook 'html-mode-hook 'my-html-setup)
-; (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
+
+;; suck in sgml-indent
+(require 'sgml-indent)
 
 ;;; elisp debugging
 (autoload 'edebug-defun "edebug" "debugger for elisp" t)
