@@ -60,7 +60,7 @@ spaces at each open tag."
 	
 	;; match the tag and any attributes
 	(cond
-	 ((re-search-forward "<[^/][^> \t]*[ \t]*\\([a-zA-Z_-]*=\".*\"[ \t\n\r]*\\)*"
+	 ((re-search-forward "<[^/> \t]*[ \t]*\\([a-zA-Z_-]*=\".*\"[ \t\n\r]*\\)*"
 			    indent-point t)
 	  (sgml-indent-debug-message (format "tag matched \"%s\"" (match-string 0)))
 	  (sgml-indent-debug-message (format "looking-at returned %s" (looking-at ">.*-->")))
