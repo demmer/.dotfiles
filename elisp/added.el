@@ -425,3 +425,15 @@ to match the current line in the source file."
     (condition-case nil
 	(Man-getpage-in-background man-args))
     (setq manual-program my-manual-program)))
+
+(defun current-line ()
+  "Return the text of the current line"
+  (interactive)
+  (save-excursion
+    (let ((beg) (end))
+      (beginning-of-line)
+      (setq beg (point))
+      (end-of-line)
+      (setq end (point))
+      (buffer-substring-no-properties beg end))
+    ))
