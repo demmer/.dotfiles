@@ -28,7 +28,7 @@ LOGABSTRACT=all
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
-:0fb
+:0bhf
 * ^[Cc]ontent-[Tt]ype: text/html
 | dehtml.pl
 
