@@ -78,8 +78,8 @@ xterm*VT100.Translations: #override\n\
 
 emacs*font:			lucidasanstypewriter-bold-12
 emacs*geometry:			=82x54+0+1
-emacs*borderWidth:		2
-emacs*internalBorder: 		2
+emacs*borderWidth:		0
+emacs*internalBorder: 		0
 emacs*foreground:		ivory
 emacs*background:		black
 emacs*menu*foreground:		black
