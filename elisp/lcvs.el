@@ -128,24 +128,32 @@ To see the whole log, use \\[lcvs-show-full-log].")
 
 (defvar lcvs-UP-face
   (let ((face (make-face 'lcvs-UP-face)))
-    (make-face-bold face)
+    (condition-case nil
+	(make-face-bold face)
+      (error (set-face-foreground face "purple")))
     face))
 
 (defvar lcvs-M-face
   (let ((face (make-face 'lcvs-M-face)))
-    (make-face-bold face)
+    (condition-case nil
+	(make-face-bold face)
+      (error nil))
     (set-face-foreground face "royalblue")
     face))
 
 (defvar lcvs-C-face
   (let ((face (make-face 'lcvs-C-face)))
-    (make-face-bold face)
+    (condition-case nil
+	(make-face-bold face)
+      (error nil))
     (set-face-foreground face "red")
     face))
 
 (defvar lcvs-other-face
   (let ((face (make-face 'lcvs-other-face)))
-    (make-face-italic face)
+    (condition-case nil
+	(make-face-italic face)
+      (error (set-face-foreground face "green")))
     face))
 
 (defvar lcvs-font-lock-keywords
