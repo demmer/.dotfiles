@@ -1,0 +1,18 @@
+#!/usr/local/bin/perl
+
+while (<>) {
+    chomp;
+    # username : passwd : uid : gid : full name : home : shell
+    if (!/(.*):.*:([0-9]*):[0-9]*:(.*):.*:.*$/) {
+	print "Illegal passwd file line: \"$_\"\n";
+	next;
+    }
+    $username = $1;
+    $uid = $2;
+    next if $uid < 1000;
+    $fullname = $3;
+    $fullname =~ s/,.*$//;
+	    
+    print "alias $username $fullname <$username\@inktomi.com>\n";
+}
+
