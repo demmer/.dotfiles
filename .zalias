@@ -49,6 +49,7 @@ alias cdiffh="cvs diff -rHEAD"
 alias clog="cvs log"
 
 alias killscape="ps auxww |grep netscape | awk '{print \$2}' | xargs kill -KILL; rm -f ~/.netscape/lock"
+alias killzilla="ps auxww | grep mozilla | awk '{print \$2}' | xargs kill -KILL; find ~/.mozilla -name lock -exec rm {} \;"
 
 alias xinigo='xssh inigo'
 
