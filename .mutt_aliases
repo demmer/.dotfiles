@@ -199,11 +199,14 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 # DTN related
 #
 alias durst Robert Durst <durst@mitre.org>
+alias kfall Kevin Fall <kfall@intel.com>
+alias kfall-eecs Kevin Fall <kfall@eecs.berkeley.edu>
 alias jeff_allen Jeff Allen <jra@nella.org>
 alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
 alias nabeel Nabeel Ahmed <n3ahmed@fe02.math.uwaterloo.ca>
+alias rrhain Regina Hain <rrhain@bbn.com>
 alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
 alias sushant Sushant Jain <sushjain@cs.washington.edu>
 alias tkoo Tristan Koo <tkoo@ocf.berkeley.edu>
@@ -222,6 +225,8 @@ alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
 alias tap Tapan Parikh <tapan@cs.washington.edu>
 alias tier tier <tier@tier.cs.berkeley.edu>
 alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
+alias tier_case_paper <tier_case_paper@tier.cs.berkeley.edu>
+alias cft <tier_case_paper@tier.cs.berkeley.edu>
 
 #
 # Other Mailing Lists
@@ -233,10 +238,12 @@ alias tinyos-devel tinyos-devel <tinyos-devel@millennium.berkeley.edu>
 #
 # EECS overrides and secondary aliases
 #
+alias august August Joki <lakiolen@uclink.berkeley.edu>
 alias bruce Bruce Beattie <bruce@eecs.berkeley.edu>
 alias eric Eric Brewer <brewer@eecs.berkeley.edu>
 alias mdw Matt Welsh <mdw@eecs.harvard.edu>
-alias august August Joki <lakiolen@uclink.berkeley.edu>
+alias brighten Brighten Godfrey <pbg@eecs.berkeley.edu>
+alias pbg Brighten Godfrey <pbg@eecs.berkeley.edu>
 
 
 #
