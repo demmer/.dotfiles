@@ -1,41 +1,7 @@
 ! .Xdefaults.in
 !
-! should be run through a script to substitute geometry settings
-
-! colorxterm
-colorxterm*foreground:			white
-colorxterm*background:			black
-colorxterm*cursorColor:			yellow
-colorxterm*pointerColor:                white
-colorxterm*pointerColorBackground:      ivory
-colorxterm*jumpScroll:                  true
-colorxterm*saveLines:                   2000
-colorxterm*scrollBar:                   true
-colorxterm*scrollbar*thickness:         14
-colorxterm*scrollbar*foreground:	grey40
-colorxterm*scrollbar*background:	grey40
-colorxterm*reverseWrap:                 true
-colorxterm*scrollKey:                   true
-colorxterm*font:			lucidasanstypewriter-bold-12
-
-colorxterm*color0:                      black
-colorxterm*color1:                      blue
-colorxterm*color2:                      green
-colorxterm*color3:                      yellow
-colorxterm*color4:                      RoyalBlue1
-colorxterm*color5:                      red
-colorxterm*color6:                      dodger blue
-colorxterm*color7:                      white
-
-colorxterm*VT100.Translations: #override\n\
-	<KeyPress>Prior : scroll-back(1,page)\n\
-	<KeyPress>Next : scroll-forw(1,page)\n\
-	Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n\
-	Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n\
-	Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n\
-	Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n\
-	<Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
-	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
+! Run through subst-geometry before loading to override geometry
+! settings for various screen resolutions.
 
 ! xterm
 xterm*foreground:			ivory
@@ -45,7 +11,7 @@ xterm*pointerColor:             	white
 xterm*pointerColorBackground:   	ivory
 xterm*jumpScroll:			true
 xterm*saveLines:			1000	
-xterm*scrollBar:			true
+xterm*scrollBar:			false
 xterm*scrollBar*thickness:		12
 xterm*reverseWrap:			true
 xterm*font:       			lucidasanstypewriter-bold-12
