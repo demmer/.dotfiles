@@ -322,8 +322,8 @@ calls with dprintf macro calls. [mjd]"
     (grep grepargs)
 ))
 
-(defun vc-annotate-goto-line ()
-  (interactive)
+(defun vc-annotate-goto-line (prompt-version)
+  (interactive current-prefix-arg)
   (let ((opoint (point)) start linenum)
     (save-excursion
       (save-restriction
@@ -335,7 +335,7 @@ calls with dprintf macro calls. [mjd]"
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (vc-annotate nil)
+    (call-interactively vc-annotate)
     (other-window 1)
     (goto-line linenum)
     (other-window -1)
@@ -390,3 +390,7 @@ calls with dprintf macro calls. [mjd]"
 	      )
        ))))))
 
+(defun grope (sym)
+  (interactive (list (read-string "Grope for: " (current-word))))
+  (compile-internal (concat "grope " sym) "No more grope hits" "grope"
+                    nil grep-regexp-alist))
