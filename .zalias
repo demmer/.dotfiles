@@ -64,9 +64,12 @@ alias etag-cwd="findsrc | xargs etags"
 
 alias make='gmake'
 
+
 alias xargus='xssh argus'
 alias xinigo='xssh inigo'
+alias xtier='xssh tier'
 alias xxoopi='xssh xoopi'
+alias xzabar='xssh zabar'
 
 alias a='xssh argus'
 alias i='xssh inigo'
