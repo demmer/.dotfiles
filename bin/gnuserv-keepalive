@@ -1,0 +1,17 @@
+#!/bin/sh
+
+START=`date`
+
+while gnudoit '(emacs-version)' > /dev/null; do
+	sleep 10
+done
+
+DEAD=`date`
+
+mailx -s "gnuserv died" demmer <<EOF
+
+keepalive started at $START	
+gnuserv died at $DEAD
+
+EOF
+
