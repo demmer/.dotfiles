@@ -206,20 +206,22 @@ proc checkfetch {} {
 }
 
 while {1} {
-    set checkfetch_output 0
+    set doscan 0
     if {$checkfetch} {
-	set checkfetch_output [checkfetch]
+	set doscan [checkfetch]
     }
     
-    set scanned 0
     foreach {spool spoolfile} $spools {
 	if {[checktime $spoolfile]} {
-	    scan $spool $spoolfile
-	    set scanned 1
+	    set doscan 1
+	    break
 	}
     }
-    
-    if {$scanned || $checkfetch_output} {
+
+    if {$doscan} {
+        foreach {spool spoolfile} $spools {
+            scan $spool $spoolfile
+        }
 	puts "."
     } else {
 	puts "ping"
