@@ -180,7 +180,8 @@ with tab characters underneath."
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
 				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
-				("\\GNUmakerules\\'" . makefile-mode)
+				("\\(M\\|m\\|GNUm\\)ake\\(file\\|rules\\)\\(\\..*\\)?\\'" .
+				 makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
 				("\\.mdn\\'" . sgml-mode)
 				("\\.xsl\\'" . sgml-mode)
