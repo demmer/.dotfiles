@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use MPEG::MP3Info qw(:all);
+push @files, shift;
+
+foreach $file (@files) {
+    my $tag  = get_mp3tag($file, 2, 1);
+    for (keys %$tag) {
+	#print "\t$_ -> $tag->{$_}\n";
+	printf "%40s => %s\n", $MP3::Info::v2_tag_names{$_}, $tag->{$_};
+    }
+}
