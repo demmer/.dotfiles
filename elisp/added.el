@@ -1,4 +1,4 @@
-(defun requote (start end)
+y(defun requote (start end)
   "Requotes the selected text, mail style. [AMD]"
   (interactive "r")
   (save-excursion
@@ -665,23 +665,22 @@ of line."
 )
 
 (defun scroll-up-ctrl-l ()
-  "Goes to the next ^L and move that line to the top of the window."
+  "Refinement to scroll-up that respects ^L characters"
   (interactive)
-  (if (re-search-forward "^$" nil t)
-      (progn
-	(next-line 1)
-	(recenter 0))
-    (scroll-up))
-  )
+  (let (pt1 pt2)
+    (save-excursion
+      (scroll-up)
+      (setq pt1 (point)))
 
-(defun scroll-down-ctrl-l ()
-  "Goes to the previous ^L and move that line to the top of the window."
-  (interactive)
-  (if (and (re-search-backward "^$" nil t)
-	   (re-search-backward "^$" nil t))
-      (progn
-	(next-line 1)
-	(recenter 0)
-	)
-    (scroll-down))
-  )
+    (save-excursion
+      (if (re-search-forward "^$" nil t)
+	  (next-line 1)
+	(goto-char pt1))
+      (setq pt2 (point)))
+
+    (if (< pt1 pt2)
+	(goto-char pt1)
+      (goto-char pt2))
+    )
+  
+  (recenter 0))
