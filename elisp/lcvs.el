@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.16 $)
+;; Version: 1.2 ($Revision: 1.17 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -103,7 +103,6 @@
 ;;
 ;; - Have space and backspace scroll a diff/log/status/etc window if visible
 
-
 ;; User vars.
 
 (defvar lcvs-cvs-command "cvs"
@@ -1104,7 +1103,7 @@ This mode is not meant to be user invoked."
     ;; If there is an ALL rule, add it in.
     (let ((all (assoc "ALL" rcsinfo)))
       (if all
-	  (setq matches (cons (cdr default) matches))))
+	  (setq matches (cons (cdr all) matches))))
     matches))
 
 (defun lcvs-commit-insert-matching-files (char desc)
@@ -1731,9 +1730,9 @@ the value of `foo'."
     
     (if delete-line
 	(let ((beg (point)))
-	  (next-line)
+	  (next-line 1)
 	  (delete-region beg (point)))
-      (next-line))
+      (next-line 1))
     )
   )
 
