@@ -16,17 +16,18 @@ if (-d "CVS") {
 	Write->flush();
     }
 } elsif (-d "RCS") {
-    chdir("RCS") or die "Can't chdir to RCS";
-    opendir(RCS, ".") or die "Can't opendir";
-    @files = readdir(RCS) or die "Can't readdir";
+    opendir(DIR, ".") or die "Can't opendir";
+    @files = readdir(DIR) or die "Can't readdir";
     foreach $f (@files) {
-	next if ($f eq ".");
-	next if ($f eq "..");
-
-	open(F, "<$f") or die "Can't open $f";
+	next if (-d $f);
+	$rcsf = "RCS/$f,v";
+	if (! -f $rcsf) {
+	    print "$f (?)\n";
+	    next;
+	}
+	open(F, "<$rcsf") or die "Can't open $rcsf";
 	while (<F>) {
 	    if (/locks/) {
-		$f =~ s/,v//;
 		$line = <F>;
 		if ($line =~ /[ \t]*(.*):(.*); strict/) {
 		    if ($1 eq $ENV{USER}) {
