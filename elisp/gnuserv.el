@@ -258,11 +258,15 @@ Prefix arg means just kill any existing server communications subprocess."
 	(process-send-string server-process s)
 	(server-log s))))
 
-(defun server-eval (form)
+(defun gnuserv-eval (form)
   "Evaluate form and return result to client."
   (server-write-to-client current-client (eval form))
   (setq current-client nil))
 
+;; similar semantics for gnuserv-eval
+;; [demmer 3/6] not sure why this all of a sudden became necessary, but
+;; it works...
+(fset 'server-eval (function gnuserv-eval))
 
 (defun server-eval-quickly (form)
   "Let client know that we've received the request, but eval the form
@@ -670,6 +674,24 @@ another normal buffer if `always' is non-nil!"
 
 (global-set-key "\C-x#" 'server-edit)
 
+;; Stuff from tera
+(defun gnuserv-select-frame ()
+  "Select current frame for gnu server"
+  (interactive)
+  (setq gnuserv-frame (selected-frame))
+  (message "current frame selected for gnuserv")
+  )
+
+(defun server-finish ()
+   "Finish server buffer, kill it, and get back to where you were."
+   (interactive)
+   (let ((oldbuf (buffer-name))
+	 (file (buffer-file-name)))
+     (server-edit)
+     (setq file (concat file "~"))
+     (if (file-exists-p file)
+	 (delete-file file)))
+   )
 (provide 'gnuserv)
 
 ;;; gnuserv.el ends here
