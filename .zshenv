@@ -65,6 +65,7 @@ path=(						\
 	/usr/sbin				\
 	/usr/X11R6/bin				\
 	/usr/games				\
+	/usr/java/jdk/bin			\
 	.					\
       )
 
