@@ -52,7 +52,7 @@ while (<SSH>) {
     if (/URL/) {
 	s/URL //;
 	next if ($_ eq "");
-	$cmd = "mozilla -remote 'openUrl($_ , new-tab)'";
+	$cmd = "mozilla -remote 'openUrl($_,new-tab)'";
 	debug "$cmd\n";
 	system $cmd;
     }
