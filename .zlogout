@@ -5,7 +5,6 @@
 ## USAGE: zsh -l
 ## 
 ## DATE:  Sat May 27 17:41:09 1995
-## $Id: .zlogout,v 1.1 2002-08-06 16:12:53 miked Exp $
 ## 
 ## Modification history:
 ##    jal   Sat May 27 17:41:12 1995   made header
