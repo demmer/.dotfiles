@@ -2,7 +2,7 @@
 # yabiff-server
 # Author: Mike Demmer <mike@demmer.nu>
 
-set debug 1
+set debug 0
 
 proc dprint {s} {
     global debug
