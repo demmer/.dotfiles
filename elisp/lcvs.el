@@ -1,11 +1,11 @@
 ;;; lcvs.el --- a little CVS mode, or lomew's CVS mode
 
-;; Copyright (C) 1997-2000 Bart Robinson <lomew@cs.utah.edu>
+;; Copyright (C) 1997-2001 Bart Robinson <lomew@cs.utah.edu>
 
 ;; Author: Bart Robinson <lomew@cs.utah.edu>
 ;; Created: Aug 1997
-;; Version: 1.1
-(defconst lcvs-version "1.1")
+;; Version: 1.2
+(defconst lcvs-version "1.2")
 ;; Date: Jan 24, 2000
 ;; Keywords: cvs
 
@@ -44,12 +44,19 @@
 ;; - fix add to cd to dir -- ie handle adding with slash in name,
 ;;   seems to work fine for me with cvs-1.10
 
+;; ASSUMPTIONS:
+;; - We assume that all files in a directory have the same branch tag.
+;;   That is, CVS/Tag and the tag portion of all entries in CVS/Entries
+;;   match.  If this isn't true you are asking for it, really.
+
 ;; TODO:
 ;;
-;; - Show tag name in commit buffer like "cvs commit" when committing on
-;;   a branch
+;; - provide a revert command to discard edits.  remove file and do
+;;   update -p -rrev > file.  Don't do just update since that will add
+;;   a sticky tag and may get you edits you don't want (in the case of
+;;   "C" files) (destein)
 ;;
-;; - Font lock stuff that works on Emacs and XEmacs
+;; - make more asynchronous.  have lcvs-do-command take a callback.
 ;;
 ;; - Emacs: how to indicate when process is running.  On XEmacs it is in the
 ;;   mode line.
@@ -65,11 +72,6 @@
 ;;   filename", since that is how added files are handled.  Could do
 ;;   this with an input filter (see amsh.el and doc) or by a post-
 ;;   processing stage.
-;;
-;; - Hook in with "ediff-revision" for diffs (demmer).  Looks like there isn't
-;;   a way to handle the D command, however.
-;;
-;; - Might be cool to put log/status/diff/etc buffers in view mode
 ;;
 ;; - Think more about how dont-use-existing should work.  Could ask "reuse
 ;;   buffer foo" then say "use g to refresh".  Maybe lcvs-update should just
@@ -90,9 +92,6 @@
 ;; - Save commit message on message ring and allow M-p/n to cycle in
 ;;   commit-mode.  vc-mode does this.
 ;;
-;; - Handle updating displayed state smarter.  Right now it searches from the
-;;   top of the buffer for each one
-;;
 ;; - Have a diff mode that shows the log message at the top of the diff (hard)
 ;;   This is very useful when working on branches since the log messages
 ;;   are at the bottom.
@@ -104,9 +103,6 @@
 ;; - Have a regexp to match/notmatch some files that lcvs-examine would update
 ;;   automatically (andrew).  This could be done with a postprocessing stage
 ;;   That collects the files and calls lcvs-update-some-files with them.
-;;
-;; - Provide a update/commit behavior variable to require a C-u or not
-;;   to grab marked files.
 ;;
 ;; - Have space and backspace scroll a diff/log/status/etc window if visible
 
@@ -121,18 +117,42 @@
 describing the current line.  This info is always available with
 the \\[lcvs-explain-this-line] command.")
 
-(defvar lcvs-log-restrict-to-branch nil
+(defvar lcvs-log-restrict-to-branch t
   "*If non-nil \\[lcvs-show-log] will show output for the current branch only.
 It does this by looking for a CVS/Tag file in the directory of the first
 file to be logged and passes the tag within to log.
-This can be confusing and thus isn't on by default.")
+To see the whole log, use \\[lcvs-show-full-log].")
 
-;; XXX/BRR this works only for XEmacs.
+(defvar lcvs-use-view-mode nil
+  "*If non nil, lcvs will use view-mode in log, diff, etc, buffers.")
+
+(defvar lcvs-UP-face
+  (let ((face (make-face 'lcvs-UP-face)))
+    (make-face-bold face)
+    face))
+
+(defvar lcvs-M-face
+  (let ((face (make-face 'lcvs-M-face)))
+    (make-face-bold face)
+    (set-face-foreground face "royalblue")
+    face))
+
+(defvar lcvs-C-face
+  (let ((face (make-face 'lcvs-C-face)))
+    (make-face-bold face)
+    (set-face-foreground face "red")
+    face))
+
+(defvar lcvs-other-face
+  (let ((face (make-face 'lcvs-other-face)))
+    (make-face-italic face)
+    face))
+
 (defvar lcvs-font-lock-keywords
-  '(("^[UP][ *].*" . bold)
-    ("^M[ *].*" . font-lock-keyword-face)
-    ("^C[ *].*" . red)
-    ("^cvs update.*" . italic)))
+  '(("^[UP][ *].*" . lcvs-UP-face)
+    ("^M[ *].*" . lcvs-M-face)
+    ("^C[ *].*" . lcvs-C-face)
+    ("^cvs update.*" . lcvs-other-face)))
 
 
 ;; Internal Vars.
@@ -172,6 +192,10 @@ This can be confusing and thus isn't on by default.")
     (?? . "File is unknown to CVS"))
   "An alist to map the first column of \"cvs update\" output into English.")
 
+(defvar lcvs-view-mode-commands
+  '("annotate" "diff" "log" "stat")
+  "List of CVS commands that get their output put into view-mode.")
+
 ;; The last dir we examined/updated.
 (defvar lcvs-last-dir nil)
 
@@ -189,9 +213,9 @@ This can be confusing and thus isn't on by default.")
     (define-key map "C" 'lcvs-commit)
     (define-key map "d" 'lcvs-diff-base)
     (define-key map "D" 'lcvs-diff-head)
-    (define-key map "e" 'lcvs-ediff-base)
+    (define-key map "e" 'lcvs-ediff)
     (define-key map "l" 'lcvs-show-log)
-    (define-key map "L" 'lcvs-show-log-all-versions)
+    (define-key map "L" 'lcvs-show-full-log)
     (define-key map "s" 'lcvs-show-status)
     (define-key map "S" 'lcvs-sort)
     (define-key map "a" 'lcvs-annotate)
@@ -251,7 +275,7 @@ For commit-mode buffers.")
 	 (buf (get-buffer bufname))
 	 (cmd (if (eq mode 'examine)
 		  (list lcvs-cvs-command "-nq" "update")
-		(list lcvs-cvs-command "-q" "update" "-d")))
+		(list lcvs-cvs-command "-q" "update" "-dP")))
 	 proc)
     ;; Use an existing buffer if it is "visiting" the same dir.
     (if (and (not dont-use-existing)
@@ -310,7 +334,7 @@ examine even if there is an examine buffer hanging around for DIR."
   (lcvs-examine-update-common 'examine dir dont-use-existing))
 
 (defun lcvs-update (dir &optional dont-use-existing)
-  "Call \"cvs -q update -d\" in DIR and then call `lcvs-mode' (which see).
+  "Call \"cvs -q update -dP\" in DIR and then call `lcvs-mode' (which see).
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 update even if there is an update buffer hanging around for DIR."
   (interactive (lcvs-examine-update-common-get-args "update"))
@@ -354,6 +378,7 @@ The following keys have meaning in an `lcvs-mode' buffer:
 	mode-name "LCVS")
   (setq modeline-process '(":%s"))
   (setq buffer-read-only t)
+  (setq font-lock-defaults '(lcvs-font-lock-keywords))
   (run-hooks 'lcvs-mode-hook))
 
 (defun lcvs-clean ()
@@ -582,7 +607,7 @@ If there are no marked files update those that need it according to
 		      "*** Perhaps there were some conflicts?\n"
 		    (format "*** There were %d conflicts.\n" nconflicts))
 		  "*** Check this buffer closely to determine what is wrong.\n"
-		  "*** It contains all the `cvs -q update -d' output.\n"
+		  "*** It contains all the `cvs -q update -dP' output.\n"
 		  "\n")
 	  (error "Update failed, see *CVS-update* buffer for details.")))))
 
@@ -621,7 +646,7 @@ the file on this line."
   (lcvs-do-command "diff"
 		   "No differences with the BASE"
 		   nil
-		   (mapcar 'car (lcvs-get-relevant-files arg)))
+		   (cons "-N" (mapcar 'car (lcvs-get-relevant-files arg))))
   (message "Diffing...done"))
 
 (defun lcvs-diff-head (arg)
@@ -642,68 +667,115 @@ the file on this line."
 			   (mapcar 'car (lcvs-get-relevant-files arg))))
   (message "Diffing...done"))
 
-(require 'ediff)
-(require 'ediff-vers)
-
-(defun lcvs-ediff-base (arg)
-  "Ediff some files against the BASE revision.
-Use this when you have locally modified files and want to see what
-you have done.  See also `lcvs-diff-head'."
+;; There isn't an easy way to do diff-base and diff-head.
+;;
+;; This doesn't drop you back to the examine/update buffer and is hard
+;; to do (would have to set the ediff hook (maybe the cleanup hook) to
+;; some function to put us back in the examine buffer then remove the
+;; function from the hook.  this would prevent multiple ediffs running
+;; from lcvs since the hook is global)
+(defun lcvs-ediff (arg)
+  "Ediff a file with the HEAD revision.
+This will compare the contents of the current-file with the tip of
+the current branch."
   (interactive "P")
-;;  (ediff-revision (lcvs-current-file))
+  (require 'ediff)
+  (require 'ediff-vers)
   (find-file (lcvs-current-file))
-  (ediff-vc-internal "" "" nil)
-  )
-
-(defun lcvs-ediff-head (arg)
-  "Ediff some files against the HEAD revision.
-Use this when you have locally modified files and want to see what
-you have done.  See also `lcvs-diff-base'."
-  (interactive "P")
-;;  (ediff-revision (lcvs-current-file))
-  (find-file (lcvs-current-file))
-  (ediff-vc-internal "" "" nil)
-  )
+  (ediff-vc-internal "" "" nil))
 
 (defun lcvs-show-log (arg)
   "Show log info for some files.
 If given a prefix argument, use the marked files.  Otherwise use
-the file on this line."
+the file on this line.
+Influenced by the `lcvs-log-restrict-to-branch' variable."
   (interactive "P")
-  (let ((files (mapcar 'car (lcvs-get-relevant-files arg))))
+  (let ((files (mapcar 'car (lcvs-get-relevant-files arg)))
+	args working-revision)
     ;; If the CVS/Tag file exists and contains a tag, then we use that
     ;; for logging so we only see messages for this branch.
     (if lcvs-log-restrict-to-branch
-	(let* ((dir (file-name-directory (car files)))
-	       (tagfile (concat dir (file-name-as-directory "CVS") "Tag"))
-	       tag)
-	  (if (and (file-exists-p tagfile)
-		   (file-readable-p tagfile))
-	      (let ((buf (get-buffer-create "*Tag*")))
+	(let ((tag (lcvs-sticky-tag (car files))))
+	  (if tag
+	      (setq args (cons (concat "-r" tag) args)))))
+    ;; If logging just one file, figure out working-revision from CVS/Entries.
+    (if (= (length files) 1)
+	(let* ((file (file-name-nondirectory (car files)))
+	       (dir (file-name-directory (car files)))
+	       (entries (concat dir (file-name-as-directory "CVS") "Entries")))
+	  (if (and (file-exists-p entries)
+		   (file-readable-p entries))
+	      (let ((buf (get-buffer-create "*Entries*")))
 		(save-excursion
 		  (set-buffer buf)
-		  (insert-file-contents tagfile t nil nil t)
+		  (erase-buffer)
+		  (insert-file-contents entries t nil nil t)
 		  (goto-char (point-min))
-		  (if (looking-at "^T\\(.*\\)")
-		      (setq files (cons (concat "-r" (match-string 1))
-					files)))
+		  (if (re-search-forward
+		       ;; /foo.c/1.3/blah/blah
+		       (concat "^/" (regexp-quote file) "/\\([^/]+\\)/")
+		       nil t)
+		      (setq working-revision (match-string 1)))
 		  (kill-buffer buf))))))
     (message "Logging...")
-    (lcvs-do-command "log" "No output" nil files)
+    (lcvs-do-command "log" "No output" nil (nconc args files))
+    ;; If we know the working revision, go mark it and make it visible.
+    ;; Parts stolen from vc.el.
+    (if working-revision
+	(let (start end lines win windows)
+	  (save-excursion
+	    (set-buffer "*CVS-log*")
+	    (goto-char (point-min))
+	    (if (not (re-search-forward
+		      (concat "----\nrevision " working-revision "\ndate: ")
+		      nil t))
+		nil
+	      ;; Mark this entry so user can determine the working rev.
+	      (beginning-of-line)
+	      (forward-line -1)
+	      (setq start (point))
+	      (let ((buffer-read-only nil))
+		(insert "\n")
+		(end-of-line)
+		(insert " ~~~~~~~~~~ YOUR REVISION ~~~~~~~~~~")
+		(set-buffer-modified-p nil))
+	      ;; Figure out the extent of this log entry.
+	      (if (not (re-search-forward "^----*\nrevision" nil t))
+		  (setq end (point-max))
+		(beginning-of-line)
+		(forward-line -1)
+		(setq end (point)))
+	      (setq lines (count-lines start end))
+	      ;; Make the log entry visible in its windows.
+	      (setq windows (get-buffer-window-list (current-buffer)))
+	      (save-selected-window
+		(while windows
+		  (setq win (car windows)
+			windows (cdr windows))
+		  (select-window win)
+		  (cond
+		   ;; If the global information and this log entry fit
+		   ;; into the window, display from the beginning
+		   ((< (count-lines (point-min) end) (window-height))
+		    (goto-char (point-min))
+		    (recenter 0))
+		   ;; If the whole entry fits into the window,
+		   ;; display it centered
+		   ((< (1+ lines) (window-height))
+		    (goto-char start)
+		    (recenter (1- (- (/ (window-height) 2) (/ lines 2)))))
+		   ;; Otherwise (the entry is too large for the window),
+		   ;; display from the start
+		   (t
+		    (goto-char start)
+		    (recenter 0)))))))))
     (message "Logging...done")))
 
-;; Same as lcvs-show-log, but forces lcvs-log-restrict-to-branch to
-;; false
-(defun lcvs-show-log-all-versions (arg)
-  "Show log info for some files,
-If given a prefix argument, use the marked files.  Otherwise use
-the file on this line."
+(defun lcvs-show-full-log (arg)
+  "Like \\[lcvs-show-log] but ignores `lcvs-log-restrict-to-branch'."
   (interactive "P")
-  (let ((oldrestrict lcvs-log-restrict-to-branch))
-    (setq lcvs-log-restrict-to-branch nil)
-    (lcvs-show-log arg)
-    (setq lcvs-log-restrict-to-branch oldrestrict)
-    ))
+  (let ((lcvs-log-restrict-to-branch nil))
+    (lcvs-show-log arg)))
 
 (defun lcvs-show-status (arg)
   "Show CVS status info for some files.
@@ -815,6 +887,8 @@ This mode is not meant to be user invoked."
   (lcvs-commit-insert-matching-files ?A "Added")
   (lcvs-commit-insert-matching-files ?R "Removed")
   (insert "CVS: ")(insert-char ?- 70)(insert "\n")
+  (if (file-readable-p "CVS/Template")
+      (insert-file-contents "CVS/Template"))
   (set-buffer-modified-p nil)
 
   ;; XXX/BRR shouldn't hardcode binding.
@@ -825,6 +899,12 @@ This mode is not meant to be user invoked."
   (if (rassoc char lcvs-commit-files)
       (progn
 	(insert "CVS: " desc " Files:\n")
+	;; This is a lame place to put this, but that is close to what cvs does.
+	;; We don't look in the CVS/Entries file but assume the CVS/Tag file
+	;; is the same.
+	(let ((tag (lcvs-sticky-tag (car (car lcvs-commit-files)))))
+	  (if tag
+	      (insert "CVS:  Tag: " tag "\n")))
 	(insert "CVS:    ")
 	(let ((cur lcvs-commit-files)
 	      pair)
@@ -898,6 +978,40 @@ This mode is not meant to be user invoked."
 
 ;; Internal functions.
 
+(defun lcvs-set-view-mode (win buf)
+  ;; Turn view-mode on for BUF in window WIN, making sure quitting it
+  ;; will get us back somewhere sane.
+  (if (not lcvs-use-view-mode)
+      nil
+    (let ((prevwin (selected-window))
+	  (prevbuf (current-buffer)))
+      (save-excursion
+	(set-buffer buf)
+	(condition-case nil
+	    (view-mode prevbuf 'kill-buffer) ;XEmacs
+	  (error
+	   (view-mode-enter (list win prevwin) 'kill-buffer)
+	   (setq buffer-read-only t))))))) ;Emacs
+
+(defun lcvs-sticky-tag (file)
+  ;; Return the sticky tag for FILE, or nil.
+  ;; Just looks in the CVS/Tag file, not in Entries.
+  (let* ((dir (file-name-directory file))
+	 (tagfile (concat dir (file-name-as-directory "CVS") "Tag"))
+	 tag)
+    (if (and (file-exists-p tagfile)
+	     (file-readable-p tagfile))
+	(let ((buf (get-buffer-create "*Tag*")))
+	  (save-excursion
+	    (set-buffer buf)
+	    (erase-buffer)
+	    (insert-file-contents tagfile t nil nil t)
+	    (goto-char (point-min))
+	    (if (looking-at "^T\\(.*\\)")
+		(setq tag (match-string 1)))
+	    (kill-buffer buf))))
+    tag))
+
 (defun lcvs-ensure-saved (files)
   ;; Check for any buffers visiting any of the FILES and offer to save
   ;; them.
@@ -923,7 +1037,7 @@ This mode is not meant to be user invoked."
 	     (not (verify-visited-file-modtime buf)))
 	(save-excursion
 	  (set-buffer buf)
-	  (revert-buffer nil t t)))))
+	  (revert-buffer nil t)))))
 
 (defun lcvs-get-relevant-files (use-marks &optional noerror)
   ;; Return a list of files in the form of `lcvs-marked-files'
@@ -933,8 +1047,10 @@ This mode is not meant to be user invoked."
   ;; when no files are marked.
   (if use-marks
       (if lcvs-marked-files
-	  ;; Copy it in case they change it while editing (commit mode)
-	  (copy-sequence lcvs-marked-files)
+	  ;; sort modifies
+	  (sort (copy-sequence lcvs-marked-files)
+		(function (lambda (a b)
+			    (string-lessp (car a) (car b)))))
 	(if noerror
 	    nil
 	  (error "No marked files")))
@@ -1053,12 +1169,11 @@ the value of `foo'."
     (setq buffer-read-only t)))
 
 (defun lcvs-read-directory-name (prompt
-				 &optional dir default must-match initial-contents
-				 history)
+				 &optional dir default must-match
+				 initial-contents)
   ;; Emacs doesn't have this handy XEmacsism
   (if (fboundp 'read-directory-name)
-      (read-directory-name prompt dir default must-match initial-contents
-			   history)
+      (read-directory-name prompt dir default must-match initial-contents)
     (let ((dir (read-file-name prompt dir default must-match initial-contents)))
       (cond ((file-directory-p dir)
 	     dir)
@@ -1101,12 +1216,13 @@ the value of `foo'."
 				     lcvs-cvs-command " "
 				     (mapconcat 'identity args " ")
 				     "\n")))))
-	     (display-buffer buf))))
+	     (let ((win (display-buffer buf)))
+	       (if (member cmd lcvs-view-mode-commands)
+		   (lcvs-set-view-mode win buf))))))
       (with-output-to-temp-buffer bufname
-	(save-excursion
-	  (setq status (apply 'call-process lcvs-cvs-command
-			      nil standard-output
-			      nil args)))))
+	(setq status (apply 'call-process lcvs-cvs-command
+			    nil standard-output
+			    nil args))))
     status))
 
 (defun lcvs-do-command-quietly (cmd cvsopts &optional cmdopts)
