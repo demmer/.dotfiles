@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.23 $)
+;; Version: 1.2 ($Revision: 1.24 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -109,6 +109,14 @@ the \\[lcvs-explain-this-line] command.")
 It does this by looking for a CVS/Tag file in the directory of the first
 file to be logged and passes the tag within to log.
 To see the whole log, use \\[lcvs-show-full-log].")
+
+(defvar lcvs-log-restrict-to-changes nil
+  "*If non-nil \\[lcvs-show-log] will show output for changes more recent
+than the current repository version.")
+
+(defvar lcvs-correlate-change-log nil
+  "*If non-nil \\[lcvs-show-changed-log] will reformat changed log messages
+to group similar checkins by author and comment string")
 
 (defvar lcvs-use-view-mode nil
   "*If non nil, lcvs will use view-mode in log, status, etc, buffers.")
@@ -223,6 +231,7 @@ a `U' line so you can update it in lcvs, not having to go to a shell.")
     (define-key map "e" 'lcvs-ediff)
     (define-key map "l" 'lcvs-show-log)
     (define-key map "L" 'lcvs-show-full-log)
+    (define-key map "x" 'lcvs-show-changed-log)
     (define-key map "s" 'lcvs-show-status)
     (define-key map "S" 'lcvs-sort)
     (define-key map "a" 'lcvs-annotate)
@@ -717,41 +726,79 @@ the current branch."
   "Show log info for some files.
 If given a prefix argument, use the marked files.  Otherwise use
 the file on this line.
-Influenced by the `lcvs-log-restrict-to-branch' variable."
+Influenced by the `lcvs-log-restrict-to-branch' and
+`lcvs-log-restrict-to-changes' variables."
   (interactive "P")
   (let ((files (mapcar 'car (lcvs-get-relevant-files arg)))
-	args working-revision)
+	args working-revisions)
     ;; If the CVS/Tag file exists and contains a tag, then we use that
     ;; for logging so we only see messages for this branch.
     (if lcvs-log-restrict-to-branch
 	(let ((tag (lcvs-sticky-tag (car files))))
 	  (if tag
 	      (setq args (cons (concat "-r" tag) args)))))
-    ;; If logging just one file, figure out working-revision from CVS/Entries.
-    (if (= (length files) 1)
-	(let* ((file (file-name-nondirectory (car files)))
-	       (dir (file-name-directory (car files)))
-	       (entries (concat dir (file-name-as-directory "CVS") "Entries")))
-	  (if (and (file-exists-p entries)
-		   (file-readable-p entries))
-	      (let ((buf (get-buffer-create "*Entries*")))
-		(save-excursion
-		  (set-buffer buf)
-		  (erase-buffer)
-		  (insert-file-contents entries t nil nil t)
-		  (goto-char (point-min))
-		  (if (re-search-forward
-		       ;; /foo.c/1.3/blah/blah
-		       (concat "^/" (regexp-quote file) "/\\([^/]+\\)/")
-		       nil t)
-		      (setq working-revision (match-string 1)))
-		  (kill-buffer buf))))))
+
+    ;; If logging just one file or need changes for all, figure out
+    ;; working-revision list from CVS/Entries.
+    (if (or lcvs-log-restrict-to-changes (= (length files) 1))
+	(setq working-revisions
+	      (mapcar (function
+		       (lambda (filename)
+			 (let* ((file (file-name-nondirectory filename))
+				(dir (file-name-directory filename))
+				(entries (concat dir (file-name-as-directory "CVS") "Entries"))
+				(working-revision nil))
+			   (if (and (file-exists-p entries)
+				    (file-readable-p entries))
+			       (let ((buf (get-buffer-create "*Entries*")))
+				 (save-excursion
+				   (set-buffer buf)
+				   (erase-buffer)
+				   (insert-file-contents entries t nil nil t)
+				   (goto-char (point-min))
+				   (if (re-search-forward
+					;; /foo.c/1.3/blah/blah
+					(concat "^/" (regexp-quote file) "/\\([^/]+\\)/") nil t)
+				       (setq working-revision (match-string 1)))
+				   (kill-buffer buf)
+				   working-revision))))))
+		      files)))
     (message "Logging...")
-    (lcvs-do-command "log" "No output" nil (nconc args files))
-    ;; If we know the working revision, go mark it and make it visible.
-    ;; Parts stolen from vc.el.
-    (if working-revision
-	(let (start end lines win windows)
+    (mapcar* (function (lambda (file rev)
+			 (message (format "file: %s ver: %s" (file-name-nondirectory file) rev))))
+	     files working-revisions)
+    (if (not lcvs-log-restrict-to-changes)
+	(lcvs-do-command "log" "No output" nil (nconc args files))
+      
+      (let ((tmpbuf (get-buffer-create "*CVS-log-temp*")) contents)
+	(save-excursion (set-buffer tmpbuf) (erase-buffer))
+	(mapcar*
+	 (function
+	  (lambda (filename version)
+	    (let ((cmdargs (nconc args (list (concat "-r" version "::")) (list filename))))
+	      (message (format "logging cmd %s " cmdargs))
+	      (lcvs-do-command "log" "No output" nil cmdargs)
+	      (save-excursion
+		(set-buffer "*CVS-log*")
+		(setq contents (buffer-substring (point-min) (point-max)))
+		(set-buffer tmpbuf)
+		(insert contents)
+		))))
+	    files working-revisions)
+
+	(save-excursion
+	  (set-buffer tmpbuf)
+	  (setq contents (buffer-substring (point-min) (point-max)))
+	  (set-buffer "*CVS-log*")
+	  (erase-buffer)
+	  (insert contents)
+	  (kill-buffer tmpbuf)
+	  )))
+    
+    ;; If we know the working revision and we're just marking one
+    ;; file, go mark it and make it visible. Parts stolen from vc.el.
+    (if (and (= (length files) 1) (car working-revisions))
+	(let (start end lines win windows (working-revision (car working-revisions)))
 	  (save-excursion
 	    (set-buffer "*CVS-log*")
 	    (goto-char (point-min))
@@ -811,12 +858,127 @@ Influenced by the `lcvs-log-restrict-to-branch' variable."
 	    (set-buffer "*CVS-log*")
 	    (goto-char (point-max))
 	    (insert msg))))
+    (if lcvs-log-restrict-to-changes
+	;; Do the substitute-command-keys before going to the other buffer.
+	(save-excursion
+	  (set-buffer "*CVS-log*")
+	  (goto-char (point-max))
+	  (if lcvs-correlate-change-log
+	      (lcvs-correlate-logs)
+	    (let ((msg (substitute-command-keys
+			(concat
+			 "\n"
+			 "NOTE: Logging is restricted to changes in files.\n"
+			 "      To see the full log, use the \\[lcvs-show-full-log]"
+			 " command.\n"))))
+	      (insert msg)
+	      ))))
     (message "Logging...done")))
+
+(defun lcvs-correlate-logs ()
+  "Parse the *CVS-log* buffer, reformatting to group checkins by author
+and log message"
+  (interactive)
+  (save-excursion
+    (set-buffer "*CVS-log*")
+    (make-variable-buffer-local 'kill-whole-line)
+    (goto-char (point-min))
+    (let ((buffer-read-only nil)
+	  (kill-whole-line t))
+      ;; strip out all the crap, leave just the meat
+      (while (re-search-forward "^RCS file:" nil t)
+	(beginning-of-line)
+	(let ((beg (point)) bound filename)
+	  ;; find the bound for this file
+	  (save-excursion
+	    (re-search-forward "^========[=]+\n")
+	    (kill-region (match-beginning 0) (match-end 0))
+	    (if (looking-at "^\n") (kill-line))
+	    (setq bound (point)))
+
+	  (search-forward "Working file: ")
+	  (setq filename (buffer-substring (point) (line-end-position)))
+	  (re-search-forward "^----[-]+\n")
+	  (kill-region beg (point))
+	  (insert "----------------------------\n")
+	  (while (re-search-forward "^revision " bound t)
+	    (insert (format "%s:" filename))
+	    (beginning-of-line)
+	    (insert "CVS ")
+	    (next-line)))
+	)
+      (goto-char (point-max))
+      (insert "----------------------------\n");; need one at the end
+      (goto-char (point-min))
+      
+      ;; scan through again -- for each file, scan through the
+      ;; remainder to try to find matches
+      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept)
+	(setq regexp (concat "^CVS revision \\([^\:]*\\):\\([^\n]*\\)\n"
+		      "date: \\([^;]*\\);  author: \\([^;]*\\).*\n"))
+
+	(while (re-search-forward regexp nil t)
+	  (setq file (match-string 1))
+	  (setq ver  (match-string 2))
+	  (setq date (match-string 3))
+	  (setq author (match-string 4))
+
+	  ;; clear all the header stuff once more
+	  (kill-region (match-beginning 0) (match-end 0))
+
+	  (insert (format "file: %s:%s\n" file ver))
+	  (setq filept (point))
+	  (insert (format "date: %s;  author: %s;\n" date author))
+
+	  (save-excursion
+	    ;; copy all the log lines into the log variable to do the
+	    ;; comparison but don't erase them from the buffer
+	    (let ((beg (point)) end)
+	      (while (not (looking-at "^[-=]+\n"))
+		(next-line))
+	      (setq end (point))
+	      (setq log (buffer-substring beg end))
+	      )
+	    
+	    ;; now repeat the scan through the rest of the entries
+	    (while (re-search-forward regexp nil t)
+	      (setq file2 (match-string 1))
+	      (setq ver2  (match-string 2))
+	      (setq date2 (match-string 3))
+	      (setq author2 (match-string 4))
+
+	      ;; again copy all the log lines into the log variable to do the
+	      ;; comparison but don't erase them from the buffer
+	      (let ((beg (match-beginning 0)) (logbeg (point)))
+		(while (not (looking-at "^[-=]+\n"))
+		  (next-line))
+		(setq log2 (buffer-substring logbeg (point)))
+
+		;; now, if they match, clear out the contents of the
+		;; second entry and add the file / version to the list
+		(if (and (string= log log2)
+			 (string= author author2))
+		    (save-excursion
+		      (next-line)
+		      (kill-region beg (point))
+		      (goto-char filept)
+		      (insert (format "file: %s:%s\n" file2 ver2))))
+	      )))
+	  ))
+      )))
 
 (defun lcvs-show-full-log (arg)
   "Like \\[lcvs-show-log] but ignores `lcvs-log-restrict-to-branch'."
   (interactive "P")
   (let ((lcvs-log-restrict-to-branch nil))
+    (lcvs-show-log arg)))
+
+(defun lcvs-show-changed-log (arg)
+  "Like \\[lcvs-show-log] but forces `lcvs-log-restrict-to-changes'."
+  (interactive "P")
+  (let ((lcvs-log-restrict-to-changes t)
+	(lcvs-log-restrict-to-branch nil)
+	(lcvs-correlate-change-log t))
     (lcvs-show-log arg)))
 
 (defun lcvs-show-status (arg)
@@ -1505,7 +1667,7 @@ the value of `foo'."
 			    nil args))))
     status))
 
-(defun lcvs-do-command-quietly (cmd cvsopts &optional cmdopts)
+(defun lcvs-do-command-quietly (cmd cvsopts &optional cmdopts noerase)
   ;; Do the cvs command `cmd' and print the result in buffer *CVS-`cmd'*.
   ;; Returns the command exit status.
   (let ((args (append cvsopts (list cmd) cmdopts))
@@ -1517,7 +1679,8 @@ the value of `foo'."
       (set-buffer buf)
       (setq default-directory cwd)
       (setq buffer-read-only nil)
-      (erase-buffer))
+      (if (not noerase)
+	  (erase-buffer)))
     (setq status (apply 'call-process lcvs-cvs-command
 			nil buf nil
 			args))
