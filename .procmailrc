@@ -1,4 +1,4 @@
-VERBOSE=no
+VERBOSE=yes
 MAILDIR=/home/miked/Mail
 LOGFILE=/home/miked/Mail/procmaillog
 LOGABSTRACT=all
@@ -30,11 +30,19 @@ LOGABSTRACT=all
 # | sed 's,[Cc]ontent-[Tt]ype: text/html,Content-Type: text/plain,g'
 
 #
-# Format headers for other email addresses
+# Modify the subject line for other email addresses
 #
-:1f
+:0
 * ^Received:.*for <mjd@acm\.org>
-| formail -I "Via: ACM"
+{
+    :0c
+    * .*
+    | formail -x Subject > /tmp/subject
+
+    :0f
+    * .*
+    | formail -i "Subject: [acm]`(cat /tmp/subject && rm -f /tmp/subject)`"
+}
 
 #
 # Copy everything to the spool mailbox
