@@ -148,7 +148,7 @@ proc scan {spool spoolfile} {
 	    }
 	    regexp {=\?[^\?]+\?[^\?]+\?([^\?]+)\?=} $from match from
 
-	    if [regexp {(\w+), (\w+)} $from match last first] {
+	    if [regexp {^(\w+), (.+)} $from match last first] {
 		set from "$first $last"
 	    }
 	    
