@@ -191,6 +191,12 @@
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-setup)
 
+
+;; setup sgml mode
+(require 'sgml-mode)
+(defun my-sgml-setup() (auto-fill-mode 0))
+(add-hook 'sgml-mode-hook 'my-sgml-setup)
+			 
 ;; suck in sgml-indent
 (require 'sgml-indent)
 
