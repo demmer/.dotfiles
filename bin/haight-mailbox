@@ -9,5 +9,4 @@ fi
 OPTS="-geometry 270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer"
 RED="< /dev/null > /dev/null"
 
-
-echo $PROG $OPTS $RED
+$PROG $OPTS $RED &
