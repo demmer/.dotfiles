@@ -101,3 +101,5 @@ alias xpowell='xssh powell'
 
 alias glimpseindex="glimpseindex -B -M 4 -n -o"
 alias glimpseindex-cwd="glimpseindex  -H . -t ."
+
+alias vncalabama='vncviewer -encodings tight -passwd ~/.vnc/passwd localhost:0'
