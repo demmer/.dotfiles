@@ -1,0 +1,8 @@
+#!/bin/sh
+
+PROG='mailbox'
+if [ "$HOST" != "haight.nbttech.com" ]; then
+	SSH='ssh -q haight -o BatchMode=yes mailbox'
+fi
+
+$PROG -geometry =270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer

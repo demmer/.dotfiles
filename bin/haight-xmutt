@@ -1,0 +1,8 @@
+#!/bin/sh -f
+
+PROG=mutt
+if [ "$HOST" != "haight.nbttech.com" ]; then 
+	PROG="ssh -t haight mutt"
+fi
+
+xterm -title "Haight Mail Shell" -geometry 80x52+1+310 -e $PROG &
