@@ -38,7 +38,7 @@
 (makunbound 'c-mode-map)
 (fmakunbound 'c++-mode-map)
 (makunbound 'c++-mode-map)
-; (makunbound 'c-style-alist)
+
 (autoload 'cc-mode "cc-mode" "cc-mode" t)
 (autoload 'c++-mode "cc-mode" "c++-mode" t)
 (autoload 'c-mode "cc-mode" "c++c-mode" t)

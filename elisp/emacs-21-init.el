@@ -121,7 +121,8 @@ This must be bound to a mouse-down event in the mode-line."
 ;; (append-no-dup 'time-stamp write-file-hooks)
 
 ;; start gnuserv (not emacsserver)
-(autoload 'gnuserv-start "gnuserv compat" "server" t)
+(autoload 'gnuserv-start "gnuserv-compat" "server" t)
+
 (message "starting gnuserv")
 (if (file-executable-p "/usr/local/bin/gnuserv")
     (gnuserv-start)
