@@ -1,10 +1,8 @@
 #!/bin/sh
 
 #
-# launch mail shells based on location
+# Launch mail shells in the right way based on hostname
 #
-
-set -x
 
 #
 # Load in geometry
