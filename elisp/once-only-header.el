@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Fri Apr 5, 1996
-;; Version: 3.0 ($Revision: 1.2 $)
+;; Version: 3.0 ($Revision: 1.3 $)
 (defconst ooh-version "3.0")
 ;; Date: Aug 17, 1997
 ;; Keywords: c c++ cpp preprocessor languages
@@ -111,6 +111,9 @@
 
 ;; user vars
 
+(defvar ooh-file-license ""
+  "License text to automatically insert.")
+
 (defvar ooh-guard-template-maker 'ooh-make-guard-template
   "*Specifies how to make the guard template.
 Function is called with two args: the SYMBOL and WHENCE which is
@@ -205,6 +208,7 @@ Empty buffers are normally left unmodified after the guard is inserted
 	    (insert (funcall ooh-guard-template-maker sym 'start))
 	    (goto-char (point-max))
 	    (insert (funcall ooh-guard-template-maker sym 'end))
+	    (copyright-update t)
 	    (if unmodify
 		(set-buffer-modified-p nil)))))))
 
@@ -217,7 +221,8 @@ when called with WHENCE as 'start, and
 	#endif /* _SYS_TYPES_H_ */
 when WHENCE is 'end."
   (cond ((eq whence 'start)
-	 (concat "#ifndef " sym "\n"
+	 (concat ooh-file-license
+		 "#ifndef " sym "\n"
 		 "#define " sym "\n\n"))
 	((eq whence 'end)
 	 (concat "\n\n#endif " "/* " sym " */" "\n"))))

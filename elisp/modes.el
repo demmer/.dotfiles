@@ -52,6 +52,46 @@
 (require 'dabbrev)
 (require 'once-only-header)
 
+(setq ooh-file-license
+"/*
+ * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By
+ * downloading, copying, installing or using the software you agree to
+ * this license. If you do not agree to this license, do not download,
+ * install, copy or use the software.
+ * 
+ * Intel Open Source License 
+ * 
+ * Copyright (c) 2005 Intel Corporation. All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *   Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * 
+ *   Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * 
+ *   Neither the name of the Intel Corporation nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *  
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE INTEL OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+")
+
 (defun my-c-common-setup ()
   (interactive)
   (setq c-tab-always-indent t)			; indent wherever cursor is
@@ -77,7 +117,7 @@
      . ((substatement-open	. 0)		; don't indent braces!
 	(inline-open		. 0)		; don't indent braces, please.
 	(label 			. -1000)	; flush labels left
-	(statement-cont		. c-lineup-math); line up statements with = signs
+	(statement-cont		. c-lineup-math); line up with = signs
 	(innamespace		. 0)		; no indent for namespaces
 	(inextern-lang		. 0)		; or extern language
 	))))
@@ -181,6 +221,10 @@ with tab characters underneath."
 ; and nesc mode
 (require 'nesc-mode)
 
+; and sgml mode
+(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
+(autoload 'xml-mode  "psgml" "Major mode to edit XML files." t)
+
 ; setup my auto modes alist
 (setq auto-mode-alist (append '(("\\.pl\\'" . perl-mode)
 				("\\.[Hh]\\'" . c++-mode)
@@ -274,8 +318,9 @@ with tab characters underneath."
 ;;
 (require 'tex-mode)
 (require 'skeleton)
-(require 'tex-site)
-(setq font-latex-title-fontify (quote color))
+(require 'tex-site nil t)
+
+(setq font-latex-title-fontity (quote color))
 
 ;; (defun latex-insert-section(type)
 ;;   "Insert a \\section{} style latex declaration."
