@@ -200,6 +200,7 @@ alias durst Robert Durst <durst@mitre.org>
 alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
+alias nabeel Nabeel Ahmed <n3ahmed@fe02.math.uwaterloo.ca>
 alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
 alias sushant Sushant Jain <sushjain@cs.washington.edu>
 alias tliu Ting Liu <tliu@cs.princeton.edu>
@@ -229,6 +230,11 @@ alias tinyos-devel tinyos-devel <tinyos-devel@millennium.berkeley.edu>
 alias bruce Bruce Beattie <bruce@eecs.berkeley.edu>
 alias eric Eric Brewer <brewer@eecs.berkeley.edu>
 alias mdw Matt Welsh <mdw@eecs.harvard.edu>
+
+#
+# Prelims
+#
+alias osprelims archanag, bowei, dmolnar, get, jwhui, pio, xuw
 
 #
 # Others added by mutt
