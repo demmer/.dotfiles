@@ -7,9 +7,15 @@ sub usage () {
     exit 1;
 }
     
-if ($#ARGV != 0) { usage(); }
+if ($#ARGV < 0) { usage(); }
 
 $mode = $ARGV[0];
+
+if ($#ARGV == 1) {
+    $mailto = $ARGV[1];
+} else {
+    $mailto = $ENV{USER};
+}
 
 if (! ($mode eq "reminder" || $mode eq "check")) {
     usage();
@@ -82,7 +88,7 @@ if (! $msg eq "") {
     }
 
     if ($mode eq "reminder") {
-	open MSG, "| mail -s \"Birthday Reminder\" $ENV{USER}" || \
+	open MSG, "| mail -s \"Birthday Reminder\" $mailto" || \
 	    die "can't open pipe to mail";
 	print MSG "\n$msg";
 	close MSG;
