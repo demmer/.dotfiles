@@ -92,7 +92,8 @@ compctl -g '*.gz' + -g '*(/)' gunzip
 compctl -g '^*.bz2' bzip2
 compctl -g '*.bz2' + -g '*(/)' bunzip2
 compctl -g '^*.Z' compress
-compctl -g '*.tar' + -g '*.gz' + -g '*(/)' + -g '*' tar
+
+compctl -g '*.(tar|gz)' + -g '*(/)' + -g '*' tar
 
 # find -exec completes as a commandline
 compctl -f -x 'r[-exec,;]' -l '' -- find
