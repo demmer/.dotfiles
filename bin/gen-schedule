@@ -97,7 +97,7 @@ print "
 <font size=-2 face=arial>
 <table border=1 cellspacing=0 align=\"center\" width=\"70%\">
 
-<tr bgcolor=\"#E0E0E0\" align=\"center\" height=\"5%\">
+<tr bgcolor=\"#cccccc\" align=\"center\" height=\"5%\">
 <td bgcolor=\"#FFFFFF\" width=\"8%\">&nbsp;</td>
 ";
 
@@ -116,7 +116,7 @@ for ($hr = 9; $hr < 18; $hr++) {
 	}
 	
 	print "<tr bgcolor=\"#FFFFFF\" align=\"center\" height=\"5%\">\n";
-	print "<td bgcolor=\"#E0E0E0\">$prettyhr:$min<br></td>\n";
+	print "<td bgcolor=\"#cccccc\">$prettyhr:$min<br></td>\n";
 	
 	foreach $day (@include_days) {
 	    $key = "$day-$hr-$min";
@@ -126,7 +126,7 @@ for ($hr = 9; $hr < 18; $hr++) {
 		$desc = $schedule{$key};
 		$units = $units{$key};
 		$desc =~ s/\\n/<br>/g;
-		print "<td bgcolor=\"#E0E0E0\" rowspan=$units>$desc</td>\n";
+		print "<td bgcolor=\"#cccccc\" rowspan=$units>$desc</td>\n";
 	    } else {
 		print "<td>&nbsp;</td>\n";
 	    }
