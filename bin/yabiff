@@ -219,10 +219,10 @@ proc refresh {host lines} {
 	    } else {
 		$label configure -bg $bg
 	    }
-		
-#	    incr nlines $count
 	    continue
 	}
+	
+	incr nlines
 
 	if {$first} {
 	    $text insert 0.0 $line
