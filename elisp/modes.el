@@ -274,9 +274,8 @@ with tab characters underneath."
 ;;
 (require 'tex-mode)
 (require 'skeleton)
-
 (require 'tex-site)
-(setq font-latex-title-fontity (quote color))
+(setq font-latex-title-fontify (quote color))
 
 ;; (defun latex-insert-section(type)
 ;;   "Insert a \\section{} style latex declaration."
@@ -509,10 +508,12 @@ with tab characters underneath."
 )
 (setenv "EMACSPARENT" "1")
 
-;; ; Linux has problems with zsh...
-;; (if (string-equal (getenv "ARCH") "Linux")
-;;     (add-hook 'shell-mode-hook 'my-shell-mode-init)
-;;   )
+;; ; Darwin has problems with zsh...
+(if (string-equal (getenv "ARCH") "Darwin")
+    (add-hook 'shell-mode-hook 'my-shell-mode-init)
+    (add-hook 'tex-shell-hook 'my-shell-mode-init)
+    (setq tex-shell-file-name "/bin/sh")
+  )
 
 ;; encryption
 (require 'crypt++)
