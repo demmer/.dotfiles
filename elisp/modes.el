@@ -1,11 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;; mode defaults ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; scheme (copied from cs51)
-
-(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
-(setq scheme-mit-dialect nil)
-(setq scheme-program-name "stk")
-
 ; script mode
 
 (defun determine-script-mode ()
@@ -34,76 +28,30 @@
 
 ;;; Setup c/c++ mode
 
-(fmakunbound 'c-mode)
-(makunbound 'c-mode-map)
-(fmakunbound 'c++-mode-map)
-(makunbound 'c++-mode-map)
-
-(autoload 'cc-mode "cc-mode" "cc-mode" t)
-(autoload 'c++-mode "cc-mode" "c++-mode" t)
-(autoload 'c-mode "cc-mode" "c++c-mode" t)
-(autoload 'c-comment "c-fill" "c-comment" t)
 (defconst my-c-style
-  '("PERSONAL"
-    (c-offsets-alist               .  ((access-label . -2)
-				       (case-label . 2)
-				       (statement-cont . 4)
-				       (substatement-open . 0)
-				       ))
-    )
-  "My C Programming Style")
-
-
-(defun my-c++-setup ()
-  (interactive)
-  (setq comment-start "// ")
-  (setq comment-end "")
-  (make-variable-buffer-local 'using-c-comments)
-  (setq using-c-comments nil)
-  (make-variable-buffer-local 'c-comment-cplusplus)
-  (setq c-comment-cplusplus t)
-
-  (define-key c++-mode-map "\M-9" 'box-enterexit)
-  (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
-  )
+  '((c-basic-offset		. 4)
+    (c-hanging-comment-ender-p	. nil)
+    (c-offsets-alist
+     . ((substatement-open	. 0)		;don't indent braces!
+	(inline-open		. 0)		;don't indent braces, please.
+	(label 			. -1000)	;flush labels left
+	(statement-cont		. c-lineup-math)))))
 
 (defun my-c-setup ()
   (interactive)
-  (setq comment-start "/* ")
-  (setq comment-end " */")
-  (make-variable-buffer-local 'using-c-comments)
-  (setq using-c-comments t)
-  (make-variable-buffer-local 'c-comment-cplusplus)
-  (setq c-comment-cplusplus nil)
-  )
-
-
-(defun my-cc-common-setup ()
-  (interactive)
-  (setq c-tab-always-indent t)
-  (setq indent-tabs-mode nil)                             ; Use spaces for tabs
-  (let ((my-style "PERSONAL"))
-    (or (assoc my-style c-style-alist)
-     (setq c-style-alist (append c-style-alist (list my-c-style)))))
-  (c-set-style "PERSONAL")
-  (setq dabbrev-case-fold-search nil
-	   dabbrev-case-replace nil)
-
-  (setq-default c-basic-offset 4)
-  (setq c-electric-pound-behavior '(alignleft))
-  (setq c-comment-starting-blank nil)
-  (setq c-comment-hanging-indent t)
-  (setq c-comment-indenting t)
-  (setq c-hanging-comment-starter-p nil)
-  (setq c-hanging-comment-ender-p nil)
-  
+  (c-add-style "my-c-style" my-c-style t)	; my style above
+  (setq c-tab-always-indent t)			; indent wherever cursor is
+  (setq indent-tabs-mode nil)           	; use spaces for tabs
+  (setq dabbrev-case-fold-search nil		; don't ignore case for dabbrev
+	dabbrev-case-replace nil)
+  (setq c-electric-pound-behavior '(alignleft))	; use electric pound
   (define-key c-mode-map "\C-m" 'newline-and-indent)
+  (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
+  (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
 )
 
-(add-hook 'c++-mode-hook 'my-c++-setup)
-(add-hook 'c-mode-hook 'my-c-setup)
-(add-hook 'c-mode-common-hook 'my-cc-common-setup)
+(add-hook 'c-mode-common-hook 'my-c-setup)
 
 ; load visual-basic mode
 (require 'visual-basic-mode)
@@ -137,6 +85,7 @@
 (add-hook 'perl-mode-hook 'my-perl-setup)
 
 ;; Setup tcl mode
+(require 'tcl-mode)
 (defun my-tcl-setup ()
   (interactive)
   (define-key tcl-mode-map "\C-m" 'newline-and-indent)
@@ -194,6 +143,7 @@
 (add-hook 'html-mode-hook 'my-html-setup)
 
 ;; setup sh-mode (shell-script-mode)
+(require 'sh-script)
 (defun my-sh-setup () 
   (interactive)
   (define-key sh-mode-map "\t" 'self-insert-command)
@@ -288,6 +238,7 @@
 ;;; Suck in prefix
 ;; (require 'prefix)
 
+(defvar termtype nil)
 (setq termtype (getenv "TERM"))         ; get our terminal type
 
 ; (if (and (or (equal termtype "dialup")  ; if we are running one
@@ -301,17 +252,9 @@
 ;       (enable-flow-control)
 ;       (load (concat term-file-prefix "vt200") nil t)))
 
-; ispell: from gwk
-(autoload 'ispell-word "ispell" "Check spelling of word at or before point" t)
-(autoload 'ispell-complete-word "ispell" "Complete word at or before point" t)
-(autoload 'ispell-region "ispell" "Check spelling of every word in region" t)
-(autoload 'ispell-buffer "ispell" "Check spelling of every word in buffer" t)
-(autoload 'ispell-message "ispell" "Check spelling of mail/news message" t)
-(setq ispell-program-name "ispell")
-
 ; extensions of files I don't want to open
-(append-no-dup ".class" completion-ignored-extensions)
-(append-no-dup ".T" completion-ignored-extensions)
+(append ".class" completion-ignored-extensions)
+(append ".T" completion-ignored-extensions)
 
 ; ediff: use the minibar instead of a separate little window
 (require 'ediff)
@@ -364,3 +307,6 @@
 (require 'crypt++)
 (setq crypt-encryption-type 'pgp)
 (crypt-rebuild-tables)
+
+;; minibuffer
+(resize-minibuffer-mode t)
