@@ -43,11 +43,12 @@ fvwm2 &
 WMPID=$!
 
 # Utility programs
+mozilla &
 nice dclock &
 inigo-mailbox &
 xoopi-tunnel &
 xoopi-mailbox &
-keepalive everybuddy &
+everybuddy > .everybuddy/everybuddy.log 2>&1 &
 
 # Bring up a console window, an email shell and a work shell
 xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
