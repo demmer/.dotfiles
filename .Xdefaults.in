@@ -1,11 +1,6 @@
-! .Xdefaults
+! .Xdefaults.in
 !
-
-! gnuplot
-gnuplot*textColor:			red
-gnuplot*borderColor:			black
-gnuplot*axisColor:			black
-gnuplot*line1Color:			magenta
+! should be run through a script to substitute geometry settings
 
 ! colorxterm
 colorxterm*foreground:			white
@@ -76,8 +71,9 @@ xterm*VT100.Translations: #override\n\
         <KeyPress> Insert: insert-selection(PRIMARY, CUT_BUFFER0) \n\
 	Shift<KeyPress>KP_Insert:insert-selection(PRIMARY, CUT_BUFFER0)
 
+! emacs
 emacs*font:			lucidasanstypewriter-bold-12
-emacs*geometry:			=82x54+0+1
+emacs*geometry:			=EMACS_GEOM
 emacs*borderWidth:		0
 emacs*internalBorder: 		0
 emacs*foreground:		ivory
@@ -93,7 +89,7 @@ emacs*cursorColor:		yellow
 emacs*pointerColor:		red
 
 ! dclock
-dclock*geometry:                =93x48+712+1
+dclock*geometry:                =DCLOCK_GEOM
 dclock*hands:                   black
 dclock*foreground:              black
 dclock*background:              grey87
@@ -101,39 +97,14 @@ dclock*highlight:               black
 dclock*borderWidth:             0
 dclock*update:                  1
 
-! xclock
-xclock*geometry:                =93x48+712+1
-xclock*hands:                   black
-xclock*foreground:              black
-xclock*background:              grey87
-xclock*highlight:               black
-xclock*borderWidth:             0
-xclock*update:                  1
-
-! xbiff
-xbiff*geometry:			=50x55+659+1
-xbiff*foreground:		black
-xbiff*background:		gray87
-xbiff*highlight:		ivory
-xbiff*borderWidth:		0
-xbiff*update:			5
-
 ! mailbox
-mailbox*geometry:		=270x60+812+1
+mailbox*geometry:		=MAILBOX_GEOM
 mailbox*foreground:		black
 mailbox*background:		gray87
 mailbox*borderWidth:		0
 
-! xload
-xload*geometry: =150x88+0+0
-xload*foreground: black
-xload*background: gray87
-xload*highlight: firebrick3
-xload*scale: 1
-xload*font: *schoolbook-medium-r-normal--18*
-
 ! XPostit
-xpostit.geometry:		=60x53+560+2
+xpostit.geometry:		=XPOSTIT_GEOM
 xpostit*foreground:		black
 xpostit*background:		gray87
 xpostit.Confirm*foreground:	black
@@ -144,72 +115,20 @@ xpostit*PostItNote*background:	gray87
 xpostit*PostItNote*font:	*helvetica-bold-r-normal--14*
 xpostit*saveNotes:		false
 
+! XPostit+
+xpostit+.geometry:              =XPOSTIT_GEOM
+xpostit+*foreground:            black
+xpostit+*background:            gray87
+xpostit+.Confirm*foreground:    black
+xpostit+.Confirm*background:    gray87
+xpostit+.Confirm*font:          *helvetica-bold-r-normal--12*
+xpostit+*PostItNote*foreground: black
+xpostit+*PostItNote*background: yellow
+xpostit+*Postit+Note*font:      *helvetica-bold-r-normal--14*
+xpostit+*saveNotes:             true
+
 ! Xmms
 xmms*geometry:			=-1-1
-
-! Xlock
-XLock.mode: swarm
-XLock.font: -b&h-lucida-medium-r-normal-sans-24-*-*-*-*-*-iso8859-1
-XLock.foreground: black
-XLock.background: white
-XLock.username: Username:
-XLock.password: Password:
-XLock.info: Enter password to unlock; select icon to lock.
-XLock.validate: Validating login...
-XLock.invalid: Invalid login.
-XLock.nice: 10
-XLock.timeout: 30
-XLock.timeelapsed: off
-XLock.mono: off
-XLock.nolock: off
-XLock.remote: off
-XLock.allowroot: off
-XLock.enablesaver: off
-XLock.install: off
-XLock.allowaccess: off
-XLock.echokeys: off
-XLock.usefirst: off
-XLock.verbose: off
-XLock.inwindow: off
-XLock.inroot: off
-XLock.grabmouse: on
-XLock.forceLogout: 30
-XLock.logoutButtonLabel: Logout
-XLock.logoutButtonHelp: \
-Click the "Logout" button to log out current\n\
-user and make workstation available.
-XLock.logoutFailedString: \
-Logout attempt FAILED.\n\
-Current user could not be automatically logged out.
-XLock.rock.delay: 0
-XLock.rock.batchcount: 100
-XLock.rock.saturation: 1
-
-
-! Framemaker
-Maker*background:                gray60
-Maker.makerkit.geometry:         300x50+0+0
-Maker.focusOnMouse:              True
-Maker.printerName:               ps3
-Maker.colorDocs:                 True
-Maker.colorImages:               True
-Maker.penWidths:                 0.5,1.0,2.5,5.0
-Maker.zoomPercents:              25,50,100,120,150,160,200,400,800,1600
-!Maker.tools.tools_form.x:       810
-!Maker.tools.tools_form..y:      5
-Maker.pgf.bb.x:                  670
-Maker.pgf.bb.y:                  300
-!  inhibit startup messages
-Maker.expertMode:                expert
-Maker.splashScreen:              False
-!  these allow framemaker to display bigger and more images
-Maker.maxClientBitmaps:          256
-Maker.clientBitmapSize:          8000000
-Maker.maxServerBitmaps:          256
-Maker.serverBitmapSize:          8000000
-!  temporary cludge to get around the ClickPrint problem
-!Maker.api:                       False
-
 
 !  Motif translations for Emacs keybindings in an XmText widgit
 !  from part3 of the Motif FAQ - copied from jal

@@ -15,13 +15,22 @@ echo "*****      Logged in on `hostname` at `date`      *****"
 echo
 echo "*******************************************************"
 
+#
+# Load in geometry
+#
+. $HOME/.geometry
+
 if [ -n "$X11HOME" ]; then
         xhost + `hostname`
 	xhost + localhost
 fi
 
-# Load the X defaults
-if [ -f $HOME/.Xdefaults ]; then
+#
+# Load the X defaults after substituting geometry bindings
+#
+if [ -f $HOME/.Xdefaults.in ]; then
+	rm -f $HOME/.Xdefaults
+	subst-geometry < $HOME/.Xdefaults.in > $HOME/.Xdefaults
 	xrdb $HOME/.Xdefaults
 fi
 
@@ -45,29 +54,32 @@ WMPID=$!
 # Utility programs
 mozilla &
 nice dclock &
+nice xpostit+ &
 inigo-mailbox &
 xoopi-tunnels &
 xoopi-mailbox &
 haight-mailbox &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
-[ -r $HOME/.fetchmailrc ] && fetchmail
+[ -r $HOME/.fetchmailrc ] && xterm -e /bin/sh -c 'fetchmail; sleep 2'  &
+KEEPALIVE_DELAY=5 keepalive x2vnc_buchanan > $HOME/.err/x2vnc.log 2>&1 &
 
 # Bring up a console window, email shells and a work shell
-xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
+xterm -title "Console" -n "Console" -geometry =$CONSOLE_GEOM -e /bin/sh -c \
     '[ -f /var/log/messages ] && tail -f -n 0 /var/log/messages & \
      [ -f /var/log/secure ] && tail -f -n 0 /var/log/secure & \
      clear; zsh' &
-xterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
+xterm -n "Fezzik, it's you . . . true" -geometry =$XTERM_1_GEOM &
 
 xoopi-xmutt &
 haight-xmutt &
 
 # Bring up emacs and two work shells in 2nd screen 
-emacs -geometry '=82x65+1280+115' -title "Inconceivable" &
-# (sleep 4; gnudoit "(make-frame '((left . 1870) (top . 115)))") &
+emacs -geometry =$EMACS_XINIT_GEOM -title "Inconceivable" &
+(sleep 5; gnudoit "(make-frame '((width . 80) (height . 65) (left . 2401) (top . 135)))") &
 
-xterm -n "Fezzik, are there rocks up ahead?" -geometry '=80x32+1870+115' &
-xterm -n "If there are, we'll all be dead!!" -geometry '=80x32+1870+568' &
+xterm -n "Fezzik, are there rocks up ahead?" -geometry =$XTERM_2_GEOM &
+xterm -n "If there are, we'll all be dead!!" -geometry =$XTERM_3_GEOM &
+xterm -n "Anybody want a peanut?" -geometry =$XTERM_4_GEOM &
 
 # Wait for the window manager to quit
 wait $WMPID
