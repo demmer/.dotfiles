@@ -1,16 +1,17 @@
 #!/bin/sh -f
 
-CMD='ssh -q treat -o BatchMode=yes mailbox unread count delay=1'
+SSH='ssh -q treat -o BatchMode=yes'
+CMD='nice mailbox unread count delay=1'
 RED='< /dev/null > /dev/null'
 
     main_opts=""
 bugzilla_opts="-geometry 29x27+650+1  mailbox=/u/demmer/Mail/bugzilla 	notext"
     root_opts="-geometry 29x27+681+1  mailbox=/u/demmer/Mail/root 	notext"
-  conews_opts="-geometry 29x27+650+29 mailbox=/u/demmer/Mail/conews 	notext"
-periodic_opts="-geometry 29x27+681+29 mailbox=/u/demmer/Mail/periodic 	notext"
+  bonsai_opts="-geometry 29x27+650+29 mailbox=/u/demmer/Mail/bonsai 	notext"
+ freebsd_opts="-geometry 29x27+681+29 mailbox=/u/demmer/Mail/freebsd 	notext"
 
 if [ $# = 0 ]; then
-   boxes="main bugzilla root conews periodic"
+   boxes="main bugzilla root bonsai freebsd"
 else
    boxes=""
    while [ $# -gt 0 ]; do
@@ -21,6 +22,6 @@ fi
 
 for box in $boxes; do
     eval "opts=\$${box}_opts"
-    $CMD $opts $RED &
+    $SSH $CMD $opts $RED &
     sleep 1
 done
