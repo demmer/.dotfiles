@@ -105,6 +105,9 @@ export INDEXPATH=/u/system/admin/users:/u/system/admin/inventory
 source ~/.zalias
 source ~/.zfunc
 
+# set umask
+chpwd
+
 # added by AMD
 # export nobeep
 
