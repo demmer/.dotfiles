@@ -1,7 +1,8 @@
 #!/bin/sh -f
 
 #
-# Try to run MozillaFirebird if it exists in the path, otherwise
+# Try to run firefox if it exists in the path, otherwise
 # default to mozilla.
 #
-exec runprog "MozillaFirebird mozilla" $*
+
+exec runprog "firefox mozilla" $*
