@@ -313,12 +313,6 @@ and selects that window."
   (compile-internal (concat "grope \"" sym "\"") "No more grope hits" "grope"
                     nil grep-regexp-alist))
 
-;; pulled from comment.el
-(defun uncomment-region ()
-  "Stupid uncommenting procedure"
-  (interactive)
-  (comment-region (region-beginning) (region-end) -1))
-
 ;; pulled from tera-added.el
 (defun line-to-top-of-window nil
   "Move the line the cursor is on to the top of the current window"

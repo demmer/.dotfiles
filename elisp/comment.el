@@ -517,8 +517,3 @@ user and a sccs header"
 
  ;; this sets auto-insert-header to be called whenever a new file is created
 (add-hook 'auto-insert-header find-file-not-found-hooks)
-
-(defun uncomment-region ()
-  "Stupid uncommenting procedure"
-  (interactive)
-  (comment-region (region-beginning) (region-end) -1))
