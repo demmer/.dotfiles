@@ -67,7 +67,7 @@ while (<STDIN>) {
 
 	$key = "$day-$starthr-$startmin";
 	if ($schedule{$key}) {
-	    print "Schedule overlap on $day $starthr:$startmin\n";
+	    print stderr "Schedule overlap on $day $starthr:$startmin\n";
 	    exit 1;
 	}
 	$schedule{$key} = $desc;
