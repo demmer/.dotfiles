@@ -73,10 +73,9 @@ path=(						\
 	.					\
       )
 #
-# Similar trick for LD_LIBRARY_PATH
+# Similar trick for LD_LIBRARY_PATH and MANPATH
 #
 ld_library_path=
-
 if [ -d ~/lib ]; then
 for d in ~/lib/* ; do
 	if [ -d $d ] ; then
@@ -86,14 +85,25 @@ for d in ~/lib/* ; do
 done
 fi
 
+manpath=`manpath`
+if [ -d ~/man ]; then
+for d in ~/man/* ; do
+	if [ -d $d ] ; then
+		d=`(cd $d && pwd -r)`
+		manpath=($manpath $d)
+	fi
+done
+fi
+
 #
-# But it's not autoset like path is
+# But they're not autoset like path is
 #
 LD_LIBRARY_PATH=${(j{:})ld_library_path}
+MANPATH=${(j{:})manpath}
 
 # Make sure that these are exported to the environment
 # I know that zsh doesn't do this by default for MANPATH
-export PATH SHELL LD_LIBRARY_PATH
+export PATH SHELL LD_LIBRARY_PATH MANPATH
 
 # less is a much better pager than more
 export MORE=less
