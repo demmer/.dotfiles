@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.26 $)
+;; Version: 1.2 ($Revision: 1.27 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -127,6 +127,9 @@ to group similar checkins by author and comment string")
 (defvar lcvs-revert-confirm t
   "*If non-nil, reverting files will require confirmation.")
 
+(defvar lcvs-remove-confirm t
+  "*If non-nil, removing files will require confirmation.")
+
 (defvar lcvs-translate-update-output t
   "*If non-nil, lcvs will translate cvs update output in examine mode.
 This rewrites things like `file is no longer in the repository' as
@@ -224,6 +227,7 @@ a `U' line so you can update it in lcvs, not having to go to a shell.")
     (define-key map "m" 'lcvs-mark-file)
     (define-key map "u" 'lcvs-unmark-file)
     (define-key map "U" 'lcvs-update-some-files)
+    (define-key map "r" 'lcvs-remove)
     (define-key map "R" 'lcvs-revert)
     (define-key map "C" 'lcvs-commit)
     (define-key map "d" 'lcvs-diff-base)
@@ -648,6 +652,31 @@ set `lcvs-revert-confirm' to nil."
 			  (delete-file (car e))))
 	      files)
       (lcvs-update-internal files))))
+
+(defun lcvs-remove (arg)
+  "Remove some files, (obviously) discarding local changes.
+By default reverts the file on this line.
+If supplied with a prefix argument, revert the marked files.
+By default this command requires confirmation to remove the files.
+To disable the confirmation, you can set `lcvs-remove-confirm' to nil."
+  (interactive "P")
+  (let* ((files (lcvs-get-relevant-files arg))
+	 (multiple (cdr files)))
+    (if (and lcvs-remove-confirm
+	     (not (yes-or-no-p (format "Remove %s? "
+				       (if multiple
+					   "the marked files"
+					 (car (car files)))))))
+	(message "Remove cancelled")
+      ;; Otherwise remove the files
+      (mapcar (function (lambda (e)
+			  (let ((file (car e)))
+			    (if (file-directory-p file)
+				(delete-directory file)
+			      (delete-file file))
+			    (lcvs-remove-file-line file)
+			    )))
+	      files))))
 
 (defun lcvs-commit (arg)
   "Commit files.
