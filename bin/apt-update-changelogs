@@ -24,7 +24,7 @@ for l in input:
 packages.sort()
 
 for (pkg, ltr, old, new) in packages:
-    print "%s (%s -> %s)" % (pkg, old, new) ,
+    print "%s (%s -> %s)" % (pkg, old, new)
     
     url = urlpat % (ltr, pkg, pkg, new)
 
@@ -43,12 +43,12 @@ for (pkg, ltr, old, new) in packages:
 
         m = pkgpat.match(l);
         if (m):
-            if (m.group(1) != new):
+            if (m.group(1) == old):
                 break
             else:
-                print m.group(2);
+                print " ", m.group(1), m.group(2)
                 continue
-
-        print l ,
+            
+        print "   ", l ,
 
     print "\n"
