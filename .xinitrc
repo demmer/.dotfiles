@@ -48,15 +48,18 @@ nice dclock &
 inigo-mailbox &
 xoopi-tunnel &
 xoopi-mailbox &
+haight-mailbox &
 everybuddy > .everybuddy/everybuddy.log 2>&1 &
 
-# Bring up a console window, an email shell and a work shell
+# Bring up a console window, email shells and a work shell
 xterm -title "Console" -n "Console" -geometry '=80x12+0+115' -e /bin/sh -c \
     '[ -f /var/log/messages ] && tail -f -n 0 /var/log/messages & \
      [ -f /var/log/secure ] && tail -f -n 0 /var/log/secure & \
      clear; zsh' &
-xoopi-xmutt &
 xterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
+
+xoopi-xmutt &
+haight-xmutt &
 
 # Bring up emacs and two work shells in 2nd screen 
 emacs -geometry '=82x65+1280+115' -title "Inconceivable" &
