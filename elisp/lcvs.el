@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.31 $)
+;; Version: 1.2 ($Revision: 1.32 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -943,14 +943,15 @@ interesting bits. Useful for lcvs-correlate-logs."
 	(setq filename (buffer-substring (point) (line-end-position)))
 	(re-search-forward "^----[-]+\n")
 	(kill-region beg (point))
-	(insert "----------------------------\n")
+	(insert "===================================")
+	(insert "===================================\n")
 	;; Find the bound for this file, then work backwards
 	(save-excursion
 	  (re-search-forward "^========[=]+\n")
 	  (kill-region (match-beginning 0) (match-end 0))
 	  (if (looking-at "^\n") (kill-line))
 
-	  (while (re-search-backward "^----[-]+\nrevision " bound t)
+	  (while (re-search-backward "^====[=]+\nrevision " bound t)
 	    (forward-word 1)
 	    (forward-char 1)
 	    (insert (format "%s:" filename))
@@ -959,11 +960,10 @@ interesting bits. Useful for lcvs-correlate-logs."
 	    (previous-line 1))))
       )
     (goto-char (point-max))
-    (insert "----------------------------\n") ;; need one at the end
+    (insert "===================================")
+    (insert "===================================\n") ;; need one at the end
     (goto-char (point-min))
-
   ))
-
 
 (defun lcvs-correlate-logs (&optional files working-revisions)
   "Parse the *CVS-log* buffer, reformatting to group checkins by author
