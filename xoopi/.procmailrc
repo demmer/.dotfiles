@@ -6,11 +6,15 @@ LOGABSTRACT=all
 #
 # Mailing lists I subscribe to go into separate folders before the spamassassin
 # checks. This is to avoid polluting the bayes database with traffic from the 
-# sa-talk list.
+# sa-users list.
 #
 :0
-* List-Id: .*spamassassin-talk
+* List-Post: .*spamassassin-users
 sa-talk
+
+:0
+* List-Id: .*pair-notices
+pair-notices
 
 #
 # Annoying aol mail bounces that don't get kicked by spamassassin

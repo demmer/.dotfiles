@@ -15,7 +15,7 @@ my_hdr From: mike@demmer.nu (Michael Demmer)
 folder-hook . set sort=mailbox-order
 folder-hook sa-talk set sort=threads
 
-mailboxes ! =sa-talk =spam
+mailboxes ! =sa-talk =spam =pair-notices
 
 #
 # Color overrides 
