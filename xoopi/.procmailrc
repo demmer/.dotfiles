@@ -15,23 +15,22 @@ sa-talk
 #
 # Anti-spam filter
 #
-:0fw
+:0fw: spamassassin.lock
 | $HOME/sa/usr/bin/spamassassin -a
 
 #
-# Kill the really bad spam (8 pts or higher). The echo line accomplishes
-# the same as /dev/null while letting me see how good it's doing.
+# Kill the really bad spam (8 pts or higher). 
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*\*\*\*
-| echo -n "." >> $HOME/Mail/spamcount
+spam-certain
 
 #
 # And anything to p@demmerfamily.com
 #
 :0
 * ^To: .*p@demmerfamily\.com 
-| echo -n "." >> $HOME/Mail/spamcount
+spam-certain
 
 #
 # And 5 points or more gets copied to the spam folder.
