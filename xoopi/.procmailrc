@@ -30,21 +30,21 @@ pair-notices
 #
 :0
 * ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
-| formail -I "Status: RO" >> $HOME/Mail/spam-certain
+| resubject-spam >> $HOME/Mail/spam
 
 #
 # And anything to p@demmerfamily.com
 #
 :0
 * ^To: .*p@demmerfamily\.com 
-| formail -I "Status: RO" >> $HOME/Mail/spam-certain
+| resubject-spam >> $HOME/Mail/spam
 
 #
 # And 4 points or more gets copied to the spam folder.
 #
 :0
 * ^X-Spam-Level: \*\*\*\*
-| formail -I "Status: RO" >> $HOME/Mail/spam
+| resubject-spam >> $HOME/Mail/spam-maybe
 
 #
 # Automatic email delivery testing
@@ -78,7 +78,7 @@ html
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
-:0bhf
+:0bhfw
 * ^content-type: text/html
 | dehtml.pl
 

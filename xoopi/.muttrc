@@ -14,5 +14,6 @@ my_hdr From: mike@demmer.nu (Michael Demmer)
 #
 folder-hook . set sort=mailbox-order
 folder-hook sa-talk set sort=threads
+folder-hook spam-maybe set sort=subject
 
-mailboxes ! =pair-notices =inkt-crap =sa-talk =spam
+mailboxes ! =pair-notices =inkt-crap =sa-talk =spam-maybe
