@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ifdown eth0
+ifup eth0

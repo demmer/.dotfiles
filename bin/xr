@@ -1,0 +1,21 @@
+#!/bin/sh
+
+case $0 in 
+    *xssh)
+	prog=ssh
+	;;
+    *xt|*xtelnet)
+	prog=telnet
+	;;
+    *xr|*xrsh)
+	prog=rsh
+	;;
+    *)
+	echo "Cannot determine program from $0."
+	exit 1
+	;;
+esac
+
+for h in $* ; do
+    xterm -n $h -T $h -e $prog $h &
+done

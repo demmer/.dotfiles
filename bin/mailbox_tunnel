@@ -1,0 +1,69 @@
+#!/usr/bin/perl
+
+use IO::Handle;
+
+# option defaults
+$host  = "localhost";
+$file  = "";
+$delay = 5;
+$verbose = 0;
+
+sub usage {
+    my($err) = @_;
+    print "$0: $err.\n";
+    print "Usage: [-host host] [-file mailbox] [-delay count]\n";
+    exit 1;
+}
+
+sub debug {
+    if ($verbose) {
+	print(STDERR "@_\n");
+    }
+}
+
+LOOP:
+while ($#ARGV >= 0) {
+    $arg = $ARGV[0]; shift;
+    if ($arg eq "-v")	{ $verbose = 1; next LOOP;}
+    
+    if ($#ARGV < 0) { usage("invalid number of arguments"); }
+    $val = $ARGV[0]; shift;
+    if ($arg eq "-host") 	{ $host = $val; }
+    elsif ($arg eq "-file") 	{ $file = $val; }
+    elsif ($arg eq "-delay")	{ $delay = $val; }
+    else 			{ usage("invalid argument $arg"); }
+
+    if ($file eq "") {
+	$file = "/tmp/mail-$host-$ENV{USER}"
+    }
+}
+
+debug("opening ssh connection...");
+open(SSH, "ssh -x -n $host bin/mailbox_scan unread delay $delay |") || die "can't run pipe";
+
+debug("done");
+
+$first = 1;
+while (<SSH>) {
+    chomp;
+
+    debug "got line $_\n";
+    if ($first == 1) {
+	$first = 0;
+	open(F, ">$file") || die "can't open output file $file";
+	F->autoflush(1);
+    }
+    
+    if (! /[A-Za-z0-9]/) {
+	debug ("read blank line...");
+	close(F);
+	$first = 1;
+	next;
+    }
+    
+    ($f, $s) = split(/ << /, $_);
+    print(F "From <$f>\n");
+    print(F "From: $f\n");
+    print(F "Subject: $s\n");
+    print(F "Status: O\n\n");
+}

@@ -1,0 +1,15 @@
+#!/usr/local/bin/tclsh
+
+set server "alabama"
+set port 1760
+
+if {[llength $argv] != 1} {
+    puts "usage: nt-urlview <url>"
+    exit 1
+}
+
+set url [lindex $argv 0]
+set socket [socket $server $port]
+puts $socket $url
+flush $socket
+close $socket

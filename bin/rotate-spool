@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Rotating Mail spool and sent files..."
+
+date=`date --date '5 days ago' '+%Y-%m'`
+
+cd $HOME/Mail
+
+mv spool spool-$date
+echo "Moved spool to spool-$date"
+
+mv sent sent-$date
+echo "Moved sent to sent-$date"
+
+rm -f procmaillog.old
+mv procmaillog procmaillog.old
+echo "Rotated procmaillog"

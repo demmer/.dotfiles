@@ -1,0 +1,43 @@
+#!/usr/local/bin/perl
+
+use FileHandle;
+use IPC::Open2;
+use IPC::Open3;
+
+select(STDERR); $| = 1;
+select(STDOUT); $| = 1; # make unbuffered
+
+if (-d "CVS") {
+    $pid = open2 (\*Read, \*Write, "/usr/bin/cvs status @ARGV");
+    Write->autoflush();
+    
+    while (<Read>) {
+	print $_ if (/\bStatus\b/ && !/\bUp-to-date\b/);
+	Write->flush();
+    }
+} elsif (-d "RCS") {
+    chdir("RCS") or die "Can't chdir to RCS";
+    opendir(RCS, ".") or die "Can't opendir";
+    @files = readdir(RCS) or die "Can't readdir";
+    foreach $f (@files) {
+	next if ($f eq ".");
+	next if ($f eq "..");
+
+	open(F, "<$f") or die "Can't open $f";
+	while (<F>) {
+	    if (/locks/) {
+		$f =~ s/,v//;
+		$line = <F>;
+		if ($line =~ /[ \t]*(.*):(.*); strict/) {
+		    if ($1 eq $ENV{USER}) {
+			print "$f ($2)\n";
+		    } else {
+			print "$f ($2): $1\n";
+		    }
+		}
+	    }
+	}
+	
+    }
+    closedir(RCS);
+}
