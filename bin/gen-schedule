@@ -1,0 +1,133 @@
+#!/usr/bin/perl
+
+# Format examples
+# MW	9:00-10:30 	CS262A Brewer	410 Soda
+# TuTh	11:00-12:00 	CS294 Culler	400 Soda
+
+$line = 0;
+while (<STDIN>) {
+    $line++;
+    next if (/^\s*$/); # skip blank lines
+    next if (/^\#/);   # and comments
+    
+    if (!/^([A-Za-z]+)\s+(\S+)\s+(.*)$/) {
+	die "Invalid line $line: $_"
+    }
+
+    $days = $1;
+    $times = $2;
+    $desc = $3;
+
+    @days_split = ( $days =~ /(M?)(Tu)?(W)?(Th)?(F)?(.*)/ );
+    $extra = $6;
+
+    if (! $extra eq "") {
+	print "Invalid days '$days' at line $line\n";
+	exit 1;
+    }
+
+    $times =~ /^([0-9]+):([0-9]+)-([0-9]+):([0-9]+)(.*)/;
+    $starthr = $1;
+    $startmin = $2;
+    $endhr = $3;
+    $endmin = $4;
+    $extra = $5;
+
+    if ((! $extra eq "") ||
+	($startmin != 0 && $startmin != 30) ||
+	($endmin != 0 && $endmin != 30) ) {
+	print "Invalid times '$times' at line $line\n";
+	exit 1;
+    }
+
+    # figure out the number of time units
+    if ($starthr < 9) { $starthr += 12; }
+    if ($endhr < 9)   { $endhr += 12; }
+    
+    $hrs = $endhr - $starthr;
+    $units = $hrs * 2;
+    if ($startmin == 30) { $units -= 1; }
+    if ($endmin == 30)   { $units += 1; }
+
+    foreach $day (@days_split) {
+	next if ($day eq "");
+
+	$key = "$day-$starthr-$startmin";
+	if ($schedule{$key}) {
+	    print "Schedule overlap on $day $starthr:$startmin\n";
+	    exit 1;
+	}
+	$schedule{$key} = $desc;
+	$units{$key} = $units;
+
+	$tmphr = $starthr;
+	$tmpmin = $startmin;
+	for ($tmpunits = $units - 1; $tmpunits > 0; $tmpunits--) {
+	    $tmpmin += 30;
+	    if ($tmpmin == 60) {
+		$tmpmin = "00";
+		$tmphr ++;
+	    }
+
+	    $key="$day-$tmphr-$tmpmin";
+	    $schedule{$key} = "...";
+	}
+    }
+}
+
+print "
+<html>
+<head>
+<title>Schedule</title>
+</head>
+<body bgcolor=\"#ffffff\">
+<font size=-2>
+<table border=1 cellspacing=0 align=\"center\" width=\"80%\">
+
+<tr bgcolor=\"#E0E0E0\" align=\"center\" height=\"5%\">
+<td bgcolor=\"#FFFFFF\" width=\"8%\">&nbsp;</td>
+<td width=\"18%\">Monday</td>
+<td width=\"18%\">Tuesday</td>
+<td width=\"18%\">Wednesday</td>
+<td width=\"18%\">Thursday</td>
+<td width=\"18%\">Friday</td>
+</tr>
+";
+
+
+for ($hr = 9; $hr < 18; $hr++) {
+    for ($min = 0; $min < 60; $min += 30) {
+	if ($min == 0) { $min = "00"; } # annoying
+
+	$prettyhr = $hr;
+	if ($prettyhr > 12) {
+	    $prettyhr -= 12;
+	}
+	
+	print "<tr bgcolor=\"#FFFFFF\" align=\"center\" height=\"5%\">\n";
+	
+	print "<td bgcolor=\"#E0E0E0\">$prettyhr:$min</td>\n";
+	
+	foreach $day ("M", "Tu", "W", "Th", "F") {
+	    $key = "$day-$hr-$min";
+	    if ($schedule{$key}) {
+		next if ($schedule{$key} eq "...");
+		
+		$desc = $schedule{$key};
+		$units = $units{$key};
+		$desc =~ s/\\n/<br>/g;
+		print "<td bgcolor=\"#E0E0E0\" rowspan=$units>$desc</td>\n";
+	    } else {
+		print "<td>&nbsp;</td>\n";
+	    }
+	}
+
+	print "</tr>\n";
+    }
+}
+
+print "
+</font>
+</table>
+</body>
+</html>";
