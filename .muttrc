@@ -2,7 +2,7 @@
 # Mutt Configuration variable settings. See www.mutt.org for manual.
 #
 
-my_hdr From: demmer@nbttech.com (Michael Demmer)
+my_hdr From: mike@demmer.nu (Michael Demmer)
 
 unset abort_unmodified
 set alias_file=~/.mutt_aliases
