@@ -97,6 +97,11 @@ bind pager < top
 bind pager > bottom
 bind pager T tag-message
 
+macro index <F5> ":source ~/.muttrc\n" "Reload the muttrc"
+macro pager <F5> ":source ~/.muttrc\n" "Reload the muttrc"
+
+macro index R "|report-spam\nd" "mark message as spam"
+macro pager R "|report-spam\nd" "mark message as spam"
 
 #
 # Colors:
@@ -117,9 +122,6 @@ color tilde      yellow         black
 color tree       brightred      black
 
 color hdrdefault yellow	        black
-#color header     brightyellow   black   ^from:
-#color header     brightyellow   black   ^(to|cc):
-#color header     brightyellow   black    ^subject:
 
 #
 # Mono video attributes
@@ -137,11 +139,3 @@ color hdrdefault yellow	        black
 ignore *
 unignore To: Cc: From: date subject Via:
 hdr_order From: To: Via: Cc: subject date
-
-# TODO: how do I make color attributes work?
-
-# TODO: from the pager, how can I start a new netscape window from a
-#       URL that appears within a piece of mail?
-
-# Question: how can I print the value of a variable?
-# Answer: "set ?sort" prints the value of the sort variable.
