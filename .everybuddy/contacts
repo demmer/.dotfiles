@@ -1,0 +1,343 @@
+<GROUP>
+	NAME="friends"
+	<CONTACT>
+		NAME="brianwoolee"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="brianwoolee"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="colby_town"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="colby_town"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="fka3"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="fka3"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="geoff_hardy"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="geoff_hardy"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="ggoodale"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="ggoodale"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Ian Swinson"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="iswinson"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="JoJo"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="jparks94105"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="mark_stemm"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="mark_stemm"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="markstemm"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="markstemm"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="mccanne"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="mccanne"
+		</ACCOUNT>
+		<ACCOUNT Yahoo>
+			NAME="stevenmccanne"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Mike D"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="demmersan"
+		</ACCOUNT>
+		<ACCOUNT Yahoo>
+			NAME="mdemmer"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Andrew Swan"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="acs9"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Glen"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="glen_sanford"
+		</ACCOUNT>
+		<ACCOUNT AIM>
+			NAME="glendsanford"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Tim Moynagh"
+		DEFAULT_PROTOCOL="MSN"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT MSN>
+			NAME="tmoynagh"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Apurva"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="apurvabdave"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="noah"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="noah_treuhaft"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Boy Wonder"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="zukanoff"
+		</ACCOUNT>
+		<ACCOUNT AIM>
+			NAME="zukanov"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="novaliscious"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="novaliscious"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Stemm"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="markstemm"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="lithboy"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="lithboy"
+		</ACCOUNT>
+	</CONTACT>
+</GROUP>
+<GROUP>
+	NAME="sterling"
+	<CONTACT>
+		NAME="almel97"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="almel97"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="johnsonliquor"
+		DEFAULT_PROTOCOL="Yahoo"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT Yahoo>
+			NAME="johnsonliquor"
+		</ACCOUNT>
+	</CONTACT>
+</GROUP>
+<GROUP>
+	NAME="Unknown"
+	<CONTACT>
+		NAME="geoff7532"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="geoff7532"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="InkSpyro"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="InkSpyro"
+		</ACCOUNT>
+	</CONTACT>
+</GROUP>
+<GROUP>
+	NAME="Co-Workers"
+	<CONTACT>
+		NAME="elund91"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="elund91"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="ink2val"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="ink2val"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="InktoKarl"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="InktoKarl"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="mdipetrillo"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="mdipetrillo"
+		</ACCOUNT>
+	</CONTACT>
+	<CONTACT>
+		NAME="Smoot on fire"
+		DEFAULT_PROTOCOL="AIM"
+		LANGUAGE=""
+		TRIGGER_TYPE=""
+		TRIGGER_ACTION=""
+		TRIGGER_PARAM=""
+		<ACCOUNT AIM>
+			NAME="Smoot on fire"
+		</ACCOUNT>
+	</CONTACT>
+</GROUP>

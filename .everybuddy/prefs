@@ -1,0 +1,137 @@
+do_login_on_startup=1
+do_everybuddy_debug=0
+do_everybuddy_debug_html=0
+do_plugin_debug=0
+length_contact_window=16
+do_applet_show_on_startup=0
+use_alternate_browser=0
+do_logging=1
+do_strip_html=0
+do_restore_last_conv=0
+do_play_send=0
+do_play_first=0
+do_play_receive=0
+do_online_sound=0
+do_away_sound=1
+do_no_sound_when_away=0
+BuddyArriveFilename=/usr/local/share/sounds/everybuddy/BuddyArrive.au
+BuddyAwayFilename=/usr/local/share/sounds/everybuddy/BuddyLeave.au
+BuddyLeaveFilename=/usr/local/share/sounds/everybuddy/BuddyLeave.au
+SendFilename=/usr/local/share/sounds/everybuddy/Send.au
+ReceiveFilename=/usr/local/share/sounds/everybuddy/Receive.au
+FirstMsgFilename=/usr/local/share/sounds/everybuddy/Receive.au
+SoundVolume=0.000000
+do_ignore_unknown=0
+do_send_idle_time=1
+do_raise_window=1
+do_timestamp=0
+do_multi_line=0
+do_enter_send=0
+do_convo_timestamp=0
+do_typing_notify=1
+do_send_typing_notify=1
+do_smiley=1
+do_escape_close=0
+do_tabbed_chat=1
+do_tabbed_chat_orient=0
+FontSize=5
+do_ignore_fore=0
+do_ignore_back=0
+do_ignore_font=1
+accel_next_tab=
+accel_prev_tab=
+proxy_type=0
+proxy_port=3128
+do_proxy_auth=0
+proxy_user=
+proxy_password=
+modules_path=/usr/local/share/everybuddy/modules
+plugins
+	/usr/local/share/everybuddy/modules/aim-toc.la
+		aim_server="toc.oscar.aol.com"
+		aim_port="21"
+		do_aim_debug="1"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/icq.la
+		icq_server="icq.mirabilis.com"
+		icq_port="4000"
+		do_icq_debug="0"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/irc.la
+	end
+	/usr/local/share/everybuddy/modules/jabber.la
+		jabber_server="jabber.com"
+		jabber_port="5222"
+		do_jabber_debug="0"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/msn2.la
+		fname_pref=""
+		msn_server="messenger.hotmail.com"
+		msn_port="1863"
+		do_mail_notify="1"
+		do_mail_notify_show="1"
+		do_mail_notify_folders="0"
+		do_mail_notify_run_script="0"
+		do_mail_notify_script_name=""
+		do_guess_away="1"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/yahoo2.la
+		pager_host="scs.yahoo.com"
+		pager_port="5050"
+		filetransfer_host="filetransfer.msg.yahoo.com"
+		filetransfer_port="80"
+		do_mail_notify="0"
+		login_invisible="0"
+		ignore_system="0"
+		do_prompt_save_file="0"
+		do_guess_away="1"
+		do_yahoo_debug="0"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/import_gaim.la
+	end
+	/usr/local/share/everybuddy/modules/import_gnomeicu.la
+	end
+	/usr/local/share/everybuddy/modules/importlicq.la
+	end
+	/usr/local/share/everybuddy/modules/importicq.la
+	end
+	/usr/local/share/everybuddy/modules/smileys2.la
+	end
+	/usr/local/share/everybuddy/modules/smileysc.la
+	end
+	/usr/local/share/everybuddy/modules/msn_smileys.la
+	end
+	/usr/local/share/everybuddy/modules/giles_smiles.la
+	end
+	/usr/local/share/everybuddy/modules/yahoo_smileys.la
+	end
+	/usr/local/share/everybuddy/modules/notes.la
+		notes_editor="xedit"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/middle.la
+		doLeet="0"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/rainbow.la
+		doRainbow="0"
+		sstart_r="255"
+		sstart_g="0"
+		sstart_b="0"
+		send_r="0"
+		send_g="0"
+		send_b="255"
+		load="1"
+	end
+	/usr/local/share/everybuddy/modules/autotrans.la
+		doTrans="0"
+		myLanguage="en"
+		load="1"
+	end
+end
+end
