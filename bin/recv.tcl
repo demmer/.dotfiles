@@ -22,7 +22,11 @@ proc readable {input} {
 
     set buf [read $input 10000]
     set len [string length $buf]
-    puts "got $len byte packet"
+
+    binary scan $buf ia* ts packet
+    set elapsed [expr [clock clicks] - $ts]
+
+    puts "got $len byte packet (delay $elapsed)"
 }
 
 proc accept {sock addr port} {

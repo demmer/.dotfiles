@@ -5,7 +5,8 @@
 #
 
 proc usage {} {
-    puts stderr {Usage: send.tcl [-rate rate] [-pktsz sz] [dstaddr:]dstport}
+    puts stderr \
+	    {Usage: send.tcl [-rate rate] [-pktsz sz] [dstaddr:]dstport}
     exit 1
 }
 
@@ -77,9 +78,15 @@ fconfigure $sock -buffering none -encoding binary -translation binary
 
 set delay [expr int(1000.0 / ((1.0 * $rate) / $pktsz))]
 
+set fmtsz [expr $pktsz - 4] 
+
 while {1} {
-    puts "sending $pktsz byte packet"
-    puts -nonewline $sock $packet
+    set ts [clock clicks]
+    set p [binary format ia$fmtsz $ts $packet]
+    set len [string length $p]
+    
+    puts "sending $len byte packet"
+    puts -nonewline $sock $p
     flush $sock
     after $delay
 }
