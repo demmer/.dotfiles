@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+%peeps;
+open (CVS, "/bin/sh -c 'cvs annotate 2> /dev/null'|") || die "can't run cvs";
+while(<CVS>) {
+    @L = split;
+    $who = $L[1];
+    $who =~ s/\(//;
+    $peeps{$who}++;
+}
+
+foreach $who (keys %peeps) {
+    print "$who: $peeps{$who}\n";
+}
