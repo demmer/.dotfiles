@@ -1,0 +1,33 @@
+#!/bin/sh
+
+#
+# launch mail shells based on location
+#
+
+set -x
+
+#
+# Load in geometry
+#
+cd $HOME
+. $HOME/.geometry
+
+REMOTEMUTT="cd www/tmp && ~/bin/mutt"
+
+case $HOST in
+    pisco)
+	gnome-terminal --geometry $PISCO_XMUTT_GEOM \
+		--tab -t "EECS Mail" -e mutt \
+		--tab -t "Xoopi Mail" -e "ssh -t xoopi $REMOTEMUTT" &
+	;;
+    ica)
+	gnome-terminal --geometry $PISCO_XMUTT_GEOM \
+		--tab -t "EECS Mail"  -e "ssh -t pisco $REMOTEMUTT" \
+		--tab -t "Xoopi Mail" -e "ssh -t xoopi $REMOTEMUTT" &
+	;;
+    *)
+	pisco-xmutt &
+	xoopi-xmutt &
+    ;;
+esac
+

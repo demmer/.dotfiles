@@ -76,14 +76,7 @@ xterm -title "Console" -n "Console" -geometry =$CONSOLE_GEOM -e /bin/sh -c \
 xterm -n "Fezzik, it's you . . . true" -geometry =$XTERM_1_GEOM &
 
 # Mail shells
-if [ "$HOST" = "pisco" ]; then
-	gnome-terminal --geometry $PISCO_XMUTT_GEOM \
-		--tab -t "EECS Mail" -e mutt \
-		--tab -t "Xoopi Mail" -e 'ssh -t xoopi cd www/tmp && ~/bin/mutt' &
-else
-	pisco-xmutt &
-	xoopi-xmutt &
-fi
+xmutts &
 
 # Tunnels for urlview
 $HOME/bin/urlview-tunnel-shell xoopi
