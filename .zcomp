@@ -45,10 +45,13 @@ compctl -g '*(*)' + -g '*(-/)' strip gprof
 # Run ghostscript on postscript files, but if no postscript file matches what
 # we already typed, complete directories as the postscript file may not be in
 # the current directory.
-compctl -g '*.ps' + -g '*(-/)' gs ghostview gv pstopdf
+compctl -g '*.ps' + -g '*(-/)' gs ghostview pstopdf
 
 # Same for pdf files
-compctl -g '*.pdf' + -g '*(-/)' acroread xpdf gv pdftops
+compctl -g '*.pdf' + -g '*(-/)' acroread xpdf pdftops
+
+# But gv can handle both
+compctl -g '*.p(s|df)' + -g '*(-/)' gv
 
 # Similar things for tex, texinfo and dvi files.
 compctl -g '*.tex*' + -g '*(-/)' tex latex texi2dvi
