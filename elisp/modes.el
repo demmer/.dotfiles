@@ -258,9 +258,12 @@ with tab characters underneath."
   )
 (add-hook 'html-mode-hook 'my-html-setup)
 
-;; setup tex mode
+;;
+;; setup tex / bibtex modes
+;;
 (require 'tex-mode)
 (require 'skeleton)
+(require 'bibtex)
 
 (defun latex-insert-section(type)
   "Insert a \\section{} style latex declaration."
@@ -314,6 +317,15 @@ with tab characters underneath."
   (lambda () (interactive) (latex-insert-section "subsection")))
 (define-key tex-mode-map "\C-c\C-v"
   (lambda () (interactive) (tex-latex-block-no-options "verbatim")))
+
+(defun my-bibtex-setup()
+  (interactive)
+  (define-key bibtex-mode-map "\M-q" 'bibtex-fill-entry)
+  (define-key bibtex-mode-map "\M-\C-l" 'lcvs-examine)
+  (setq bibtex-align-at-equal-sign t)
+  (setq fill-column 80))
+
+(add-hook 'bibtex-mode-hook 'my-bibtex-setup)
 
 ;; maybe someday
 ;;
