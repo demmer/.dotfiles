@@ -130,7 +130,8 @@ To see the whole log, use \\[lcvs-show-full-log].")
   (let ((face (make-face 'lcvs-UP-face)))
     (condition-case nil
 	(make-face-bold face)
-      (error (set-face-foreground face "purple")))
+      (error nil))
+    (set-face-foreground face "yellow")
     face))
 
 (defvar lcvs-M-face
@@ -162,7 +163,6 @@ To see the whole log, use \\[lcvs-show-full-log].")
     ("^C[ *].*" . lcvs-C-face)
     ("^cvs update.*" . lcvs-other-face)))
 
-
 ;; Internal Vars.
 
 ;; Specifies what to search for when looking for the filename
