@@ -305,7 +305,7 @@ with tab characters underneath."
   (lambda () (interactive) (latex-insert-face "texttt")))
 (define-key tex-mode-map "\C-c\C-a"
   (lambda () (interactive) (tex-latex-block-no-options "abstract")))
-(define-key tex-mode-map "\C-c\C-c"
+(define-key tex-mode-map "\C-c\C-x"
   (lambda () (interactive) (tex-latex-block-no-options "center")))
 (define-key tex-mode-map "\C-c\C-e"
   (lambda () (interactive) (tex-latex-block-no-options "enumerate")))
@@ -317,6 +317,7 @@ with tab characters underneath."
   (lambda () (interactive) (latex-insert-section "subsection")))
 (define-key tex-mode-map "\C-c\C-v"
   (lambda () (interactive) (tex-latex-block-no-options "verbatim")))
+(define-key tex-mode-map "\C-c\C-c" 'comment-region)
 
 (defun my-bibtex-setup()
   (interactive)
