@@ -14,24 +14,22 @@ proc dprint {s} {
 #
 set delay 5
 set checkfetch 0
+set spools {}
+
+array set argvars {
+    -delay		delay
+    -spools		spools
+}
 
 for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
-
-    switch -- $arg {
-	-delay {
-	    set delay [lindex $argv [incr i]]
-	}
-
-	-checkfetch {
-	    set checkfetch 1
-	}
-
-	default {
-	    puts "ERROR -- unknown argument $arg"
-	    exit 1
-	}
+    if {! [info exists argvars($arg)]} {
+	puts "Error: unknown arg $arg"
+	exit 1
     }
+    
+    set val [lindex $argv [incr i]]
+    set $argvars($arg) $val
 }
 
 set delay [expr $delay * 1000]
@@ -45,50 +43,66 @@ if [info exists env(USER)] {
     exit -1;
 }
 
-if [info exists env(MAIL)] {
-    if [file exists $env(MAIL)] {
-	set spoolfile $env(MAIL);
+foreach spool [split $spools ,] {
+    if {$spool == "@F"} {
+	set checkfetch 1
+	continue
+    } elseif {$spool == "@"} {
+	if [info exists env(MAIL)] {
+	    if [file exists $env(MAIL)] {
+		set spoolfile $env(MAIL);
+	    }
+	} elseif [file exists "/var/mail/$user"] {
+	    set spoolfile "/var/mail/$user";
+	} elseif [file exists "/var/spool/mail/$user"] {
+	    set spoolfile "/var/spool/mail/$user";
+	}
+
+	if {! [info exists spoolfile]} {
+	    puts stderr "no inbox spool";
+	    exit -1;
+	}
+    } else {
+	set spoolfile "$env(HOME)/Mail/$spool"
     }
-} elseif [file exists "/var/mail/$user"] {
-    set spoolfile "/var/mail/$user";
-} elseif [file exists "/var/spool/mail/$user"] {
-    set spoolfile "/var/spool/mail/$user";
-}
+    
+    if {! [file readable $spoolfile]} {
+	puts stderr "$spoolfile unreadable"
+	exit -1;
+    }
+    lappend newspools $spool $spoolfile
 
-if {! [info exists spoolfile]} {
-    puts stderr "no spool";
-    exit -1;
+    set ctime($spoolfile) 0
+    set mtime($spoolfile) 0
 }
+set spools $newspools
 
-if {! [file readable $spoolfile]} {
-    puts stderr "$spoolfile unreadable"
-    exit -1;
-}
-
-set ctime 0
-set mtime 0
-proc checktime {} {
+proc checktime {spoolfile} {
     global ctime mtime
-    global spoolfile
-    dprint "checktime $ctime $mtime"
+    dprint "checktime $spoolfile $ctime($spoolfile) $mtime($spoolfile)"
+    
     if [file exists $spoolfile] {
 	file stat $spoolfile stat
-	if {$stat(mtime) > $mtime || $stat(ctime) > $ctime} {
-	    set mtime $stat(mtime)
-	    set ctime $stat(ctime)
-	    dprint "checktime changed: $ctime $mtime"
+	if {$stat(mtime) > $mtime($spoolfile) || \
+		$stat(ctime) > $ctime($spoolfile)} {
+#	    file atime $spoolfile $stat(atime)
+	    file mtime $spoolfile $stat(mtime)
+	    file stat $spoolfile stat
+	    set mtime($spoolfile) $stat(mtime)
+	    set ctime($spoolfile) $stat(ctime)
+	    dprint "checktime changed: $ctime($spoolfile) $mtime($spoolfile)"
 	    return 1
 	}
     }
     return 0
 }
 
-proc scan {} {
-    global spoolfile
-
+proc scan {spool spoolfile} {
     set from ""
     set subject ""
     set status ""
+
+    set nlines 0
     
     set fd [open $spoolfile r]
     while {! [eof $fd]} {
@@ -140,7 +154,10 @@ proc scan {} {
 	    }
 	    
 	    set subject [string tolower $subject]
-	    puts "$from >> $subject"
+	    if {$spool == "@"} {
+		puts "$from >> $subject"
+	    }
+	    incr nlines
 
 	    # clean house
  	    set from ""
@@ -152,6 +169,9 @@ proc scan {} {
     }
 
     close $fd
+    if {$spool != "@"} {
+	puts "yabiff count $spool $nlines"
+    }
 }
 
 proc checkfetch {} {
@@ -179,13 +199,16 @@ while {1} {
     if {$checkfetch} {
 	set checkfetch_output [checkfetch]
     }
-
-    set doscan [checktime]
-    if {$doscan} {
-	scan
+    
+    set scanned 0
+    foreach {spool spoolfile} $spools {
+	if {[checktime $spoolfile]} {
+	    scan $spool $spoolfile
+	    set scanned 1
+	}
     }
-
-    if {$doscan || $checkfetch_output} {
+    
+    if {$scanned || $checkfetch_output} {
 	puts "."
     } else {
 	puts "ping"
