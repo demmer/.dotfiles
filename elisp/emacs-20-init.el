@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.12 2001-05-21 18:28:33 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.13 2001-10-17 01:08:23 demmer Exp $
 
 
 (defun memequal (el list)
@@ -141,7 +141,6 @@ This must be bound to a mouse-down event in the mode-line."
 ;; load in other files
 (load "modes")
 (load "comment")
-(load "added")
 (load "mjdkeys")
 (load "tera-added")
 (load "lcvs")
@@ -150,6 +149,8 @@ This must be bound to a mouse-down event in the mode-line."
 (let ((checkstcl "~/work/am-1/checkstcl/checkstcl.el"))
   (if (file-exists-p checkstcl)
       (load checkstcl)))
+
+(load "added")
 
 ;; lcvs setup
 (defun my-lcvs-setup ()                                                
