@@ -55,7 +55,7 @@
   (append nesc-font-lock-keywords-1
    c++-font-lock-keywords-2))
 
-(define-derived-mode nesc-mode c-mode "Nesc"
+(define-derived-mode nesc-mode c++-mode "Nesc"
   "Major mode for editing nesc files"
 
   (make-local-variable 'font-lock-defaults)
