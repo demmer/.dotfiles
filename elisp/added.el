@@ -364,3 +364,24 @@ calls with dprintf macro calls. [mjd]"
   "Move the line the cursor is on to the top of the current window"
   (interactive)
   (recenter 0))
+
+(if (not (boundp 'xxx-do-next-line))
+    (progn 
+      (fset 'old-next-line (symbol-function 'next-line))
+      (defvar xxx-do-next-line nil)))
+
+(defun next-line (&optional arg)
+  "Move cursor vertically down ARG lines.
+If there is no character in the target line exactly under the current column,
+the cursor is positioned after the character in that line which spans this
+column, or at the end of the line if it is not long enough.
+If there is no line in the buffer after this one, nothing happens.
+
+The command \\[set-goal-column] can be used to create
+a semipermanent goal column to which this command always moves.
+Then it does not try to move vertically."
+  (interactive "p")
+  (if (save-excursion (end-of-line) (eobp))
+      (end-of-line)
+    (old-next-line (if arg arg 1))))
+
