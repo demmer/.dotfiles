@@ -4,22 +4,4 @@
 # Try to run MozillaFirebird if it exists in the path, otherwise
 # default to mozilla.
 #
-
-dirs=`echo $PATH | sed 's/:/ /g'`
-
-for dir in $dirs; do
-	[ $dir = $HOME/bin ] && continue
-	if [ -x $dir/MozillaFirebird ]; then
-		echo $dir/MozillaFirebird $*
-		exec $dir/MozillaFirebird $*
-	fi
-done
-
-for dir in $dirs; do
-	[ $dir = $HOME/bin ] && continue
-	if [ -x $dir/mozilla ]; then
-		echo $dir/mozilla $*
-		exec $dir/mozilla $*
-	fi
-done
-
+exec runprog "MozillaFirebird mozilla"
