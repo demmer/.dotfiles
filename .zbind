@@ -1,0 +1,43 @@
+##
+## FILE:  .zbind
+## DESC:  zsh commandline keybindings
+##
+## USAGE: zsh
+## 
+## DATE:  Sat May 27 17:37:02 1995
+## $Id: .zbind,v 1.1 2002-08-06 16:12:53 miked Exp $
+## 
+## Modification history:
+##    jal   Sat May 27 17:37:04 1995   made header
+##
+
+## Default bindings: emacs-mode with meta-keys enabled
+bindkey -dem
+
+#  These are bound incorrectly in the default bindings
+#  ie. these are the "real" emacs bindings
+bindkey "^W" kill-region
+
+#  Some nice bindings
+bindkey "^J" self-insert
+bindkey "\M-^M" self-insert-unmeta
+
+#  Ones that I don't use for one reason or another
+bindkey "\M-^[[C" forward-word
+bindkey "\M-^[[D" backward-word
+#bindkey "^I" expand-or-complete-prefix
+#bindkey "\e^I" complete-word
+#bindkey "\M-^_" copy-prev-word
+#bindkey "\M-r" history-search-backward
+#bindkey "\M-s" history-search-forward
+#bindkey "\M-^J" self-insert-unmeta
+#bindkey "\M-^I" infer-next-history
+#bindkey "\M-^H" backward-kill-word
+#bindkey "\M-^?" backward-kill-word
+#bindkey "\M-^D" list-choices
+
+#  Bindings for the alternate keypad
+bindkey "^[OA" up-history
+bindkey "^[OB" down-history
+bindkey "^[OD" backward-char
+bindkey "^[OC" forward-char

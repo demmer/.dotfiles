@@ -1,0 +1,138 @@
+##
+## FILE:  .zfunc
+## DESC:  zsh function definitions
+##
+## USAGE: zsh
+## 
+## DATE:  Sat May 27 17:35:07 1995
+## $Id: .zfunc,v 1.1 2002-08-06 16:12:53 miked Exp $
+## 
+## Modification history:
+##    jal   Sat May 27 17:35:10 1995   made header
+##
+
+function lc {
+	unset dict_names
+	unset dict_dirs 
+}
+
+function l {
+	i=$dict_names[(Ie)$1*]
+	if [ $i -eq 0 ]; then
+		less $1
+	else
+		less $dict_dirs[$i]
+	fi
+}
+
+function la {
+	foreach i ($*)
+		dict_names=($dict_names $i)
+		dict_dirs=($dict_dirs $PWD/$i)
+	end
+}
+
+# setenv emulation
+#   usage: setenv <var> <value>
+function setenv {
+	export $1=$2
+}
+
+# the miraculous un- function; and nice to your hashtable to boot!
+#   usage: un <function-or-alias>
+function un {
+	unalias $*
+	unfunction $*
+	rehash
+}
+
+# remove emacs backups
+#   usage: rmbak [dir ...]
+function rmbak {
+	local dirs="$*"
+	if [ "$dirs" = "" ]; then
+		dirs=.
+	fi
+	/bin/find $dirs \( -name '.*~' -o -name '*~' \) \
+		-print -exec /bin/rm {} \;
+}
+
+# set DISPLAY variable to X server name
+#   usage:  sd <dpy_name>
+function sd {
+	export DISPLAY="$1:0"
+}
+
+# set TERM variable to terminal type
+#   usage:  st <term_type>
+function st {
+	export TERM=$1
+}
+
+# set lines and columns
+#   usage: slc <lines> <columns>
+function slc {
+	export LINES=$1 COLUMNS=$2
+}
+
+# calendar manager using gdate backend (display 1 week)
+#   usage: cmweek <gdate-date-spec> (e.g. gcm "+1 day")
+function cmweek {
+	local date="$*"
+	if [ "x$date" = "x" ]; then
+		date=today
+	fi
+	cm_lookup -v week -d `gdate -d "$date" "+%D"`
+}
+
+# calendar manager using gdate backend (display 1 day)
+#   usage: cmweek <gdate-date-spec> (e.g. gcm "+1 day")
+function cmday {
+	local date="$*"
+	if [ "x$date" = "x" ]; then
+		date=today
+	fi
+	cm_lookup -d `gdate -d "$date" "+%D"`
+}
+
+# dumb little finger thing
+function ftkl {
+	if [ ARGC -eq 0 ]; then
+		finger tkl@awabi.cs.washington.edu
+	else
+		finger tkl@$1.cs.washington.edu
+	fi
+}
+
+function f {
+	if [ ARGC -eq 1 ]; then
+		~/zabar/bin/f $1
+	else
+		echo "usage: f <user_id>"
+	fi
+}
+
+# dumb little thing for engine 163
+function goeng {
+	if [ "$DISPLAY" = "$HOST:0" ]; then
+		DISPLAY="$HOSTcs:0"
+	fi
+
+	if [ ARGC -eq 0 ]; then
+		local machine="sun18.engin.brown.edu"
+	else
+		local machine="$1.engin.brown.edu"
+	fi
+	xterm -n $machine -T $machine -e telnet $machine &
+}
+
+# chpwd - runs every time the current working directory changes
+function chpwd {
+        while read pattern mask
+        do
+                eval "if [[ `pwd` == $pattern ]]; then
+                        umask $mask
+                        break
+                fi"
+        done < ~/.umask
+}

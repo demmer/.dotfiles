@@ -1,0 +1,116 @@
+##
+## FILE:  .zcomp
+## DESC:  zsh conditional completion settings
+##
+## USAGE: zsh
+## 
+## DATE:  Sat May 27 17:33:51 1995
+## $Id: .zcomp,v 1.1 2002-08-06 16:12:53 miked Exp $
+## 
+## Modification history:
+##    jal   Sat May 27 17:33:54 1995   made header
+##
+
+# This file gives some examples of compctl commands. The name zcomp
+# does not mean anything to zsh, you can either put the compctl commands
+# in your .zshrc or include a separate file from your .zshrc with the
+# source command.
+
+# These are just examples, use and modify to personal taste.  Copying this
+# file without thought will needlessly increase zsh's memory usage and
+# startup time.
+
+# For an explanation of what all this means, read either the
+# introduction for some explanation or the manual for a detailed
+# description.
+
+ftphosts=(						\
+                        $HOST				\
+                        rtfm.mit.edu			\
+			mirrors.aol.com			\
+			ftp.uwp.edu			\
+                        wuarchive.wustl.edu		\
+                        )
+
+hosts=(							\
+			postoffice.brown.edu		\
+			tahoe				\
+                        )
+
+# man completes to executable command names
+compctl -e man
+
+# Rmdir only real directories
+compctl -g '*(/)' rmdir
+
+# Strip and profile only executables
+compctl -g '*(*)' + -g '*(-/)' strip gprof
+
+# Run ghostscript on postscript files, but if no postscript file matches what
+# we already typed, complete directories as the postscript file may not be in
+# the current directory.
+compctl -g '*.ps' + -g '*(-/)' gs ghostview gv
+
+# Same for pdf files
+compctl -g '*.pdf' + -g '*(-/)' acroread
+
+# Similar things for tex, texinfo and dvi files.
+compctl -g '*.tex*' + -g '*(-/)' tex latex texi2dvi
+compctl -g '*.dvi' + -g '*(-/)' xdvi dvips
+
+# And again for xfig files
+compctl -g '*.fig' + -g'*(-/)' xfig
+
+# Anything after nohup is a command by itself with its own completion
+compctl -l '' nohup exec
+
+# If the command is rsh, make the first argument complete to hosts
+# and treat the rest of the line as a command on its own.
+compctl -k hosts -x 'p[2,-1]' -l '' -- rsh
+compctl -k hosts -x 'c[-1,-l]' -u  -- rlogin
+compctl -x 'n[-1,@]' -k hosts -- finger
+
+# If the command is telnet (or the like), complete to hostnames
+# that I frequent.
+compctl -k hosts telnet xr xt ping
+
+# some ftp hosts that I frequent
+compctl -k ftphosts ftp aftp ncftp
+
+# kill takes signal names as the first argument after -, but job names after %
+compctl -j -P % -x 's[-] p[1]' -k signals -- kill
+
+# job control commands take job names
+compctl -j -P % fg bg disown
+
+# complete compression to non-compressed files
+# complete decompression to compressed files
+compctl -g '*.Z' + -g '.*.Z' + -g "*.gz" + -g '*(/)' zcat zmore uncompress
+compctl -g '^*.zip)' zip
+compctl -g '*.zip' + -g '*(/)' unzip
+compctl -g '^*.gz' gzip
+compctl -g '*.gz' + -g '*(/)' gunzip
+compctl -g '^*.bz2' bzip2
+compctl -g '*.bz2' + -g '*(/)' bunzip2
+compctl -g '^*.Z' compress
+compctl -g '*.tar' + -g '*.gz' + -g '*(/)' + -g '*' tar
+
+# find -exec completes as a commandline
+compctl -f -x 'r[-exec,;]' -l '' -- find
+
+## DEFAULT COMPLETION
+#  complete filenames and path arguments
+compctl -D -f -x 's[-I][-L]' -f
+
+
+# Java stuff
+compctl -g '*.java' + -g '*(/)' javac
+compctl -g '*.java' + -g '*(/)' javadoc
+
+compctl -g '*.html' + -g '*(/)' appletviewer
+
+compctl -g '*.iv' + -g '*(/)' SceneViewer
+
+compctl -k dict_names l
+compctl -k dir_names g
+
