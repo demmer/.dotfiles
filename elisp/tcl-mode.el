@@ -140,7 +140,7 @@ Should be a list of strings."
     (list
      ;;
      ;; Function name declarations.
-     '("\\<\\(itcl_class\\|method\\|proc\\)\\>[ \t]*\\(\\sw+\\)?"
+     '("\\<\\(itcl_class\\|method\\|abstract\\|proc\\)\\>[ \t]*\\(\\sw+\\)?"
        (1 font-lock-keyword-face) (2 font-lock-function-name-face nil t))
      ;;
      ;; Keywords.
