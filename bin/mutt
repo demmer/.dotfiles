@@ -1,7 +1,7 @@
 #!/bin/csh
 
 setenv TERMINFO ~/.terminfo
-if ($TERM == "xterm") then
+if ($TERM == "" || $TERM == "xterm") then
     setenv TERM xterm-color
 endif
 stty stop  "^\'"           # unset ctrl-s
