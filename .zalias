@@ -22,6 +22,7 @@ alias more='less'
 alias m='more'
 alias l='less'
 alias e='emacs'
+alias rg='rungrep'
 
 alias trt='traceroute'
 alias td='tcpdump'
