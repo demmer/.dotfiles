@@ -1,12 +1,15 @@
 #!/bin/sh
 
 PROG='mailbox'
+RED=''
 
-if [ "$HOST" != "haight.nbttech.com" ]; then
-	PROG='ssh -q haight -o BatchMode=yes mailbox'
+HOST=`hostname | sed -e 's/\..*//'`
+
+if [ ! "$HOST" = "haight" ]; then 
+	PROG='ssh -q haight -o BatchMode=yes exec mailbox'
+	RED='< /dev/null > /dev/null'
 fi
 
 OPTS="-geometry 270x45+812+73 unread count delay=1 mailbox=/var/mail/demmer"
-RED="< /dev/null > /dev/null"
 
-$PROG $OPTS $RED &
+exec $PROG $OPTS $RED &
