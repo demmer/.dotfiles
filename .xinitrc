@@ -40,6 +40,10 @@ xv -quit -rmode 4 $HOME/images/gray_rock.gif
 fvwm2 &
 WMPID=$!
 
+# SSH tunnels
+xterm -iconic -title playa-proxy -e ssh playa-proxy &
+xterm -iconic -title alabama-vnc -e ssh -L 5900:alabama:5900 treat &
+
 # run dclock and mailbox
 nice dclock &
 # nice mailbox unread count &
