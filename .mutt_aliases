@@ -90,6 +90,7 @@ alias kim Kimberly Cullen <kimberlycullen@hotmail.com>
 alias kirsten Kirsten Thornton <kirsten.thornton@accenture.com>
 alias kristy Kristy Cockrell <k_cockrell@excite.com>
 alias lance Lance Berc <lberc@vmware.com>
+alias liz benson_zinck <benson_zinck@sbcglobal.net>
 alias lucas Lucas Standaert <lucas@cray.com>
 alias lucas_ives Lucas Ives <lri@pixar.com>
 alias luke Luke D'Alessandro <luke@luked.net>
@@ -131,6 +132,7 @@ alias tkl Tashana Landray <tlandray@yahoo.com>
 alias tate Tate Hausman <mrhausman@yahoo.com>
 alias tex Michael Horn <mhorn@classroom.com>
 alias tony Anthony Siddall <asiddall@achieve.org>
+alias vinnie Vinnie Zinck <vincent.zinck@wni.com>
 alias webb Webb Eaken <webbstaa@hotmail.com>
 alias welch Will Welch <welch@quietplease.com>
 alias zach Zach Franklin <zfranklin@yahoo.com>
@@ -195,8 +197,12 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 # DTN related
 #
 alias durst Robert Durst <durst@mitre.org>
+alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
 alias kscott Keith Scott <kscott@mitre.org>
 alias mho Melissa Ho <mrh9@cornell.edu>
+alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
+alias sushant Sushant Jain <sushjain@cs.washington.edu>
+alias tliu Ting Liu <tliu@cs.princeton.edu>
 alias dtn-dev dtn-dev@mailman.dtnrg.org
 alias dtn-devel dtn-dev@mailman.dtnrg.org
 
@@ -204,8 +210,10 @@ alias dtn-devel dtn-dev@mailman.dtnrg.org
 # Tier / ICT4B related
 #
 alias jen_bussell Jen Bussell <jbussell@berkeley.edu>
+alias jordan_hayes Jordan Hayes <jordan@thinkbank.com>
 alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
 alias tier tier <tier@tier.cs.berkeley.edu>
+alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
 
 #
 # Other Mailing Lists
