@@ -1,0 +1,63 @@
+#!/usr/bin/perl
+use Time::Local;
+
+
+sub usage () {
+    print "Usage: birthday [ reminder | check ]\n";
+    exit 1;
+}
+    
+if ($#ARGV != 0) { usage(); }
+
+$mode = $ARGV[0];
+
+if (! ($mode eq "reminder" || $mode eq "check")) {
+    usage();
+}
+
+$filename = "$ENV{HOME}/.birthdays";
+
+open(F, "<$filename") or die "can't open $filename.";
+
+while (<F>) {
+    chomp;
+    next if /^[ \t]*$/;
+    next if /^[ \t]*#/;
+    
+    if (! /[ \t]*([A-Za-z]+)[ \t]*([0-9]+)[ \t]+(.*)$/) {
+	print "Malformed line: $_\n";
+    }
+    $bmname = $1;
+    $bday = $2;
+    $who = $3;
+    
+    %months = (
+	       January    => 0,
+	       February  => 1,
+	       March      => 2,
+	       April      => 3,
+	       May        => 4,
+	       June       => 5,
+	       July       => 6,
+	       August     => 7,
+	       September  => 8,
+	       October    => 9,
+	       November   => 10,
+	       December   => 11
+	       );
+    
+    $bmon = $months{$bmname};
+    
+    print "bmon: $bmon\n";
+    if ($bmon eq "") {
+	print "$_ (error: invalid month)\n";
+	exit 1;
+    }
+    
+    if ($mode eq "check") {
+	print "$bmname $bday: $who\n";
+    }
+};
+
+close F;
+
