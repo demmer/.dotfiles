@@ -2,9 +2,19 @@
 
 echo "Rotating Mail spool and sent files..."
 
-date=`date --date '5 days ago' '+%Y-%m'`
+date=`date -v-5d '+%Y-%m'`
 
 cd $HOME/Mail
+
+if [ -f spool-$date ] ; then
+   echo "ERROR: spool-$date exists!!!"
+   exit 1
+fi
+
+if [ -f sent-$date ] ; then
+   echo "ERROR: sent-$date exists!!!"
+   exit 1
+fi
 
 mv spool spool-$date
 echo "Moved spool to spool-$date"
