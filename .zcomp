@@ -36,6 +36,9 @@ hosts=(							\
 			tahoe				\
                         )
 
+# global match options -- set to do case-insensitive complete
+compctl -M '' 'm:{a-zA-Z}={A-Za-z}'
+
 # man completes to executable command names
 compctl -c man
 
@@ -93,7 +96,7 @@ compctl -g '^*.bz2' bzip2
 compctl -g '*.bz2' + -g '*(/)' bunzip2
 compctl -g '^*.Z' compress
 
-compctl -g '*.(tar|gz)' + -g '*(/)' + -g '*' tar
+compctl -g '*.(tar|gz|tgz)' + -g '*(/)' + -g '*' tar
 
 # find -exec completes as a commandline
 compctl -f -x 'r[-exec,;]' -l '' -- find
