@@ -8,3 +8,5 @@
 *.pdf$
 autom4te.cache/*
 CVS/*
+TAGS
+doxygen/*
