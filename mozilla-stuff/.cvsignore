@@ -1,7 +1,11 @@
+US
 Cache*
 XUL*
 cook*.txt
 *.db
 *.rdf
 *.dat
+*.ini
+extensions
+hostperm.1
 install.log
