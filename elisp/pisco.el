@@ -6,6 +6,6 @@
 (setq lpr-command "enscript")
 (setq lpr-headers-switches (list "-B"))
 
-(if (require 'zenirc nil t)
-    (setq zenirc-server-default "tier")
-  )
+;; (if (require 'zenirc nil t)
+;;     (setq zenirc-server-default "tier")
+;;   )
