@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.19 $)
+;; Version: 1.2 ($Revision: 1.20 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1458,7 +1458,7 @@ the value of `foo'."
     (let ((dir (read-file-name prompt dir default must-match initial-contents)))
       (cond ((file-directory-p dir)
 	     dir)
-	    ((string-equal dir buffer-file-name)
+	    ((string-equal (expand-file-name dir) buffer-file-name)
 	     ;; Undo that lame "default to current buffer" crap.
 	     (file-name-directory dir))
 	    (t
