@@ -74,8 +74,8 @@ alias maggie Maggie Gertz <gertzm@ruderfinn.com>
 alias markf Mark Fritzel <fritzel@sbcglobal.net>
 alias maureen Maureen Morgan <maureenmorgan@hotmail.com>
 alias mattp Matt Podolsky <matt@inktomi.com>
-alias mccanne-personal Steve McCanne <steven@mccanne.com>
-alias michelle Michelle Munson <michelle@michellemunson.com>
+alias mccanne Steve McCanne <steven@mccanne.com>
+alias michelle Michelle Munson <michelle@digitalfountain.com>
 alias michon Mike Michon <mmichon@skew.org>
 alias mjr Michael John Radwin <mjr@acm.org>
 alias molly Molly Brown <mollybro@microsoft.com>
@@ -163,6 +163,6 @@ alias mccanne Steve McCanne <mccanne@nbttech.com>
 alias jay Jason LaTorre <latorrej@sterlingnet.com>
 alias patsy Patsy Manning <manningp@sterlingnet.com>
 
-
+#
 # Others added by mutt
 #
