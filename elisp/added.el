@@ -335,7 +335,7 @@ calls with dprintf macro calls. [mjd]"
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (vc-annotate current-prefix-arg)
+    (vc-annotate prompt-version)
     (other-window 1)
     (goto-line linenum)
     (other-window -1)
@@ -413,3 +413,4 @@ calls with dprintf macro calls. [mjd]"
     ))
 
 (add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
+  
