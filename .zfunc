@@ -74,57 +74,6 @@ function slc {
 	export LINES=$1 COLUMNS=$2
 }
 
-# calendar manager using gdate backend (display 1 week)
-#   usage: cmweek <gdate-date-spec> (e.g. gcm "+1 day")
-function cmweek {
-	local date="$*"
-	if [ "x$date" = "x" ]; then
-		date=today
-	fi
-	cm_lookup -v week -d `gdate -d "$date" "+%D"`
-}
-
-# calendar manager using gdate backend (display 1 day)
-#   usage: cmweek <gdate-date-spec> (e.g. gcm "+1 day")
-function cmday {
-	local date="$*"
-	if [ "x$date" = "x" ]; then
-		date=today
-	fi
-	cm_lookup -d `gdate -d "$date" "+%D"`
-}
-
-# dumb little finger thing
-function ftkl {
-	if [ ARGC -eq 0 ]; then
-		finger tkl@awabi.cs.washington.edu
-	else
-		finger tkl@$1.cs.washington.edu
-	fi
-}
-
-function f {
-	if [ ARGC -eq 1 ]; then
-		~/zabar/bin/f $1
-	else
-		echo "usage: f <user_id>"
-	fi
-}
-
-# dumb little thing for engine 163
-function goeng {
-	if [ "$DISPLAY" = "$HOST:0" ]; then
-		DISPLAY="$HOSTcs:0"
-	fi
-
-	if [ ARGC -eq 0 ]; then
-		local machine="sun18.engin.brown.edu"
-	else
-		local machine="$1.engin.brown.edu"
-	fi
-	xterm -n $machine -T $machine -e telnet $machine &
-}
-
 # chpwd - runs every time the current working directory changes
 function chpwd {
         while read pattern mask
@@ -140,7 +89,6 @@ function notify () {
         eval $argv
         xmessage -timeout 5 notify: $HOSTNAME completed \'$argv\' &
 }
-
 
 function rgrep-internal () {
 	 files=$2
