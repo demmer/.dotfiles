@@ -1,3 +1,0 @@
-#!/bin/sh
-/bin/cat | formail -I "Status: RO" >> $HOME/Mail/spool
-
