@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.10 2001-03-20 17:04:19 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.11 2001-05-21 18:10:50 demmer Exp $
 
 
 (defun memequal (el list)
@@ -38,7 +38,7 @@ done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
   )
 
 ;;; Set up our load path
-(append-no-dup (format "%s/elisp" *HOME*) load-path)
+(prepend-no-dup (format "%s/elisp" *HOME*) load-path)
 
 ;;; turn off audio bell
 (setq visible-bell t)
