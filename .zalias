@@ -51,7 +51,12 @@ alias clog="cvs log"
 alias killscape="ps auxww |grep netscape | awk '{print \$2}' | xargs kill -KILL; rm -f ~/.netscape/lock"
 alias killzilla="ps auxww | grep mozilla | awk '{print \$2}' | xargs kill -KILL; find ~/.mozilla -name lock -exec rm {} \;"
 
-alias xinigo='xssh inigo'
-
 alias glimpseindex="glimpseindex -B -M 128 -n -o"
 alias glimpseindex-cwd="glimpseindex  -H . -t ."
+alias gcwd=glimpseindex-cwd
+
+alias make='gmake'
+
+alias xinigo='xssh inigo'
+alias xxoopi='xssh xoopi'
+alias xhaight='xssh haight'
