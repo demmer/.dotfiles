@@ -89,10 +89,12 @@
   (setq indent-tabs-mode nil)
   )
 
-(defvar my-c-style-overrides
-  '(("~/work/.*DTN" c-indent-one-tab)
-    )
-  )
+(defvar my-c-style-overrides)
+(setq my-c-style-overrides
+      '(("~/work/.*DTN" c-indent-one-tab)
+	("~/work/nesc" c-indent-two-spaces)
+	)
+      )
 
 (defun apply-c-style-overrides ()
   (interactive)
