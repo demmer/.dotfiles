@@ -96,6 +96,12 @@ export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
 export CVSROOT_DTN=:ext:playground:/usr/src/bundles/orig
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
 
+# Host specific overrides
+if [ $HOST = pisco ]; then
+	export CVSROOT_PISCO=/repository
+	export CVSROOT_TIER=/usr/projects/tier/ICT/repository
+fi
+
 if [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
 else 
