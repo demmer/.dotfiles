@@ -52,7 +52,7 @@ $HOME/bin/treat-mailboxes &
 
 # Bring up a console window, an email shell and a work shell
 xterm -C -n "Console" -geometry '=80x12+0+115' &
-$HOME/bin/xmutt &
+$HOME/bin/xoopi-xmutt &
 $HOME/bin/treat-xmutt &
 colorxterm -n "Fezzik, it's you . . . true" -geometry '=80x67+590+115'&
 
