@@ -131,7 +131,7 @@ export EMACSHOME=$HOME
 export CVSROOT_INIGO=:ext:inigo:/repository
 export CVSROOT_TIER=:ext:tier.cs.berkeley.edu:/usr/projects/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
-export CVSROOT_DTN=ext:playground:/usr/src/bundles/orig
+export CVSROOT_DTN=:ext:playground:/usr/src/bundles/orig
 
 if [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
