@@ -1,0 +1,276 @@
+#
+# .fvwm2rc - window manager preferences for fvwm2
+#
+
+#
+# General Style Settings
+#
+Style "*"	Color black/gray87, \
+		RandomPlacement, \
+		SmartPlacement,\
+		BorderWidth 3, \
+		HandleWidth 3, \
+		MWMBorder,\
+		MWMButtons, \
+		StickyIcon, \
+		IconBox 1 1 650 600
+
+#
+# Other General Settings
+#
+
+DeskTopSize 3x2
+HilightColor red gray87
+EdgeScroll 0 0
+OpaqueMoveSize 0
+
+MenuStyle * mwm
+MenuStyle * Foreground black, BackGround gray87
+
+#
+# Font Settings
+#
+WindowFont  *schoolbook-bold-r-normal--14*
+DefaultFont *schoolbook-medium-r-normal--14*
+IconFont    *schoolbook-medium-i-normal--18*
+
+#
+# Pager Settings
+#
+Module FvwmPager * *
+*FvwmPagerGeometry 195x100-1+1
+*FvwmPagerFore grey87
+*FvwmPagerBack black
+*FvwmPagerHilight grey40
+*FvwmPagerFont none
+
+#
+# Window List Settings
+#
+*FvwmWinListFont  *schoolbook-medium-r-normal--14*
+*FvwmWinListFore  black
+*FvwmWinListBack  gray87
+*FvwmWinListUseSkipList
+*FvwmWinListUseIconNames
+*FvwmWinListAction Click1 Focus
+*FvwmWinListAction Click3 Focus
+
+#
+# Window-Specific Style Settings
+#
+Style "FvwmPager"	NoTitle, HandleWidth 0, Sticky
+Style "FvwmWinList"	NoTitle, WindowListSkip
+Style "xbiff"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
+Style "xpostit"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
+Style "mailbox"		NoTitle, HandleWidth 0, Sticky, WindowListSkip
+Style "dclock"		NoTitle, Sticky, WindowListSkip
+Style "FvwmButtons"	NoTitle, HandleWidth 0, Sticky
+
+#
+# Function Definitions
+#
+AddToFunc Move-or-Raise "I" Raise + "M" Move + "D" Lower
+
+#
+# Key Bindings
+#
+
+# Virtual Screen Navigation
+Key F1 A N      GotoPage 0 0
+Key F2 A N      GotoPage 1 0
+Key F3 A N      GotoPage 2 0
+Key F4 A N      GotoPage 0 1
+Key F5 A N      GotoPage 1 1
+Key F6 A N      GotoPage 2 1
+
+Key 1 R N      GotoPage 0 0
+Key 2 R N      GotoPage 1 0
+Key 3 R N      GotoPage 2 0
+Key 4 R N      GotoPage 0 1
+Key 5 R N      GotoPage 1 1
+Key 6 R N      GotoPage 2 1
+
+Key 1 A M      GotoPage 0 0
+Key 2 A M      GotoPage 1 0
+Key 3 A M      GotoPage 2 0
+Key 4 A M      GotoPage 0 1
+Key 5 A M      GotoPage 1 1
+Key 6 A M      GotoPage 2 1
+
+#
+# Popup Menus
+#
+AddToMenu Applications "Applications" Title
+    + "Shell"		Exec xterm -geometry 80x28 -n 'Shell' &
+    + "Emacs"		Exec emacs &
+    + "Xmms"  		Exec xmms &
+    + "Realplay"	Exec /u/demmer/bin/realplay &
+    + "Netscape"	Exec netscape &
+    + "XV"		Exec xv &
+    + "-----------------" Nop
+    + "Logout"		Quit
+
+
+AddToMenu WindowOps "Window Operations" Title
+    + "Kill"			Destroy
+    + "Close"			Delete
+    + "Move"			Move
+    + "Resize"			Resize
+    + "Stick"			Stick
+    + "Iconify"			Iconify
+    + "Refresh"			Refresh
+    + "Maximize"		Maximize
+    + "Maximize Vertical"	Maximize 0 100
+    + "-----------------"	Nop
+    + "Reread .fvwm2rc"		Restart fvwm2
+    + "Run fvwm1"		Restart fvwm
+
+#
+# Define Functions
+#
+AddToFunc Move-or-Raise "C" Raise
+			+ "M" Move
+			+ "D" Raise
+
+#
+# Define mouse bindings
+#
+# Buttons:
+# 0 any mouse button
+# 1 Left mouse button
+# 2 Middle mouse button
+# 3 Right mouse button
+#
+# Context:
+# R root window
+# W application window
+# T window title
+# S window side, top or bottom bars
+# F window frame (corners)
+# I icon
+# n title-bar buttons
+#
+# Modifiers:
+# N no modifiers
+# C control
+# S shift
+# M meta
+# A any modifier
+
+#	Button  Context	Modifier Function
+Mouse   0	FS	A	Resize
+Mouse   0	1	A	PopUp "WindowOps"
+Mouse   0	2	A	Maximize
+Mouse   0	4	A	Iconify
+
+Mouse   1	R	A	PopUp "Applications"
+Mouse   1	T	N	Move-or-Raise
+Mouse   1	WT	M	Raise
+Mouse   1	T	C	Move
+Mouse   1       I       A	Iconify
+Mouse   1	WTSF  	S	Resize		
+
+Mouse   2	R	A	PopUp "WindowOps"
+Mouse   2	I	A	Move
+Mouse   2	W	M	Move
+Mouse   2	T	M	Move
+Mouse   2	T	A	Move
+
+Mouse   3	R	A	Module FvwmWinList Transient
+Mouse   3	I	A	Iconify
+Mouse   3	W	M	Lower
+Mouse   3	T	N	Lower
+Mouse   3	T	A	Lower
+
+#
+# Define keyboard shortcuts
+#
+
+# Arrow Keys
+# press arrow + control-meta anywhere, and scroll by 1% of a page
+Key Left  A    CM   CursorMove     -1   0
+Key Right A    CM   CursorMove     +1   0
+Key Up    A    CM   CursorMove     +0   -1
+Key Down  A    CM   CursorMove     +0   +1
+Key Home  A    CM   CursorMove     -1   -1
+Key Prior A    CM   CursorMove     +1   -1
+Key End   A    CM   CursorMove     -1   +1
+Key Next  A    CM   CursorMove     +1   +1
+
+Key KP_Left  A    CM   CursorMove     -1   0
+Key KP_Right A    CM   CursorMove     +1   0
+Key KP_Up    A    CM   CursorMove     +0   -1
+Key KP_Down  A    CM   CursorMove     +0   +1
+Key KP_Home  A    CM   CursorMove     -1   -1
+Key KP_Prior A    CM   CursorMove     +1   -1
+Key KP_End   A    CM   CursorMove     -1   +1
+Key KP_Next  A    CM   CursorMove     +1   +1
+
+# press arrow + control-meta anywhere, and scroll by 10% of a page
+Key Left  A    SM   CursorMove     -10  0
+Key Right A    SM   CursorMove     +10  0
+Key Up    A    SM   CursorMove     +0   -10
+Key Down  A    SM   CursorMove     +0   +10
+Key Home  A    SM   CursorMove     -10  -10
+Key Prior A    SM   CursorMove     +10  -10
+Key End   A    SM   CursorMove     -10  +10
+Key Next  A    SM   CursorMove     +10  +10
+
+Key KP_Left  A    SM   CursorMove     -10  0
+Key KP_Right A    SM   CursorMove     +10  0
+Key KP_Up    A    SM   CursorMove     +0   -10
+Key KP_Down  A    SM   CursorMove     +0   +10
+Key KP_Home  A    SM   CursorMove     -10  -10
+Key KP_Prior A    SM   CursorMove     +10  -10
+Key KP_End   A    SM   CursorMove     -10  +10
+Key KP_Next  A    SM   CursorMove     +10  +10
+
+# No modifiers needed for the root window
+Key Left  R    N    CursorMove     -10  0
+Key Right R    N    CursorMove     +10  0
+Key Up    R    N    CursorMove     +0   -10
+Key Down  R    N    CursorMove     +0   +10
+Key Home  R    N    CursorMove     -10  -10
+Key Prior R    N    CursorMove     +10  -10
+Key End   R    N    CursorMove     -10  +10
+Key Next  R    N    CursorMove     +10  +10
+
+# application shortcuts
+Key x    R    N    Exec  xterm -geometry 79x28 -n 'Shell' &
+Key t    R    N    Exec  xterm -n "treat" -T "treat" -e ssh treat &
+Key i    R    N    Exec  xterm -n "inigo" -T "inigo" -e ssh inigo &
+Key n    R    N    Exec  netscape &    
+
+# raise / lower windows
+Key space A CM   RaiseLower
+Key space A SM   RaiseLower
+
+#
+# Setup FvwmButtons
+#
+Module FvwmButtons
+*FvwmButtonsFore black
+*FvwmButtonsBack grey60
+*FvwmButtonsFont lucidasanstypewriter-bold-12
+
+*FvwmButtonsGeometry =100x355-1+125
+*FvwmButtonsRows 13
+ 
+*FvwmButtons Reload 	none Restart fvwm
+*FvwmButtons Shell 	none Exec exec xterm -title "Shell" -geometry 80x28 &
+*FvwmButtons Xmms 	none Exec exec xmms &
+*FvwmButtons Emacs 	none Exec exec emacs &
+*FvwmButtons Mutt 	none Exec exec HOME/bin/xmutt &
+*FvwmButtons Calculator none Exec exec xcalc &
+*FvwmButtons Netscape 	none Exec exec netscape &
+*FvwmButtons Windows 	none Module FvwmWinList
+*FvwmButtons ----------
+*FvwmButtons Close 	none Delete
+*FvwmButtons Kill 	none Destroy 
+*FvwmButtons Logout 	none Quit
+*FvwmButtons Shutdown 	none Exec shutdown -h now
+
+
+# Stuff not pulled over from fvwm
+
+#		StubbornPlacement
