@@ -689,7 +689,7 @@ Emacs 18 users must use `setq':
   :group 'tcl)
 
 (defvar tcl-proc-list
-  '("proc" "method" "itcl_class")
+  '("proc" "method" "itcl_class" "abstract")
   "List of commands whose first argument defines something.
 This exists because some people (eg, me) use \"defvar\" et al.
 Call `tcl-set-proc-regexp' and `tcl-set-font-lock-keywords'
@@ -725,6 +725,7 @@ This variable is generally set from `tcl-proc-regexp',
   '(
     ("proc" nil tcl-expr tcl-commands)
     ("method" nil tcl-expr tcl-commands)
+    ("abstract" nil tcl-expr tcl-commands)
     ("destructor" tcl-commands)
     ("constructor" tcl-commands)
     ("expr" tcl-expr)
