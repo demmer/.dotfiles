@@ -342,3 +342,27 @@ calls with dprintf macro calls. [mjd]"
   (other-window 1)
   (delete-other-windows)
   )
+
+(defun convert-xservice ()
+  (interactive)
+  (if (not (re-search-forward "\\$[-a-zA-Z0-9_]*_" nil t))
+      (message "done")
+    (progn
+      (set-mark (match-beginning 0))
+      (goto-char (match-end 0))
+      (let ((prompt (format "Convert %s? " (buffer-substring (match-beginning 0) (match-end 0)))))
+	(let ((input (read-string prompt nil "y")))
+;	(let ((input (read-char prompt)))
+	  (if (not (string-equal input "y"))
+	      (convert-xservice)
+	    (progn
+	      (goto-char (match-beginning 0))
+	      (delete-char 1)
+	      (insert "[$xservice_ ")
+	      (goto-char (match-end 0))
+	      (forward-char 11)
+	      (insert "]")
+	      (convert-xservice)
+	      )
+       ))))))
+
