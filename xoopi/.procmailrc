@@ -4,9 +4,7 @@ LOGFILE=$HOME/Mail/procmaillog
 LOGABSTRACT=all
 
 #
-# Mailing lists I subscribe to go into separate folders before the spamassassin
-# checks. This is to avoid polluting the bayes database with traffic from the 
-# sa-users list.
+# Mailing lists that I want into separate folders before spooling
 #
 :0
 * List-Post: .*spamassassin-users
@@ -112,10 +110,18 @@ $DEFAULT
 | formail -I "Status: RO" >> $HOME/Mail/spool
 
 #
-# Finally, get rid of duplicate messages after saving a copy to the spool.
+# Get rid of duplicate messages after saving a copy to the spool.
 #
 :0 Wh: msgid.lock
 | formail -D 32768 msgid.cache
+
+#
+# Now some other lists
+#
+:0
+* Mailing-List: .*inkt.*
+inkt-crap
+
 
 #
 # C'est fini.
