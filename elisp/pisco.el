@@ -9,3 +9,5 @@
 ;; (if (require 'zenirc nil t)
 ;;     (setq zenirc-server-default "tier")
 ;;   )
+
+(setq mail-host-address "cs.berkeley.edu")
