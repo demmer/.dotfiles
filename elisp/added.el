@@ -336,3 +336,9 @@ calls with dprintf macro calls. [mjd]"
     (delete-other-windows)
     (other-frame -1)
     ))
+
+(defun other-window-only ()
+  (interactive)
+  (other-window 1)
+  (delete-other-windows)
+  )
