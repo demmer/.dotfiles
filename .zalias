@@ -2,104 +2,55 @@
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-alias rmplain='find . -name \*~ -print -exec /bin/rm {} \;'
-alias rmdot='find . -name .\*~ -print -exec /bin/rm {} \;'
-alias rmbak='rmplain; rmdot'
-alias rmbakl='/bin/rm -f *~; /bin/rm -f .*~; echo > /dev/null'
+alias rmbak='find . -name \*~ -print -exec /bin/rm {} \;'
+alias rmbakl='find . -maxdepth 1 -name \*~ -print -exec /bin/rm {} \;'
 
 alias startx='startx 2>&1 | tee ~/.err/startx.log'
 alias x='startx'
 
-alias pcount='cat *.[CH] | wc -l'
-
-alias ztkl='zwrite tkl'
-alias z='zwrite'
-
-alias ls='ls --color=auto'
-
+alias ls='ls -F'
+alias lrt='ls -lrt'
+alias lart='ls -lart'
 alias more='less'
-#alias less='more_or_less'
 alias m='more'
 alias l='less'
 alias e='emacs'
-alias cls='ls *.[CH]'
-alias jls='ls *.{java,class}'
-alias rgb='/usr/lib/X11/rgb.txt'
-alias sourcelpr='/usr/bin/pr -f README Makefile *.[HChcpil] *.cc | lpr -Pcis'
-alias prsrc='/usr/local/bin/enscript README Makefile *.[HC] *.[hc] *.cc -Pcis'
-alias pop='popmail -s'
 
-alias gp='pushd . > /dev/null; cd /pro/gp/c++/src'
-alias back='popd > /dev/null'
-alias remake='\rm *.class;javac *.java'
+alias trt='traceroute'
+alias td='tcpdump'
 
-alias hotlocal='setenv CLASSPATH ~/java/classes'
-alias hotremote='unsetenv CLASSPATH'
-alias qt='xanim +Ae +Ak \!*'
-
-alias xelm='colorxterm -title "Mail Shell" -geometry 80x52+1+310 -e elm &'
-alias frm='frm -s new -s unread'
-
-#  architecture dependant
-if [ "$ARCH" = "solaris" ]; then
-	alias mine="ps -fu $LOGNAME"
-	alias other="ps -ef | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
-elif [ "$ARCH" = "Linux" ]; then
-	alias mine="ps -aux | fgrep $LOGNAME"
+#  architecture dependant - not if I use ucb
+case "$ARCH" in
+     solaris)
+        alias pscompat='/bin/ps -o user,pid,pcpu,pmem,vsz,rss,s,stime,time,comm'
+        alias pscompatw='/bin/ps -o user,pid,pcpu,pmem,vsz,rss,s,stime,time,args'
+	alias mine="pscompat -u $LOGNAME"
+	alias minew="pscompatw -u $LOGNAME"
+	alias other="pscompat -e | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
+	alias proc="pscompat -e | egrep "
+	;;
+      *)
+        alias mine="ps -ux"
+        alias minew="ps -uxww"
 	alias other="ps -aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
-elif [ "$ARCH" = "sunos" ]; then
-	alias mine="ps -aux | fgrep $LOGNAME"
-	alias other="ps -aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
-else
-	alias psu='echo "Unknown architecture."'
-	alias notme='echo "Unknown architecture."'
-fi
-alias pg='ps auxww | grep'
-alias av='appletviewer'
-alias ad='appletviewer -debug'
-alias jc='javac'
+	alias proc="ps -auxww | egrep "
+	alias pg="ps -auxww | grep "
+	;;
+esac
 
-alias cknews='/usr/local/bin/rn -c -s30'
+# CVS shortcuts
+alias commit="cvs commit"
+alias status="cvs status"
+alias update="cvs update"
+alias cstat="cvs status"
+alias cup="cvs update"
+alias cdiff="cvs diff"
+alias cdiffh="cvs diff -rHEAD"
+alias clog="cvs log"
 
-alias PissOffEnvall='echo I Am A Gimp | figlet | zwrite ewm'
-
-alias lpq1='lpq -Pps1'
-alias lpq2='lpq -Pps2'
-alias lpq3='lpq -Pps3'
-alias lpq4='lpq -Pps4'
-alias lpq5='lpq -Pps5'
-alias lpqcis='lpq -Pcis'
-
-alias lpr1='lpr -Pps1'
-alias lpr2='lpr -Pps2'
-alias lpr3='lpr -Pps3'
-alias lpr4='lpr -Pps4'
-alias lpr5='lpr -Pps5'
-alias lprcis='lpr -Pcis'
-
-alias fn='finger -p'
-
-# useful shortcuts based on lsh's gfx command to list machines in labs
-alias ai='gfx -f ~/.ai_machines'
-alias sysa='gfx -f ~/.sysa_machines'
-alias sysb='gfx syslabb'
-
-alias du_='du -k | grep -v "/[^/]*/"'
-
-alias goeng='rlogin -l demmermj sun30.engin.brown.edu'
-
-alias xcslogin='xterm -title "CS Mail Shell" -geometry '=80x42+1+291' -e $HOME/bin/cslogin stuff &'
-
-
-alias vncon='killall -CONT vncviewer'
-alias vncoff='kilalll -STOP vncviewer'
-alias statd=statd
+alias killscape="ps auxww |grep netscape | awk '{print \$2}' | xargs kill -KILL; rm -f ~/.netscape/lock"
 
 alias xinigo='xssh inigo'
-alias xtreat='xssh treat'
-alias xpowell='xssh powell'
 
-alias glimpseindex="glimpseindex -B -M 4 -n -o"
+alias glimpseindex="glimpseindex -B -M 128 -n -o"
 alias glimpseindex-cwd="glimpseindex  -H . -t ."
-
-alias vncalabama='vncviewer -encodings tight -passwd ~/.vnc/passwd localhost:0'
