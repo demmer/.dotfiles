@@ -5,7 +5,7 @@
 #
 
 proc usage {} {
-    puts stderr {Usage: recv.tcl [addr:]port}
+    puts stderr {Usage: recv.tcl [-ack] [addr:]port}
     exit 1
 }
 
@@ -15,6 +15,8 @@ proc bgerror {err} {
 }
 
 proc readable {input} {
+    global ack
+    
     if [eof $input] {
 	close $input
 	return
@@ -24,9 +26,13 @@ proc readable {input} {
     set len [string length $buf]
 
     binary scan $buf ia* ts packet
-    set elapsed [expr [clock clicks] - $ts]
+    set elapsed [expr [clock clicks -milliseconds] - $ts]
 
     puts "got $len byte packet (delay $elapsed)"
+
+    if {$ack} {
+	puts -nonewline $input [binary format c 0]
+    }
 }
 
 proc accept {sock addr port} {
@@ -38,6 +44,7 @@ proc accept {sock addr port} {
     fileevent $sock readable "readable $sock"
 }
 
+set ack  0
 set addr 0
 set port -1
 
@@ -45,6 +52,10 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
 
     switch -- $arg {
+	"-ack" {
+	    set ack 1
+	}
+	
 	default {
 	    set l [split $arg ":"]
 	    if {[llength $l] == 1} {

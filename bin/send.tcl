@@ -6,7 +6,7 @@
 
 proc usage {} {
     puts stderr \
-	    {Usage: send.tcl [-rate rate] [-pktsz sz] [dstaddr:]dstport}
+	    {Usage: send.tcl [-ack] [-rate rate] [-pktsz sz] [dstaddr:]dstport}
     exit 1
 }
 
@@ -15,6 +15,7 @@ proc bgerror {err} {
     puts stderr "bgerror: $err\n$errorInfo"
 }
 
+set ack     0
 set rate    1024
 set pktsz   512
 set dstaddr 127.0.0.1
@@ -25,6 +26,10 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
 
     switch -- $arg {
+	"-ack" {
+	    set ack 1
+	}
+	
 	"-rate" {
 	    incr i
 	    set rate [lindex $argv $i]
@@ -42,11 +47,12 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
 	
 	default {
 	    set l [split $arg ":"]
+
 	    if {[llength $l] == 1} {
-		set dstport [lindex $arg 0]
+		set dstport [lindex $l 0]
 	    } elseif {[llength $l] == 2} {
-		set dstaddr [lindex $arg 0]
-		set dstport [lindex $arg 1]
+		set dstaddr [lindex $l 0]
+		set dstport [lindex $l 1]
 	    } else {
 		usage
 	    }
@@ -88,5 +94,11 @@ while {1} {
     puts "sending $len byte packet"
     puts -nonewline $sock $p
     flush $sock
+
+    if {$ack} {
+	set x [read $sock 1]
+	set now [clock clicks]
+	puts "round trip time: [expr $now - $ts]"
+    }
     after $delay
 }
