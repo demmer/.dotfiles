@@ -2,7 +2,19 @@
 # Host specific muttrc
 # 
 
+#
+# First suck in the generic stuff
+#
+source ~/.muttrc.generic
+
 my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 
-source ~/.muttrc.generic
+mailboxes ! =tinyos
+
+#
+# Sorting order dependent on the folder
+#
+folder-hook . set sort=mailbox-order
+folder-hook tinyos set sort=threads
+
 

@@ -42,5 +42,12 @@ html
 | formail -D 32768 msgid.cache
 
 #
+# Lists that I want to be spooled go here (last)
+#
+:0
+* List-Id: .*tinyos
+tinyos
+
+#
 # C'est fini.
 #
