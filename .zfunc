@@ -69,9 +69,10 @@ function slc {
 
 # chpwd - runs every time the current working directory changes
 function chpwd {
+	cwd=`pwd`
         while read pattern mask
         do
-                eval "if [[ `pwd` == $pattern ]]; then
+                eval "if [[ '$cwd' == $pattern ]]; then
                         umask $mask
                         break
                 fi"
