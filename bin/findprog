@@ -1,0 +1,20 @@
+#!/bin/sh -f
+
+#
+# usage: findprog "prog1 [prog2]..." [arg] ...
+#
+# Search path for the programs, printing all matches
+#
+
+progs=$1
+shift
+
+dirs=`echo $PATH | sed 's/:/ /g'`
+
+for prog in $progs; do
+for dir in $dirs; do
+	if [ -x $dir/$prog ]; then
+		echo $dir/$prog
+	fi
+done
+done
