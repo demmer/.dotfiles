@@ -385,3 +385,7 @@
     (add-hook 'shell-mode-hook 'my-shell-mode-init)
   )
 
+;; encryption
+(require 'crypt++)
+(setq crypt-encryption-type 'pgp)
+(crypt-rebuild-tables)
