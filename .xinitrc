@@ -62,7 +62,7 @@ mozilla &
 xclock -digital -twelve -padding 3 -geometry =$XCLOCK_GEOM \
 	-bg gray87 -strftime "%b %e %l:%M %p" &
 yabiff -geometry $YABIFF_GEOM -host xoopi,argus -checkfetch argus &
-ayttm > .ayttm/ayttm.log 2>&1 &
+gaim &
 
 # Bring up a console window and a work shell
 xterm -title "Console" -n "Console" -geometry =$CONSOLE_GEOM -e /bin/sh -c \
