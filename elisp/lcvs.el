@@ -386,6 +386,7 @@ The following keys have meaning in an `lcvs-mode' buffer:
 	mode-name "LCVS")
   (setq modeline-process '(":%s"))
   (setq buffer-read-only t)
+  (make-variable-buffer-local 'font-lock-defaults)
   (setq font-lock-defaults '(lcvs-font-lock-keywords))
   (run-hooks 'lcvs-mode-hook))
 
