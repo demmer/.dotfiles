@@ -71,7 +71,7 @@ current directory for buffer.H.[mjd]"
   (interactive)
   (let ((targetlist (CH-buffer-match (buffer-name)))
 	(bufferlist (buffer-list))
-	(matches) (match) (pos) (file))
+	(matches) (match) (pos) (file) (files))
     
     ;; Try to find an open buffer that matches a name from the list
     (setq matches
