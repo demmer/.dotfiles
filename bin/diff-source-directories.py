@@ -11,7 +11,7 @@ def rmpath(top):
         for name in dirs:
             os.rmdir(join(root, name))
 
-pat1 = re.compile('/\*.*\*/', re.M | re.S)
+pat1 = re.compile('/\*.*?\*/', re.M | re.S)
 pat2 = re.compile('//.*')
 
 def strip_comments(dir):
@@ -46,3 +46,4 @@ strip_comments(new)
 strip_comments(old)
 
 os.system('diff -N -r %s %s | grep ">" | egrep -v "^>[ ]*$"'  % (join(tmp,old), join(tmp,new)))
+
