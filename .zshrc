@@ -74,9 +74,9 @@ watch=(notme)
 WATCHFMT='%n %a %l from %m at %t.'
 LOGCHECK=10
 
-# get the completions and bindings from seperate files
-source ~/.zcomp
+# get key bindings and completions
 source ~/.zbind
+source ~/.zcomp
 
 ## ARCHITECTURE SPECIFIC
 if [ "$ARCH" = "IRIX" -o "$ARCH" = "HP-UX" ]; then
@@ -94,11 +94,5 @@ function xtitle {
 	print -n "]0;$*"
 }
 
-## before each prompt, make the xterm's title display some info
-#function precmd {
-#	print -n "]2;$USER@$HOST   $PWD"
-#}
-
 fi
 #  end of xterm specific functions
-

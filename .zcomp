@@ -8,14 +8,6 @@
 # in your .zshrc or include a separate file from your .zshrc with the
 # source command.
 
-# These are just examples, use and modify to personal taste.  Copying this
-# file without thought will needlessly increase zsh's memory usage and
-# startup time.
-
-# For an explanation of what all this means, read either the
-# introduction for some explanation or the manual for a detailed
-# description.
-
 hosts=(							\
 			inigo.demmer.nu			\
 			largo.millennium.berkeley.edu	\
@@ -23,90 +15,18 @@ hosts=(							\
 			xoopi.pair.com			\
                         )
 
-# global completion options
-
-# case-insensitive 
-compctl -M '' 'm:{a-zA-Z}={A-Za-z}'
-
-# partial completion
-compctl -M 'r:|[.,_-]=* r:|=*'
-
-# application completion options
-
-# man completes to executable command names
-compctl -c man
-
-# Rmdir only real directories
-compctl -g '*(/)' rmdir
-
-# Strip and profile only executables
-compctl -g '*(*)' + -g '*(-/)' strip gprof
-
-# Run ghostscript on postscript files, but if no postscript file matches what
-# we already typed, complete directories as the postscript file may not be in
-# the current directory.
-compctl -g '*.ps' + -g '*(-/)' gs ghostview pstopdf
-
-# Same for pdf files
-compctl -g '*.pdf' + -g '*(-/)' acroread xpdf pdftops
-
-# But gv can handle both
-compctl -g '*.p(s|df)' + -g '*(-/)' gv
-
-# Similar things for tex, texinfo and dvi files.
-compctl -g '*.tex*' + -g '*(-/)' tex latex texi2dvi
-compctl -g '*.dvi' + -g '*(-/)' xdvi dvips
-
-# And again for xfig files
-compctl -g '*.fig' + -g'*(-/)' xfig
-
-# Anything after nohup is a command by itself with its own completion
-compctl -l '' nohup exec
-
-# If the command is rsh/ssh, make the first argument complete to hosts
-# and treat the rest of the line as a command on its own.
-compctl -k hosts -x 'p[2,-1]' -l '' -- rsh ssh
-compctl -x 'n[-1,@]' -k hosts -- finger
-
-# If the command is ssh (or the like), complete to hostnames that I
-# frequent.
-compctl -k hosts ping xssh ssh traceroute
-
-# kill takes signal names as the first argument after -, but job names after %
-compctl -j -P % -x 's[-] p[1]' -k signals -- kill
-
-# job control commands take job names
-compctl -j -P % fg bg disown
-
-# complete compression to non-compressed files
-# complete decompression to compressed files
-compctl -g '*.Z' + -g '.*.Z' + -g '*(/)' zcat zmore uncompress
-compctl -g '^*.zip)' zip
-compctl -g '*.zip' + -g '*(/)' unzip
-compctl -g '^*.gz' gzip
-compctl -g '*.gz' + -g '*(/)' gunzip gzcat
-compctl -g '^*.bz2' bzip2
-compctl -g '*.bz2' + -g '*(/)' bunzip2 bzcat
-compctl -g '^*.Z' compress
-
-compctl -g '*.(tar|gz|tgz)' + -g '*(/)' + -g '*' tar
-
-# find -exec completes as a commandline
-compctl -f -x 'r[-exec,;]' -l '' -- find
-
-# Java stuff
-compctl -g '*.java' + -g '*(/)' javac javadoc
-
-## DEFAULT COMPLETION
-#  complete filenames and path arguments
-compctl -D -f -x 's[-I][-L]' -f
-
-compctl -k dict_names l
-compctl -k dir_names g
-
 # Suck in runtest completions
 # XXX/demmer may want this again
 # if test -r ~/.runtest-comp; then
 #   testcases=(`cat ~/.runtest-comp`)
 #   compctl -k testcases runtest
 # fi
+# The following lines were added by compinstall
+
+zstyle :compinstall filename '/home/demmer/.zcomp'
+
+autoload -U compinit
+compinit
+# End of lines added by compinstall
+
+zstyle ':completion:*' verbose yes
