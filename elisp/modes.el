@@ -326,7 +326,7 @@ with tab characters underneath."
   (define-key bibtex-mode-map "\M-q" 'bibtex-fill-entry)
   (define-key bibtex-mode-map "\M-\C-l" 'lcvs-examine)
   (setq bibtex-align-at-equal-sign t)
-  (setq fill-column 80))
+  (setq fill-column 75))
 
 (add-hook 'bibtex-mode-hook 'my-bibtex-setup)
 
