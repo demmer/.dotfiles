@@ -1,0 +1,4 @@
+text/html; lynx -dump -force_html %s  | sed -e 's/^   //' ; copiousoutput
+application/ps; gv %s
+application/pdf; gv %s
+application/msword; antiword %s; copiousoutput
