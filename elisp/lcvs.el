@@ -4,9 +4,9 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.13 $)
+;; Version: 1.2 ($Revision: 1.14 $)
 (defconst lcvs-version "1.2")
-;; Date: Jan 24, 2000
+;; Date: Apr 23, 2003
 ;; Keywords: cvs
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -43,8 +43,6 @@
 ;; - chokes when using CVS_RSH=ssh and get prompted for passwd
 ;; - fix add to cd to dir -- ie handle adding with slash in name,
 ;;   seems to work fine for me with cvs-1.10
-;; - clear the mark list after operations on marked files.  commit and
-;;   update do this but add doesn't, for example.
 
 ;; ASSUMPTIONS:
 ;; - We assume that all files in a directory have the same branch tag.
@@ -52,11 +50,6 @@
 ;;   match.  If this isn't true you are asking for it, really.
 
 ;; TODO:
-;;
-;; - provide a revert command to discard edits.  remove file and do
-;;   update -p -rrev > file.  Don't do just update since that will add
-;;   a sticky tag and may get you edits you don't want (in the case of
-;;   "C" files) (destein)
 ;;
 ;; - make more asynchronous.  have lcvs-do-command take a callback.
 ;;
@@ -124,6 +117,9 @@ To see the whole log, use \\[lcvs-show-full-log].")
 
 (defvar lcvs-use-view-mode nil
   "*If non nil, lcvs will use view-mode in log, diff, etc, buffers.")
+
+(defvar lcvs-revert-confirm t
+  "*If non-nil, reverting files will require confirmation.")
 
 (defvar lcvs-UP-face
   (let ((face (make-face 'lcvs-UP-face)))
@@ -229,6 +225,7 @@ To see the whole log, use \\[lcvs-show-full-log].")
     (define-key map "m" 'lcvs-mark-file)
     (define-key map "u" 'lcvs-unmark-file)
     (define-key map "U" 'lcvs-update-some-files)
+    (define-key map "R" 'lcvs-revert)
     (define-key map "C" 'lcvs-commit)
     (define-key map "d" 'lcvs-diff-base)
     (define-key map "D" 'lcvs-diff-head)
@@ -581,19 +578,9 @@ See also `lcvs-mark-file'."
       (lcvs-next-line)
     (error nil)))
 
-(defun lcvs-update-some-files (arg)
-  "Update some files.
-By default updates file file on this line.
-If supplied with a prefix argument, update the marked files.
-If there are no marked files update those that need it according to
-`lcvs-updatable-regexp'."
-  (interactive "P")
-  (if (not (eq lcvs-submode 'examine))
-      (error "Updating in an update mode buffer is nonsensical."))
-  (let ((files (or (lcvs-get-relevant-files arg 'noerror)
-		   (lcvs-get-updatable-files)
-		   (error "Nothing to update")))
-	(nconflicts 0)
+(defun lcvs-update-internal (files)
+  ;; Internal guts of update and revert.
+  (let ((nconflicts 0)
 	status)
     (message "Updating...")
     (setq status (lcvs-do-command-quietly "update" '("-q") (mapcar 'car files)))
@@ -641,6 +628,42 @@ If there are no marked files update those that need it according to
 		  "*** It contains all the `cvs -q update -dP' output.\n"
 		  "\n")
 	  (error "Update failed, see *CVS-update* buffer for details.")))))
+
+(defun lcvs-update-some-files (arg)
+  "Update some files.
+By default updates the file on this line.
+If supplied with a prefix argument, update the marked files.
+If there are no marked files update those that need it according to
+`lcvs-updatable-regexp'."
+  (interactive "P")
+  (if (not (eq lcvs-submode 'examine))
+      (error "Updating in an update mode buffer is nonsensical."))
+  (let ((files (or (lcvs-get-relevant-files arg 'noerror)
+		   (lcvs-get-updatable-files)
+		   (error "Nothing to update"))))
+    (lcvs-update-internal files)))
+
+(defun lcvs-revert (arg)
+  "Revert some files, discarding local changes.
+By default reverts the file on this line.
+If supplied with a prefix argument, revert the marked files.
+The files are removed and then updated.  By default this command requires
+confirmation to remove the files.  To disable the confirmation, you can
+set `lcvs-revert-confirm' to nil."
+  (interactive "P")
+  (let* ((files (lcvs-get-relevant-files arg))
+	 (multiple (cdr files)))
+    (if (and lcvs-revert-confirm
+	     (not (yes-or-no-p (format "Discard changes to %s? "
+				       (if multiple
+					   "the marked files"
+					 (car (car files)))))))
+	(message "Revert cancelled")
+      ;; Otherwise remove the files and do the update.
+      (mapcar (function (lambda (e)
+			  (delete-file (car e))))
+	      files)
+      (lcvs-update-internal files))))
 
 (defun lcvs-commit (arg)
   "Commit files.
@@ -804,6 +827,18 @@ Influenced by the `lcvs-log-restrict-to-branch' variable."
 		   (t
 		    (goto-char start)
 		    (recenter 0)))))))))
+    (if lcvs-log-restrict-to-branch
+	;; Do the substitute-command-keys before going to the other buffer.
+	(let ((msg (substitute-command-keys
+		    (concat
+		     "\n"
+		     "NOTE: Logging is restricted to the current branch.\n"
+		     "      To see the full log, use the \\[lcvs-show-full-log]"
+		     " command.\n"))))
+	  (save-excursion
+	    (set-buffer "*CVS-log*")
+	    (goto-char (point-max))
+	    (insert msg))))
     (message "Logging...done")))
 
 (defun lcvs-show-full-log (arg)
@@ -922,7 +957,8 @@ This mode is not meant to be user invoked."
   (insert "CVS: ")(insert-char ?- 70)(insert "\n")
   (insert "CVS: Enter Log.  Lines beginning with `CVS:' are removed"
 	  " automatically\n")
-  (insert "CVS: Type C-c C-c when done.\n")
+  (insert (substitute-command-keys
+	   "CVS: Type \\[lcvs-commit-finish] when done.\n"))
   (insert "CVS:\n")
   (insert "CVS: Committing in " default-directory "\n")
   (insert "CVS:\n")
@@ -936,8 +972,7 @@ This mode is not meant to be user invoked."
   (setq lcvs-commit-initial-buffer-contents (buffer-string))
   (set-buffer-modified-p nil)
 
-  ;; XXX/BRR shouldn't hardcode binding.
-  (message "Type C-c C-c when done.")
+  (message (substitute-command-keys "Type \\[lcvs-commit-finish] when done."))
   (run-hooks 'text-mode-hook))
 
 (defun lcvs-maybe-insert-template ()
