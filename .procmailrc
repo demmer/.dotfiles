@@ -21,13 +21,13 @@ LOGABSTRACT=all
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
-:0fb
-* ^[Cc]ontent-[Tt]ype: text/html
-| dehtml.pl
+# :0fb
+# * ^[Cc]ontent-[Tt]ype: text/html
+# | dehtml.pl
 
-:0fh
-* ^[Cc]ontent-[Tt]ype: text/html
-| sed 's,[Cc]ontent-[Tt]ype: text/html,Content-Type: text/plain,g'
+# :0fh
+# * ^[Cc]ontent-[Tt]ype: text/html
+# | sed 's,[Cc]ontent-[Tt]ype: text/html,Content-Type: text/plain,g'
 
 #
 # Format headers for other email addresses
