@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.3 2001-04-25 21:12:10 demmer Exp $
+;; $Id: vc.el,v 1.4 2001-06-26 21:41:59 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -2337,7 +2337,7 @@ A prefix argument specifies a factor for stretching the time scale.
 mode-specific menu. `vc-annotate-color-map' and
 `vc-annotate-very-old-color' defines the mapping of time to
 colors. `vc-annotate-background' specifies the background color."
-  (interactive "p")
+  (interactive "P")
   (vc-ensure-vc-buffer)
   (if (not (eq (vc-backend (buffer-file-name)) 'CVS))
       (error "Sorry, vc-annotate is only implemented for CVS"))
