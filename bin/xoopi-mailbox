@@ -1,3 +1,4 @@
 #!/bin/sh
 
-mailbox -geometry 370x45+985+72 unread count delay=1 mailbox=/tmp/mail-xoopi-demmer &
+mailbox -geometry =270x95+812+1 unread count delay=1 \
+	mailbox=/tmp/mail-xoopi-$USER &
