@@ -15,6 +15,11 @@ echo "*****      `date`"
 echo "*******************************************************"
 
 #
+# Bounce back to my home directory for convenience
+#
+cd $HOME
+
+#
 # Load in geometry
 #
 . $HOME/.geometry
@@ -59,8 +64,7 @@ WMPID=$!
 
 # Utility programs
 mozilla & 
-xclock -digital -twelve -padding 3 -geometry =$XCLOCK_GEOM \
-	-bg gray87 -strftime "%b %e %l:%M %p" &
+dclock &
 yabiff -geometry $YABIFF_GEOM argus:@,@F,tier,dtn,tinyos xoopi:@,sa-talk,pair-notices &
 gaim &
 
