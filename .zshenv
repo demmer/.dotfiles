@@ -127,7 +127,7 @@ export CVS_RSH=ssh
 if [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
 else 
-    export CVSROOT=:ext:inigo.demmer.nu:/repository  
+    export CVSROOT=:ext:inigo:/repository  
 fi
 
 unset XAUTHORITY
