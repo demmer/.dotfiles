@@ -36,10 +36,13 @@ unlimit
 limit stack 8192
 limit -s
 
-# left prompt
-PROMPT='%S[%m]%s -> '
-# right prompt
-RPROMPT=' %~'
+if [ "$EMACSPARENT" = "1" ]; then
+	PROMPT='[%m] %~ -> '
+	RPROMPT=''
+else
+	PROMPT='%S[%m]%s -> '
+	RPROMPT=' %~'
+fi
 
 # what is a word, really?
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
