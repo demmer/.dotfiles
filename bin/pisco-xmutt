@@ -1,7 +1,7 @@
 #!/bin/sh -f
 
 PROG=
-if [ ! '$HOST' == 'pisco' ]; then
+if ! [ x$HOST == xpisco ]; then
 	PROG='ssh -t pisco'
 fi
 
