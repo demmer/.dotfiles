@@ -35,6 +35,13 @@ spam
 | formail -I "Subject: (none)"
 
 #
+# Save a copy of html mail unmodified, just in case.
+#
+:0c
+* ^content-type: text/html
+html
+
+#
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
