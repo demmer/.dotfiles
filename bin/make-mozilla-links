@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ ! -d $HOME/.phoenix/default ]; then
+   echo "Run mozilla once to create profile then re-run $0"
+   exit 1
+fi
+
+cd $HOME/.phoenix/default
+DIR=`ls -1`
+cd $DIR
+
+echo "Setting up CVS links in `pwd`..."
+
+movefiles() {
+	srcdir=$1
+	dstdir=$2
+	echo "movefiles $srcdir $dstdir"
+	for f in `(cd $srcdir && ls -1d *)` ; do
+		[ $f = "." ] && continue
+		[ $f = ".." ] && continue
+		echo $dstdir/$f
+		rm -rf $dstdir/$f
+		mv $srcdir/$f $dstdir/$f
+	done
+}
+
+
+movefiles $HOME/.dotfiles/mozilla-stuff/chrome chrome
+rmdir $HOME/.dotfiles/mozilla-stuff/chrome
+
+# Move all the other files, including the CVS dir into this
+movefiles $HOME/.dotfiles/mozilla-stuff .
+rmdir $HOME/.dotfiles/mozilla-stuff
+
+ln -s `pwd` $HOME/.dotfiles/mozilla-stuff
+
+
