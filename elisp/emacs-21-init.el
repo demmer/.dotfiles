@@ -124,7 +124,8 @@ This must be bound to a mouse-down event in the mode-line."
 (autoload 'gnuserv-start "gnuserv-compat" "server" t)
 
 (message "starting gnuserv")
-(if (file-executable-p "/usr/local/bin/gnuserv")
+(if (or (file-executable-p "/usr/local/bin/gnuserv")
+	(file-executable-p "/usr/bin/gnuserv"))
     (gnuserv-start)
   )
 
