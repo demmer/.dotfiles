@@ -9,11 +9,11 @@
 # to sa-learn
 
 if [ x$1 = x ]; then
-	echo "usage: $0 <mbox-file>"
-	exit 1
+	MBOX=$HOME/Mail/missedspam
+else
+	MBOX=`pwd`/$1
 fi
 
-MBOX=`pwd`/$1
 TMP=/tmp/missed-spam-$$
 
 rm -rf $TMP
