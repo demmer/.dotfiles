@@ -55,15 +55,19 @@ if (open(TMP, "> $tmpf")) {
 }
 
 # Note that if this command fails for any reason, most likely because
-# lynx isn't in the path, then all that happens is that $body ends up
+# w3m isn't in the path, then all that happens is that $body ends up
 # as an empty string. The original html is still in $html and so will
 # be attached properly.
-if (open(LYNX, "lynx -dump -force_html $tmpf |")) {
-    while(<LYNX>) {
+
+$cmd = "w3m -dump -T text/html $tmpf";
+if (open(W3M, "$cmd |")) {
+    while(<W3M>) {
 	s/^   //;
 	$body .= $_;
     }
-    close LYNX;
+    close W3M;
+} else {
+    $body = "Error running '$cmd': $!\n\n";
 }
 
 unlink($tmpf);
