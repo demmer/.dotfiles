@@ -46,7 +46,7 @@
   )
 (add-hook 'text-mode-hook 'my-text-setup)
 
-;;; Setup c/c++ mode
+;;; Setup c/c++/java mode
 
 (defconst my-c-style
   '((c-basic-offset		. 4)
@@ -57,11 +57,18 @@
 	(label 			. -1000)	;flush labels left
 	(statement-cont		. c-lineup-math)))))
 
-(defun my-c-setup ()
+(defconst my-java-style
+  '((c-basic-offset		. 2)
+    (c-hanging-comment-ender-p	. nil)
+    (c-offsets-alist
+     . ((substatement-open	. 0)		;don't indent braces!
+	(inline-open		. 0)		;don't indent braces, please.
+	(label 			. -1000)	;flush labels left
+	(statement-cont		. c-lineup-math)))))
+
+(defun my-c-common-setup ()
   (interactive)
-  (c-add-style "my-c-style" my-c-style t)	; my style above
   (setq c-tab-always-indent t)			; indent wherever cursor is
-  (setq indent-tabs-mode nil)           	; use spaces for tabs
   (setq dabbrev-case-fold-search nil		; don't ignore case for dabbrev
 	dabbrev-case-replace nil)
   (setq c-electric-pound-behavior '(alignleft))	; use electric pound
@@ -71,9 +78,26 @@
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
-)
+  )
 
-(add-hook 'c-mode-common-hook 'my-c-setup)
+(add-hook 'c-mode-common-hook 'my-c-common-setup)
+
+(defun my-c-setup ()
+  (interactive)
+  (c-add-style "my-c-style" my-c-style t)	; my style above
+  (setq indent-tabs-mode nil)	           	; use spaces for tabs
+  )
+
+(add-hook 'c-mode-hook 'my-c-setup)
+(add-hook 'c++-mode-hook 'my-c-setup)
+
+(defun my-java-setup ()
+  (interactive)
+  (c-add-style "my-java-style" my-java-style t)	; my style above
+  (setq indent-tabs-mode t)
+  )
+  
+(add-hook 'java-mode-hook 'my-java-setup)
 
 ; load visual-basic mode
 (require 'visual-basic-mode)
