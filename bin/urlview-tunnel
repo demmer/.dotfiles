@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+while (<>) {
+	chomp;
+	$cmd = "mozilla -remote 'openUrl($_)'";
+	print "$cmd\n";
+	system $cmd;
+}
