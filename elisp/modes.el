@@ -145,6 +145,13 @@
 (add-hook 'c-mode-hook 'my-c-setup)
 (add-hook 'c-mode-common-hook 'my-cc-common-setup)
 
+; Fix the shitty xml mode
+(defun my-sgml-setup () 
+  (interactive)
+  (setq indent-tabs-mode nil)
+  )
+(add-hook 'sgml-mode-hook 'my-sgml-setup)
+
 ; Try to make the compile command do the right thing for amsh
 (defun amsh-compile-command-hook ()
   (interactive)
