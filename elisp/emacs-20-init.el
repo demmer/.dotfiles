@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.4 2000-05-24 20:50:55 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.5 2000-06-08 17:50:01 demmer Exp $
 
 
 (defun memequal (el list)
@@ -117,8 +117,6 @@ This must be bound to a mouse-down event in the mode-line."
 				     (vertical-scroll-bars . nil)
 				     )
 				  default-frame-alist))
-;; cool fontification always
-(global-font-lock-mode t)
 
 ;; timestamp customizations
 (setq time-stamp-start "[Mm]odified:[     ]+\\\\?[\"<]+")
@@ -144,7 +142,10 @@ This must be bound to a mouse-down event in the mode-line."
 (load "tera-added")
 (load "lcvs")
 (load "mwheel")
-(load "~/work/am-1/checkstcl/checkstcl.el")
+
+(let ((checkstcl "~/work/am-1/checkstcl/checkstcl.el"))
+  (if (file-exists-p checkstcl)
+      (load checkstcl)))
 
 (setq lcvs-log-restrict-to-branch t)
 
