@@ -3,24 +3,13 @@
 ## DESC:  zsh conditional completion settings
 ##
 
-# This file gives some examples of compctl commands. The name zcomp
-# does not mean anything to zsh, you can either put the compctl commands
-# in your .zshrc or include a separate file from your .zshrc with the
-# source command.
-
-hosts=(							\
-			inigo.demmer.nu			\
-			largo.millennium.berkeley.edu	\
-			playground.intel-research.net	\
-			xoopi.pair.com			\
-                        )
-
 # Suck in runtest completions
 # XXX/demmer may want this again
 # if test -r ~/.runtest-comp; then
 #   testcases=(`cat ~/.runtest-comp`)
 #   compctl -k testcases runtest
 # fi
+
 # The following lines were added by compinstall
 
 zstyle :compinstall filename '/home/demmer/.zcomp'
@@ -29,4 +18,65 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
-zstyle ':completion:*' verbose yes
+######################################################################
+#
+# A bunch of stuff adapted from Adam Spires example online
+#
+######################################################################
+
+# Don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
+
+# Don't complete uninteresting users
+zstyle ':completion:*:*:*:users' ignored-patterns \
+        adm apache bin daemon games gdm halt ident junkbust lp mail mailnull \
+        named news nfsnobody nobody nscd ntp operator pcap postgres radvd \
+        rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs
+
+# ... unless we really want to.
+zstyle '*' single-ignored show
+
+#
+# Output formatting
+#
+
+# Separate matches into groups
+zstyle ':completion:*' group-name ''
+
+# Describe each match group.
+zstyle ':completion:*:descriptions' format "%B---- %d%b"
+
+# Messages/warnings format
+zstyle ':completion:*:messages' format '%B%U---- %d%u%b' 
+zstyle ':completion:*:warnings' format '%B%U---- no match for: %d%u%b'
+ 
+# Describe options in full
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+
+# My accounts
+users=(
+    demmer 
+    miked 
+    mikedemmer
+)
+
+zstyle ':completion:*' users $users
+
+# Common hostnames pulled from ssh known hosts
+_ssh_known_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*})
+
+hosts=(
+    "$_ssh_known_hosts[@]"
+    localhost
+)
+
+zstyle ':completion:*' hosts $hosts
+
+# Pretty display stuff
+# zmodload -i zsh/complist
+
+# zstyle ':completion:*' list-colors ''
+
+# zstyle ':completion:*:*:kill:*:processes' list-colors \
+# 	'=(#b) #([0-9]#)*=0=01;31'
