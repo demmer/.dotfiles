@@ -20,6 +20,9 @@ case $HOST in
  	zabar)
 	   BASE_GEOM=1024x768
 	   ;;
+	jitara)
+	   BASE_GEOM=OSX
+	   ;;
 	*)
 	   BASE_GEOM=1280x1024
 	   ;;
@@ -130,5 +133,15 @@ XTERM_4_GEOM="142x28+2048+40"
 XTERM_5_GEOM="142x22+2048+440"
 
 ACROREAD_GEOM="1024x768+0+0"
+
+#
+# OSX Geometry
+#
+elif [ "$BASE_GEOM" = "OSX" ]; then
+
+SSH_INIT_GEOM="+300+400"
+YABIFF_GEOM="400x100+1400+0"
+PISCO_XMUTT_GEOM="80x40-50+500"
+XOOPI_XMUTT_GEOM="80x40-650+500"
 
 fi
