@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+use Mail::MboxParser;
+
+my $parseropts = {
+    enable_cache    => 1,
+    enable_grep     => 1,
+    cache_file_name => '$ENV{HOME}/Mail/mbox-cache-file',
+};
+
+if ($#ARGV != 1) {
+    print "usage: $0 <mbox1> <mbox2>\n";
+    exit(1);
+}
+
+$mbox1 = $ARGV[0];
+$mbox2 = $ARGV[1];
+
+my $mb1 = Mail::MboxParser->new($mbox1, 
+				decode     => 'HEADER',
+				parseropts => $parseropts);
+
+my $mb2 = Mail::MboxParser->new($mbox2,
+				decode     => 'HEADER',
+				parseropts => $parseropts);
+# -----------
+
+# suck in all the msg ids from mailbox 1 
+%IDS = {};
+for my $msg ($mb1->get_messages) {
+    $IDS{$msg->id} = $msg;
+}
+
+# now search though mbox 2 to look for dupes
+for my $msg2 ($mb2->get_messages) {
+    $msg1 = $IDS{$msg2->id};
+
+    if ($msg1) {
+	print "Duplicate: " . $msg1->id . " " . $msg2->id . "\n";
+	print "  From:    " . $msg1->header->{from} . "\n";
+	print "  To:      " . $msg1->header->{to} . "\n";
+	print "  Subject: " . $msg1->header->{subject} . "\n";
+    }
+}
+
