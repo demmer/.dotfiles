@@ -1,0 +1,26 @@
+#!/bin/sh -f
+
+#
+# usage: runprog "prog1 [prog2]..." [arg] ...
+#
+# Search path for one of the programs named, skipping $HOME/bin and
+# exec it if found.
+#
+
+progs=$1
+shift
+
+dirs=`echo $PATH | sed 's/:/ /g'`
+
+for prog in $progs; do
+for dir in $dirs; do
+	[ $dir = $HOME/bin ] && continue
+	if [ -x $dir/$prog ]; then
+		echo $dir/$prog $*
+		exec $dir/$prog $*
+	fi
+done
+done
+
+echo "runprog: can't find $progs in PATH"
+exit 1
