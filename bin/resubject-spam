@@ -1,0 +1,38 @@
+#!/usr/local/bin/perl
+
+$buf = "";
+
+while (<STDIN>) {
+    if (/^Subject: (\*\*.*\*\*)?(.*)/) {
+	$oldspam = $1;
+	$subject = $2;
+	next;
+    }
+    if (/^X-Spam-Status:.*hits=([0-9.]+).*/) {
+	$rating = $1;
+    }
+
+    if ($rating && $subject) {
+	print "Subject: *****SPAM-$rating***** $subject\n";
+	print $buf;
+	print $_;
+	last;
+    }
+
+    if ($subject) {
+	$buf .= $_;
+    } else {
+	print $_;
+    }
+
+    if (/^$/) {
+	# no X-Spam-Status in headers, dump buffer
+	print "Subject: $oldspam$subject\n";
+	print $buf;
+	last;
+    }
+}
+
+while (<STDIN>) {
+    print $_;
+}
