@@ -14,9 +14,9 @@
 
 (defvar CH-buffer-pairs)
 
-(setq CH-buffer-pairs '((".C" ".H")
-			(".cc" ".h")
+(setq CH-buffer-pairs '((".cc" ".h")
 			(".c" ".h")
+			(".C" ".H")
 			(".tcc" ".h")
 			(".tcl" ".cc")
 			("M.nc" ".nc")
@@ -120,7 +120,7 @@ current directory for buffer.H.[mjd]"
       ;; If one exists, or the user wants one, open it, if not, see if
       ;; we want it to be created
       (if file (find-file file)
-	(if (y-or-n-p "Create new file? ")
+	(if (and (car matches) (y-or-n-p "Create new file? "))
 	    (find-file (read-from-minibuffer "Filename: " (car files)))
 	  (message "Not a switchable buffer")))
       )
