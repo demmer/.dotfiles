@@ -148,6 +148,7 @@
 				("\\.[A-Za-z0-9]*rc" . shell-script-mode)
 				("\\GNUmakerules\\'" . makefile-mode)
 				("\\.[12345678]\\'" . text-mode)
+				("\\.mdn\\'" . sgml-mode)
 				)
 			      auto-mode-alist))
 
