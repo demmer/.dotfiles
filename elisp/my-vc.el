@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: vc.el,v 1.6 2002-06-06 22:21:33 demmer Exp $
+;; $Id: my-vc.el,v 1.1 2002-09-05 21:40:48 miked Exp $
 
 ;; This file is part of GNU Emacs.
 
@@ -216,7 +216,7 @@ Default color is used if nil."
 (defcustom vc-annotate-menu-elements '(2 0.5 0.1 0.01)
   "*Menu elements for the mode-specific menu of VC-Annotate mode.
 List of factors, used to expand/compress the time scale.  See `vc-annotate'."
-  :type 'sexp
+   :type 'sexp
   :group 'vc)
 
 ;;;###autoload

@@ -139,6 +139,10 @@ This must be bound to a mouse-down event in the mode-line."
 (load "ff-stuff")
 (load "added")
 
+;; For emacs 20 I made some vc customizations that are addressed in
+;; emacs 21, so need to load my-vc.el.
+(load "my-vc")
+
 ;; lcvs setup
 (load "lcvs")
 (defun my-lcvs-setup ()                                                
