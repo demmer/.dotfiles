@@ -8,9 +8,7 @@
 ###################################################
 
 uname -snmr
-if [ -x `which frm` ]; then
-	frm -s new -s old
-fi
+frm -s new -s old 2> /dev/null
 
 ###################################################
 # Environment variables describing my preferences #
