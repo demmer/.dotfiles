@@ -1,0 +1,5 @@
+#
+# Just source the generic one
+#
+
+source ~/.muttrc.generic
