@@ -22,12 +22,12 @@ LOGABSTRACT=all
 # Content-Type header
 #
 :0fb
-* ^Content-Type: text/html
+* ^[Cc]ontent-[Tt]ype: text/html
 | dehtml.pl
 
 :0fh
-* ^Content-Type: text/html
-| sed 's,Content-Type: text/html, Content-Type: text/plain,g'
+* ^[Cc]ontent-[Tt]ype: text/html
+| sed 's,[Cc]ontent-[Tt]ype: text/html,Content-Type: text/plain,g'
 
 #
 # Format headers for other email addresses
