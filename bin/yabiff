@@ -5,36 +5,51 @@
 # Reworked and added ssh connection support by Mike Demmer <mike@demmer.nu>
 
 ## XXX this should be in resources but I don't know how
-set lines 5;
-set width 60;
-set beep 0;
-set flash 1;
-set delay 5;
-set delay [expr $delay * 1000];
-set fg black;
-set bg grey87;
-set font "6x13"
-set geometry "+10+10"
-set remotehost ""
+set width 60
+set delay 5000
+set fg black
+set bg grey87
+set font "6x10"
+set default_geometry "=300x70+10+10"
+set hosts ""
+set usebar 1
+set beep 1
+
+if {! [info exists geometry]} {
+    set geometry $default_geometry
+}    
+
+array set argvars {
+    -geometry		geometry
+    -geom		geometry
+    -delay		delay
+    -host		hosts
+    -bar		usebar
+    -beep		beep
+}
+
+proc usage {} {
+    global argvars
+    puts -nonewline "usage: yabiff "
+    foreach arg [array names argvars] {
+	puts "\[ $arg \] "
+    }
+    puts ""
+    exit 1
+}
 
 for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
-    switch -- $arg {
-	"-geometry" - "-geom" {
-	    incr i
-	    set geometry [lindex $argv $i]
-	}
-	"-host" {
-	    incr i
-	    set remotehost [lindex $argv $i]
-	}
-	default {
-	    puts stderr "unknown argument $arg"
-	    exit 1
-	}
+    set val [lindex $argv [incr i]]
+    if {! [info exists argvars($arg)]} {
+	puts stderr "unknown argument $arg"
+	usage
     }
+
+    set $argvars($arg) $val
 }
 
+set hosts [split $hosts ,]
 
 if [info exists env(USER)] {
     set user $env(USER);
@@ -45,7 +60,7 @@ if [info exists env(USER)] {
     exit -1;
 }
 
-if {$remotehost == ""} {
+if {$hosts == ""} {
     # no host specified, look for a spoolfile
     if [info exists env(MAIL)] {
 	if [file exists $env(MAIL)] {
@@ -70,21 +85,28 @@ if {$remotehost == ""} {
 wm title . YaBiff;
 wm geometry . $geometry
 
-set bar_width 2
+if {$usebar} {
+    set bar_width 2
+    text .bar -wrap none -font $font \
+	    -width $bar_width -background $bg -bd 1
+    pack .bar -side left -expand no -fill y
+} else {
+    set bar_width 0
+}
 
-text .bar -wrap none -setgrid 1 -font $font \
-	-width $bar_width \
-	-height $lines -background $bg -bd 1 
+set g [split $geometry {=x+}]
+set y [lindex $g 2]
 
-text .text -wrap none -setgrid 1 -font $font \
-	-width [expr $width - $bar_width] \
-	-height $lines -background $bg -bd 1
-
-frame .box -bd 0
-
-pack .box -anchor n -fill both
-pack .bar -side left -expand no -fill y
-pack .text -expand yes -fill both
+if {$hosts == ""} {
+    text $text -wrap none -font $font -background $bg -bd 1 -height 0
+    pack $text -expand yes -fill both -side top 
+} else {
+    foreach host $hosts {
+	set text ".text-$host"
+	text $text -wrap none -font $font -background $bg -bd 1 -height 0
+	pack $text -expand yes -fill both -side top 
+    }
+}
 
 proc flash {} {
     global beep;
@@ -114,24 +136,55 @@ proc checktime {} {
     return 0
 }
 
-proc refresh {lines} {
-    global fg bg
+set nlines_total 0
+proc refresh {host lines} {
+    global fg bg beep usebar
+    global nlines_total
+    upvar \#0 nlines_$host nlines_host
 
-    .text configure -state normal
-    .text delete 0.0 end
-
-    foreach line $lines {
-	.text insert 0.0 "$line\n";
+    if {$host == ""} {
+	set text .text
+    } else {
+	set text .text-$host
     }
 
-    if {[llength $lines] > 0} {
+    $text configure -state normal
+    $text delete 0.0 end
+
+    # adjust the global line count to tell if there's any new messages
+    # in any window
+    set nlines [llength $lines]
+    if {![info exists nlines_host]} {
+	set nlines_host 0
+    }
+
+    set old_nlines_total $nlines_total
+    set nlines_total [expr $nlines_total - $nlines_host + $nlines]
+    set nlines_host $nlines
+
+    # don't put a newline after the last one
+    $text insert 0.0 "[lindex $lines 0]"
+    for {set i 1} {$i < $nlines} {incr i} {
+	set line [lindex $lines $i]
+	$text insert 0.0 "$line\n";
+    }
+
+    if {$beep && ($nlines_total > $old_nlines_total)} {
 	bell -displayof .;
-	.bar configure -bg $fg
-    } else {
-	.bar configure -bg $bg
     }
     
-    .text configure -state disabled
+    if {$usebar} {
+	if {$nlines_total > 0} {
+	    .bar configure -bg $fg
+	} else {
+	    .bar configure -bg $bg
+	}
+    }
+
+    # make sure the bottom of the textbox is displayed
+    $text yview moveto 1.0
+    
+    $text configure -state disabled
 }
 
 proc spoolfile_loop {} {
@@ -152,25 +205,26 @@ proc spoolfile_loop {} {
     }
     catch {close $handle};
     
-    refresh $lines
+    refresh "" $lines
 }
 
 proc remote_loop {} {
-    global ssh remotehost
-    set ssh [open "|ssh -v $remotehost yabiff-server < /dev/null" r]
-    fconfigure $ssh -blocking false -buffering none
-    fileevent $ssh readable update_remote
+    global hosts
+
+    foreach host $hosts {
+	set ssh [open "|ssh -v $host yabiff-server < /dev/null" r]
+	fconfigure $ssh -blocking false -buffering none
+	fileevent $ssh readable "update_remote $host $ssh"
+    }
 }
 
-proc update_remote {} {
-    global ssh
-
+proc update_remote {host ssh} {
     set lines {}
     
     # something should be readable here
     set ret [gets $ssh line]
     if {$ret == -1} {
-	refresh {"(error: ssh tunnel died)"}
+	refresh $host {"(error: ssh tunnel died)"}
 	close $ssh
 	return
     }
@@ -194,15 +248,8 @@ proc update_remote {} {
     }
     
     # output what we got
-    refresh $lines
+    refresh $host $lines
 }
-
-proc prettytime {} {
-    set localtime [clock format [clock seconds] -format %I:%M%p];
-    regsub -- {^0} $localtime {} localtime
-    return [string tolower $localtime]
-}
-
 
 if [info exists spoolfile] {
     spoolfile_loop
