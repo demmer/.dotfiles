@@ -1,0 +1,181 @@
+#
+# Aliases to use for Mutt
+#
+
+#
+# Inktomi aliases to get tab completion. Put first so other aliases
+# take precedence.
+#
+source ~/.mutt_inktomi_aliases
+source ~/.mutt_inktomi_list_aliases
+
+#
+# Inktomi aliases that I think should be there but aren't.
+#
+alias ericl Eric Lundstedt <elundste@inktomi.com>
+alias ccutright Catherine Cutright <cutright@inktomi.com>
+alias t anoop, koichi, sreedhar
+
+#
+# Family
+#
+alias adam Adam Buchsbaum <alb@research.att.com>
+alias dad Peter Demmer <dad@demmerfamily.com>
+alias jab The Browns <brownjab@swbell.net>
+alias jimi Jimi Onalik <jonalik@nunanet.com>
+alias liuba Liuba Shapiro <shapirol@georgetown.edu>
+alias mary Mary Fernandez <mff@research.att.com>
+alias matt Matt Demmer <matt@demmerfamily.com>
+alias mom Regina Steinbach <mom@demmerfamily.com>
+alias nana Dorothy Steinbach <yanka1@msn.com>
+
+alias family mom, dad, matt, nana, jab, jimi, meanne, adam, mary
+
+#
+# Friends
+#
+alias amanda Amanda Eaken <aeaken@transact.org>
+alias apurva Apurva Dave <apurva@inktomi.com>
+alias aswan Andrew Swan <aswan@cs.berkeley.edu>
+alias becca Rebecca Silbermann <Rebecca_Silbermann@hotmail.com>
+alias bigs John Pottebaum <jsp@pixar.com>
+alias chaffee Gordon Chaffee <chaffee@attbi.com>
+alias czerwin Steve Czerwinski <czerwin@cs.berkeley.edu>
+alias diana Diana Reed <dreed@girlsms.org>
+alias dsimpson David Simpson <dsimpson@inktomi.com>
+alias dsolomon Debra Solomon <dsolomon@greatschools.net>
+alias elliot Elliot Winard <ewinard@macromedia.com>
+alias ewesson Elizabeth Wesson <ewesson@battery.com>
+alias glen Glen Sanford <glen@glen.nu>
+alias gk Gautam Kachroo <gk@inktomi.com>
+alias heather Heather Ingate <oliphant23@aol.com>
+alias hoofar Hoofar Razavi <hoofar@hoofar.com>
+alias jake Jake Cockrell <jcockrell@macromedia.com>
+alias jenmart Jennifer Martinez <JeMartinez@tribune.com>
+alias jessie Jessica Beckett <jbeckett@mac.com>
+alias jevans Jim Evans <jevans@cray.com>
+alias jon Jon Salky <jon@salky.com>
+alias jonah Jonah Staw <jonah.staw@frogdesign.com>
+alias josh Joshua Woolley <Joshua_Woolley@hotmail.com>
+alias jsp John Pottebaum <jsp@pixar.com>
+alias kathy Kathy Robertson <ski_winnie@hotmail.com>
+alias kevin Kevin Janiak <kevin@highschoolalumni.com>
+alias kim Kimberly Cullen <kim@asaponline.org>
+alias kirsten Kirsten Thornton <kirsten.thornton@accenture.com>
+alias kristy Kristy Cockrell <k_cockrell@excite.com>
+alias lance Lance Berc <lance@al.org>
+alias lucas Lucas Standaert <lucas@cray.com>
+alias luke Luke D'Alessandro <Luke_Dalessandro@hotmail.com>
+alias markf Mark Fritzel <mark@asaponline.org>
+alias maureen Maureen Morgan <maureenmorgan@hotmail.com>
+alias mattp Matt Podolsky <matt@inktomi.com>
+alias michelle Michelle Munson <michelle@michellemunson.com>
+alias mjr Michael John Radwin <mjr@acm.org>
+alias molly Molly Brown <mollybro@microsoft.com>
+alias nancychaffee <nancyk@home.net>
+alias neal Neal Cardwell <neal@inktomi.com>
+alias nlucks Ned Lucks <nlucks@stanfordalumni.org>
+alias noah Noah Treuhaft <treuhaft@cs.berkeley.edu>
+alias rachel Rachel Benson <rachelbenson@yahoo.com>
+alias robin Robin Alper <robinalper@earthlink.net>
+alias shawna Shawna Kaplan <shawna_kaplan@yahoo.com>
+alias stemm Mark Stemm <stemm@inktomi.com>
+alias tami Tami Downes <howie75@hotmail.com>
+alias tate Tate Hausman <mrhausman@yahoo.com>
+alias tex Michael Horn <mhorn@classroom.com>
+alias tkl Tashana Landray <tashana@tashana.com>
+alias tony Anthony Siddall <asiddall@achieve.org>
+alias webb Webb Eaken <webbstaa@hotmail.com>
+alias welch Will Welch <welch@quietplease.com>
+alias zach Zach Franklin <zfranklin@yahoo.com>
+
+alias sf-friends kim, robin, tex, diana, tkl, apurva, josh, jessie, glen, \
+		 jsp, tami, stemm, aswan, michelle, kevin, kathy, dsimpson, \
+		 hoofar, jonah, jake, kristy, markf, zach, noah, \
+		 rachel, amanda, dsolomon, ewesson, elliot, gk, mattp, neal \
+		 shawna, tate
+
+
+alias other-friends maureen, becca, luke, heather, kirsten, tony, \
+		    lucas, jon, jenmart, molly, shooters
+
+alias badness Badness 2000 <bad@love.cs.berkeley.edu>
+alias monday Monday Night Crew <monday@love.cs.berkeley.edu>
+
+#
+# Shooters
+#
+alias jodavis Joe Davis <jodavis@u.washington.edu>
+alias meghan Meghan Haslam <mhaslam@u.washington.edu>
+alias roncu Ron Curtis <roncu@microsoft.com>
+alias vechio Jason Zacher <zacherj@zgi.com>
+alias peck Mark Peck <MarkPe@Attachmate.com>
+
+alias shooters jodavis, meghan, vechio, roncu, peck
+
+#
+# Kingfish
+#
+alias alan_margulius Alan Margulius <margulius@earthlink.net>
+alias cbeausejour Christian Beausejour <cbeausejour@lbl.gov>
+alias david_ng David Ng <yondrboy@sj.znet.com>
+alias dougb Doug Byles <dougb@nibbi.com>
+alias ecampeau Eric Campeau <ECampeau@lbl.gov>
+alias jeff <JeffK@getmewired.com>
+alias john_reid <johnmichaelreid@yahoo.com>
+alias marc_silverberg Marc Silverberg <marc.silverberg@gator.com>
+alias marty Marty Meuller <mjmueller@aol.com>
+alias matt_sade Matthew Sade <matthewsade@yahoo.com>
+alias mike_gwynn Mike Gwynn <mjg@usms.com>
+alias peter_rizos Peter Rizos <prizos@yahoo.com>
+alias scott_pankonin Scott Pankonin <pankonin@pacbell.net>
+alias steve_welch Steve Welch <SWelch@ArcherNorris.com>
+alias strange_brew <strange_brew_racing@msn.com>
+
+alias kingfish alan_margulius, david_ng, dougb, \
+	       ecampeau, jeff, john_reid, marc_silverberg, \
+	       marty, matt_sade, mike_gwynn, peter_rizos, \
+	       scott_pankonin, steve_welch, strange_brew, \
+	       cbeausejour
+
+#
+# ASAP People
+#
+alias john_kittredge John Kittredge <john@asaponline.org>
+alias michael_taylor Michael Taylor <mltaylor01@attbi.com>
+alias daniel_tompos Daniel Tompos <daniel@asaponline.org>
+alias anthony_kelani Anthony Kelani <anthony@asaponline.org>
+
+#
+# Old ones that may not work
+#
+alias amd Adam Doppelt <amd@marimba.com>
+alias caf Michael Cafarella <michaelc@dai.ed.ac.uk>
+alias emil Emil Lissauer <elissau@emory.edu>
+alias eva E. Wong <evawong@u.washington.edu>
+alias fab Fabrizio Vitale <fabv@exchange.microsoft.com>
+alias graham Graham Phillips <GRPHILLIPS@vaxsar.vassar.edu>
+alias jasmina Jasmina Pavlin <Jasmina_Pavlin@ccm.sc.intel.com>
+alias jeremy Jeremy Bernstein <jabernst@student.umass.edu>
+alias kam Kamran Javadizadeh <KJAVA@minerva.cis.yale.edu>
+alias kostadis Kostadis Roussos <kostadis@engr.sgi.com>
+alias maggie Maggie Gertz <dachsy@minerva.cis.yale.edu>
+alias marc Marc Zimmerman <mkzim@cs.washington.edu>
+alias meghan Meghan Taira <mdt10@columbia.edu>
+alias mkzim Marc Zimmerman <mkzim@cs.washington.edu>
+alias nick Nicholas E Stern <neste@conncoll.edu>
+alias sara Sara Young <se-young@students.uiuc.edu>
+alias tom Tom Danielson <Thomas_Danielson@brown.edu>
+
+#
+# inktomi mailing lists
+#
+alias media-content-injector <media-content-injector@inktomi.com>
+alias media-defensive-mdn <media-defensive-mdn@inktomi.com>
+alias media-multicast <media-multicast@inktomi.com>
+alias media-packet-pump <media-packet-pump@inktomi.com>
+alias media-routing <media-routing@inktomi.com>
+
+#
+# Others added by mutt
+#
