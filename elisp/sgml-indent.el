@@ -48,6 +48,7 @@ spaces at each open tag."
     (when (re-search-backward "^\\([ \t]*\\)<" nil t)
       (let ((prev-indent-point (match-end 1))
 	    (prev-indent-column nil)
+	    (beginning nil)
 	    )
 	(goto-char prev-indent-point)
 	(setq prev-indent-column (current-column))
