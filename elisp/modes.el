@@ -145,6 +145,15 @@
 	    (progn
 	      (make-local-variable 'compile-command)
 	      (setq compile-command (format "cd %s; make" directory)))
+	  )
+
+	(setq directory (format "%s../../ffn/bin/%s" 
+				(file-name-directory buffer-file-name)
+				(getenv "ARCH")))
+	(if (file-directory-p directory)
+	    (progn
+	      (make-local-variable 'compile-command)
+	      (setq compile-command (format "cd %s; make" directory)))
 	  ))
     ))
 
