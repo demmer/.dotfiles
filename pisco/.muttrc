@@ -11,11 +11,11 @@ my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 
 set spoolfile =$HOME/Mail/inbox
 
-mailboxes =inbox =tier =dtn =tinyos =cs-crap =spam-maybe =end2end =ip =debian =soekris 
+mailboxes =inbox =tier =dtn =tinyos =cs-crap =spam-maybe =end2end =ip =debian =soekris =bytesforall
 
 subscribe tinyos-help tinyos-devel tinyos-internal tinyos-users \
 	  tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
-	  soekris-tech end2end-interest ip
+	  soekris-tech end2end-interest ip bytesforall_readers
 
 #
 # Sorting order dependent on the folder
@@ -28,4 +28,5 @@ folder-hook debian set sort=threads
 folder-hook soekris set sort=threads
 folder-hook end2end set sort=threads
 folder-hook ip set sort=threads
+folder-hook bytesforall set sort=threads
 

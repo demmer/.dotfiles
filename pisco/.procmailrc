@@ -70,6 +70,10 @@ tinyos
 * List-Id: .*ip@
 ip
 
+:0
+* Mailing-List: list bytesforall
+bytesforall
+
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
