@@ -120,7 +120,7 @@ color quoted     white          black
 color signature  yellow         black
 color status     black		white
 color tilde      yellow         black
-color tree       brightred      black
+color tree       cyan           black
 color hdrdefault yellow	        black
 
 #
