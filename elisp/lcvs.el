@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.20 $)
+;; Version: 1.2 ($Revision: 1.21 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1444,7 +1444,10 @@ the value of `foo'."
   (save-excursion
     (goto-char (point-min))
     (setq buffer-read-only nil)
-    (delete-matching-lines (concat lcvs-update-regexp (regexp-quote file) "$"))
+    (delete-matching-lines (concat lcvs-update-regexp
+				   (regexp-quote file)
+				   "\\( (.*)\\)?"
+				   "$"))
     (if (assoc file lcvs-marked-files)
 	(setq lcvs-marked-files (lcvs-remassoc file lcvs-marked-files)))
     (setq buffer-read-only t)))
@@ -1529,13 +1532,20 @@ the value of `foo'."
     status))
 
 (defun lcvs-current-file ()
+  ;; Assuming the current line is updatable (by lcvs-update-regexp), return
+  ;; the file name, minus any parenthesized comments that lcvs put in.
+  ;; e.g. "U elisp (new directory)" => "elisp"
   (save-excursion
     (beginning-of-line)
     (if (looking-at lcvs-update-regexp)
-	(buffer-substring (match-end 0)
-			  (progn (end-of-line) (point)))
+	(let ((beg (match-end 0))
+	      (end (search-forward "(" (line-end-position) t)))
+	  (if end
+	      (setq end (- end 2)) 		;; back up paren and whitespace
+	    (setq end (line-end-position))) 	;; take the whole line
+	  (buffer-substring beg end))
       (error "No file on this line"))))
-
+    
 (defun lcvs-current-file-state ()
   (save-excursion
     (beginning-of-line)
@@ -1594,6 +1604,20 @@ the value of `foo'."
 		 " is no longer \\(pertinent\\|\\(in the repository\\)\\).*\n"))
 	(replace-match "U \\2\n")
 	(setq dont-move t))
+
+       ((looking-at
+	 (concat "^cvs \\(update\\|server\\): warning: \\(.*\\)"
+		 " is not (any longer) pertinent\n"))
+	(replace-match "U \\2\n")
+	(setq dont-move t))
+
+       ;; Rewrite new directories as "U" with a note
+       ((looking-at
+	 (concat "^cvs \\(update\\|server\\): "
+		 "New directory `\\(.*\\)' -- ignored\n"))
+	(replace-match "U \\2 (new directory)\n")
+	(setq dont-move t))
+	
 
        ;; Ignore RCS noise
        ((looking-at
