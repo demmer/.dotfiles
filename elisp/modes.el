@@ -131,6 +131,7 @@ with tab characters underneath."
 (defvar my-c-style-overrides)
 (setq my-c-style-overrides
       '(("~/work/nesc" c-indent-two-spaces)
+	("~/work/tinyos-1.x" c-indent-two-spaces)
 	)
       )
 

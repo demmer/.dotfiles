@@ -155,13 +155,11 @@ This must be bound to a mouse-down event in the mode-line."
 (setq compile-command '"make")
 (setq compilation-scroll-output t)
 
-;; printer support
-(require 'lpr)
-(setq lpr-page-header-program "cat")
-(setq lpr-page-header-switches nil)
-(setq lpr-command "enscript")
-(setq lpr-headers-switches (list "-B"))
-
+;; host specific support
+(let ((host-elisp (format "%s/elisp/%s.el" *HOME* (getenv "HOST"))))
+  (if (file-readable-p host-elisp)
+      (load-file host-elisp)))
+    
 ;;; stuff that, for one reason or another, must come last
 (setq gc-cons-threshold 200000)
 (setq default-major-mode 'text-mode)
