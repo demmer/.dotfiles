@@ -9,11 +9,17 @@ dirs=`echo $PATH | sed 's/:/ /g'`
 
 for dir in $dirs; do
 	[ $dir = $HOME/bin ] && continue
-  	[ -x $dir/MozillaFirebird ] && exec $dir/MozillaFirebird $*
+	if [ -x $dir/MozillaFirebird ]; then
+		echo $dir/MozillaFirebird $*
+		exec $dir/MozillaFirebird $*
+	fi
 done
 
 for dir in $dirs; do
 	[ $dir = $HOME/bin ] && continue
-  	[ -x $dir/mozilla ] && exec $dir/mozilla $*
+	if [ -x $dir/mozilla ]; then
+		echo $dir/mozilla $*
+		exec $dir/mozilla $*
+	fi
 done
 
