@@ -1,0 +1,56 @@
+(require 'generic)
+(define-generic-mode 'fflog-generic-mode
+  ()
+  ()
+  (list
+   (list "^[^]]*\\(always\\)\\]"      '(1 font-lock-string-face nil t))
+   
+   (list "^[^]]*\\(debug\\)\\]"       '(1 font-lock-variable-name-face nil t))
+   
+   (list "^[^]]*\\(alert\\)\\]"       '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(crit\\)\\]"        '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(critical\\)\\]"    '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(emerg\\)\\]"       '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(emergency\\)\\]"   '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(err\\)\\]"         '(1 font-lock-comment-face nil t))
+   (list "^[^]]*\\(error\\)\\]"       '(1 font-lock-comment-face nil t))
+   
+   (list "^[^]]*\\(warn\\)\\]"        '(1 font-lock-warning-face nil t))
+   (list "^[^]]*\\(warning\\)\\]"     '(1 font-lock-warning-face nil t))
+   
+   (list "^[^]]*\\(info\\)\\]"        '(1 font-lock-string-face nil t))
+   (list "^[^]]*\\(notice\\)\\]"      '(1 font-lock-string-face nil t))
+   
+   (list "^[^[]*\\(\\[\\)\\([0-9]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\)\\(\\]\\)"
+         '(1 font-lock-string-face)
+         '(2 font-lock-string-face)
+         '(3 font-lock-function-name-face)
+         '(4 font-lock-string-face)
+         '(5 font-lock-string-face)
+         '(6 font-lock-string-face)
+         '(7 font-lock-function-name-face)
+         '(8 font-lock-string-face)
+         '(9 font-lock-string-face)
+         )
+   (list "^[^[]*\\(\\[\\)\\(<nopid>\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\)\\(\\]\\)"
+         '(1 font-lock-string-face)
+         '(2 font-lock-string-face)
+         '(3 font-lock-string-face)
+         '(4 font-lock-string-face)
+         '(5 font-lock-string-face)
+         '(6 font-lock-function-name-face)
+         '(7 font-lock-string-face)
+         '(8 font-lock-string-face)
+         )
+   (list "^[^[]*\\(\\[\\)\\([0-9/]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\) \\([^ ]*\\)\\(\\]\\)"
+         '(1 font-lock-string-face)
+         '(2 font-lock-string-face)
+         '(3 font-lock-string-face)
+         '(4 font-lock-string-face)
+         '(5 font-lock-function-name-face)
+         '(6 font-lock-string-face)
+         '(7 font-lock-string-face)
+         )
+   )
+  (list "\.log")
+  ())
