@@ -19,6 +19,19 @@ $filename = "$ENV{HOME}/.birthdays";
 
 open(F, "<$filename") or die "can't open $filename.";
 
+$oneday = (3600 * 24);
+
+$now = time - (time % $oneday) + $oneday;
+
+%reminders = (
+	      $now, 		  "today!!",
+	      $now + $oneday,	  "tomorrow.",
+	      $now + ($oneday * 7),  "next week.",
+	      $now + ($oneday * 14), "in two weeks."
+	      );
+
+$msg = "";
+
 while (<F>) {
     chomp;
     next if /^[ \t]*$/;
@@ -33,7 +46,7 @@ while (<F>) {
     
     %months = (
 	       January    => 0,
-	       February  => 1,
+	       February   => 1,
 	       March      => 2,
 	       April      => 3,
 	       May        => 4,
@@ -48,16 +61,33 @@ while (<F>) {
     
     $bmon = $months{$bmname};
     
-    print "bmon: $bmon\n";
     if ($bmon eq "") {
 	print "$_ (error: invalid month)\n";
 	exit 1;
     }
-    
-    if ($mode eq "check") {
-	print "$bmname $bday: $who\n";
+
+    while (($check, $when) = each %reminders) {
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$x) = localtime($check);
+
+	if ($mon == $bmon && $mday == $bday) {
+	    $who .= "'s";
+	    $msg .= "It's $who birthday $when ($bmname $bday)\n";
+	}
     }
 };
+
+if (! $msg eq "") {
+    if ($mode eq "check") {
+	print $msg;
+    }
+
+    if ($mode eq "reminder") {
+	open MSG, "| mail -s \"Birthday Reminder\" $ENV{USER}" || \
+	    die "can't open pipe to mail";
+	print MSG "\n$msg";
+	close MSG;
+    }
+}
 
 close F;
 
