@@ -394,3 +394,22 @@ calls with dprintf macro calls. [mjd]"
   (interactive (list (read-string "Grope for: " (current-word))))
   (compile-internal (concat "grope " sym) "No more grope hits" "grope"
                     nil grep-regexp-alist))
+
+;; Try to make the compile command do the right thing for amsh
+(defun amsh-compile-command-hook ()
+  (interactive)
+  (if (string-match ".*am-1.*" (file-name-directory buffer-file-name))
+      (let ((directory))
+	(setq directory (file-name-directory 
+			 (file-truename 
+			  (format "%s../ffn/bin/%s/GNUMakerules" 
+				  (file-name-directory buffer-file-name)
+				  (getenv "ARCH")))))
+	(if (file-directory-p directory)
+	    (progn
+	      (make-local-variable 'compile-command)
+	      (setq compile-command (format "cd %s; make" directory)))
+	  ))
+    ))
+
+(add-hook 'c-mode-common-hook 'amsh-compile-command-hook)
