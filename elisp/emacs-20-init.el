@@ -2,6 +2,8 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
+;;; $Id: 
+
 
 (defun memequal (el list)
   "[Jak] Returns non-nil if ELT is an element of LIST.  Comparison
