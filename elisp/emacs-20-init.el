@@ -2,7 +2,7 @@
 ;;; elisp configuration file
 ;;; compiled from amd and other sources
 ;;;
-;;; $Id: emacs-20-init.el,v 1.7 2000-09-18 18:07:42 demmer Exp $
+;;; $Id: emacs-20-init.el,v 1.8 2000-10-24 19:22:24 demmer Exp $
 
 
 (defun memequal (el list)
@@ -165,7 +165,7 @@ This must be bound to a mouse-down event in the mode-line."
 (setq zenirc-server-default "irc.ffnet.com")
 
 (setq gnus-nntp-server nil)
-(setq gnus-select-method '(nntp "news.berkeley.edu"))
+(setq gnus-select-method '(nntp "nntp.concentric.net"))
 
 ; (remove-el ".log" completion-ignored-extensions)
 ; (remove-el ".log" PC-ignored-extensions)
