@@ -104,6 +104,7 @@ k;;;
 (global-set-key "\C-c\C-c" 'comment-region)
 (global-set-key "\C-c\C-u" 'uncomment-region)
 (global-set-key "\M-\C-l" 'lcvs-examine)
+(global-set-key "\C-l" 'lcvs-examine)
 (global-set-key "\C-xO" 'other-window-only)
 
 (global-set-key "\C-x\C-c" (lambda () (interactive) 
