@@ -85,12 +85,12 @@ mailbox*background:		gray87
 mailbox*borderWidth:		0
 
 ! XPostit
-xpostit.geometry:		=XPOSTIT_GEOM
+xpostit*geometry:		=XPOSTIT_GEOM
 xpostit*foreground:		black
 xpostit*background:		gray87
-xpostit.Confirm*foreground:	black
-xpostit.Confirm*background:	gray87
-xpostit.Confirm*font:		*helvetica-bold-r-normal--12*
+xpostit*Confirm*foreground:	black
+xpostit*Confirm*background:	gray87
+xpostit*Confirm*font:		*helvetica-bold-r-normal--12*
 xpostit*PostItNote*foreground:	black
 xpostit*PostItNote*background:	gray87
 xpostit*PostItNote*font:	*helvetica-bold-r-normal--14*
