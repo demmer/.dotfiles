@@ -1,3 +1,4 @@
 application/ps; gv %s
 application/pdf; gv %s
+application/x-application.pdf; gv %s
 application/msword; antiword %s; copiousoutput
