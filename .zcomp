@@ -36,6 +36,10 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
+# offer matching files, then files + directories, then all files
+# zstyle ':completion:*' file-patterns \
+# 	'%p:globbed-files' '*(-/):directories' '*:all-files'
+
 #
 # Output formatting
 #
@@ -60,23 +64,12 @@ users=(
     miked 
     mikedemmer
 )
-
 zstyle ':completion:*' users $users
 
-# Common hostnames pulled from ssh known hosts
+# Hostnames pulled from ssh known hosts
 _ssh_known_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*})
-
 hosts=(
     "$_ssh_known_hosts[@]"
     localhost
 )
-
 zstyle ':completion:*' hosts $hosts
-
-# Pretty display stuff
-# zmodload -i zsh/complist
-
-# zstyle ':completion:*' list-colors ''
-
-# zstyle ':completion:*:*:kill:*:processes' list-colors \
-# 	'=(#b) #([0-9]#)*=0=01;31'
