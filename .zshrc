@@ -6,6 +6,11 @@
 # search path for the cd command
 cdpath=(.)
 
+# on OS X, we don't run the .zlogin, so check for ssh-agent here
+if [ $ARCH = "Darwin" -a "$SSH_AUTH_SOCK" = "" ]; then
+	source $HOME/.ssh-attach
+fi
+
 # ignore these extensions when completing filenames
 fignore=(\~)
 
