@@ -3,10 +3,16 @@
 #
 
 #
+# Source eecs aliases first so they don't stomp on mine
+#
+source ~/.mutt_aliases_eecs
+
+#
 # Me
 #
-alias me Mike Demmer <mike@demmer.nu>
-alias work Mike Demmer <demmer@nbttech.com>
+alias me 	Michael Demmer <mike@demmer.nu>
+alias me-eecs 	Michael Demmer <demmer@eecs.berkeley.edu>
+alias me-nbt 	Michael Demmer <demmer@nbttech.com>
 
 #
 # Family
@@ -45,6 +51,7 @@ alias colby Chris Colby <colby@alum.mit.edu>
 alias czerwin Steve Czerwinski <czerwin@cs.berkeley.edu>
 alias davidwu-personal David Wu <davewu@soda.berkeley.edu>
 alias diana Diana Reed <dreed@girlsms.org>
+alias dpennise David Pennise <dpennise@uclink.berkeley.edu>
 alias dsimpson David Simpson <dave@simpsonhome.com>
 alias dsolomon Debra Solomon <dsolomon@greatschools.net>
 alias elena Elena Jakubiak <elena_jakubiak@hotmail.com>
@@ -186,5 +193,3 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 # Others added by mutt
 #
-alias dpennise David Pennise <dpennise@uclink.berkeley.edu>
-alias marykj Mary Kelleher-Jones <marykj@eecs.berkeley.edu>

@@ -1,0 +1,8 @@
+#
+# Host specific muttrc
+# 
+
+my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
+
+source ~/.muttrc.generic
+

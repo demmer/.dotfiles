@@ -1,0 +1,46 @@
+#
+# .procmailrc for argus
+#
+
+VERBOSE=no
+MAILDIR=$HOME/Mail
+LOGFILE=$HOME/Mail/procmaillog
+LOGABSTRACT=all
+
+#
+# Add a subject line for everything.
+#
+:0fh
+* ^Subject:[ ]*$
+| formail -I "Subject: (none)"
+
+#
+# Save a copy of html mail unmodified, just in case.
+#
+:0c
+* ^content-type: text/html
+html
+
+#
+# Strip out htmlification from the message body and change the
+# Content-Type header
+#
+:0bhf
+* ^content-type: text/html
+| dehtml.pl
+
+#
+# Save a copy of all mail into the spool mailbox, marking as already read.
+#
+:0c
+| formail -I "Status: RO" >> $HOME/Mail/spool
+
+#
+# Finally, get rid of duplicate messages after saving a copy to the spool.
+#
+:0 Wh: msgid.lock
+| formail -D 32768 msgid.cache
+
+#
+# C'est fini.
+#

@@ -2,11 +2,9 @@
 # Mutt Configuration variable settings. See www.mutt.org for manual.
 #
 
-my_hdr From: mike@demmer.nu (Michael Demmer)
-
 unset abort_unmodified
 set alias_file=~/.mutt_aliases
-set alternates="mike@demmer.nu|mjd@acm.org|mike@demmerfamily.com|demmer@nbttech.com"
+set alternates="mike@demmer.nu|mike@demmerfamily.com|demmer@cs.berkeley.edu"
 set askcc                 # prompt for cc when composing
 set attribution="" 
 set auto_tag
