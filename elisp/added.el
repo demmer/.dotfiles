@@ -348,6 +348,7 @@ calls with dprintf macro calls. [mjd]"
   (delete-other-windows)
   )
 
+(require 'compile)
 (defun grope (sym)
   (interactive (list (read-string "Grope for: " (current-word))))
   (compile-internal (concat "grope " sym) "No more grope hits" "grope"
