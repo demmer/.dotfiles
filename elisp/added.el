@@ -663,3 +663,25 @@ of line."
     ) ; let
   ) ; save-excursion
 )
+
+(defun scroll-up-ctrl-l ()
+  "Goes to the next ^L and move that line to the top of the window."
+  (interactive)
+  (if (re-search-forward "^$" nil t)
+      (progn
+	(next-line 1)
+	(recenter 0))
+    (scroll-up))
+  )
+
+(defun scroll-down-ctrl-l ()
+  "Goes to the previous ^L and move that line to the top of the window."
+  (interactive)
+  (if (and (re-search-backward "^$" nil t)
+	   (re-search-backward "^$" nil t))
+      (progn
+	(next-line 1)
+	(recenter 0)
+	)
+    (scroll-down))
+  )

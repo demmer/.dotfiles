@@ -103,3 +103,5 @@
 				   (save-buffers-kill-emacs)))))
 (global-set-key "\C-x " 'next-error)
 (global-set-key "\M-m" 'man)
+(global-set-key "\C-v" 'scroll-up-ctrl-l)
+(global-set-key "\M-v" 'scroll-down-ctrl-l)
