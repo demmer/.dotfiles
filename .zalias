@@ -55,6 +55,9 @@ alias glimpseindex="glimpseindex -B -M 128 -n -o"
 alias glimpseindex-cwd="glimpseindex  -H . -t ."
 alias gcwd=glimpseindex-cwd
 
+alias findsrc="find . -name \*.h -or -name \*.c -or -name \*.cc"
+alias etag-cwd="findsrc | xargs etags"
+
 alias make='gmake'
 
 alias xinigo='xssh inigo'
