@@ -772,10 +772,11 @@ Influenced by the `lcvs-log-restrict-to-branch' variable."
 		    (goto-char (point-min))
 		    (recenter 0))
 		   ;; If the whole entry fits into the window,
-		   ;; display it centered
+		   ;; display it at the bottom of the window
 		   ((< (1+ lines) (window-height))
-		    (goto-char start)
-		    (recenter (1- (- (/ (window-height) 2) (/ lines 2)))))
+		    (goto-char end)
+		    (previous-line (- (window-height) 2))
+		    (recenter 0))
 		   ;; Otherwise (the entry is too large for the window),
 		   ;; display from the start
 		   (t
