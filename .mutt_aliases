@@ -205,6 +205,7 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 alias durst Robert Durst <durst@mitre.org>
 alias kscott Keith Scott <kscott@mitre.org>
+alias dtn-devel kfall, durst, kscott, rkpatra
 
 #
 # Mailing Lists
