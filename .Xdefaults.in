@@ -56,12 +56,13 @@ emacs*pointerColor:		red
 
 ! dclock
 dclock*geometry:                =DCLOCK_GEOM
-dclock*hands:                   black
-dclock*foreground:              black
-dclock*background:              grey87
-dclock*highlight:               black
-dclock*borderWidth:             0
-dclock*update:                  1
+dclock*foreground:             	black
+dclock*background:             	gray87
+dclock*led_off:               	gray87
+dclock*dateup:			1
+dclock*fade:			1
+dclock*blink:			0
+dclock*date:			%a %b %e %Y
 
 ! mailbox
 mailbox*geometry:		=MAILBOX_GEOM
