@@ -1,0 +1,45 @@
+#!/bin/sh
+
+#
+# report-spam <mbox-file?>
+#
+
+# create a temp directory, split the mbox file, remove any
+# spamassassin markup, rehtml'ize the email, then pass the directory
+# to sa-learn
+
+if [ x$1 = x ]; then
+	echo "usage: $0 <mbox-file>"
+	exit 1
+fi
+
+MBOX=`pwd`/$1
+TMP=/tmp/missed-spam-$$
+
+rm -rf $TMP
+mkdir $TMP
+cd $TMP
+
+if [ ! -r $MBOX ]; then
+	echo "can't read $MBOX"
+	exit 1
+fi
+
+mboxsplit $MBOX
+mkdir new
+
+echo "Reformatting..."
+for f in `ls`; do
+	if [ -f $f ]; then 
+		echo -n "$f... "	
+		cat $f | rehtml.pl > new/$f
+	fi
+done
+echo
+
+sa-learn --spam --dir new
+
+cd /
+rm -rf $TMP
+
+rm -i $MBOX

@@ -1,0 +1,21 @@
+#!/usr/local/bin/perl
+
+$i = 0;
+
+while (<STDIN>) {
+    chomp;
+    $old = $_;
+    next if ($old eq "");
+    s/^[0-9]+[ _.]+//;
+    $new = sprintf("%03d. $_", $i);
+
+    if (-f $old) {
+	print "$old -> $new\n";
+    } else {
+	print "ERROR: can't find $old\n";
+    }
+
+    rename($old, $new) || die ("can't rename $old -> $new: $!");
+
+    $i++;
+}

@@ -1,0 +1,207 @@
+#!/usr/local/bin/perl
+
+
+# constants
+$pics_dir = "pics";
+$thumb_dir = "thumbnails";
+$body = "<body bgcolor=\"black\" text=\"white\" link=\"white\" \
+               vlink=\"white\" alink=\"white\">\n";
+$font = "<font face=\"arial\">\n";
+
+# figure out all the files we're interested in
+opendir(PICS, $pics_dir) || die "can't open $pics_dir: $!";
+@pics_files = sort(readdir(PICS));
+closedir PICS;
+
+# set the title based on the current directory name
+chomp($title = `pwd`);
+$title =~ s|.*/||;
+
+#
+# set up the thumbnail and frame files
+#
+open(THUMBNAILS, ">index.htm");
+
+print(THUMBNAILS "
+<html>
+<head>
+<title>$title</title>
+</head>
+$body
+$font
+<center>
+<h2>$title</h2>
+<a href=\"frames.htm\">frames</a>
+</center>
+<table width=100%>
+");
+
+open(LEFTFRAME, ">leftframe.htm");
+
+print(LEFTFRAME "
+<html>
+$body
+$font
+<center>
+<a target=\"_top\" href=\"index.htm\">thumbnails</a><br>
+mike\@demmer.nu
+<br><br>
+");
+
+#
+# Strip out the number and extension from the file.
+#
+sub extract_caption {
+    my ($file) = @_;
+    $file =~ m/([0-9]+\. )(.*)\.([A-Za-z0-9][A-Za-z0-9][A-Za-z0-9])/;
+    return $2;
+}
+
+sub append_to_thumbnails {
+    my ($file, $caption, $index) = @_;
+    if ($index % 4 == 0) {
+	if ($index != 0) {
+	    print (THUMBNAILS "</tr>\n\n");
+	}
+	print (THUMBNAILS "<tr>\n");
+    }
+
+    print (THUMBNAILS "
+<td>
+<center>
+<a href=\"$caption.htm\">
+<img border=\"0\" src=\"thumbnails/$file\"><br>
+$caption</a>
+<br><br><br>
+</center>
+</td>
+");
+}
+
+sub append_to_frame {
+    my ($file, $caption) = @_;
+    print(LEFTFRAME "
+<center>
+<a href=\"$caption.htm\" target=\"rightframe\">
+<img border=\"0\" src=\"thumbnails/$file\"><br>
+$caption</a>
+<br><br><br>
+</center>
+");
+}
+
+sub gen_file_page {
+    my ($file, $caption, $prev, $next) = @_;
+
+    my $prevlink = "";
+    if (! $prev eq "") {
+	$prevlink = "<a href=\"$prev.htm\">prev</a>";
+    }
+
+    my $nextlink = "";
+    if (! $next eq "") {
+	$nextlink = "<a href=\"$next.htm\">next</a>";
+    }
+    open(FILE, ">$caption.htm") || die "can't open $caption.htm: $!";
+
+    print(FILE "
+<html>
+<head>
+<title>$caption</title>
+</head>
+$body
+<div>
+<center>
+$font
+<h3>$caption</h3>
+<table border=\"0\">
+  <tr>
+  <td>$prevlink</td>
+  <td>&nbsp;</td>
+  <td>$nextlink</td>
+  <td>&nbsp;</td>
+  <td><a href=\"index.htm\" target=\"_top\">thumbnails</a></td>
+  <td>&nbsp;</td>
+  <td><a href=\"frames.htm\" target=\"_top\">frames</a></td>
+  </tr>
+</table>
+<img src=\"pics/$file\">
+</font>
+</center>
+</div>
+</body>
+</html>
+");
+
+    close FILE;
+};
+
+#
+# loop through images, start at 2 to skip . and ..
+#
+for ($i = 2; $i <= $#pics_files; ++$i) {
+    my $file = $pics_files[$i];
+    my $caption = extract_caption($pics_files[$i]);
+    my $prev = "";
+    if ($i != 2) {
+	$prev = extract_caption($pics_files[$i - 1]);
+    }
+    my $next = "";
+    if ($i != $#pics_files) {
+	$next = extract_caption($pics_files[$i + 1]);
+    }
+
+    append_to_thumbnails($file, $caption, $i - 2);
+    append_to_frame($file, $caption);
+    gen_file_page($file, $caption, $prev, $next);
+
+    print "$caption\n";
+}
+
+#
+# finish off the index pages
+#
+print(THUMBNAILS "
+</tr>
+</table>
+</font>
+</body>
+</html>
+");
+
+close(THUMBNAILS);
+
+print(LEFTFRAME "
+</table>
+</font>
+</body>
+</html>
+");
+close(LEFTFRAME);
+
+
+#
+# and finally, create the frameset page
+#
+open(FRAMESET, ">frames.htm");
+my $first = extract_caption($pics_files[2]);
+print(FRAMESET "
+<html>
+<head>
+<title>$title</title>
+</head>
+
+<frameset name=\"frameset\" frameborder=\"no\" cols=\"20%, 80%\" border=\"0\" framespacing=\"0\">
+<frame src=\"leftframe.htm\" name=\"leftframe\" scrolling=\"auto\">
+<frame src=\"$first.htm\" name=\"rightframe\" scrolling=\"auto\">
+
+<noframes>
+<body>
+This page requires a browser capable of displaying frames.
+Try the <a href=\"index.htm\">thumbnails</a>.
+</body>
+</noframes>
+</frameset>
+</html>
+");
+close(FRAMESET);
