@@ -8,6 +8,7 @@
 *.pdf$
 autom4te.cache/*
 CVS/*
+.svn/*
 TAGS
 tags
 doxygen/*
