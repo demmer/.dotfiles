@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.2 $)
+;; Version: 1.1 ($Revision: 1.3 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -113,25 +113,36 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
     face))
 
 (defvar dsvn-font-lock-keywords
-  '(("^[UP][ *].*" . dsvn-UP-face)
+  '(("^.      \\*.*" . dsvn-UP-face)
     ("^M[ *].*" . dsvn-M-face)
+    ("^C[ *].*" . dsvn-C-face)))
+(setq dsvn-font-lock-keywords
+  '(("^M      \\*.*" . dsvn-C-face)
     ("^C[ *].*" . dsvn-C-face)
-    ("^svn update.*" . dsvn-other-face)))
+    ("^M[ *].*" . dsvn-M-face)
+    ("^.      \\*.*" . dsvn-UP-face)))
 
 
 ;; Internal Vars.
 
 ;; Specifies what to search for when looking for the filename
 ;; in "svn status" output.
-;; The parens in this are assumed to enclose the state chars.
-(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]       [0-9]+   \\)")
+;; The first match indicates the local state char, the second
+;; indicates the server state char (* if updatable)
+(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~]\\)[ CM][ L][ +][ S]  \\([ *]\\)[ ]+[0-9]*[ ]+[ *]")
 
 ;; Describes how a marked line looks.
-(defvar dsvn-marked-file-regexp "^[UPARMC?]\\*")
+(defvar dsvn-marked-file-regexp "^[ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *][ ]+[0-9]*[ ]+\\*")
 
-;; Describes lines for files for which a "svn update" would make sense.
-(defvar dsvn-updatable-regexp "^\\([UC]\\)")
-(setq dsvn-updatable-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  \\*       [0-9]+   \\)")
+;; Describes lines for files for which a "svn update" would make
+;; sense. Basically identical to the status-regexp, except that the *
+;; must be set in the 8th column to indicate that the file was changed
+;; on the server and we don't include '?' files.
+(defvar dsvn-updatable-regexp "^[ ACDGIMRX!~][ CM][ L][ +][ S]  \\*[ ]+[0-9]*[ ]+[ *]")
+
+;; Describes lines for files for which a "svn resolved" would make
+;; sense. 
+(defvar dsvn-conflicted-regexp "^C[ CM][ L][ +][ S]  \\*[ ]+[0-9]*[ ]+[ *]")
 
 ;; List of regexps describing lines that `dsvn-clean' will remove in
 ;; an update mode buffer.
@@ -139,23 +150,18 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
 			     "^svn update: warning: .* was lost"))
 
 (defvar dsvn-examine-explanations
-  '((?U . "File has been changed in repository and needs to be updated")
-    (?A . "File has been added but not committed to the repository")
-    (?R . "File has been removed but not committed to the repository")
-    (?M . "File has been locally modified")
-    (?C . "File has been changed in repository and by you")
-    (?? . "File is unknown to SVN"))
-  "An alist to map the first column of \"svn update -n\" output into English.")
+  '((" *" . "File has been changed in repository and needs to be updated")
+    ("A " . "File has been added but not committed to the repository")
+    ("A " . "File has been added but not committed to the repository")
+    ("R " . "File has been removed but not committed to the repository")
+    ("M " . "File has been locally modified")
+    ("M*" . "File has been locally modified and changed in repository")
+    ("C " . "File has a conflict")
+    ("? " . "File is unknown to SVN"))
+  "An alist to map the state columns of \"svn examine\" output into English.")
 
-(defvar dsvn-update-explanations
-  '((?U . "File has been updated")
-    (?A . "File has been added but not committed to the repository")
-    (?R . "File has been removed but not committed to the repository")
-    (?M . "File has been locally modified")
-    (?C . "File has undergone a merge and now contains a conflict")
-    (?P . "File has been updated with a patch")
-    (?? . "File is unknown to SVN"))
-  "An alist to map the first column of \"svn update\" output into English.")
+;; XXX/demmer todo
+(defvar dsvn-update-explanations nil)
 
 (defvar dsvn-view-mode-commands
   '("annotate" "log" "stat")
@@ -244,8 +250,8 @@ For commit-mode buffers.")
 	 (procname (format "svn-%s-%s" mode basename))
 	 (buf (get-buffer bufname))
 	 (cmd (if (eq mode 'examine)
-		  (list dsvn-svn-command "-uq" "status")
-		(list dsvn-svn-command "-q" "update" "-dP")))
+		  (list dsvn-svn-command "-u" "status")
+		(list dsvn-svn-command "update")))
 	 proc)
     ;; Use an existing buffer if it is "visiting" the same dir.
     (if (and (not dont-use-existing)
@@ -397,9 +403,9 @@ been locally modified\"."
     (save-excursion
       (beginning-of-line)
       (if (looking-at dsvn-status-regexp)
-	  (progn
-	    (setq char (aref (match-string 1) 0))
-	    (message (cdr (assoc char dsvn-explanations))))
+	  (let ((state (concat (match-string 1)
+			       (match-string 2))))
+	    (message (cdr (assoc state dsvn-explanations))))
 	(message "I don't know what this line means")))))
 
 (defun dsvn-next-line ()
@@ -483,7 +489,7 @@ A numeric argument serves as a repeat count."
 	;; Since dsvn-current-file didn't fail, we know we're on a
 	;; normal line.
 	(beginning-of-line)
-	(forward-char 1)
+	(forward-char 19)
 	(setq buffer-read-only nil)
 	(subst-char-in-region (point) (1+ (point)) ?\ ?* 'no-undo)
 	(setq buffer-read-only t)
@@ -504,7 +510,7 @@ See also `dsvn-mark-file'."
 	  ;; Since dsvn-current-file didn't fail, we know we're on a
 	  ;; normal line.
 	  (beginning-of-line)
-	  (forward-char 1)
+	  (forward-char 19)
 	  (setq buffer-read-only nil)
 	  (subst-char-in-region (point) (1+ (point)) ?* ?\ 'no-undo)
 	  (setq buffer-read-only t)
@@ -519,7 +525,7 @@ See also `dsvn-mark-file'."
   (let ((nconflicts 0)
 	status)
     (message "Updating...")
-    (setq status (dsvn-do-command-quietly "update" '("-q") (mapcar 'car files)))
+    (setq status (dsvn-do-command-quietly "update" '("-q" "--non-interactive") (mapcar 'car files)))
     (message "Updating...done")
     (if (zerop status)
 	;; Parse the update output and update the displayed state accordingly.
@@ -722,10 +728,10 @@ Influenced by the `dsvn-log-restrict-to-branch' and
 	args working-revisions)
     ;; If the SVN/Tag file exists and contains a tag, then we use that
     ;; for logging so we only see messages for this branch.
-    (if dsvn-log-restrict-to-branch
-	(let ((tag (dsvn-sticky-tag (car files))))
-	  (if tag
-	      (setq args (cons (concat "-r" tag) args)))))
+;;     (if dsvn-log-restrict-to-branch
+;; 	(let ((tag (dsvn-sticky-tag (car files))))
+;; 	  (if tag
+;; 	      (setq args (cons (concat "-r" tag) args)))))
 
     ;; If logging just one file or need changes for all, figure out
     ;; working-revision list from SVN/Entries.
@@ -809,18 +815,18 @@ Influenced by the `dsvn-log-restrict-to-branch' and
 		    (goto-char start)
 		    (recenter 0)))))))))
 
-    (if dsvn-log-restrict-to-branch
-	;; Do the substitute-command-keys before going to the other buffer.
-	(let ((msg (substitute-command-keys
-		    (concat
-		     "\n"
-		     "NOTE: Logging is restricted to the current branch.\n"
-		     "      To see the full log, use the \\[dsvn-show-full-log]"
-		     " command.\n"))))
-	  (save-excursion
-	    (set-buffer "*SVN-log*")
-	    (goto-char (point-max))
-	    (insert msg))))
+;;     (if dsvn-log-restrict-to-branch
+;; 	;; Do the substitute-command-keys before going to the other buffer.
+;; 	(let ((msg (substitute-command-keys
+;; 		    (concat
+;; 		     "\n"
+;; 		     "NOTE: Logging is restricted to the current branch.\n"
+;; 		     "      To see the full log, use the \\[dsvn-show-full-log]"
+;; 		     " command.\n"))))
+;; 	  (save-excursion
+;; 	    (set-buffer "*SVN-log*")
+;; 	    (goto-char (point-max))
+;; 	    (insert msg))))
     
     (if dsvn-log-restrict-to-changes
 	;; Do the substitute-command-keys before going to the other buffer.
@@ -1758,11 +1764,7 @@ the value of `foo'."
   (save-excursion
     (beginning-of-line)
     (if (looking-at dsvn-status-regexp)
-	(let ((beg (match-end 0))
-	      (end (search-forward "(" (line-end-position) t)))
-	  (if end
-	      (setq end (- end 2)) 		;; back up paren and whitespace
-	    (setq end (line-end-position))) 	;; take the whole line
+	(let ((beg (match-end 0)) (end (line-end-position))) 	;; take the whole line
 	  (buffer-substring beg end))
       (error "No file on this line"))))
     
@@ -1921,4 +1923,4 @@ the value of `foo'."
 		      (dsvn-next-line)
 		    (error nil)))))))))
 
-;;; dsvn.el ends here 
+(provide 'dsvn)
