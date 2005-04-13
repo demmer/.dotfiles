@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.3 $)
+;; Version: 1.1 ($Revision: 1.4 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -60,10 +60,6 @@ the \\[dsvn-explain-this-line] command.")
 (defvar dsvn-log-restrict-to-changes nil
   "*If non-nil \\[dsvn-show-log] will show output for changes more recent
 than the current repository version.")
-
-(defvar dsvn-correlate-change-log nil
-  "*If non-nil \\[dsvn-show-changed-log] will reformat changed log messages
-to group similar checkins by author and comment string")
 
 (defvar dsvn-use-view-mode nil
   "*If non nil, dsvn will use view-mode in log, status, etc, buffers.")
@@ -833,205 +829,16 @@ Influenced by the `dsvn-log-restrict-to-branch' and
 	(save-excursion
 	  (set-buffer "*SVN-log*")
 	  (goto-char (point-max))
-
-	  ;; first some cleanup stuff
-	  (dsvn-cleanup-logs files working-revisions)
-      
-	  (if dsvn-correlate-change-log
-	      (dsvn-correlate-logs files working-revisions)
-	    (let ((msg (substitute-command-keys
-			(concat
-			 "\n"
-			 "NOTE: Logging is restricted to changes in files.\n"
-			 "      To see the full log, use the \\[dsvn-show-full-log]"
-			 " command.\n"))))
-	      (insert msg)
-	      ))))
-    (message "Logging...done")))
-
-(defvar dsvn-last-update 0
-  "Placeholder variable to keep the timestamp of the last progress update")
-
-(defvar dsvn-update-interval 2
-  "Number of seconds between progress updates")
-  
-(defun dsvn-update-progress (what)
-  "Simple procedure to update progress in the current buffer"
-  (let ((now (nth 1 (current-time))))
-    (if (> (- now dsvn-last-update) 2)
-	(progn
-	  (message "%s... (%d%% complete)" what
-		   (/ (* 100 (- (point) (point-min)))
-		      (- (point-max) (point))))
-	  (setq dsvn-last-update now)))))
-
-(defun dsvn-cleanup-logs (&optional files working-revisions)
-  "Strip out all the RCS crap from the log file, leaving only the
-interesting bits. Useful for dsvn-correlate-logs."
-  (interactive)
-
-  (save-excursion
-    (set-buffer "*SVN-log*")
-    (buffer-enable-undo)
-    (goto-char (point-min))
-
-    (setq buffer-read-only nil)
-      
-    (make-variable-buffer-local 'kill-whole-line)
-    (setq kill-whole-line t)
-
-    ;; strip out irrelevant log entries
-    (if files
-	(mapcar*
-	 (function
-	  (lambda (file version)
-	    (save-excursion
-	      (if (not (re-search-forward (format "Working file: %s" file) nil t)) nil
-		(if (not (re-search-forward (format "revision %s" version) nil t)) nil
-		  (previous-line 1)
-		  (beginning-of-line)
-		  (let ((beg (point)))
-		    (re-search-forward "^========[=]+\n")
-		    (previous-line 1)
-		    (beginning-of-line)
-		    (kill-region beg (point)))
-		  )))))
-	 files working-revisions))
-	    
-    ;; strip out all the crap, leave just the meat
-    (while (re-search-forward "^RCS file:" nil t)
-      (beginning-of-line)
-
-      (dsvn-update-progress "Stripping RCS junk")
-      
-      (let ((beg (point)) bound filename)
-
-	(search-forward "Working file: ")
-	(setq filename (buffer-substring (point) (line-end-position)))
-	(re-search-forward "^----[-]+\n")
-	(kill-region beg (point))
-	(insert "===================================")
-	(insert "===================================\n")
-
-	(save-excursion
-	  ;; Find the bound for this file
-	  (re-search-forward "^========[=]+\n")
-	  (kill-region (match-beginning 0) (match-end 0))
-	  (if (looking-at "^\n") (kill-line))
-	  (setq bound (point))
-
-	  ;; add the filename to any subsequent revisions
- 	  (save-excursion
- 	    (while (re-search-backward "^revision " beg t)
- 	      (replace-match (format "SVN revision %s:" filename) nil nil)))
-	    
-	  ;; and the first log entry
-	  (while (re-search-backward "^====[=]+\nrevision " beg t)
-	    (forward-word 1)
-	    (forward-char 1)
-	    (insert (format "%s:" filename))
-	    (beginning-of-line)
-	    (insert "SVN ")
-	    (previous-line 1))
 	  
-	  )))
-    
-    (goto-char (point-max))
-    (insert "===================================")
-    (insert "===================================\n") ;; need one at the end
-    (goto-char (point-min))
-    
-    ;; finally change ----- to ======
-    (save-excursion
-      (while (re-search-forward "^----[-]+" nil t)
-	(beginning-of-line)
-	(kill-line)
-	(insert "===================================")
-	(insert "===================================\n")
-	))
-  ))
-
-(defun dsvn-correlate-logs (&optional files working-revisions)
-  "Parse the *SVN-log* buffer, reformatting to group checkins by author
-and log message"
-  (interactive)
-
-  ;; first some setup stuff
-  (save-excursion
-    (set-buffer "*SVN-log*")
-    (buffer-enable-undo)
-    (goto-char (point-min))
-
-    (let ((old-gc-threshold gc-cons-threshold))
-
-      (setq buffer-read-only nil)
-
-      (make-variable-buffer-local 'gc-cons-threshold)
-      (setq gc-cons-threshold 100000000)
-
-      (make-variable-buffer-local 'kill-whole-line)
-      (setq kill-whole-line t)
-
-      ;; scan through again -- for each file, scan through the
-      ;; remainder to try to find matches. 
-      (let (regexp file file2 ver ver2 date date2 author author2 log log2 filept)
-	(setq regexp (concat "^SVN revision \\([^\:]*\\):\\([^\n]*\\)\n"
-		      "date: \\([^;]*\\);  author: \\([^;]*\\).*\n"))
-
-	(while (re-search-forward regexp nil t)
-	  (setq file (match-string 1))
-	  (setq ver  (match-string 2))
-	  (setq date (match-string 3))
-	  (setq author (match-string 4))
-
-	  (dsvn-update-progress "Correlating logs")
-
-	  ;; clear all the header stuff once more
-	  (kill-region (match-beginning 0) (match-end 0))
-
-	  (insert (format "file: %s:%s\n" file ver))
-	  (setq filept (point))
-	  (insert (format "date: %s;  author: %s;\n\n" date author))
-
-	  (save-excursion
-	    ;; copy all the log lines into the log variable to do the
-	    ;; comparison but don't erase them from the buffer
-	    (let ((beg (point)) end)
-	      (while (not (looking-at "^[-=]+\n"))
-		(next-line 1))
-	      (setq end (point))
-	      (setq log (buffer-substring beg end))
-	      )
-	    
-	    ;; now repeat the scan through the rest of the entries
-	    (while (re-search-forward regexp nil t)
-	      (setq file2 (match-string 1))
-	      (setq ver2  (match-string 2))
-	      (setq date2 (match-string 3))
-	      (setq author2 (match-string 4))
-
-	      ;; again copy all the log lines into the log variable to do the
-	      ;; comparison but don't erase them from the buffer
-	      (let ((beg (match-beginning 0)) (logbeg (point)))
-		(while (not (looking-at "^[-=]+\n"))
-		  (next-line 1))
-		(setq log2 (buffer-substring logbeg (point)))
-
-		;; now, if they match, clear out the contents of the
-		;; second entry and add the file / version to the list
-		(if (and (string= log log2)
-			 (string= author author2))
-		    (save-excursion
-		      (next-line 1)
-		      (kill-region beg (point))
-		      (goto-char filept)
-		      (insert (format "file: %s:%s\n" file2 ver2))))
-	      )))
-	  ))
-      (garbage-collect)
-      (setq gc-cons-threshold old-gc-threshold)
-      (setq buffer-read-only t)
-    )))
+	  (let ((msg (substitute-command-keys
+		      (concat
+		       "\n"
+		       "NOTE: Logging is restricted to changes in files.\n"
+		       "      To see the full log, use the \\[dsvn-show-full-log]"
+		       " command.\n"))))
+	    (insert msg)
+	    )))
+  (message "Logging...done")))
 
 (defun dsvn-show-full-log (arg)
   "Like \\[dsvn-show-log] but ignores `dsvn-log-restrict-to-branch'."
