@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.35 $)
+;; Version: 1.2 ($Revision: 1.36 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1955,4 +1955,4 @@ the value of `foo'."
 		      (lcvs-next-line)
 		    (error nil)))))))))
 
-;;; lcvs.el ends here 
+(provide 'lcvs)
