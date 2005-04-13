@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.5 $)
+;; Version: 1.1 ($Revision: 1.6 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -123,9 +123,9 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
 
 ;; Specifies what to search for when looking for the filename
 ;; in "svn status" output.
-;; The first match indicates the local state char, the second
-;; indicates the server state char (* if updatable)
-(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~]\\)[ CM][ L][ +][ S]  \\([ *]\\)[ ]+[0-9]*[ ]+[ *]")
+;; The parentheses match all the state characters.
+(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)[ ]+[0-9]*[ ]+[ *]")
+(setq dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)[ ]+[0-9]*[ ]+[ *]")
 
 ;; Describes how a marked line looks.
 (defvar dsvn-marked-file-regexp "^[ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *][ ]+[0-9]*[ ]+\\*")
@@ -145,19 +145,57 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
 (defvar dsvn-dirty-regexps '("^\\([UP]\\)[ *]"
 			     "^svn update: warning: .* was lost"))
 
-(defvar dsvn-examine-explanations
-  '((" *" . "File has been changed in repository and needs to be updated")
-    ("A " . "File has been added but not committed to the repository")
-    ("A " . "File has been added but not committed to the repository")
-    ("R " . "File has been removed but not committed to the repository")
-    ("M " . "File has been locally modified")
-    ("M*" . "File has been locally modified and changed in repository")
-    ("C " . "File has a conflict")
-    ("? " . "File is unknown to SVN"))
-  "An alist to map the state columns of \"svn examine\" output into English.")
+(defun dsvn-local-state (state)
+  (aref state 0))
 
+(defun dsvn-property-state (state)
+  (aref state 1))
+
+(defun dsvn-update-state (state)
+  (aref state 7))
+
+;; Extract the 
+(defun dsvn-status-explain (state)
+  (let ((local-state    (dsvn-local-state state))
+	(property-state (dsvn-property-state state))
+	(update-state   (dsvn-update-state state))
+	(result nil))
+    
+    (cond
+     ((equal local-state ?M)
+      (setq result "File has been locally modified"))
+     
+     ((equal local-state ?A)
+      (setq result "File has been added"))
+
+     ((equal local-state ?R)
+      (setq result "File has been removed"))
+
+     ((equal local-state ?C)
+      (setq result "File has a conflict"))
+
+     ((equal local-state ??)
+      (setq result "File is unknown to SVN"))
+     )
+
+    (if (equal property-state ?M)
+	(setq result
+	      (if (equal result nil)
+		  "File properties have been modified"
+		(concat result " and properties have been modified"))))
+
+    (if (equal update-state ?*)
+	(setq result
+	      (if (equal result nil)
+		  "File has been updated in the repository"
+		(concat result " and has been updated in the repository"))))
+
+    result
+    ))
+     
 ;; XXX/demmer todo
-(defvar dsvn-update-explanations nil)
+(defun dsvn-update-explain (state)
+  )
 
 (defvar dsvn-view-mode-commands
   '("annotate" "log" "stat")
@@ -178,6 +216,7 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
     (define-key map "R" 'dsvn-revert)
     (define-key map "r" 'dsvn-resolve-conflict)
     (define-key map "C" 'dsvn-commit)
+    (define-key map "i" 'dsvn-ignore)
     (define-key map "d" 'dsvn-diff-base)
     (define-key map "D" 'dsvn-diff-head)
     (define-key map "e" 'dsvn-ediff)
@@ -220,9 +259,9 @@ For commit-mode buffers.")
 For commit-mode buffers.")
 (make-variable-buffer-local 'dsvn-commit-parent-buffer)
 
-(defvar dsvn-explanations nil
-  "An alist explaining lines in this buffer based on the first column.")
-(make-variable-buffer-local 'dsvn-explanations)
+(defvar dsvn-explain-func nil
+  "Function to explain the line based on the state.")
+(make-variable-buffer-local 'dsvn-explain-func)
 
 (defvar dsvn-refresh-command nil
   "The command used to generate the buffer contents.")
@@ -246,7 +285,7 @@ For commit-mode buffers.")
 	 (procname (format "svn-%s-%s" mode basename))
 	 (buf (get-buffer bufname))
 	 (cmd (if (eq mode 'examine)
-		  (list dsvn-svn-command "-u" "status")
+		  (list dsvn-svn-command "status" "-u")
 		(list dsvn-svn-command "update")))
 	 proc)
     ;; Use an existing buffer if it is "visiting" the same dir.
@@ -345,10 +384,10 @@ via `describe-key' on \\[describe-key]"
   (kill-all-local-variables)
   (setq dsvn-marked-files nil)
   (cond ((eq submode 'examine)
-	 (setq dsvn-explanations dsvn-examine-explanations)
+	 (setq dsvn-explain-func 'dsvn-status-explain)
 	 (setq dsvn-refresh-command 'dsvn-examine))
 	(t
-	 (setq dsvn-explanations dsvn-update-explanations)
+	 (setq dsvn-explain-func 'dsvn-update-explain)
 	 (setq dsvn-refresh-command 'dsvn-update)))
   (setq dsvn-submode submode)
   (use-local-map dsvn-mode-map)
@@ -399,9 +438,8 @@ been locally modified\"."
     (save-excursion
       (beginning-of-line)
       (if (looking-at dsvn-status-regexp)
-	  (let ((state (concat (match-string 1)
-			       (match-string 2))))
-	    (message (cdr (assoc state dsvn-explanations))))
+	  (let ((state (match-string 1)))
+	    (message (funcall dsvn-explain-func state)))
 	(message "I don't know what this line means")))))
 
 (defun dsvn-next-line ()
@@ -641,15 +679,35 @@ the file on this line."
     (while cur
       (setq state (cdr (car cur)))
       (setq cur (cdr cur))
-      (if (or (equal state ?M)
-	      (equal state ?A)
-	      (equal state ?C)
-	      (equal state ?R))
+      (if (or (equal (dsvn-local-state state) ?M)
+	      (equal (dsvn-local-state state) ?A)
+	      (equal (dsvn-local-state state) ?R)
+	      (equal (dsvn-property-state state) ?M))
 	  nil
-	(error "Can only commit \"M\", \"A\", \"C\", or \"R\" files")))
+	(error "Can only commit locally modified files")))
     ;; Checks ok, give them the edit buffer.
     (pop-to-buffer (get-buffer-create "*SVN-commit-message*"))
     (dsvn-commit-mode this-buffer files)))
+
+(defun dsvn-ignore (arg)
+  "Add the given files to the svn:ignore property for their appropriate directory."
+  (interactive "P")
+  (dsvn-bitch-if-commit-in-progress)
+  (let ((files (dsvn-get-relevant-files arg))
+	(this-buffer (current-buffer))
+	cur state)
+    (setq cur files)
+    (while cur
+      (let ((dir  (file-name-directory (car (car cur))))
+	    (file (file-name-nondirectory (car (car cur)))))
+      (setq cur (cdr cur))
+
+      (if (eq dir nil)
+	  (setq dir "."))
+
+      ;; XXX/demmer yuck -- too much hassle
+      ))))
+
 
 (defun dsvn-resolve-conflict (arg)
   "Call 'svn resolve' on some files. Use this once you've resolved the
@@ -859,7 +917,7 @@ If given a prefix argument, use the marked files.  Otherwise use
 the file on this line."
   (interactive "P")
   (message "Getting status...")
-  (dsvn-do-command "status" "No output" nil
+  (dsvn-do-command "info" "No output" nil
 		   (mapcar 'car (dsvn-get-relevant-files arg)))
   (message "Getting status...done"))
 
@@ -1542,6 +1600,7 @@ the value of `foo'."
 (defun dsvn-do-command-quietly (cmd svnopts &optional cmdopts noerase)
   ;; Do the svn command `cmd' and print the result in buffer *SVN-`cmd'*.
   ;; Returns the command exit status.
+  (message (concat "dsvn command: " cmd svnopts))
   (let ((args (append svnopts (list cmd) cmdopts))
 	(bufname (concat "*SVN-" cmd "*"))
 	(cwd default-directory)
@@ -1578,7 +1637,7 @@ the value of `foo'."
   (save-excursion
     (beginning-of-line)
     (if (looking-at dsvn-status-regexp)
-	(aref (match-string 1) 0)
+	(match-string 1)
       (error "No file on this line"))))
 
 (defun dsvn-redraw-modeline (&optional all)
