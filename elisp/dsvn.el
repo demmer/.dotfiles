@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.4 $)
+;; Version: 1.1 ($Revision: 1.5 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -850,8 +850,7 @@ Influenced by the `dsvn-log-restrict-to-branch' and
   "Like \\[dsvn-show-log] but forces `dsvn-log-restrict-to-changes'."
   (interactive "P")
   (let ((dsvn-log-restrict-to-changes t)
-	(dsvn-log-restrict-to-branch nil)
-	(dsvn-correlate-change-log t))
+	(dsvn-log-restrict-to-branch nil))
     (dsvn-show-log arg)))
 
 (defun dsvn-show-status (arg)
