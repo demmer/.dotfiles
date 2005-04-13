@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.1 $)
+;; Version: 1.1 ($Revision: 1.2 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -46,6 +46,9 @@
 
 ;; User vars.
 
+;; we depend on some lcvs functions
+(require 'lcvs)
+
 (defvar dsvn-svn-command "svn"
   "*How to call svn.")
 
@@ -53,12 +56,6 @@
   "*If non-nil dsvn-mode will print a message in the echo area
 describing the current line.  This info is always available with
 the \\[dsvn-explain-this-line] command.")
-
-(defvar dsvn-log-restrict-to-branch t
-  "*If non-nil \\[dsvn-show-log] will show output for the current branch only.
-It does this by looking for a SVN/Tag file in the directory of the first
-file to be logged and passes the tag within to log.
-To see the whole log, use \\[dsvn-show-full-log].")
 
 (defvar dsvn-log-restrict-to-changes nil
   "*If non-nil \\[dsvn-show-log] will show output for changes more recent
@@ -125,15 +122,16 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
 ;; Internal Vars.
 
 ;; Specifies what to search for when looking for the filename
-;; in "svn update" output.
-;; The parens in this are assumed to enclose the state char.
-(defvar dsvn-update-regexp "^\\([UPARMC?]\\)[ *]")
+;; in "svn status" output.
+;; The parens in this are assumed to enclose the state chars.
+(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]       [0-9]+   \\)")
 
 ;; Describes how a marked line looks.
 (defvar dsvn-marked-file-regexp "^[UPARMC?]\\*")
 
 ;; Describes lines for files for which a "svn update" would make sense.
-(defvar dsvn-updatable-regexp "^\\([UC]\\)[ *]")
+(defvar dsvn-updatable-regexp "^\\([UC]\\)")
+(setq dsvn-updatable-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  \\*       [0-9]+   \\)")
 
 ;; List of regexps describing lines that `dsvn-clean' will remove in
 ;; an update mode buffer.
@@ -163,9 +161,6 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
   '("annotate" "log" "stat")
   "List of SVN commands that get their output put into view-mode.")
 
-;; The last dir we examined/updated.
-(defvar dsvn-last-dir nil)
-
 (defvar dsvn-debug nil
   "If non-nil, put dsvn into debug mode.")
 
@@ -177,8 +172,9 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
     (define-key map "m" 'dsvn-mark-file)
     (define-key map "u" 'dsvn-unmark-file)
     (define-key map "U" 'dsvn-update-some-files)
-    (define-key map "r" 'dsvn-remove)
+    (define-key map "-" 'dsvn-remove)
     (define-key map "R" 'dsvn-revert)
+    (define-key map "r" 'dsvn-resolve-conflict)
     (define-key map "C" 'dsvn-commit)
     (define-key map "d" 'dsvn-diff-base)
     (define-key map "D" 'dsvn-diff-head)
@@ -248,7 +244,7 @@ For commit-mode buffers.")
 	 (procname (format "svn-%s-%s" mode basename))
 	 (buf (get-buffer bufname))
 	 (cmd (if (eq mode 'examine)
-		  (list dsvn-svn-command "-nq" "update")
+		  (list dsvn-svn-command "-uq" "status")
 		(list dsvn-svn-command "-q" "update" "-dP")))
 	 proc)
     ;; Use an existing buffer if it is "visiting" the same dir.
@@ -297,30 +293,32 @@ For commit-mode buffers.")
   (list (expand-file-name
 	 (file-name-as-directory
 	  (dsvn-read-directory-name (format "SVN %s directory: " submode)
-				    dsvn-last-dir dsvn-last-dir t))
+				    lcvs-last-dir lcvs-last-dir t))
 	 current-prefix-arg)))
 
 (defun dsvn-examine (dir &optional dont-use-existing)
-  "Call \"svn -nq update\" in DIR and then call `dsvn-mode' (which see).
+  "Call \"svn examine\" in DIR and then call `dsvn-mode' (which see).
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 examine even if there is an examine buffer hanging around for DIR."
   (interactive (dsvn-examine-update-common-get-args 'examine))
-  (setq dsvn-last-dir dir)
+  (setq lcvs-last-dir dir)
   (dsvn-examine-update-common 'examine dir dont-use-existing))
 
 (defun dsvn-update (dir &optional dont-use-existing)
   "Call \"svn -q update -dP\" in DIR and then call `dsvn-mode' (which see).
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 update even if there is an update buffer hanging around for DIR."
-  (interactive (dsvn-examine-update-common-get-args 'update))
-  (setq dsvn-last-dir dir)
-  (dsvn-examine-update-common 'update dir dont-use-existing))
+  (interactive)
+  (error "dsvn-update not implemented"))
+;;   (interactive (dsvn-examine-update-common-get-args 'update))
+;;   (setq lcvs-last-dir dir)
+;;   (dsvn-examine-update-common 'update dir dont-use-existing))
 
 (defun dsvn-examine-or-update (dir &optional dont-use-existing)
   "LVCS examine or update based on the current value of `dsvn-submode'.
 It doesn't make sense to call this outside of an DSVN buffer."
   (interactive (dsvn-examine-update-common-get-args dsvn-submode))
-  (setq dsvn-last-dir dir)
+  (setq lcvs-last-dir dir)
   (dsvn-examine-update-common dsvn-submode dir dont-use-existing))
 
 (defun dsvn-mode (submode)
@@ -398,7 +396,7 @@ been locally modified\"."
   (let (char)
     (save-excursion
       (beginning-of-line)
-      (if (looking-at dsvn-update-regexp)
+      (if (looking-at dsvn-status-regexp)
 	  (progn
 	    (setq char (aref (match-string 1) 0))
 	    (message (cdr (assoc char dsvn-explanations))))
@@ -407,7 +405,7 @@ been locally modified\"."
 (defun dsvn-next-line ()
   "Move cursor to the next file."
   (interactive)
-  (if (re-search-forward dsvn-update-regexp nil t)
+  (if (re-search-forward dsvn-status-regexp nil t)
       (if dsvn-explain-each-line
 	  (dsvn-explain-this-line))
     (error "No more files")))
@@ -417,7 +415,7 @@ been locally modified\"."
   (interactive)
   (let ((pt (point)))
     (beginning-of-line)
-    (if (re-search-backward dsvn-update-regexp nil t)
+    (if (re-search-backward dsvn-status-regexp nil t)
 	(progn 
 	  (goto-char (match-end 0))
 	  (if dsvn-explain-each-line
@@ -643,12 +641,25 @@ the file on this line."
       (setq cur (cdr cur))
       (if (or (equal state ?M)
 	      (equal state ?A)
+	      (equal state ?C)
 	      (equal state ?R))
 	  nil
-	(error "Can only commit \"M\", \"A\", or \"R\" files")))
+	(error "Can only commit \"M\", \"A\", \"C\", or \"R\" files")))
     ;; Checks ok, give them the edit buffer.
     (pop-to-buffer (get-buffer-create "*SVN-commit-message*"))
     (dsvn-commit-mode this-buffer files)))
+
+(defun dsvn-resolve-conflict (arg)
+  "Call 'svn resolve' on some files. Use this once you've resolved the
+conflict and want to remove the conflicted bit which will let you check it in.
+If given a prefix argument, use the marked files.  Otherwise use
+the file on this line."
+  (interactive "P")
+  (dsvn-do-command "resolved"
+		   "No conflict to resolve"
+		   nil
+		   (mapcar 'car (dsvn-get-relevant-files arg)))
+  (message "Diffing...done"))
 
 (defun dsvn-diff-base (arg)
   "Diff some files against the BASE revision.
@@ -678,8 +689,8 @@ the file on this line."
   (dsvn-do-command "diff"
 		   "No differences with the HEAD"
 		   nil
-		   (append '("-N" "-rBASE") (dsvn-head-arg)
-			   (mapcar 'car (dsvn-get-relevant-files arg))))
+		   (cons"-N" (cons (format "-rBASE:%s" (dsvn-head-arg))
+			(mapcar 'car (dsvn-get-relevant-files arg)))))
   (message "Diffing...done"))
 
 ;; There isn't an easy way to do diff-base and diff-head.
@@ -981,7 +992,7 @@ and log message"
 	    ;; comparison but don't erase them from the buffer
 	    (let ((beg (point)) end)
 	      (while (not (looking-at "^[-=]+\n"))
-		(next-line))
+		(next-line 1))
 	      (setq end (point))
 	      (setq log (buffer-substring beg end))
 	      )
@@ -997,7 +1008,7 @@ and log message"
 	      ;; comparison but don't erase them from the buffer
 	      (let ((beg (match-beginning 0)) (logbeg (point)))
 		(while (not (looking-at "^[-=]+\n"))
-		  (next-line))
+		  (next-line 1))
 		(setq log2 (buffer-substring logbeg (point)))
 
 		;; now, if they match, clear out the contents of the
@@ -1005,7 +1016,7 @@ and log message"
 		(if (and (string= log log2)
 			 (string= author author2))
 		    (save-excursion
-		      (next-line)
+		      (next-line 1)
 		      (kill-region beg (point))
 		      (goto-char filept)
 		      (insert (format "file: %s:%s\n" file2 ver2))))
@@ -1456,9 +1467,8 @@ This mode is not meant to be user invoked."
     result))
 
 (defun dsvn-head-arg ()
-  ;; Return an arg referring to the HEAD, this might be a tag.
-  (or dsvn-sticky-tag
-      '("-rHEAD")))
+  ;; Return a string referring to the HEAD, this might be a tag.
+  (or dsvn-sticky-tag "HEAD"))
 
 (defun dsvn-set-view-mode (win buf)
   ;; Turn view-mode on for BUF in window WIN, making sure quitting it
@@ -1575,13 +1585,13 @@ This mode is not meant to be user invoked."
 
 (defun dsvn-parse-update-buffer (buf)
   ;; Return an alist describing the update output in a buffer.
-  ;; The buffer is expected to look like "svn -nq update" output.
+  ;; The buffer is expected to look like "svn examine" output.
   ;; The alist is like dsvn-marked-files with (file . state) pairs.
   (let (result)
     (save-excursion
       (set-buffer buf)
       (goto-char (point-min))
-      (while (re-search-forward dsvn-update-regexp nil t)
+      (while (re-search-forward dsvn-status-regexp nil t)
 	(let ((file (dsvn-current-file))
 	      (state (dsvn-current-file-state)))
 	  (setq result (cons (cons file state) result)))))
@@ -1637,7 +1647,7 @@ the value of `foo'."
   ;; Change the displayed state of a file.
   (save-excursion
     (goto-char (point-min))
-    (if (re-search-forward (concat dsvn-update-regexp (regexp-quote file) "$") nil t)
+    (if (re-search-forward (concat dsvn-status-regexp (regexp-quote file) "$") nil t)
 	(dsvn-change-this-file-state newstate))))
 
 (defun dsvn-remove-file-line (file)
@@ -1647,7 +1657,7 @@ the value of `foo'."
   (save-excursion
     (goto-char (point-min))
     (setq buffer-read-only nil)
-    (delete-matching-lines (concat dsvn-update-regexp
+    (delete-matching-lines (concat dsvn-status-regexp
 				   (regexp-quote file)
 				   "\\( (.*)\\)?"
 				   "$"))
@@ -1683,6 +1693,7 @@ the value of `foo'."
   ;; Do the svn command `cmd' and print the result in buffer *SVN-`cmd'*.
   ;; If there is no output, insert some default text.
   ;; Returns the command exit status.
+  (message (format "dsvn command: %s" cmd))
   (let ((args (append svnopts (list cmd) cmdopts))
 	(bufname (concat "*SVN-" cmd "*"))
 	(cwd default-directory)
@@ -1735,13 +1746,18 @@ the value of `foo'."
 			args))
     status))
 
+(defun dsvn-print-current-file ()
+  (interactive)
+  (message (dsvn-current-file)))
+
+
 (defun dsvn-current-file ()
-  ;; Assuming the current line is updatable (by dsvn-update-regexp), return
+  ;; Assuming the current line is updatable (by dsvn-status-regexp), return
   ;; the file name, minus any parenthesized comments that dsvn put in.
   ;; e.g. "U elisp (new directory)" => "elisp"
   (save-excursion
     (beginning-of-line)
-    (if (looking-at dsvn-update-regexp)
+    (if (looking-at dsvn-status-regexp)
 	(let ((beg (match-end 0))
 	      (end (search-forward "(" (line-end-position) t)))
 	  (if end
@@ -1753,7 +1769,7 @@ the value of `foo'."
 (defun dsvn-current-file-state ()
   (save-excursion
     (beginning-of-line)
-    (if (looking-at dsvn-update-regexp)
+    (if (looking-at dsvn-status-regexp)
 	(aref (match-string 1) 0)
       (error "No file on this line"))))
 
