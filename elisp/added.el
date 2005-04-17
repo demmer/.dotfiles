@@ -19,6 +19,7 @@
 			(".C" ".H")
 			(".tcc" ".h")
 			(".tcl" ".cc")
+			("hpp" "cpp")
 			("M.nc" ".nc")
  			("M.nc" "C.nc")
 			))
