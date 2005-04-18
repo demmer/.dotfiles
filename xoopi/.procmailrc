@@ -110,6 +110,14 @@ html
 * Subject:.*(security run|daily run|weekly run|monthly run) output
 $DEFAULT
 
+:0
+* Subject: Cron .* run-parts .*
+$DEFAULT
+
+:0
+* Subject: DailyTao.org.*
+$DEFAULT
+
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
