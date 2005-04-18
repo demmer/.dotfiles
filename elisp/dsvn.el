@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.7 $)
+;; Version: 1.1 ($Revision: 1.8 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,10 @@
   "*If non-nil dsvn-mode will print a message in the echo area
 describing the current line.  This info is always available with
 the \\[dsvn-explain-this-line] command.")
+
+(defvar dsvn-log-from-repository nil
+  "*If non-nil \\[dsvn-show-log] will show the log based on the
+current state in the repository, not on the local checked out copy.")
 
 (defvar dsvn-log-restrict-to-changes nil
   "*If non-nil \\[dsvn-show-log] will show output for changes more recent
@@ -771,48 +775,50 @@ the current branch."
   (ediff-vc-internal "" "" nil))
 
 (defun dsvn-show-log (arg)
-  "Show log info for some files.
-If given a prefix argument, use the marked files.  Otherwise use
-the file on this line.
-Influenced by the `dsvn-log-restrict-to-branch' and
-`dsvn-log-restrict-to-changes' variables."
+  "Show log info for some files. If given a prefix argument, use the
+marked files. Otherwise use the file on this line. Influenced by the
+`dsvn-log-from-repository' and `dsvn-log-restrict-to-changes'
+variables."
   (interactive "P")
   (let ((files (mapcar 'car (or (dsvn-get-relevant-files arg 'noerror)
 				(dsvn-get-updatable-files))))
 	args working-revisions)
-    ;; If the SVN/Tag file exists and contains a tag, then we use that
-    ;; for logging so we only see messages for this branch.
-;;     (if dsvn-log-restrict-to-branch
-;; 	(let ((tag (dsvn-sticky-tag (car files))))
-;; 	  (if tag
-;; 	      (setq args (cons (concat "-r" tag) args)))))
 
     ;; If logging just one file or need changes for all, figure out
     ;; working-revision list from SVN/Entries.
-    (if (or dsvn-log-restrict-to-changes (= (length files) 1))
-	(setq working-revisions
-	      (mapcar (function
-		       (lambda (filename)
-			 (let* ((file (file-name-nondirectory filename))
-				(dir (file-name-directory filename))
-				(entries (concat dir (file-name-as-directory "SVN") "Entries"))
-				(working-revision nil))
-			   (if (and (file-exists-p entries)
-				    (file-readable-p entries))
-			       (let ((buf (get-buffer-create "*Entries*")))
-				 (save-excursion
-				   (set-buffer buf)
-				   (erase-buffer)
-				   (insert-file-contents entries t nil nil t)
-				   (goto-char (point-min))
-				   (if (re-search-forward
-					;; /foo.c/1.3/blah/blah
-					(concat "^/" (regexp-quote file) "/\\([^/]+\\)/") nil t)
-				       (setq working-revision (match-string-no-properties 1)))
-				   (kill-buffer buf)
-				   working-revision))))))
-		      files)))
+    ;; XXX/demmer fixme
+;;     (if (or dsvn-log-restrict-to-changes (= (length files) 1))
+;; 	(setq working-revisions
+;; 	      (mapcar (function
+;; 		       (lambda (filename)
+;; 			 (let* ((file (file-name-nondirectory filename))
+;; 				(dir (file-name-directory filename))
+;; 				(entries (concat dir (file-name-as-directory "SVN") "Entries"))
+;; 				(working-revision nil))
+;; 			   (if (and (file-exists-p entries)
+;; 				    (file-readable-p entries))
+;; 			       (let ((buf (get-buffer-create "*Entries*")))
+;; 				 (save-excursion
+;; 				   (set-buffer buf)
+;; 				   (erase-buffer)
+;; 				   (insert-file-contents entries t nil nil t)
+;; 				   (goto-char (point-min))
+;; 				   (if (re-search-forward
+;; 					;; /foo.c/1.3/blah/blah
+;; 					(concat "^/" (regexp-quote file) "/\\([^/]+\\)/") nil t)
+;; 				       (setq working-revision (match-string-no-properties 1)))
+;; 				   (kill-buffer buf)
+;; 				   working-revision))))))
+;; 		      files)))
 
+    ;; If logging from repository, transform the file list to prepend
+    ;; the repository
+    (if dsvn-log-from-repository
+	(setq files (mapcar 'dsvn-file-url files))
+	)
+    (message "log files:")
+    (mapcar (function (lambda (f) (message (format "log file %s" f)))) files)
+        
     ;; do the actual log command
     (message "Logging...")
     (dsvn-do-command "log" "No output" nil (nconc args files))
@@ -869,18 +875,18 @@ Influenced by the `dsvn-log-restrict-to-branch' and
 		    (goto-char start)
 		    (recenter 0)))))))))
 
-;;     (if dsvn-log-restrict-to-branch
-;; 	;; Do the substitute-command-keys before going to the other buffer.
-;; 	(let ((msg (substitute-command-keys
-;; 		    (concat
-;; 		     "\n"
-;; 		     "NOTE: Logging is restricted to the current branch.\n"
-;; 		     "      To see the full log, use the \\[dsvn-show-full-log]"
-;; 		     " command.\n"))))
-;; 	  (save-excursion
-;; 	    (set-buffer "*SVN-log*")
-;; 	    (goto-char (point-max))
-;; 	    (insert msg))))
+    (if (not dsvn-log-from-repository)
+ 	;; Do the substitute-command-keys before going to the other buffer.
+	(let ((msg (substitute-command-keys
+		    (concat
+		     "\n"
+		     "NOTE: Logging is restricted to the checked out copy.\n"
+		     "      To see the full log, use the \\[dsvn-show-full-log]"
+		     " command.\n"))))
+	  (save-excursion
+	    (set-buffer "*SVN-log*")
+	    (goto-char (point-max))
+	    (insert msg))))
     
     (if dsvn-log-restrict-to-changes
 	;; Do the substitute-command-keys before going to the other buffer.
@@ -899,16 +905,15 @@ Influenced by the `dsvn-log-restrict-to-branch' and
   (message "Logging...done")))
 
 (defun dsvn-show-full-log (arg)
-  "Like \\[dsvn-show-log] but ignores `dsvn-log-restrict-to-branch'."
+  "Like \\[dsvn-show-log] but sets `dsvn-log-from-repository'."
   (interactive "P")
-  (let ((dsvn-log-restrict-to-branch nil))
+  (let ((dsvn-log-from-repository t))
     (dsvn-show-log arg)))
 
 (defun dsvn-show-changed-log (arg)
-  "Like \\[dsvn-show-log] but forces `dsvn-log-restrict-to-changes'."
+  "Like \\[dsvn-show-log] but sets `dsvn-log-restrict-to-changes'."
   (interactive "P")
-  (let ((dsvn-log-restrict-to-changes t)
-	(dsvn-log-restrict-to-branch nil))
+  (let ((dsvn-log-restrict-to-changes t))
     (dsvn-show-log arg)))
 
 (defun dsvn-show-status (arg)
@@ -1291,8 +1296,8 @@ This mode is not meant to be user invoked."
 ;; Internal functions.
 
 (defun dsvn-get-special-file-contents (filename)
-  ;; Get the contents of SVN/<filename>
-  (let ((filename (concat (file-name-as-directory "SVN") filename))
+  ;; Get the contents of .svn/<filename>
+  (let ((filename (concat (file-name-as-directory ".svn") filename))
 	result)
     (if (file-readable-p filename)
 	(let ((tempbuf (get-buffer-create (concat " *" filename "*"))))
@@ -1373,6 +1378,38 @@ This mode is not meant to be user invoked."
 		(setq tag (match-string-no-properties 1)))
 	    (kill-buffer buf))))
     tag))
+
+(defun dsvn-file-url (file)
+  "Return the svn url for the given file by extracting it from
+.svn/entries in the same directory as the given file."
+  (let* ((dir (file-name-directory file))
+	 (entries (concat dir (file-name-as-directory ".svn") "entries"))
+	 tail url)
+
+    (if (and (file-exists-p entries)
+	     (file-readable-p entries))
+	(setq tail "")
+      
+      ;; try the current directory, to which we'll tack on the
+      ;; file's directory as the tail
+      (setq entries (concat (file-name-as-directory ".svn") "entries"))
+      
+      (if (and (file-exists-p entries)
+	       (file-readable-p entries))
+	  (setq tail (file-name-as-directory (file-name-directory file)))
+	(error "Can't open entries file %s" entries)))
+
+    (let ((buf (get-buffer-create "*SVN-entries*")))
+      (save-excursion
+	(set-buffer buf)
+	(erase-buffer)
+	(insert-file-contents entries t nil nil t)
+	(goto-char (point-min))
+	(re-search-forward "url=\"\\([^\"]+\\)\"")
+	(setq url (match-string 1))
+	(kill-buffer buf)))
+  (concat (file-name-as-directory url) tail (file-name-nondirectory file))
+  ))
 
 (defun dsvn-ensure-saved (files)
   ;; Check for any buffers visiting any of the FILES and offer to save
