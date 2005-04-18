@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.6 $)
+;; Version: 1.1 ($Revision: 1.7 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -438,7 +438,7 @@ been locally modified\"."
     (save-excursion
       (beginning-of-line)
       (if (looking-at dsvn-status-regexp)
-	  (let ((state (match-string 1)))
+	  (let ((state (match-string-no-properties 1)))
 	    (message (funcall dsvn-explain-func state)))
 	(message "I don't know what this line means")))))
 
@@ -808,7 +808,7 @@ Influenced by the `dsvn-log-restrict-to-branch' and
 				   (if (re-search-forward
 					;; /foo.c/1.3/blah/blah
 					(concat "^/" (regexp-quote file) "/\\([^/]+\\)/") nil t)
-				       (setq working-revision (match-string 1)))
+				       (setq working-revision (match-string-no-properties 1)))
 				   (kill-buffer buf)
 				   working-revision))))))
 		      files)))
@@ -1073,7 +1073,7 @@ This mode is not meant to be user invoked."
 			     "Root")))
       (if svnroot-contents
 	  (if (string-match "^:local:\\(.*\\)" svnroot-contents)
-	      (setq local-svnroot (match-string 1 svnroot-contents))
+	      (setq local-svnroot (match-string-no-properties 1 svnroot-contents))
 	    (if (file-name-absolute-p svnroot-contents)
 		(setq local-svnroot svnroot-contents)))))
     (if local-svnroot
@@ -1094,8 +1094,8 @@ This mode is not meant to be user invoked."
 		  (while (not (eobp))
 		    (if (and (not (looking-at "^#"))
 			     (looking-at "\\s-*\\(\\S-+\\)\\s-+\\(.*\\)"))
-			(let ((exp (dsvn-emacsify-regexp (match-string 1)))
-			      (value (dsvn-expand local-svnroot (match-string 2))))
+			(let ((exp (dsvn-emacsify-regexp (match-string-no-properties 1)))
+			      (value (dsvn-expand local-svnroot (match-string-no-properties 2))))
 			  ;; Append since order matters.
 			  (setq result (append result (list (cons exp value))))))
 		    (forward-line)))
@@ -1132,7 +1132,7 @@ This mode is not meant to be user invoked."
 		(if root
 		    (progn
 		      (if (string-match "^:local:\\(.*\\)" root)
-			  (setq root (match-string 1 root)))
+			  (setq root (match-string-no-properties 1 root)))
 		      (replace-in-string repos
 					 (concat "^" (regexp-quote root))
 					 "")))))
@@ -1312,7 +1312,7 @@ This mode is not meant to be user invoked."
     (if contents
 	(progn
 	  (string-match ".*" contents)
-	  (match-string 0 contents)))))
+	  (match-string-no-properties 0 contents)))))
 
 (defun dsvn-emacsify-regexp (exp)
   ;; Convert a SVN-style regular expression into Emacs-style.
@@ -1370,7 +1370,7 @@ This mode is not meant to be user invoked."
 	    (insert-file-contents tagfile t nil nil t)
 	    (goto-char (point-min))
 	    (if (looking-at "^T\\(.*\\)")
-		(setq tag (match-string 1)))
+		(setq tag (match-string-no-properties 1)))
 	    (kill-buffer buf))))
     tag))
 
@@ -1600,7 +1600,6 @@ the value of `foo'."
 (defun dsvn-do-command-quietly (cmd svnopts &optional cmdopts noerase)
   ;; Do the svn command `cmd' and print the result in buffer *SVN-`cmd'*.
   ;; Returns the command exit status.
-  (message (concat "dsvn command: " cmd svnopts))
   (let ((args (append svnopts (list cmd) cmdopts))
 	(bufname (concat "*SVN-" cmd "*"))
 	(cwd default-directory)
@@ -1630,14 +1629,14 @@ the value of `foo'."
     (beginning-of-line)
     (if (looking-at dsvn-status-regexp)
 	(let ((beg (match-end 0)) (end (line-end-position))) 	;; take the whole line
-	  (buffer-substring beg end))
+	  (buffer-substring-no-properties beg end))
       (error "No file on this line"))))
     
 (defun dsvn-current-file-state ()
   (save-excursion
     (beginning-of-line)
     (if (looking-at dsvn-status-regexp)
-	(match-string 1)
+	(match-string-no-properties 1)
       (error "No file on this line"))))
 
 (defun dsvn-redraw-modeline (&optional all)
