@@ -17,6 +17,8 @@ cmu blackboard	x-mdemmer		bro
 IBM		mjdemmer		bro2
 RHN		mdemmer			bro
 pairnic		ictresearch		1ctresearch
+pairnic		demmer			normal
+register.com	mdemmer			bro
 EDAS		demmer@cs		bro2
 OSDI04		demmer@cs		bro2
 WDTN		demmer@cs		bro2
