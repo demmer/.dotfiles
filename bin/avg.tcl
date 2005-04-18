@@ -1,4 +1,4 @@
-#!/usr/local/bin/tclsh
+#!/usr/bin/tclsh
 
 set tot 0
 set L {}
@@ -29,7 +29,7 @@ foreach e $L {
 }
 set stddev [expr sqrt($stddev) / $cnt]
 
-set L [lsort -integer $L]
+set L [lsort -real $L]
 
 puts "Count:   $cnt"
 puts "Total:   $tot"
