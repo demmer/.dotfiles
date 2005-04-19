@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.8 $)
+;; Version: 1.1 ($Revision: 1.9 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -289,7 +289,7 @@ For commit-mode buffers.")
 	 (procname (format "svn-%s-%s" mode basename))
 	 (buf (get-buffer bufname))
 	 (cmd (if (eq mode 'examine)
-		  (list dsvn-svn-command "status" "-u")
+		  (list dsvn-svn-command "-u" "status")
 		(list dsvn-svn-command "update")))
 	 proc)
     ;; Use an existing buffer if it is "visiting" the same dir.
@@ -430,7 +430,7 @@ messages at the bottom."
     (unwind-protect
 	(let ((beg (point)))
 	  (setq buffer-read-only nil)
-	  (sort-lines nil beg (progn (forward-paragraph) (point))))
+	  (sort-lines nil beg (point-max)))
       (setq buffer-read-only t))))
 
 (defun dsvn-explain-this-line ()
