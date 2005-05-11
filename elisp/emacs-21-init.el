@@ -123,12 +123,12 @@ This must be bound to a mouse-down event in the mode-line."
 ;; start gnuserv (not emacsserver)
 (cond ((and window-system
 	    (or (file-executable-p "/usr/local/bin/gnuserv")
-		(file-executable-p "/usr/bin/gnuserv"))))
-      (autoload 'gnuserv-start "gnuserv-compat" "server" t)
-      (message "starting gnuserv")
-      (gnuserv-start)
-      (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
-      )
+		(file-executable-p "/usr/bin/gnuserv")))
+       (autoload 'gnuserv-start "gnuserv-compat" "server" t)
+       (message "starting gnuserv")
+       (gnuserv-start)
+       (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
+       ))
 
 ;; load in other files
 (load "modes")
