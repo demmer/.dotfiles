@@ -170,11 +170,19 @@ else
     export CVSROOT=$CVSROOT_INIGO
 fi
 
+# Ditto for SVNROOT
+if [ $HOST = wangari ]; then
+    export SVNROOT=file://svndepot/
+else
+    export SVNROOT=svn+ssh://wangari.cs.berkeley.edu:/svndepot/
+fi
+
 export CVS_RSH=ssh
  
 if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
     export DISPLAY=0:0
 fi
+
 
 unset XAUTHORITY
 export XAUTHORITY
