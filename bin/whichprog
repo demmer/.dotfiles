@@ -1,0 +1,21 @@
+#!/bin/sh -f
+
+#
+# usage: whichprog "prog1 [prog2]..." [arg] ...
+#
+# Search path for one of the programs named, skipping $HOME/bin and
+# echo the path if found.
+#
+
+progs=$1
+shift
+
+dirs=`echo $PATH | sed 's/:/ /g'`
+
+for prog in $progs; do
+for dir in $dirs; do
+	if [ -x $dir/$prog ]; then
+		echo $dir/$prog
+	fi
+done
+done
