@@ -33,6 +33,9 @@ if [ -x $UNAME ]; then
   	FreeBSD-2*)
   		export ARCH=FreeBSD2
   		;;
+	Darwin-*)
+		export ARCH=Darwin
+		;;
   	*)
   		export ARCH=`$UNAME -s`
   		;;
@@ -168,6 +171,10 @@ else
 fi
 
 export CVS_RSH=ssh
+ 
+if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
+    export DISPLAY=0:0
+fi
 
 unset XAUTHORITY
 export XAUTHORITY
