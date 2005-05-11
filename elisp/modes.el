@@ -52,6 +52,11 @@
 (require 'dabbrev)
 (require 'once-only-header)
 
+(require 'vc)
+(require 'vc-svn)
+(setq vc-handled-backends (cons 'SVN vc-handled-backends))
+
+
 (setq ooh-file-license
 "/*
  * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By
