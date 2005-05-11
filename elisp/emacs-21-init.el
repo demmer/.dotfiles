@@ -121,15 +121,14 @@ This must be bound to a mouse-down event in the mode-line."
 ;; (append-no-dup 'time-stamp write-file-hooks)
 
 ;; start gnuserv (not emacsserver)
-(cond (window-system
-       (autoload 'gnuserv-start "gnuserv-compat" "server" t)
-       (message "starting gnuserv")
-       (cond ((or (file-executable-p "/usr/local/bin/gnuserv")
-		  (file-executable-p "/usr/bin/gnuserv"))
-	      (gnuserv-start)
-	      (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
-	 ))
-       ))
+(cond ((and window-system
+	    (or (file-executable-p "/usr/local/bin/gnuserv")
+		(file-executable-p "/usr/bin/gnuserv"))))
+      (autoload 'gnuserv-start "gnuserv-compat" "server" t)
+      (message "starting gnuserv")
+      (gnuserv-start)
+      (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
+      )
 
 ;; load in other files
 (load "modes")
