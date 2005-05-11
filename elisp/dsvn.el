@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.9 $)
+;; Version: 1.1 ($Revision: 1.10 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -128,8 +128,8 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
 ;; Specifies what to search for when looking for the filename
 ;; in "svn status" output.
 ;; The parentheses match all the state characters.
-(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)[ ]+[0-9]*[ ]+[ *]")
-(setq dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)[ ]+[0-9]*[ ]+[ *]")
+(defvar dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)\\([ ]+[0-9]*[ ]+[ *]\\)")
+(setq dsvn-status-regexp "^\\([ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *]\\)\\([ ]+[0-9]*[ ]+[ *]\\)")
 
 ;; Describes how a marked line looks.
 (defvar dsvn-marked-file-regexp "^[ ACDGIMRX?!~][ CM][ L][ +][ S]  [ *][ ]+[0-9]*[ ]+\\*")
@@ -685,7 +685,7 @@ the file on this line."
       (setq cur (cdr cur))
       (if (or (equal (dsvn-local-state state) ?M)
 	      (equal (dsvn-local-state state) ?A)
-	      (equal (dsvn-local-state state) ?R)
+	      (equal (dsvn-local-state state) ?D)
 	      (equal (dsvn-property-state state) ?M))
 	  nil
 	(error "Can only commit locally modified files")))
@@ -1540,10 +1540,13 @@ the value of `foo'."
   ;; Change the displayed state of the file on this line.
   ;; If the file in in the marked list, update that too.
   (setq buffer-read-only nil)
-  (let ((file (dsvn-current-file))
-	(curstate (dsvn-current-file-state)))
+  (let ((file (dsvn-current-file)))
     (beginning-of-line)
-    (subst-char-in-region (point) (1+ (point)) curstate newstate 'noundo)
+    (if (not (looking-at dsvn-status-regexp))
+	(error "No file on this line"))
+
+    (replace-match (format "%c       \\2" newstate))
+    
     (if (assoc file dsvn-marked-files)
 	(setq dsvn-marked-files
 	      (cons (cons file newstate)
