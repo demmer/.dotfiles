@@ -9,7 +9,7 @@
 
 cat -s /etc/motd
 uname -snmr
-frm -s new 2> /dev/null
+# frm -s new 2> /dev/null
 
 ###################################################
 # Environment variables describing my preferences #
