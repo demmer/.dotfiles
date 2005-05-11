@@ -259,6 +259,7 @@ Key a    R    N    Exec  xterm -n "argus" -T "argus" -e ssh argus &
 Key p    R    N    Exec  xterm -n "pisco" -T "pisco" -e ssh pisco &
 Key s    R    N    Exec  xterm -n "sandbox" -T "sandbox" -e ssh sandbox &
 Key w    R    N    Exec  xterm -n "wangari" -T "wangari" -e ssh wangari &
+Key f    R    N    Exec  xterm -n "frontier" -T "frontier" -e ssh frontier &
 Key t    R    N    Exec  xterm -n "tier"  -T "tier" -e ssh tier &
 Key m    R    N    Exec  mozilla &    
 Key space R   N	   Exec  xset dpms force off &
