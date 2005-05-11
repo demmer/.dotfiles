@@ -39,9 +39,10 @@ if [ -n "$X11HOME" ]; then
 fi
 
 #
-# Set up path to include fink installed apps
+# Set up path to include fink installed apps and Darwin specific overrides
 #
 PATH=$PATH:/sw/bin
+PATH=$PATH:$HOME/bin/Darwin
 PATH=$PATH:$HOME/bin
 
 #
