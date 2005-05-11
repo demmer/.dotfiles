@@ -19,7 +19,12 @@ echo "Making links for $host..."
 #
 for f in bin elisp online ; do
 	echo .dotfiles/$f
-	rm -rf $f
+
+	if [ -L $f ] ; then
+	    rm -f $f
+        else	
+	    rm -ri $f
+	fi
 	ln -s .dotfiles/$f $f
 done
 
@@ -31,9 +36,13 @@ makelinks() {
 		[ $f = ".." ] && continue
 		[ -f $dir/$host/$f ] && continue ; # hack, works for toplevel
 	
-		rm -rf $f
-		ln -s $dir/$f $f
-		echo $dir/$f
+            if [ -L $f ] ; then
+                rm -f $f
+            else
+                rm -ri $f
+            fi
+	    ln -s $dir/$f $f
+	    echo $dir/$f
 	done
 }
 
