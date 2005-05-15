@@ -22,6 +22,7 @@
 			("hpp" "cpp")
 			("M.nc" ".nc")
  			("M.nc" "C.nc")
+			(".cpp" ".hpp")
 			))
 (require 'cl)
 (defun CH-buffer-match (name)
