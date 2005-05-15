@@ -52,11 +52,6 @@
 (require 'dabbrev)
 (require 'once-only-header)
 
-(require 'vc)
-(require 'vc-svn)
-(setq vc-handled-backends (cons 'SVN vc-handled-backends))
-
-
 (setq ooh-file-license
 "/*
  * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By
@@ -529,6 +524,9 @@ with tab characters underneath."
 (define-key vc-prefix-map "s" 'vc-print-status)
 (define-key vc-prefix-map "?" 'vc-print-status)
 (setq vc-follow-symlinks t)
+
+(require 'vc-svn)
+(setq vc-handled-backends (cons 'SVN vc-handled-backends))
 
 ; fixes so shell-mode works with zsh
 (require 'comint)
