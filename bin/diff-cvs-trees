@@ -3,7 +3,7 @@
 # differences between two CVS trees
 
 diff -ur --exclude \*.[oda] --exclude CVS --exclude .glimpse\* \
-	--ignore-matching-lines=\$Id $*
+	--ignore-matching-lines=\$Id --ignore-matching-lines=\$Header $*
 
 
 	
