@@ -24,6 +24,7 @@ alias jimi Jimi Onalik <jonalik@nunanet.com>
 alias liuba Liuba Shapiro <shapirol@georgetown.edu>
 alias mary Mary Fernandez <mff@research.att.com>
 alias matt Matt Demmer <mdemmer@gmail.com>
+alias matty Matt Demmer <mdemmer@gmail.com>
 alias mom Regina Steinbach <mom@demmerfamily.com>
 alias nana Dorothy Steinbach <yanka1@msn.com>
 
@@ -35,16 +36,19 @@ alias family mom, dad, matt, nana, jab, jimi, meanne, adam, mary
 alias aidan Aidan Rogers <aidan@yoyo.org>
 alias abible Andrea Bible <abible@sbcglobal.net>
 alias abigail Abigail Rogers <abigail@yoyo.org>
-alias amanda Amanda Eaken <Amanda.M.Eaken.99@Alum.Dartmouth.ORG>
+alias amanda Amanda Eaken <aeaken@gmail.com>
 alias andalman Brad Andalman <andalman@pixar.com>
+alias andrea Andrea Bible <abible@sbcglobal.net>
 alias andrew_schwartz Andrew Schwartz <scienterboy@yahoo.com>
 alias anna Anna Potterat <apotterat@yahoo.com>
 alias anoop Anoop Reddy <anoopkreddy@hotmail.com>
 alias april April Tofanelli <atofanelli@hotmail.com>
 alias april-work April Tofanelli <April.Tofanelli@WatsonWyatt.com>
 alias apurva Apurva Dave <apurva@apurva.net>
+alias andrew Andrew Swan <andrew.swan@gmail.com>
 alias aswan Andrew Swan <andrew.swan@gmail.com>
 alias becca Rebecca Silbermann <Rebecca_Silbermann@urmc.rochester.edu>
+alias becky_swanson Becky Swanson <rswanson7@hotmail.com>
 alias betsy Betsy Clink <betsyclink@hotmail.com>
 alias bigs John Pottebaum <john@pottebaum.net>
 alias boris Boris Pavlin <boris_pavlin@excite.com>
@@ -71,7 +75,7 @@ alias ericaaustin Erica Austin <supereaa@yahoo.com>
 alias ewesson Elizabeth Wesson <ewesson@battery.com>
 alias glen Glen Sanford <glen@glen.nu>
 alias gk Gautam Kachroo <gkachroo@yahoo.com>
-alias graham Graham Phillips <graham.phillips@ogilvy.com>
+alias graham Graham Phillips <gphillips@bssp.com>
 alias harry Harry Yoon <alsoharry@yahoo.com>
 alias heather Heather Mills <mill0422@yahoo.com>
 alias heather_ingate Heather Ingate <oliphant23@aol.com>
@@ -79,6 +83,7 @@ alias hildy Hildy Kuryk <gichkuryk@earthlink.net>
 alias hoofar Hoofar Razavi <hoofar@hoofar.com>
 alias hughes Hughes Silvestri <hhsilvestri@lbl.gov>
 alias jake Jake Cockrell <jcockrell@macromedia.com>
+alias jef Jeff Cunningham <crowcrag@ersatzdesign.com>
 alias jen Jen Hsia <jenhsia@hotmail.com>
 alias jenmart Jennifer Martinez <JeMartinez@tribune.com>
 alias jessie Jessica Beckett <jbeckett@mac.com>
@@ -87,7 +92,7 @@ alias jevans Jim Evans <jim@cowlove.com>
 alias joanna Joanna Parks <joannaparks@earthlink.net>
 alias jon Jon Salky <jonathan.salky@citigroup.com>
 alias jonah Jonah Staw <jonah.staw@frogdesign.com>
-alias josh Joshua Woolley <jwoolle@itsa.ucsf.edu>
+alias josh Joshua Woolley <jwoolley@memory.ucsf.edu>
 alias jsp John Pottebaum <john@pottebaum.net>
 alias karl Karl Petty <pettyk@eecs.berkeley.edu>
 alias kathy Kathy Robertson <kathy_robertson@hotmail.com>
@@ -108,7 +113,7 @@ alias mattp Matt Podolsky <podolsky@eecs.berkeley.edu>
 alias matt_stout Matt Stout <mgstout@umich.edu>
 alias mccanne-personal Steve McCanne <steven@mccanne.com>
 alias michelle Michelle Munson <michelle@digitalfountain.com>
-alias michon Mike Michon <mmichon@skew.org>
+alias michon Mike Michon <mmichon@gmail.com>
 alias miranda Miranda Jones <mirandajonessf@yahoo.com>
 alias mjr Michael John Radwin <mjr@acm.org>
 alias molly Molly Brown <mollybro@microsoft.com>
@@ -123,6 +128,7 @@ alias nova Nova Brown <nova@supadupanova.com>
 alias pava David Pava <davidpava@yahoo.com>
 alias rachel Rachel Benson <rachelbenson@yahoo.com>
 alias rfromm Rich Fromm <rfromm@avocadolounge.com>
+alias rick_mills Rick Mills <rick@headsets.com>
 alias robin Robin Alper <robinalper@earthlink.net>
 alias rpremo Roger Premo <rpremo@inktomi.com>
 alias sandra Sandra Schilling <schillings@prodigy.net>
@@ -145,16 +151,8 @@ alias webb Webb Eaken <webbstaa@hotmail.com>
 alias welch Will Welch <welch@quietplease.com>
 alias zach Zach Franklin <zfranklin@yahoo.com>
 
-alias sf-friends kim, robin, tex, diana, tkl, apurva, josh, jessie, glen, \
-		 jsp, tami, stemm, aswan, michelle, kevin, kathy, dsimpson, \
-		 hoofar, jonah, jake, kristy, markf, zach, noah, \
-		 rachel, amanda, dsolomon, ewesson, elliot, gk, mattp, neal \
-		 shawna, tate
-
-
-alias other-friends maureen, becca, luke, heather, kirsten, tony, \
-		    lucas, jon, jenmart, molly, shooters
-
+alias bookclub rachel, jessie, robin, betsy, andrea, denise,  \
+	heather, rick_mills, becky_swanson
 alias badness Badness 2000 <badness2000@yahoogroups.com>
 alias mondaze Mondaze <mondaze@yahoogroups.com>
 
@@ -175,12 +173,14 @@ alias shooters jodavis, meghan, vechio, roncu, peck
 alias cam_stewart Cameron Stewart <cstewart@oaklandathletics.com>
 alias charles_frump Charles Frump <cfrump@ford.com>
 alias chris_silverman Chris Silverman <chris@twentytwoshoes.com>
+alias dave_hxxx <drh217@nyu.edu>
 alias dougb Doug Byles <dougb@nibbi.com>
 alias jesse_johnson Jesse Johnson <jjohnson@princetonsoftech.com>
 alias joe_schmid Joe Schmid <joe@schmid.com>
 alias joel_passen Joel Passen <joel@gravitypeople.com>
 alias marc_lajoie Marc Lajoie <mlajoie@axismso.com>
 alias marc_silverberg Marc Silverberg <marc.silverberg@gator.com>
+alias marc_silverberg2 <hockeyberg25@dslextreme.com>
 alias matt_sade Matthew Sade <matthewsade@yahoo.com>
 alias peter_jackson Peter Jackson <peter.jackson@som.com>
 alias peter_rizos Peter Rizos <prizos@yahoo.com>
@@ -272,3 +272,6 @@ alias osprelims archanag, bowei, dmolnar, get, jwhui, pio, xuw
 # Others added by mutt
 #
 
+alias mphillips Melissa Phillips <mphillips@mayacamasranch.com>
+alias vjager Vanessa Jager <vjager@mayacamasranch.com>
+alias ben_fishman Ben Fishman <fishmanben@hotmail.com>
