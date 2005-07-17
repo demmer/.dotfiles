@@ -1,21 +1,68 @@
 #!/usr/local/bin/perl
 
-$i = 0;
+$dryrun = 0;
+$mode   = "prepend";
+$number = 1;
+$base   = "file";
+$sep    = " ";
+$numfmt = "%d";
 
+while ($#ARGV >= 0) {
+    $arg = $ARGV[0]; shift;
+    
+    if    ($arg eq "-append")     { $mode = "append"; }
+    elsif ($arg eq "-n")          { $dryrun = 1; }
+    elsif ($arg eq "-prepend")    { $mode = "prepend"; }
+    elsif ($arg eq "-rename")     { $mode = "rename"; }
+    elsif ($arg eq "-replace")    { $mode = "rename"; }
+    elsif ($arg eq "-nonumber")   { $number = 0; }
+    elsif ($arg eq "-fixedwidth") { $numfmt = "%03d"; }
+    elsif ($arg eq "-sep")        { $sep = $ARGV[0]; shift; }
+    elsif ($arg eq "-base")       { $base = $ARGV[0]; shift; }
+    else			  { die("invalid argument $arg"); }
+}
+
+$i = 1;
 while (<STDIN>) {
     chomp;
-    $old = $_;
+    $file = $old = $_;
     next if ($old eq "");
-    s/^[0-9]+[ _.]+//;
-    $new = sprintf("%03d. $_", $i);
+    
+    if ($mode eq "prepend") {
+	$file =~ s/^[0-9]+[ _.-]+//;
+	$new = sprintf($numfmt . "%s%s", $i, $sep, $file);
 
+    } elsif ($mode eq "append") {
+	($file, $ext) = split(/\./, $file);
+	$file =~ s/[ _.-]+[0-9]+$//;
+	
+	$new = sprintf("%s%s" . $numfmt . ".%s", $file, $sep, $i, $ext);
+    
+    } elsif ($mode eq "rename") {
+	die "can't use nonumber and rename mode" if $nonumber;
+
+	($file, $ext) = split(/\./, $file);
+	$file =~ s/[ _.-]+[0-9]+$//;
+
+	$new = sprintf("%s%s" . $numfmt . ".%s", $base, $sep, $i, $ext);
+	
+    } else {
+	die "unknown mode $mode";
+    }
+    
+    if (! $number) {
+ 	$new = $file;
+    }
+    
     if (-f $old) {
 	print "$old -> $new\n";
     } else {
 	print "ERROR: can't find $old\n";
     }
-
-    rename($old, $new) || die ("can't rename $old -> $new: $!");
+    
+    if (! $dryrun) {
+	rename($old, $new) || die ("can't rename $old -> $new: $!");
+    }
 
     $i++;
 }
