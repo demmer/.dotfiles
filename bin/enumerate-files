@@ -1,9 +1,9 @@
-#!/usr/local/bin/perl
+#!/usr/bin/perl
 
 $dryrun = 0;
 $mode   = "prepend";
 $number = 1;
-$base   = "file";
+$base   = "";
 $sep    = " ";
 $numfmt = "%d";
 
@@ -30,11 +30,13 @@ while (<STDIN>) {
     
     if ($mode eq "prepend") {
 	$file =~ s/^[0-9]+[ _.-]+//;
+	$file = $base . $file;
 	$new = sprintf($numfmt . "%s%s", $i, $sep, $file);
 
     } elsif ($mode eq "append") {
 	($file, $ext) = split(/\./, $file);
 	$file =~ s/[ _.-]+[0-9]+$//;
+	$file = $file . $base;
 	
 	$new = sprintf("%s%s" . $numfmt . ".%s", $file, $sep, $i, $ext);
     
