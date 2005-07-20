@@ -71,7 +71,7 @@ fi
 
 
 # Mail shells and yabiff
-wish $HOME/bin/yabiff -geometry $YABIFF_GEOM pisco:inbox,@F,tier,dtn,tinyos xoopi:@,pair-notices &
+/usr/bin/wish $HOME/bin/yabiff -geometry $YABIFF_GEOM pisco:inbox,@F,tier,dtn,tinyos xoopi:@,pair-notices &
 xmutts
 
 # and one more
