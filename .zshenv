@@ -180,7 +180,7 @@ fi
 export CVS_RSH=ssh
  
 if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
-    export DISPLAY=0:0
+    export DISPLAY=localhost:0
 fi
 
 
