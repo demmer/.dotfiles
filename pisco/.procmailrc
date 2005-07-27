@@ -81,6 +81,12 @@ bytesforall
 | formail -I "Status: RO" >> $MAILDIR/spool
 
 #
+# And one copy to gmail
+#
+# :0c
+# ! demmer@gmail.com
+
+#
 # Get rid of duplicate messages after saving a copy to the spool.
 # I have no idea why this one needs the full path, but whatever...
 #
@@ -100,6 +106,10 @@ dtn
 
 :0
 * List-Id: <dtn-bugs.*>
+dtn
+
+:0
+* List-Id: .*<dtn-security.*>
 dtn
 
 :0
