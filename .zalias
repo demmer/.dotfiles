@@ -83,11 +83,11 @@ alias script='SCRIPTPARENT=1 script'
 alias enscriptclean='enscript -B'
 
 # debian shortcuts
-alias apti='sudo apt-get install'
-alias aptrm='sudo apt-get remove'
-alias aptu='sudo apt-get update'
-alias aptU='sudo apt-get dist-upgrade'
+alias apti='sudo aptitude install'
+alias aptrm='sudo aptitude remove'
+alias aptu='sudo aptitude update'
+alias aptU='sudo aptitude dist-upgrade'
 alias apts='apt-cache search'
-alias aptq='sudo apt-get upgrade -s'
+alias aptq='sudo aptitude upgrade -s'
 alias dls='dpkg -l'
 
