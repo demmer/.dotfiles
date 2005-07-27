@@ -5,10 +5,10 @@
         <entry name="scrollbar_position" mtime="1112743385" type="string">
                 <stringvalue>hidden</stringvalue>
         </entry>
-        <entry name="font" mtime="1115246329" type="string">
+        <entry name="font" mtime="1120001411" type="string">
                 <stringvalue>LucidaTypewriter Bold 12</stringvalue>
         </entry>
-        <entry name="use_system_font" mtime="1112635553" type="bool" value="false">
+        <entry name="use_system_font" mtime="1120001195" type="bool" value="false">
         </entry>
         <entry name="exit_action" mtime="1112635150" type="string">
                 <stringvalue>close</stringvalue>
@@ -16,7 +16,7 @@
         <entry name="title_mode" mtime="1112635147" type="string">
                 <stringvalue>replace</stringvalue>
         </entry>
-        <entry name="palette" mtime="1115246321" type="string">
+        <entry name="palette" mtime="1120001391" type="string">
                 <stringvalue>#000000000000:#CDCB00000000:#0000CDCB0000:#CDCBCDCB0000:#1E1A908FFFFF:#CDCB0000CDCB:#0000CDCBCDCB:#E5E2E5E2E5E2:#4CCC4CCC4CCC:#FFFF00000000:#0000FFFF0000:#FFFFFFFF0000:#46458281B4AE:#FFFF0000FFFF:#0000FFFFFFFF:#FFFFFFFFFFFF</stringvalue>
         </entry>
         <entry name="background_color" mtime="1112636167" type="string">

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <gconf>
-        <entry name="hf-right" mtime="1112983313" type="list" ltype="string">
+        <entry name="hf-right" mtime="1122501594" type="list" ltype="string">
         </entry>
-        <entry name="hf-middle" mtime="1112983313" type="list" ltype="string">
+        <entry name="hf-middle" mtime="1122501594" type="list" ltype="string">
         </entry>
-        <entry name="hf-left" mtime="1112983313" type="list" ltype="string">
+        <entry name="hf-left" mtime="1122501594" type="list" ltype="string">
         </entry>
 </gconf>
