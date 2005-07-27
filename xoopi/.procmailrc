@@ -118,6 +118,18 @@ $DEFAULT
 * Subject: DailyTao.org.*
 $DEFAULT
 
+:0
+* To: .*moveon@demmer.nu
+$DEFAULT
+
+:0
+* To: .*ppaction@demmer.nu
+$DEFAULT
+
+:0
+* To: .*amnesty@demmer.nu
+$DEFAULT
+
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
