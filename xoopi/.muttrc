@@ -6,6 +6,7 @@
 # First suck in the generic stuff
 #
 source ~/.muttrc.generic
+set alternates=".*@demmer.nu|mike@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 
 my_hdr From: mike@demmer.nu (Michael Demmer)
 

@@ -8,6 +8,7 @@
 source ~/.muttrc.generic
 
 my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
+alternates ".*@demmer.nu|.*@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 
 set spoolfile =$HOME/Mail/inbox
 
