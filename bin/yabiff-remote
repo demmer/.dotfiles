@@ -73,26 +73,24 @@ foreach spool [split $spools ,] {
     lappend newspools $spool $spoolfile
 
     set atime($spoolfile) 0
-    set ctime($spoolfile) 0
     set mtime($spoolfile) 0
 }
 set spools $newspools
 
 proc checktime {spoolfile} {
-    global atime ctime mtime
-    dprint "checktime $spoolfile $atime($spoolfile) $ctime($spoolfile) $mtime($spoolfile)"
-    
-    if [file exists $spoolfile] {
-	file stat $spoolfile stat
-	if {$stat(mtime) > $mtime($spoolfile) || \
-		$stat(ctime) > $ctime($spoolfile)} {
-	    set atime($spoolfile) $stat(atime)
-	    set mtime($spoolfile) $stat(mtime)
-	    set ctime($spoolfile) $stat(ctime)
-	    dprint "checktime changed: $atime($spoolfile) $ctime($spoolfile) $mtime($spoolfile)"
-	    return 1
-	}
+    global mtime
+    dprint "checktime $spoolfile $mtime($spoolfile)"
+    if {![file exists $spoolfile]} {
+	return 0
     }
+    
+    file stat $spoolfile stat
+    
+    if {$stat(mtime) > $mtime($spoolfile)} {
+	dprint "checktime changed: $stat(mtime) != $mtime($spoolfile)"
+	return 1
+    }
+    
     return 0
 }
 
@@ -102,7 +100,10 @@ proc scan {spool spoolfile} {
     set status ""
 
     set nlines 0
-    
+
+    # stat the file before 
+    file stat $spoolfile stat
+
     set fd [open $spoolfile r]
     while {! [eof $fd]} {
 	
@@ -169,17 +170,26 @@ proc scan {spool spoolfile} {
 
     close $fd
 
-    # update the times, then reset the internal statistics
-    global atime ctime mtime
+    # update the times -- if nothing has changed, then set the mtime
+    # and atime equal, otherwise force mtime to be bigger than atime
+    global atime mtime
+    
+    if {$nlines == 0} {
+	set atime($spoolfile) $stat(mtime)
+	set mtime($spoolfile) $stat(mtime)
+    } else {
+	set atime($spoolfile) $stat(atime)
+	set mtime($spoolfile) $stat(mtime)
+	
+	if {$stat(mtime) <= $stat(atime)} {
+	    set mtime($spoolfile) [expr $stat(atime) + 1]
+	}
+    }
+    
     file atime $spoolfile $atime($spoolfile)
     file mtime $spoolfile $mtime($spoolfile)
-    dprint "checktime setting times $atime($spoolfile) $mtime($spoolfile)"
-
-    file stat $spoolfile stat
-    set atime($spoolfile) $stat(atime)
-    set mtime($spoolfile) $stat(mtime)
-    set ctime($spoolfile) $stat(ctime)
-
+    dprint "setting times (nlines $nlines) $atime($spoolfile) $mtime($spoolfile)"
+    
     if {$spool != "@" && $spool != "inbox"} {
 	puts "yabiff count $spool $nlines"
     }
