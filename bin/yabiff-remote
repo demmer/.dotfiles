@@ -23,6 +23,10 @@ array set argvars {
 
 for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
+    if {$arg == "-debug"} {
+        set debug 1
+        continue
+    }
     if {! [info exists argvars($arg)]} {
 	puts "Error: unknown arg $arg"
 	exit 1
@@ -73,21 +77,23 @@ foreach spool [split $spools ,] {
     lappend newspools $spool $spoolfile
 
     set atime($spoolfile) 0
+    set ctime($spoolfile) 0
     set mtime($spoolfile) 0
 }
 set spools $newspools
 
 proc checktime {spoolfile} {
-    global mtime
-    dprint "checktime $spoolfile $mtime($spoolfile)"
+    global mtime ctime
+    dprint "checktime $spoolfile $mtime($spoolfile) $ctime($spoolfile)"
     if {![file exists $spoolfile]} {
 	return 0
     }
     
     file stat $spoolfile stat
     
-    if {$stat(mtime) > $mtime($spoolfile)} {
-	dprint "checktime changed: $stat(mtime) != $mtime($spoolfile)"
+    if {$stat(mtime) > $mtime($spoolfile) || \
+	$stat(ctime) > $ctime($spoolfile)} {
+	dprint "checktime changed: $stat(mtime) != $mtime($spoolfile) || $stat(ctime) != $ctime($spoolfile)"
 	return 1
     }
     
@@ -172,13 +178,15 @@ proc scan {spool spoolfile} {
 
     # update the times -- if nothing has changed, then set the mtime
     # and atime equal, otherwise force mtime to be bigger than atime
-    global atime mtime
+    global atime ctime mtime
     
     if {$nlines == 0} {
 	set atime($spoolfile) $stat(mtime)
+	set ctime($spoolfile) $stat(ctime)
 	set mtime($spoolfile) $stat(mtime)
     } else {
 	set atime($spoolfile) $stat(atime)
+	set ctime($spoolfile) $stat(ctime)
 	set mtime($spoolfile) $stat(mtime)
 	
 	if {$stat(mtime) <= $stat(atime)} {
@@ -186,9 +194,16 @@ proc scan {spool spoolfile} {
 	}
     }
     
+    dprint "setting times (nlines $nlines) $atime($spoolfile) $ctime($spoolfile) $mtime($spoolfile)"
+    
     file atime $spoolfile $atime($spoolfile)
     file mtime $spoolfile $mtime($spoolfile)
-    dprint "setting times (nlines $nlines) $atime($spoolfile) $mtime($spoolfile)"
+
+    # since our setting of atime / mtime changed the ctime (and we
+    # want to get the real latest one), call stat once more to update
+    # our internal ctime stat
+    file stat $spoolfile stat
+    set ctime($spoolfile) $stat(ctime)
     
     if {$spool != "@" && $spool != "inbox"} {
 	puts "yabiff count $spool $nlines"
