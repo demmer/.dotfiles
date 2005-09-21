@@ -6,7 +6,8 @@
 
 proc usage {} {
     puts stderr \
-	    {Usage: send.tcl [-ack] [-rate rate] [-pktsz sz] [dstaddr:]dstport}
+	    {Usage: send.tcl [-q] [-ack] [-rate rate] [-pktsz sz] \
+	    	[dstaddr:]dstport}
     exit 1
 }
 
@@ -15,6 +16,7 @@ proc bgerror {err} {
     puts stderr "bgerror: $err\n$errorInfo"
 }
 
+set quiet   0
 set ack     0
 set rate    1024
 set pktsz   512
@@ -26,6 +28,10 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
     set arg [lindex $argv $i]
 
     switch -- $arg {
+    	"-q" {
+	    set quiet 1
+	}
+		
 	"-ack" {
 	    set ack 1
 	}
@@ -91,7 +97,9 @@ while {1} {
     set p [binary format ia$fmtsz $ts $packet]
     set len [string length $p]
     
-    puts "sending $len byte packet"
+    if {! $quiet} {
+        puts "sending $len byte packet"
+    }
     puts -nonewline $sock $p
     flush $sock
 
