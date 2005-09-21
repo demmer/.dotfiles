@@ -35,7 +35,9 @@ xterm*VT100.Translations: #override\n\
 	<Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
 	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
         <KeyPress> Insert: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-	Shift<KeyPress>KP_Insert:insert-selection(PRIMARY, CUT_BUFFER0)
+	Shift<KeyPress>KP_Insert:insert-selection(PRIMARY, CUT_BUFFER0)\n\
+        Ctrl<Key>Left: string(0xe2)\n\
+        Ctrl<Key>Right: string(0xe6)
 
 
 gnome-terminal*foreground:			ivory
