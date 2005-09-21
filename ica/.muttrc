@@ -1,0 +1,16 @@
+#
+# Host specific muttrc
+# 
+
+#
+# First suck in the generic stuff
+#
+source ~/.muttrc.generic
+
+my_hdr From: michael.j.demmer@intel.com (Michael Demmer)
+
+#set spoolfile=imap://mjdemmer@127.0.1.11:10143/INBOX
+set spoolfile=imaps://mjdemmer@127.0.10.1:10993/INBOX
+set implicit_autoview
+
+
