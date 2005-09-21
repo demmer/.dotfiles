@@ -1,0 +1,187 @@
+#!/usr/bin/perl
+
+# fixbb repairs the incorrect bounding box for postscipt files created by many
+# Windows applications. It uses bbfig to compute the bounding box, and then
+# fixes any existing bounding box that is in the file. (It currently doesn't
+# add a bounding box to postscript files that do not have it.)
+
+# This program requires that bbfig and ps2ascii are in your path. bbfig can be
+# found in the CTAN archive (e.g.
+# ftp://ftp.duke.edu/tex-archive/support/bbfig/). ps2ascii can be found in the
+# ghostscript distribution (http://www.cs.wisc.edu/~ghost/)
+
+# bbfig fails half the time, and ps2ascii fails half the time, which means
+# this script will probably only work 1/4 the time. Please send patches that
+# make this script more robust. (Perhaps by using pstotext, ghostscript, or
+# some new PostScript module.)
+
+# If you would like to be notified of updates, send email to me at
+# david@coppit.org. The latest version is always at
+# http://www.coppit.org/code/.
+
+# Do a pod2text on this file to get full documentation, or pod2man to get
+# man pages.
+
+# Written by David Coppit (david@coppit.org,
+#  http://www.coppit.org/index.html)
+
+# Please send me any modifications you make. (for the better, that is. :) I
+# have a suite of tests that I can give you if you ask. Keep in mind that I'm
+# likely to turn down obscure features to avoid including everything but the
+# kitchen sink.
+
+# This code is distributed under the GNU General Public License (GPL). See
+# http://www.opensource.org/gpl-license.html and http://www.opensource.org/.
+
+$VERSION = 1.0;
+
+require 5.001;
+
+use strict;
+
+Check_System();
+
+Print_Usage() and exit unless @ARGV;
+
+my $input_file = shift;
+my $output_file = shift;
+
+die "Input file \"$input_file\" does not exist, or is not a plain file.\n"
+  unless -e $input_file && !-B $input_file;
+
+my $bounding_box = Get_Bounding_Box($input_file);
+Set_Bounding_Box($input_file,$output_file,$bounding_box);
+
+# ----------------------------------------------------------------------------
+
+# Checks that bbfig and ps2ascii are in the PATH.
+
+sub Check_System
+{
+  my $found_bbfig = 0;
+
+  for my $dir (split /:/, $ENV{PATH})
+  {
+    $found_bbfig = 1 and last if -e "$dir/bbfig";
+  }
+
+  my $found_ps2ascii = 0;
+
+  for my $dir (split /:/, $ENV{PATH})
+  {
+    $found_ps2ascii = 1 and last if -e "$dir/ps2ascii";
+  }
+
+  die "Can't find bbfig in your path.\n" unless $found_bbfig;
+  die "Can't find ps2ascii in your path.\n" unless $found_ps2ascii;
+}
+
+# ----------------------------------------------------------------------------
+
+sub Print_Usage
+{
+  print <<"  EOF";
+usage: $0 <inputfile.[e]ps> [<outputfile.[e]ps>]
+  EOF
+}
+
+# ----------------------------------------------------------------------------
+
+sub Get_Bounding_Box
+{
+  my $ps_file = shift;
+
+  open TEXT, "bbfig $ps_file | ps2ascii |"
+    or die "Couldn't execute \"bbfig $ps_file | ps2ascii\"\n";
+
+  my $bounding_box;
+
+  while (my $line = <TEXT>)
+  {
+    if ($line =~ /^\%\%BoundingBox: (\d+ \d+ \d+ \d+)/)
+    {
+      $bounding_box = $1;
+      last;
+    }
+  }
+  close TEXT;
+
+  return $bounding_box;
+}
+
+# ----------------------------------------------------------------------------
+
+sub Set_Bounding_Box
+{
+  my $input_file = shift;
+  my $output_file = shift;
+  my $bouding_box = shift;
+
+  open IN, "$input_file" or die "Couldn't open \"$input_file\"\n";
+
+  if (defined $output_file)
+  {
+    open OUT, ">$output_file" or die "Couldn't open \"$output_file\"\n";
+  }
+
+  while (my $line = <IN>)
+  {
+    $line =~ s/^(\%\%BoundingBox: )\d+ \d+ \d+ \d+/$1$bounding_box/;
+    defined $output_file ?
+      print OUT $line
+      :
+      print $line;
+  }
+  close IN;
+  close OUT if defined $output_file;
+}
+
+#-------------------------------------------------------------------------------
+
+=head1 NAME
+
+fixbb - repairs bounding boxes in postscript files
+
+=head1 SYNOPSIS
+
+  fixbb <inputfile.[e]ps> [<outputfile.[e]ps>]
+
+=head1 DESCRIPTION
+
+=over 2
+
+I<fixbb> repairs the incorrect bounding box for postscipt files created by many
+Windows applications. It uses bbfig to compute the bounding box, and then
+fixes any existing bounding box that is in the file. (It currently doesn't
+add a bounding box to postscript files that do not have it.)
+
+This program requires that bbfig and ps2ascii are in your path. bbfig can be
+found in the CTAN archive (e.g.
+ftp://ftp.duke.edu/tex-archive/support/bbfig/). ps2ascii can be found in the
+ghostscript distribution (http://www.cs.wisc.edu/~ghost/)
+
+bbfig fails half the time, and ps2ascii fails half the time, which means
+this script will probably only work 1/4 the time. Please send patches that
+make this script more robust. (Perhaps by using pstotext, ghostscript, or
+some new PostScript module.)
+
+=back
+
+=head1 OPTIONS AND ARGUMENTS
+
+The inputfile is mandatory.
+
+I<fixbb> will output the repaired file to standard output if no outputfile is
+specified.
+
+=back
+
+=head1 AUTHOR
+
+  David Coppit, <david@coppit.org>, http://coppit.org/
+
+=head1 SEE ALSO
+
+bbfig(1), ps2ascii(1), postscript(7)
+
+=cut
