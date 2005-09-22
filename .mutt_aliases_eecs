@@ -1,17 +1,17 @@
 alias Nobody  <Nobody@eecs.berkeley.edu>
 alias aabate Alessandro Abate <aabate@eecs.berkeley.edu>
-alias aaronj Aaron Jow <aaronj@eecs.berkeley.edu>
 alias aaronson Scott Aaronson <aaronson@eecs.berkeley.edu>
+alias aaswani Anil Jayanti Aswani <aaswani@eecs.berkeley.edu>
 alias abachrac Abraham Bachrach <abachrac@eecs.berkeley.edu>
+alias abarrett April Barrett <abarrett@eecs.berkeley.edu>
 alias abbyt Abby Thompson <abbyt@eecs.berkeley.edu>
 alias abegel Andrew Begel <abegel@eecs.berkeley.edu>
 alias aberg Alexander C. Berg <aberg@eecs.berkeley.edu>
 alias abhik Abhik Majumdar <abhik@eecs.berkeley.edu>
-alias abhikp PRAMANIK <abhikp@eecs.berkeley.edu>
 alias abird Annie Bird <abird@eecs.berkeley.edu>
 alias abrown Aaron Brown <abrown@eecs.berkeley.edu>
 alias ac Andrew Chih-Rong Chang <ac@eecs.berkeley.edu>
-alias acao Andrew Cao <acao@eecs.berkeley.edu>
+alias acardes Andrew Serrano Cardes <acardes@eecs.berkeley.edu>
 alias acarle Andrew Jacob Carle <acarle@eecs.berkeley.edu>
 alias acarlson Andrew Carlson <acarlson@eecs.berkeley.edu>
 alias acataldo James Cataldo <acataldo@eecs.berkeley.edu>
@@ -21,6 +21,7 @@ alias adabi Ehsan Adabi Firouzjaei <adabi@eecs.berkeley.edu>
 alias adamb Adam Bargteil <adamb@eecs.berkeley.edu>
 alias adamc Adam James Chlipala <adamc@eecs.berkeley.edu>
 alias adames Aaron Ames <adames@eecs.berkeley.edu>
+alias adatta Anwitaman Datta <adatta@eecs.berkeley.edu>
 alias adelafv Alejandro De la Fuente Vornbrock <adelafv@eecs.berkeley.edu>
 alias adib Andrej Bogdanov <adib@eecs.berkeley.edu>
 alias adim Georgios Alexandros Dimakis <adim@eecs.berkeley.edu>
@@ -33,8 +34,10 @@ alias agu Allan Xiao Yu Gu <agu@eecs.berkeley.edu>
 alias agueye Assane Gueye <agueye@eecs.berkeley.edu>
 alias ahoover Aaron Hoover <ahoover@eecs.berkeley.edu>
 alias ahurst Aaron Paul Hurst <ahurst@eecs.berkeley.edu>
+alias aiac Ana Isabela Araujo Cunha <aiac@eecs.berkeley.edu>
 alias aidan Aidan Bauer <aidan@eecs.berkeley.edu>
 alias aiken Alex Aiken <aiken@eecs.berkeley.edu>
+alias aingram Alba Ingram <aingram@eecs.berkeley.edu>
 alias aj Ajeet Ganesh Shankar <aj@eecs.berkeley.edu>
 alias ajl A.J. Lichtenberg <ajl@eecs.berkeley.edu>
 alias akirk Adam Kirk <akirk@eecs.berkeley.edu>
@@ -43,85 +46,90 @@ alias akolla Alexandra Kolla <akolla@eecs.berkeley.edu>
 alias akrasnov KRASNOV <akrasnov@eecs.berkeley.edu>
 alias aks Anoop Kumar Sinha <aks@eecs.berkeley.edu>
 alias akurzhan Alexandr A Kurzhanskiy <akurzhan@eecs.berkeley.edu>
+alias alanh Alan Hamai <alanh@eecs.berkeley.edu>
 alias alanmi Alan Mishchenko <alanmi@eecs.berkeley.edu>
 alias alann Alan Frederick Newberger <alann@eecs.berkeley.edu>
-alias alanwei Alan Wei <alanwei@eecs.berkeley.edu>
 alias alanwu Alan C. Wu <alanwu@eecs.berkeley.edu>
 alias albrown Alexander Brown <albrown@eecs.berkeley.edu>
 alias alexf Alexander Fabrikant <alexf@eecs.berkeley.edu>
 alias alexip Alexandros Papavasiliou <alexip@eecs.berkeley.edu>
-alias alexkan Alexander Kan <alexkan@eecs.berkeley.edu>
 alias ali Ali Rahimi <ali@eecs.berkeley.edu>
+alias alicek Alice Kwon <alicek@eecs.berkeley.edu>
 alias alicez Alice Zheng <alicez@eecs.berkeley.edu>
 alias alie Ali El-Annan <alie@eecs.berkeley.edu>
 alias aliseya Aliseya Wright <aliseya@eecs.berkeley.edu>
+alias allai Alan Lai <allai@eecs.berkeley.edu>
 alias allenh Allen Hopkins <allenh@eecs.berkeley.edu>
 alias almolnar Alyosha Molnar <almolnar@eecs.berkeley.edu>
 alias almudena Almudena Ordonez <almudena@eecs.berkeley.edu>
 alias along CHUN-LONG GUO <along@eecs.berkeley.edu>
-alias alonso Gustavo Alonso <alonso@eecs.berkeley.edu>
 alias alptekin Sema Alptekin <alptekin@eecs.berkeley.edu>
 alias alschult Andrew Lawrence Schultz <alschult@eecs.berkeley.edu>
-alias altmann Joern Altmann <altmann@eecs.berkeley.edu>
 alias alvaro Alvaro San Paulo <alvaro@eecs.berkeley.edu>
+alias alvchang Alvin Chang <alvchang@eecs.berkeley.edu>
 alias alvise Alvise Bonivento <alvise@eecs.berkeley.edu>
 alias alyson Allie Fletcher <alyson@eecs.berkeley.edu>
-alias ambainis Andris Ambainis <ambainis@eecs.berkeley.edu>
 alias ambuj Ambuj Tewari <ambuj@eecs.berkeley.edu>
-alias amc Adam M. Costello <amc@eecs.berkeley.edu>
-alias amd Andre' DeHon <amd@eecs.berkeley.edu>
 alias ameli Alexandra Meliou <ameli@eecs.berkeley.edu>
 alias amettler Adrian Matthew Mettler <amettler@eecs.berkeley.edu>
+alias amin Amin Saberi <amin@eecs.berkeley.edu>
 alias aminer Andrew Miner <aminer@eecs.berkeley.edu>
 alias aminh Meghdad Hajimorad <aminh@eecs.berkeley.edu>
 alias aminzade Amin Aminzadeh Gohari <aminzade@eecs.berkeley.edu>
 alias amol Amol Deshpande <amol@eecs.berkeley.edu>
-alias anandi Animesh Nandi <anandi@eecs.berkeley.edu>
+alias amy Amy Ng <amy@eecs.berkeley.edu>
 alias ananth Venkat Anantharam <ananth@eecs.berkeley.edu>
 alias ananthar Ananthapadmanabha Rajagopala-Rao <ananthar@eecs.berkeley.edu>
-alias anar Ana Ramirez <anar@eecs.berkeley.edu>
+alias anar Ana Ramirez Chang <anar@eecs.berkeley.edu>
 alias anderc Ander Chen <anderc@eecs.berkeley.edu>
 alias andrea Andrea Johnson <andrea@eecs.berkeley.edu>
 alias andreask Andreas Bernd Kominek <andreask@eecs.berkeley.edu>
 alias andrei Andrei Vladimirescu <andrei@eecs.berkeley.edu>
+alias andrew Andrew Chekerylla <andrew@eecs.berkeley.edu>
+alias andreye Andrey Ermolinskiy <andreye@eecs.berkeley.edu>
 alias ang Andrew Y. Ng <ang@eecs.berkeley.edu>
+alias angie Angie Hinh <angie@eecs.berkeley.edu>
 alias anil Anil Anwarali Sewani <anil@eecs.berkeley.edu>
 alias anile Anil Edakkunni <anile@eecs.berkeley.edu>
 alias animesh Animesh Kumar <animesh@eecs.berkeley.edu>
-alias anisha Anisha Jain <anisha@eecs.berkeley.edu>
-alias anniew Annie Wang <anniew@eecs.berkeley.edu>
+alias ankit Ankit Jain <ankit@eecs.berkeley.edu>
 alias anouck Anouck Girard <anouck@eecs.berkeley.edu>
 alias aohta Aaron Ohta <aohta@eecs.berkeley.edu>
-alias aoki Paul M. Aoki <aoki@eecs.berkeley.edu>
 alias aowens Annie Owen <aowens@eecs.berkeley.edu>
 alias apadilla Alvaro Padilla <apadilla@eecs.berkeley.edu>
+alias aparsons Aaron Parsons <aparsons@eecs.berkeley.edu>
 alias apinto Alessandro Pinto <apinto@eecs.berkeley.edu>
 alias appisano Professor A. P. Pisano <appisano@eecs.berkeley.edu>
+alias arash Arash Jamshidi <arash@eecs.berkeley.edu>
+alias arbabian Mohammad Amin Arbabian <arbabian@eecs.berkeley.edu>
 alias archanag Archana Ganapathi <archanag@eecs.berkeley.edu>
 alias ardeshir Ardeshir Mostofi <ardeshir@eecs.berkeley.edu>
 alias aredfern Andrew J Redfern <aredfern@eecs.berkeley.edu>
 alias arel Arel Lee Cordero <arel@eecs.berkeley.edu>
 alias arellano Noel Arellano <arellano@eecs.berkeley.edu>
+alias aria42 Aria Delier Haghighi <aria42@eecs.berkeley.edu>
 alias arindam Arindam Chakrabarti <arindam@eecs.berkeley.edu>
 alias arkadeb Arkadeb Ghosal <arkadeb@eecs.berkeley.edu>
 alias arkaray Arka Ray <arkaray@eecs.berkeley.edu>
 alias arnold Gilad Arnold <arnold@eecs.berkeley.edu>
+alias arsalan Arsalan Tavakoli <arsalan@eecs.berkeley.edu>
 alias art_tang Siu Fan Arthur Tang <art_tang@eecs.berkeley.edu>
+alias artemtk TKACHENKO <artemtk@eecs.berkeley.edu>
 alias artin Artin Der Minassians <artin@eecs.berkeley.edu>
 alias arty Arthur Yeap <arty@eecs.berkeley.edu>
+alias arvind05 Arvind Krishnamurthy <arvind05@eecs.berkeley.edu>
 alias arvindk Arvind Krishnamurthy <arvindk@eecs.berkeley.edu>
 alias asami Satoshi Asami <asami@eecs.berkeley.edu>
 alias asanz Ana Sanz Merino <asanz@eecs.berkeley.edu>
 alias asarwate Anand Dilip Sarwate <asarwate@eecs.berkeley.edu>
-alias aseshia Ashwin_Arunkumar Seshia <aseshia@eecs.berkeley.edu>
-alias asha Asha Tarachandani <asha@eecs.berkeley.edu>
 alias ashwin Ashwin Nayak <ashwin@eecs.berkeley.edu>
 alias asimma Aleksandr Simma <asimma@eecs.berkeley.edu>
+alias asimmons Annamarie Simmons <asimmons@eecs.berkeley.edu>
+alias ask Aaron Saunders Kaluszka <ask@eecs.berkeley.edu>
 alias asolar Armando Solar-Lezama <asolar@eecs.berkeley.edu>
-alias asoppera Andrea Soppera <asoppera@eecs.berkeley.edu>
 alias aswan Andrew Swan <aswan@eecs.berkeley.edu>
-alias atsao Tsao <atsao@eecs.berkeley.edu>
 alias attwood David Attwood <attwood@eecs.berkeley.edu>
+alias aullal Adeeti  Ullal <aullal@eecs.berkeley.edu>
 alias avestime Amir Salman Avesti Mehr <avestime@eecs.berkeley.edu>
 alias avz Avideh Zakhor <avz@eecs.berkeley.edu>
 alias aw Aaron Walburg <aw@eecs.berkeley.edu>
@@ -129,7 +137,8 @@ alias awagner Aaron Wagner <awagner@eecs.berkeley.edu>
 alias awoo Alec Woo <awoo@eecs.berkeley.edu>
 alias awwong awwong <awwong@eecs.berkeley.edu>
 alias axelb Axel Berny <axelb@eecs.berkeley.edu>
-alias ayumu Ayumu Kubota <ayumu@eecs.berkeley.edu>
+alias ayazifar Babak Ayazifar <ayazifar@eecs.berkeley.edu>
+alias ayzhou Aoying Zhou <ayzhou@eecs.berkeley.edu>
 alias azevedo Robert Azevedo <azevedo@eecs.berkeley.edu>
 alias b_afshar Bagher Afshar <b_afshar@eecs.berkeley.edu>
 alias bahai Ahmad Bahai <bahai@eecs.berkeley.edu>
@@ -137,31 +146,32 @@ alias bai Zhaojun Bai <bai@eecs.berkeley.edu>
 alias bajcsy Ruzena Bajcsy <bajcsy@eecs.berkeley.edu>
 alias bala Bala Pesala <bala@eecs.berkeley.edu>
 alias balaji Balaji Prabhakar <balaji@eecs.berkeley.edu>
-alias balke Wolf-Tilo Balke <balke@eecs.berkeley.edu>
 alias bandyos Shamik Bandyopadhyay <bandyos@eecs.berkeley.edu>
 alias barath Barath Raghavan <barath@eecs.berkeley.edu>
 alias barreno Marco Antonio Barreno <barreno@eecs.berkeley.edu>
 alias bartlett Peter Bartlett <bartlett@eecs.berkeley.edu>
 alias bbkirk Bonnie Kirkpatrick <bbkirk@eecs.berkeley.edu>
 alias bblum Benjamin Norman Blum <bblum@eecs.berkeley.edu>
+alias bbrady Bryan Brady <bbrady@eecs.berkeley.edu>
 alias bbrother Big Brother <bbrother@eecs.berkeley.edu>
 alias bdiaz Barbara Diaz-Diez <bdiaz@eecs.berkeley.edu>
 alias bean Boris Stoeber <bean@eecs.berkeley.edu>
 alias bec Bor-Yuh Evan Chang <bec@eecs.berkeley.edu>
 alias beckmann Christopher Paul Beckmann <beckmann@eecs.berkeley.edu>
 alias bee Barbara Engelhardt <bee@eecs.berkeley.edu>
-alias behrooz KHORASHADI <behrooz@eecs.berkeley.edu>
 alias benlake Ben Lake <benlake@eecs.berkeley.edu>
+alias benmar Benjamin David Mar <benmar@eecs.berkeley.edu>
 alias benr Benjamin Rubinstein <benr@eecs.berkeley.edu>
 alias benwild Ben Wild <benwild@eecs.berkeley.edu>
 alias berardi Luca Berardi <berardi@eecs.berkeley.edu>
 alias bergen A. Bergen <bergen@eecs.berkeley.edu>
+alias berk Berk Atikoglu <berk@eecs.berkeley.edu>
+alias berkel Kees Van Berkel <berkel@eecs.berkeley.edu>
 alias betsy Betsy Quayle <betsy@eecs.berkeley.edu>
 alias beverly Beverly A. Quintana <beverly@eecs.berkeley.edu>
 alias beyer Dirk Beyer <beyer@eecs.berkeley.edu>
 alias bfeldman Bryan E Feldman <bfeldman@eecs.berkeley.edu>
 alias bfields Brian Fields <bfields@eecs.berkeley.edu>
-alias bfulton BRYANJASON FULTON <bfulton@eecs.berkeley.edu>
 alias bgchun Byung-Gon Chun <bgchun@eecs.berkeley.edu>
 alias bgupta Bhusan Gupta <bgupta@eecs.berkeley.edu>
 alias bhaskara Bhaskara Marthi <bhaskara@eecs.berkeley.edu>
@@ -181,12 +191,14 @@ alias bliu911 Ben Liu <bliu911@eecs.berkeley.edu>
 alias bmattis Brian Alexander Mattis <bmattis@eecs.berkeley.edu>
 alias bmiller Bob Miller <bmiller@eecs.berkeley.edu>
 alias bmkapron Bruce Kapron <bmkapron@eecs.berkeley.edu>
-alias bnl Brian Limketkai <bnl@eecs.berkeley.edu>
+alias bmm36 Brittany Marie McClinton <bmm36@eecs.berkeley.edu>
 alias bob bob <bob@eecs.berkeley.edu>
 alias bobak Bobak Anthony Nazer <bobak@eecs.berkeley.edu>
+alias bobd Bob Dahlberg <bobd@eecs.berkeley.edu>
 alias bock Roger Bock <bock@eecs.berkeley.edu>
 alias bodik Rastislav Bodik <bodik@eecs.berkeley.edu>
 alias bodikp Peter Bodik <bodikp@eecs.berkeley.edu>
+alias bogdan Bogdan Caprita <bogdan@eecs.berkeley.edu>
 alias bonachea Dan Bonachea <bonachea@eecs.berkeley.edu>
 alias bonniez Xia Zhu <bonniez@eecs.berkeley.edu>
 alias boonloo Boon Thau Loo <boonloo@eecs.berkeley.edu>
@@ -195,20 +207,20 @@ alias boren Eran Borenstein <boren@eecs.berkeley.edu>
 alias bori Boriska Toth <bori@eecs.berkeley.edu>
 alias boser boser <boser@eecs.berkeley.edu>
 alias botis Brian_Patrick Otis <botis@eecs.berkeley.edu>
+alias bouchard Alexandre Bouchard-Cote <bouchard@eecs.berkeley.edu>
 alias bowei Bowei Du <bowei@eecs.berkeley.edu>
 alias bowonder Anupama Bowonder <bowonder@eecs.berkeley.edu>
+alias braswell Samantha R Braswell <braswell@eecs.berkeley.edu>
 alias breic Benjamin Reichardt <breic@eecs.berkeley.edu>
-alias brenda Brenda Vanoni <brenda@eecs.berkeley.edu>
 alias brendler Brenda Haendler <brendler@eecs.berkeley.edu>
 alias brewer Eric Brewer <brewer@eecs.berkeley.edu>
 alias brianb Brian Bircumshaw <brianb@eecs.berkeley.edu>
 alias brudno Michael Brudno <brudno@eecs.berkeley.edu>
-alias bsac-ga Ga(BSAC) <bsac-ga@eecs.berkeley.edu>
+alias bschuber Bryan Edward Schubert <bschuber@eecs.berkeley.edu>
 alias bschwarz Benjamin Schwarz <bschwarz@eecs.berkeley.edu>
-alias bsingh Balraj Singh <bsingh@eecs.berkeley.edu>
 alias bskinner Beverly Skinner <bskinner@eecs.berkeley.edu>
-alias bsl Brian_Sheldon Leibowitz <bsl@eecs.berkeley.edu>
 alias bsriram Sriram Balasubramaniam <bsriram@eecs.berkeley.edu>
+alias burkhart Nathan Burkhart <burkhart@eecs.berkeley.edu>
 alias burst Paul Burstein <burst@eecs.berkeley.edu>
 alias busse busse <busse@eecs.berkeley.edu>
 alias butuny Yusuf Butun <butuny@eecs.berkeley.edu>
@@ -218,47 +230,56 @@ alias c_nguyen Chi Nguyen <c_nguyen@eecs.berkeley.edu>
 alias cadence Cadence account <cadence@eecs.berkeley.edu>
 alias cagdaser Baris Cagdaser <cagdaser@eecs.berkeley.edu>
 alias caitlin Caitlin Dey-ward <caitlin@eecs.berkeley.edu>
-alias caljacks Jackson Lao <caljacks@eecs.berkeley.edu>
 alias carlosa Carlos Andrade <carlosa@eecs.berkeley.edu>
 alias carlosm Carlos Martinez <carlosm@eecs.berkeley.edu>
+alias carmena Jose M Carmena <carmena@eecs.berkeley.edu>
 alias carolm Carol Marshall <carolm@eecs.berkeley.edu>
-alias carraher Terrence Carraher <carraher@eecs.berkeley.edu>
 alias casaburi James Casaburi <casaburi@eecs.berkeley.edu>
 alias casem Michael Lee Case <casem@eecs.berkeley.edu>
-alias cassie Cassandra Dunn <cassie@eecs.berkeley.edu>
+alias catanzar Bryan Christopher Catanzaro <catanzar@eecs.berkeley.edu>
 alias catwoman Winnie Wang <catwoman@eecs.berkeley.edu>
 alias cbruno Claudia Bruno <cbruno@eecs.berkeley.edu>
 alias cbruyns Cynthia D Bruyns <cbruyns@eecs.berkeley.edu>
 alias ccarven Carven Chan <ccarven@eecs.berkeley.edu>
 alias cch Connie Chang-Hasnain <cch@eecs.berkeley.edu>
 alias cchang Cheng Chang <cchang@eecs.berkeley.edu>
+alias cchase Christopher Chase <cchase@eecs.berkeley.edu>
 alias cclo Cheuk Chi Lo <cclo@eecs.berkeley.edu>
+alias ccshi Changchun Shi <ccshi@eecs.berkeley.edu>
+alias cdaniels Cynthia  Daniels <cdaniels@eecs.berkeley.edu>
 alias cdewey COLIN DEWEY <cdewey@eecs.berkeley.edu>
 alias cdowney Collin Downey <cdowney@eecs.berkeley.edu>
-alias cedric Cedric Westphal <cedric@eecs.berkeley.edu>
 alias celaine Elaine Cheong <celaine@eecs.berkeley.edu>
 alias ceperley Daniel Ceperley <ceperley@eecs.berkeley.edu>
 alias cernest Cynthia Ernest <cernest@eecs.berkeley.edu>
 alias cgeyer Christopher Geyer <cgeyer@eecs.berkeley.edu>
 alias cgjones Christopher Jones <cgjones@eecs.berkeley.edu>
+alias chang568 Albert H. Chang <chang568@eecs.berkeley.edu>
+alias changa99 Angela  Chang <changa99@eecs.berkeley.edu>
 alias changd Diane Chang <changd@eecs.berkeley.edu>
 alias changrui Changrui Yin <changrui@eecs.berkeley.edu>
 alias chantim chantim <chantim@eecs.berkeley.edu>
 alias chelle Raychelle Lee <chelle@eecs.berkeley.edu>
-alias chelseyl Chelsey Leung <chelseyl@eecs.berkeley.edu>
 alias chema Jose Maria Gonzalez <chema@eecs.berkeley.edu>
+alias chen05 Yuhui David Chen <chen05@eecs.berkeley.edu>
 alias chengaj Adrian Cheng <chengaj@eecs.berkeley.edu>
 alias chengjcm Jim Chih-Min Cheng <chengjcm@eecs.berkeley.edu>
 alias chengs Shih-Yu Cheng <chengs@eecs.berkeley.edu>
 alias chengsh Shih-Yo Shawn Cheng <chengsh@eecs.berkeley.edu>
 alias chenyj YIJIAN CHEN <chenyj@eecs.berkeley.edu>
 alias chenzh Chen Chang <chenzh@eecs.berkeley.edu>
+alias chenzhy Zhangyuan Chen <chenzhy@eecs.berkeley.edu>
+alias cherylp Cheryl Pon <cherylp@eecs.berkeley.edu>
+alias cheungw Willy Cheung <cheungw@eecs.berkeley.edu>
 alias chiaraf chiaraf <chiaraf@eecs.berkeley.edu>
 alias chinwuba CHINWUBADAVID EZEKWE <chinwuba@eecs.berkeley.edu>
 alias chion Chi On Chui <chion@eecs.berkeley.edu>
 alias chiuyun Yun Chiu <chiuyun@eecs.berkeley.edu>
 alias chl Chung-Hsun Lin <chl@eecs.berkeley.edu>
 alias chogue Christopher W. Hogue <chogue@eecs.berkeley.edu>
+alias chomon Cho-Mon Kyaw <chomon@eecs.berkeley.edu>
+alias choumert Christophe Choumert <choumert@eecs.berkeley.edu>
+alias chris Chris Heinz Clifford <chris@eecs.berkeley.edu>
 alias chrisc chrisc <chrisc@eecs.berkeley.edu>
 alias chrishtr Chris Harrelson <chrishtr@eecs.berkeley.edu>
 alias christos Christos Papadimitriou <christos@eecs.berkeley.edu>
@@ -270,28 +291,31 @@ alias cindyp Cindy Palwick <cindyp@eecs.berkeley.edu>
 alias ckarlof Chris Karlof <ckarlof@eecs.berkeley.edu>
 alias ckeller Chris Keller <ckeller@eecs.berkeley.edu>
 alias ckennon Cynthia Kennon <ckennon@eecs.berkeley.edu>
+alias ckj Cathy Jen <ckj@eecs.berkeley.edu>
 alias clairet Claire Tomlin <clairet@eecs.berkeley.edu>
 alias clarsson Larsson <clarsson@eecs.berkeley.edu>
+alias clhou Chenlu Hou <clhou@eecs.berkeley.edu>
 alias clim Chu-Cheow Lim <clim@eecs.berkeley.edu>
 alias cmajidi Carmel Majidi <cmajidi@eecs.berkeley.edu>
+alias cmarcu Cristian  Marcu <cmarcu@eecs.berkeley.edu>
 alias cmjones Charlotte Jones <cmjones@eecs.berkeley.edu>
 alias cmtice Caroline Tice <cmtice@eecs.berkeley.edu>
-alias cmuhlstn Christopher Muhlstein <cmuhlstn@eecs.berkeley.edu>
 alias cnam Christina Nam <cnam@eecs.berkeley.edu>
+alias colleen Colleen Lewis <colleen@eecs.berkeley.edu>
 alias congliu Cong Liu <congliu@eecs.berkeley.edu>
 alias cookbw Ben Cook <cookbw@eecs.berkeley.edu>
 alias costis Konstantinos Daskalakis <costis@eecs.berkeley.edu>
-alias cpwen Chih-Po Wen <cpwen@eecs.berkeley.edu>
 alias crave crave <crave@eecs.berkeley.edu>
 alias crbaker Christopher Ryan Baker <crbaker@eecs.berkeley.edu>
+alias creeder Christopher Reeder <creeder@eecs.berkeley.edu>
 alias csajka Tamas Csajka <csajka@eecs.berkeley.edu>
 alias csbell Christian Steven Bell <csbell@eecs.berkeley.edu>
-alias cschen CHEN <cschen@eecs.berkeley.edu>
 alias csgsa CS Grad Student Association <csgsa@eecs.berkeley.edu>
 alias csguest CS Guest <csguest@eecs.berkeley.edu>
 alias csh Chen Shen <csh@eecs.berkeley.edu>
 alias csinem Sinem Coleri <csinem@eecs.berkeley.edu>
 alias cslee Chung Lee <cslee@eecs.berkeley.edu>
+alias cspeerca Casey O Speer <cspeerca@eecs.berkeley.edu>
 alias cssharp Cory Sharp <cssharp@eecs.berkeley.edu>
 alias ct-ee Cheng Tien Ee <ct-ee@eecs.berkeley.edu>
 alias ctsang Cheongyuen Tsang <ctsang@eecs.berkeley.edu>
@@ -299,6 +323,7 @@ alias cuadra Rosa Cuadra <cuadra@eecs.berkeley.edu>
 alias culler David Culler <culler@eecs.berkeley.edu>
 alias cusg EECS Computer User Support Group <cusg@eecs.berkeley.edu>
 alias cvicente Camille Vicente <cvicente@eecs.berkeley.edu>
+alias cweekley Cynthia Weekley <cweekley@eecs.berkeley.edu>
 alias cwlee Cheol-Woong Lee <cwlee@eecs.berkeley.edu>
 alias cxh Christopher Hylands <cxh@eecs.berkeley.edu>
 alias cyc Christopher Crutchfield <cyc@eecs.berkeley.edu>
@@ -306,11 +331,12 @@ alias cynthias Cynthia Sylvester <cynthias@eecs.berkeley.edu>
 alias czerwin Steven E. Czerwinski <czerwin@eecs.berkeley.edu>
 alias czhong Lishi_Charlie Chong <czhong@eecs.berkeley.edu>
 alias dadkins Daniel Adkins <dadkins@eecs.berkeley.edu>
-alias daewon Dae-Won Ha <daewon@eecs.berkeley.edu>
 alias daf David Forsyth <daf@eecs.berkeley.edu>
+alias daisyw Zhe Daisy Wang <daisyw@eecs.berkeley.edu>
 alias dalee88 David Lee <dalee88@eecs.berkeley.edu>
 alias damonh Damon Hinson <damonh@eecs.berkeley.edu>
 alias dancheng Daniel Cheng <dancheng@eecs.berkeley.edu>
+alias dandre David Andre <dandre@eecs.berkeley.edu>
 alias danh Danny Heap <danh@eecs.berkeley.edu>
 alias daniele Daniele Gasperini <daniele@eecs.berkeley.edu>
 alias danijela Danijela Cabric <danijela@eecs.berkeley.edu>
@@ -319,6 +345,7 @@ alias dantonel Dominic Aldo Antonelli <dantonel@eecs.berkeley.edu>
 alias daphne Daphne Koller <daphne@eecs.berkeley.edu>
 alias darinf Darin Fisher <darinf@eecs.berkeley.edu>
 alias dario Dario Cini <dario@eecs.berkeley.edu>
+alias darsen Darsen Duane Lu <darsen@eecs.berkeley.edu>
 alias dasobel David_Amory Sobel <dasobel@eecs.berkeley.edu>
 alias davare Abhijit Davare <davare@eecs.berkeley.edu>
 alias daves Dave Shackelford <daves@eecs.berkeley.edu>
@@ -327,38 +354,46 @@ alias davidj David Johnson <davidj@eecs.berkeley.edu>
 alias davidlo David Lo <davidlo@eecs.berkeley.edu>
 alias davidopp David Oppenheimer <davidopp@eecs.berkeley.edu>
 alias davidp David Parks <davidp@eecs.berkeley.edu>
+alias davidsun David Qin Sun <davidsun@eecs.berkeley.edu>
 alias davteng davteng <davteng@eecs.berkeley.edu>
 alias daw David A Wagner <daw@eecs.berkeley.edu>
 alias dbindel David Bindel <dbindel@eecs.berkeley.edu>
+alias dbucher Daniel Bucher <dbucher@eecs.berkeley.edu>
 alias dcarlton David Carlton <dcarlton@eecs.berkeley.edu>
 alias dcg Daniel C. Glaser <dcg@eecs.berkeley.edu>
+alias dclark Donald Clark <dclark@eecs.berkeley.edu>
 alias ddgarcia Dan Garcia <ddgarcia@eecs.berkeley.edu>
 alias dean-ofc Dean's Office <dean-ofc@eecs.berkeley.edu>
 alias dejan dejan <dejan@eecs.berkeley.edu>
 alias delynnb DeLynn Bettencourt <delynnb@eecs.berkeley.edu>
 alias demmer Michael Demmer <demmer@eecs.berkeley.edu>
 alias demoe Jake DeMoe <demoe@eecs.berkeley.edu>
+alias denero John Sturdy DeNero <denero@eecs.berkeley.edu>
 alias dengzm Zhiming Deng <dengzm@eecs.berkeley.edu>
 alias denise Denise Johnson <denise@eecs.berkeley.edu>
 alias dennk Chi-Wai Kuen <dennk@eecs.berkeley.edu>
 alias densmore Douglas Densmore <densmore@eecs.berkeley.edu>
 alias derenzo Steve Derenzo <derenzo@eecs.berkeley.edu>
+alias derickson Darrell Erickson <derickson@eecs.berkeley.edu>
 alias devouass Devouassoux Yannick <devouass@eecs.berkeley.edu>
 alias dey Anind Dey <dey@eecs.berkeley.edu>
 alias dgay David Gay <dgay@eecs.berkeley.edu>
+alias dgillick Daniel Jacob Gillick <dgillick@eecs.berkeley.edu>
 alias dgjones Debbie Jones <dgjones@eecs.berkeley.edu>
-alias dglo Dave Glowacki <dglo@eecs.berkeley.edu>
 alias dgood Daniel Albert Good <dgood@eecs.berkeley.edu>
-alias dhchang Dennis Ho-Wah Chang <dhchang@eecs.berkeley.edu>
+alias dguerma David Guermandi <dguerma@eecs.berkeley.edu>
 alias diaoyl Yanlei Diao <diaoyl@eecs.berkeley.edu>
 alias diegod Diego DAuglinac <diegod@eecs.berkeley.edu>
 alias digh Dai Hisamoto <digh@eecs.berkeley.edu>
 alias dilip Dilip Antony Joseph <dilip@eecs.berkeley.edu>
 alias dimakis ANTONIOS DIMAKIS <dimakis@eecs.berkeley.edu>
+alias dingm Min Ding <dingm@eecs.berkeley.edu>
+alias diulama Alex Yim <diulama@eecs.berkeley.edu>
 alias divya Divya Ramachandran <divya@eecs.berkeley.edu>
 alias dkatsis Dimitrios Katsis <dkatsis@eecs.berkeley.edu>
-alias dkjeong Deog Kyoon Jeong <dkjeong@eecs.berkeley.edu>
+alias dkmoon Daekyeong Moon <dkmoon@eecs.berkeley.edu>
 alias dleuen David Leuenberger <dleuen@eecs.berkeley.edu>
+alias dlin David Lin <dlin@eecs.berkeley.edu>
 alias dlong Ong <dlong@eecs.berkeley.edu>
 alias dmarin David_P Marin <dmarin@eecs.berkeley.edu>
 alias dmcc Daniel McCormick <dmcc@eecs.berkeley.edu>
@@ -368,9 +403,10 @@ alias dogan Hakan Dogan <dogan@eecs.berkeley.edu>
 alias dolecek Lara Dolecek <dolecek@eecs.berkeley.edu>
 alias donald Donald Chai <donald@eecs.berkeley.edu>
 alias dongarra Jack Dongarra <dongarra@eecs.berkeley.edu>
-alias donnako Donna Ko <donnako@eecs.berkeley.edu>
+alias donkey Zachary Mills Norwood <donkey@eecs.berkeley.edu>
+alias donnam Donna Mulchand <donnam@eecs.berkeley.edu>
 alias donnelly donnelly <donnelly@eecs.berkeley.edu>
-alias dori Dori Rickert <dori@eecs.berkeley.edu>
+alias dorawong Dora Y. Wong <dorawong@eecs.berkeley.edu>
 alias doria Dorit Aharonov <doria@eecs.berkeley.edu>
 alias doris Doris Simpson <doris@eecs.berkeley.edu>
 alias doyle Jane Doyle <doyle@eecs.berkeley.edu>
@@ -381,6 +417,7 @@ alias dratajcz David Ratajczak <dratajcz@eecs.berkeley.edu>
 alias draz Danny Raz -- ICSI/theory <draz@eecs.berkeley.edu>
 alias drewc Andrewc Cheng <drewc@eecs.berkeley.edu>
 alias drezgic Milos Drezgic <drezgic@eecs.berkeley.edu>
+alias drosen David Rosenberg <drosen@eecs.berkeley.edu>
 alias droz Pierre-Yves Droz <droz@eecs.berkeley.edu>
 alias drummond Tony Drummond <drummond@eecs.berkeley.edu>
 alias dschonbe Daniel Schonberg <dschonbe@eecs.berkeley.edu>
@@ -389,6 +426,7 @@ alias dsontag SONTAG <dsontag@eecs.berkeley.edu>
 alias dsw Daniel Wilkerson <dsw@eecs.berkeley.edu>
 alias dtchang dtchang <dtchang@eecs.berkeley.edu>
 alias dtlee Donovan_Tan Lee <dtlee@eecs.berkeley.edu>
+alias dtlin David Lin <dtlin@eecs.berkeley.edu>
 alias dtse David Tse <dtse@eecs.berkeley.edu>
 alias duan Yitao Duan <duan@eecs.berkeley.edu>
 alias duke DUKE LEE <duke@eecs.berkeley.edu>
@@ -400,6 +438,8 @@ alias e_chang Ellen Chang <e_chang@eecs.berkeley.edu>
 alias eaton Patrick Eaton <eaton@eecs.berkeley.edu>
 alias eb-9d9 Tamara Blain <eb-9d9@eecs.berkeley.edu>
 alias ebkim Eunice Kim <ebkim@eecs.berkeley.edu>
+alias eboni Eboni Wilson <eboni@eecs.berkeley.edu>
+alias ebopriyo Debopriyo Chowdhury <ebopriyo@eecs.berkeley.edu>
 alias echang echang <echang@eecs.berkeley.edu>
 alias echiou Esmond Chiou <echiou@eecs.berkeley.edu>
 alias edelman Alan Edelman <edelman@eecs.berkeley.edu>
@@ -413,6 +453,7 @@ alias eholzwar Edward Holzwarth <eholzwar@eecs.berkeley.edu>
 alias eiji EIJI MIZUTANI <eiji@eecs.berkeley.edu>
 alias eingerso Emrys Ingersoll <eingerso@eecs.berkeley.edu>
 alias eisentra Kirsten Eisentrager <eisentra@eecs.berkeley.edu>
+alias ejf Eric Friedman <ejf@eecs.berkeley.edu>
 alias ejgeiger Emil Geiger <ejgeiger@eecs.berkeley.edu>
 alias ejim Eun-Jin Im <ejim@eecs.berkeley.edu>
 alias ejr Edward Jason Riedy <ejr@eecs.berkeley.edu>
@@ -422,34 +463,39 @@ alias elau Erwin Kin-Ping Lau <elau@eecs.berkeley.edu>
 alias elenaj Elena Wen Jiang <elenaj@eecs.berkeley.edu>
 alias elghaoui Laurent ElGhaoui <elghaoui@eecs.berkeley.edu>
 alias eliao EDWARD_H LIAO <eliao@eecs.berkeley.edu>
+alias elisa Elisa Lewis <elisa@eecs.berkeley.edu>
 alias elise Elise Mills <elise@eecs.berkeley.edu>
 alias elisio Jong-Woo Shin <elisio@eecs.berkeley.edu>
 alias elitza Elitza Maneva <elitza@eecs.berkeley.edu>
 alias ellen_zh Yang Zhao <ellen_zh@eecs.berkeley.edu>
-alias emach MACH <emach@eecs.berkeley.edu>
 alias ematsi Eleftherios D Matsikoudis <ematsi@eecs.berkeley.edu>
+alias emilio Emilio Lora-Tomayo-D'Ocon <emilio@eecs.berkeley.edu>
 alias emilong Emil Ong <emilong@eecs.berkeley.edu>
 alias emlai Elaine Lai <emlai@eecs.berkeley.edu>
-alias emyeh Edmund Yeh <emyeh@eecs.berkeley.edu>
+alias emr143 Evan Michael Reutzel <emr143@eecs.berkeley.edu>
+alias enikos Eniko Seen <enikos@eecs.berkeley.edu>
 alias entwistl Jon Perry Entwistle <entwistl@eecs.berkeley.edu>
 alias enyi En-Yi Lin <enyi@eecs.berkeley.edu>
 alias epxing Eric P. Xing <epxing@eecs.berkeley.edu>
 alias equevy Emmanuel Quevy <equevy@eecs.berkeley.edu>
+alias eran Eran Halperin <eran@eecs.berkeley.edu>
 alias ergen Mustafa Ergen <ergen@eecs.berkeley.edu>
 alias eric & Allman <eric@eecs.berkeley.edu>
+alias ericb Eric Dean Battenberg <ericb@eecs.berkeley.edu>
 alias ericmail Zheng-Xin Liu <ericmail@eecs.berkeley.edu>
-alias ericmao Eric Mao <ericmao@eecs.berkeley.edu>
+alias erika Erika A Parra <erika@eecs.berkeley.edu>
 alias erinr Erin Reiche <erinr@eecs.berkeley.edu>
 alias eritaka Eri Takahashi <eritaka@eecs.berkeley.edu>
+alias ernestt Ernest Tsui <ernestt@eecs.berkeley.edu>
 alias erythean Erythean Martin <erythean@eecs.berkeley.edu>
-alias esanchez Erika I. Sanchez <esanchez@eecs.berkeley.edu>
 alias esleland Eli S. Leland <esleland@eecs.berkeley.edu>
 alias etesami Omid Etesami <etesami@eecs.berkeley.edu>
 alias eva Eva Poinar <eva@eecs.berkeley.edu>
-alias evang Evan Greensmith <evang@eecs.berkeley.edu>
 alias everitt Katherine Everitt <everitt@eecs.berkeley.edu>
 alias ewagner Earl Wagner <ewagner@eecs.berkeley.edu>
+alias eychin Eric Chin <eychin@eecs.berkeley.edu>
 alias eylon Eylon Caspi <eylon@eecs.berkeley.edu>
+alias ezri Jeremie Ezri <ezri@eecs.berkeley.edu>
 alias fabian Fabian_Chavez Martinez <fabian@eecs.berkeley.edu>
 alias faiza Faiza Azgui <faiza@eecs.berkeley.edu>
 alias farhad Farhad Massoudi <farhad@eecs.berkeley.edu>
@@ -457,56 +503,54 @@ alias farhana Farhana Sheikh <farhana@eecs.berkeley.edu>
 alias farinaz Farinaz Koushanfar <farinaz@eecs.berkeley.edu>
 alias fateman Richard J. Fateman <fateman@eecs.berkeley.edu>
 alias fbach Francis Bach <fbach@eecs.berkeley.edu>
-alias felix Felix Tien-Shang Wu <felix@eecs.berkeley.edu>
 alias ferenc Ferenc Kovac <ferenc@eecs.berkeley.edu>
 alias ferencz Andras Ferencz <ferencz@eecs.berkeley.edu>
 alias feskafi Farzad Eskafi <feskafi@eecs.berkeley.edu>
-alias fischerp Peter Fischer <fischerp@eecs.berkeley.edu>
 alias fischion Carlo Fischione <fischion@eecs.berkeley.edu>
 alias flab Francois Labelle <flab@eecs.berkeley.edu>
 alias flaca Ixel Chavez <flaca@eecs.berkeley.edu>
-alias fliao Frank Jason Liao <fliao@eecs.berkeley.edu>
 alias flora Flora Oviedo <flora@eecs.berkeley.edu>
 alias floral Flora Law <floral@eecs.berkeley.edu>
 alias florescu Octavian Florescu <florescu@eecs.berkeley.edu>
-alias forrest Jon Forrest <forrest@eecs.berkeley.edu>
 alias fowlkes Charless Fowlkes <fowlkes@eecs.berkeley.edu>
 alias franca Luiz M. Franca-Neto <franca@eecs.berkeley.edu>
-alias francesc Gianni Franceschini <francesc@eecs.berkeley.edu>
-alias frankel Sherman Frankel <frankel@eecs.berkeley.edu>
 alias franklin Michael Franklin <franklin@eecs.berkeley.edu>
 alias fraser Eric Fraser <fraser@eecs.berkeley.edu>
+alias freedman Michael Freedman <freedman@eecs.berkeley.edu>
 alias frey Wilhelm Frey <frey@eecs.berkeley.edu>
 alias frueh Christian Frueh <frueh@eecs.berkeley.edu>
 alias ftp-arch CS Anonymous FTP Admin <ftp-arch@eecs.berkeley.edu>
+alias fujiit Tomonori  Fujiii <fujiit@eecs.berkeley.edu>
+alias fxjiang Xiaofan Jiang <fxjiang@eecs.berkeley.edu>
 alias fyu Fang Yu <fyu@eecs.berkeley.edu>
 alias galtekar Gautam Deepak Altekar <galtekar@eecs.berkeley.edu>
 alias ganache Cynthia Almazol <ganache@eecs.berkeley.edu>
-alias gaodi Di Gao <gaodi@eecs.berkeley.edu>
 alias garmay LEUNG <garmay@eecs.berkeley.edu>
+alias garretto Garrett Brown <garretto@eecs.berkeley.edu>
 alias garrigue Pierre Jerome Garrigues <garrigue@eecs.berkeley.edu>
 alias garth Garth Robins <garth@eecs.berkeley.edu>
 alias garyb Gary Baldwin <garyb@eecs.berkeley.edu>
 alias gatis Gatis Midrijanis <gatis@eecs.berkeley.edu>
 alias gavazza Joe Gavazza <gavazza@eecs.berkeley.edu>
+alias gawalt Brian Christopher Gawalt <gawalt@eecs.berkeley.edu>
 alias gballs Greg Balls <gballs@eecs.berkeley.edu>
 alias gdgib GIBELING <gdgib@eecs.berkeley.edu>
 alias gdtuazon GINACARLADEOCAREZA TUAZON <gdtuazon@eecs.berkeley.edu>
 alias gebis Joseph James Gebis <gebis@eecs.berkeley.edu>
 alias geels Dennis Geels <geels@eecs.berkeley.edu>
 alias geirea Gabriel Eirea <geirea@eecs.berkeley.edu>
-alias geksiong Gek Siong Low <geksiong@eecs.berkeley.edu>
-alias gendflor Jason Michael Broad <gendflor@eecs.berkeley.edu>
 alias gene Eugene W. Myers <gene@eecs.berkeley.edu>
 alias genewa Eugene Wachspress <genewa@eecs.berkeley.edu>
 alias gennari Frank Gennari <gennari@eecs.berkeley.edu>
 alias geraldw Guoqiang Wang <geraldw@eecs.berkeley.edu>
 alias gert Gert Lanckriet <gert@eecs.berkeley.edu>
 alias get Gilman Edwin Tolle <get@eecs.berkeley.edu>
+alias gfreberg Glenda Freberg <gfreberg@eecs.berkeley.edu>
 alias gianniq Gianni Quartiero <gianniq@eecs.berkeley.edu>
 alias gin Helena Gin <gin@eecs.berkeley.edu>
 alias ginger Ginger Ogle <ginger@eecs.berkeley.edu>
 alias givelber Edward Givelberg <givelber@eecs.berkeley.edu>
+alias gjstern George J. Stern <gjstern@eecs.berkeley.edu>
 alias gkelson Gary Kelson <gkelson@eecs.berkeley.edu>
 alias gmc Gregory McIntyre <gmc@eecs.berkeley.edu>
 alias gmhenry Greg Henry <gmhenry@eecs.berkeley.edu>
@@ -519,6 +563,8 @@ alias gporter George Porter <gporter@eecs.berkeley.edu>
 alias grace_pe BSAC GA(Piccola) <grace_pe@eecs.berkeley.edu>
 alias gracev VESOM <gracev@eecs.berkeley.edu>
 alias grafix Graphics Laboratory <grafix@eecs.berkeley.edu>
+alias grant Grant Robert Schoenebeck <grant@eecs.berkeley.edu>
+alias greeves Galen  Reeves <greeves@eecs.berkeley.edu>
 alias gregl Gregory Lawrence <gregl@eecs.berkeley.edu>
 alias gregor Gregor Goessler <gregor@eecs.berkeley.edu>
 alias gretchen Gretchen Sanderson <gretchen@eecs.berkeley.edu>
@@ -531,18 +577,19 @@ alias guille Guillermo Diez Canas <guille@eecs.berkeley.edu>
 alias gulwani Sumit Gulwani <gulwani@eecs.berkeley.edu>
 alias gunnar Gunnar Proppe <gunnar@eecs.berkeley.edu>
 alias guptar Rajarshi Gupta <guptar@eecs.berkeley.edu>
+alias gurtov Andrei Gurtov <gurtov@eecs.berkeley.edu>
 alias gus Gus Monino <gus@eecs.berkeley.edu>
 alias guyang Guang Yang <guyang@eecs.berkeley.edu>
 alias gwenl Gwen Lindsey <gwenl@eecs.berkeley.edu>
 alias haidehk Haideh Khorramabadi <haidehk@eecs.berkeley.edu>
+alias halldor Halldor Isak Gylfason <halldor@eecs.berkeley.edu>
 alias hansen82 Hansen Bow <hansen82@eecs.berkeley.edu>
 alias harchol Mor Harchol-Balter <harchol@eecs.berkeley.edu>
 alias harmonia Harmonia Project <harmonia@eecs.berkeley.edu>
-alias harrisod David Harrison <harrisod@eecs.berkeley.edu>
 alias harrison Michael Harrison <harrison@eecs.berkeley.edu>
+alias hauer Jan-Hinrich Hauer <hauer@eecs.berkeley.edu>
 alias hayest Tom Hayes <hayest@eecs.berkeley.edu>
 alias hazen Daniel Adam Hazen <hazen@eecs.berkeley.edu>
-alias hchen Hao Chen <hchen@eecs.berkeley.edu>
 alias hchoo Hyuck Choo <hchoo@eecs.berkeley.edu>
 alias hcshim HYUNCHUL SHIM <hcshim@eecs.berkeley.edu>
 alias hdinh Hiep Dinh <hdinh@eecs.berkeley.edu>
@@ -552,13 +599,15 @@ alias helenk Helen Kang <helenk@eecs.berkeley.edu>
 alias helenkim Helen Kim <helenkim@eecs.berkeley.edu>
 alias henrylin Henry Chih-Heng Lin <henrylin@eecs.berkeley.edu>
 alias hernan Pat Hernan <hernan@eecs.berkeley.edu>
-alias herrick Jesse Herrick <herrick@eecs.berkeley.edu>
 alias hesham Hesham Kamel <hesham@eecs.berkeley.edu>
+alias hewei He Wei <hewei@eecs.berkeley.edu>
 alias heydari Babak Heydari <heydari@eecs.berkeley.edu>
+alias heydavid David Park <heydavid@eecs.berkeley.edu>
 alias higham Nick Higham <higham@eecs.berkeley.edu>
 alias hildrum Kris Hildrum <hildrum@eecs.berkeley.edu>
 alias hjones Heather Jones <hjones@eecs.berkeley.edu>
-alias hksteven HOCHAK HUNG <hksteven@eecs.berkeley.edu>
+alias hlchen Haolin Chen <hlchen@eecs.berkeley.edu>
+alias hlei Howard Hao Lei <hlei@eecs.berkeley.edu>
 alias hling Ling Huang <hling@eecs.berkeley.edu>
 alias hmb Hans-Martin Bluethgen <hmb@eecs.berkeley.edu>
 alias hoeteck Hoeteck Wee <hoeteck@eecs.berkeley.edu>
@@ -566,7 +615,6 @@ alias hohltb Barbara Hohlt <hohltb@eecs.berkeley.edu>
 alias hokazono Akira Hokazono <hokazono@eecs.berkeley.edu>
 alias holtz William Holtz <holtz@eecs.berkeley.edu>
 alias hong Wei Hong <hong@eecs.berkeley.edu>
-alias hongha Hong-Ha Hoang <hongha@eecs.berkeley.edu>
 alias honicky Richard Edward Honicky <honicky@eecs.berkeley.edu>
 alias hoon ByungHoon Kang <hoon@eecs.berkeley.edu>
 alias hormozd Hormozd Benjamin Gahvari <hormozd@eecs.berkeley.edu>
@@ -578,91 +626,94 @@ alias hpc Hua-Pei Chen <hpc@eecs.berkeley.edu>
 alias hread Heather Read <hread@eecs.berkeley.edu>
 alias hrson Hongrak Son <hrson@eecs.berkeley.edu>
 alias hsil Hsin-I Liu <hsil@eecs.berkeley.edu>
+alias hsu Hsan-Yin Hsu <hsu@eecs.berkeley.edu>
 alias huangdc Daniel Huang <huangdc@eecs.berkeley.edu>
 alias hubaux Jean-pierre Hubaux <hubaux@eecs.berkeley.edu>
 alias huebsch Ryan Huebsch <huebsch@eecs.berkeley.edu>
 alias huifangq Huifang Qin <huifangq@eecs.berkeley.edu>
 alias hungpham Hung Pham <hungpham@eecs.berkeley.edu>
+alias hurd2 Sharon Hurd <hurd2@eecs.berkeley.edu>
 alias hurwitz Carol Hurwitz <hurwitz@eecs.berkeley.edu>
-alias husain Husain Muzaffar <husain@eecs.berkeley.edu>
-alias hwatanab Hikaru Watanabe <hwatanab@eecs.berkeley.edu>
 alias hweather Hakim Weatherspoon <hweather@eecs.berkeley.edu>
 alias hyskim Hyongsuk Kim <hyskim@eecs.berkeley.edu>
 alias hyukee92 Hyuk-Kee Sung <hyukee92@eecs.berkeley.edu>
 alias hywong2 Hiu Yung Wong <hywong2@eecs.berkeley.edu>
 alias hyzheng Haiyang Zheng <hyzheng@eecs.berkeley.edu>
 alias iakovos Iakovos Mavroidis <iakovos@eecs.berkeley.edu>
+alias iantan Ian Nathaniel Lim Tan <iantan@eecs.berkeley.edu>
 alias ibagrak Ilya Bagrak <ibagrak@eecs.berkeley.edu>
 alias iben Hayley Iben <iben@eecs.berkeley.edu>
 alias icetrey Thomas H. Cauley <icetrey@eecs.berkeley.edu>
+alias ichiro Ichiro Seto <ichiro@eecs.berkeley.edu>
 alias ienadjak Irena Emilova Nadjakova <ienadjak@eecs.berkeley.edu>
 alias ihaque Imran Haque <ihaque@eecs.berkeley.edu>
-alias ilyas Ilya Shpitser <ilyas@eecs.berkeley.edu>
+alias ikeda Yutaka  Ikeda <ikeda@eecs.berkeley.edu>
 alias imgdba IMG DBA <imgdba@eecs.berkeley.edu>
 alias imitchel Ian Mitchell <imitchel@eecs.berkeley.edu>
 alias inderjit Dhillon Inderjit Singh <inderjit@eecs.berkeley.edu>
 alias inkyu Inkyu Park <inkyu@eecs.berkeley.edu>
-alias inori Ryan Stejskal <inori@eecs.berkeley.edu>
 alias intropia Sang-Won Park <intropia@eecs.berkeley.edu>
 alias ion Ion Yannopoulos <ion@eecs.berkeley.edu>
-alias iritd Irit Dinur <iritd@eecs.berkeley.edu>
+alias ireneos Eirinaios Michelakis <ireneos@eecs.berkeley.edu>
+alias iseetho Isaac M Seetho <iseetho@eecs.berkeley.edu>
+alias isenburg Martin Isenburg <isenburg@eecs.berkeley.edu>
 alias ishikawa Tomohiro Ishikawa <ishikawa@eecs.berkeley.edu>
 alias ishwar Ishwar <ishwar@eecs.berkeley.edu>
 alias isler I. Volkan Isler <isler@eecs.berkeley.edu>
 alias istoica Ion Stoica <istoica@eecs.berkeley.edu>
+alias itsizzy Isabel Chen <itsizzy@eecs.berkeley.edu>
+alias ivans Ivan E Sutherland <ivans@eecs.berkeley.edu>
 alias iychen I_Yang Chen <iychen@eecs.berkeley.edu>
 alias jack Jack Li <jack@eecs.berkeley.edu>
 alias jaein Jaein Jeong <jaein@eecs.berkeley.edu>
 alias jaety John Edwards <jaety@eecs.berkeley.edu>
-alias jali Jali Heilmann <jali@eecs.berkeley.edu>
+alias jamesjyz James Zhang <jamesjyz@eecs.berkeley.edu>
 alias jamshidi Babak Jamshidi <jamshidi@eecs.berkeley.edu>
 alias janavg Jana Van Greunen <janavg@eecs.berkeley.edu>
 alias janetshu Janet Shu <janetshu@eecs.berkeley.edu>
 alias janexi Jane Xi <janexi@eecs.berkeley.edu>
 alias janka Jana Kosecka <janka@eecs.berkeley.edu>
+alias janny Janny Chiu <janny@eecs.berkeley.edu>
 alias janp Jan Pardoe <janp@eecs.berkeley.edu>
+alias jar Jesse  Aaron  Richmond <jar@eecs.berkeley.edu>
 alias jasjohl Jas Johl <jasjohl@eecs.berkeley.edu>
 alias jasna Jasna Mrkic <jasna@eecs.berkeley.edu>
 alias jasonh Jason Hong <jasonh@eecs.berkeley.edu>
-alias jasonli Jason Li <jasonli@eecs.berkeley.edu>
+alias jasonps Jason Patrick Sanders <jasonps@eecs.berkeley.edu>
 alias jawolfe Jason A. Wolfe <jawolfe@eecs.berkeley.edu>
-alias jaychen Jay Chen <jaychen@eecs.berkeley.edu>
+alias jaysonhu HU <jaysonhu@eecs.berkeley.edu>
 alias jba John B. Accinelli <jba@eecs.berkeley.edu>
 alias jbayer Jason Bayer <jbayer@eecs.berkeley.edu>
-alias jbkirby KIRBY <jbkirby@eecs.berkeley.edu>
 alias jblack JUSTIN BLACK <jblack@eecs.berkeley.edu>
 alias jbokor Jeff Bokor <jbokor@eecs.berkeley.edu>
-alias jcain Jason Cain <jcain@eecs.berkeley.edu>
 alias jcalizo Jose Calizo <jcalizo@eecs.berkeley.edu>
+alias jchen Jing Chen <jchen@eecs.berkeley.edu>
 alias jchuang John Chuang <jchuang@eecs.berkeley.edu>
 alias jcloo Jeffrey Loo <jcloo@eecs.berkeley.edu>
+alias jcompa John Compa <jcompa@eecs.berkeley.edu>
 alias jcondit Jeremy Condit <jcondit@eecs.berkeley.edu>
 alias jctsai Jui-Che Tsai <jctsai@eecs.berkeley.edu>
 alias jdavis Jo Davis <jdavis@eecs.berkeley.edu>
 alias jdf jdf <jdf@eecs.berkeley.edu>
 alias jduell Jason Clark Duell <jduell@eecs.berkeley.edu>
-alias jeanene Jeanene Hayes <jeanene@eecs.berkeley.edu>
+alias jeanclin Jean Lin-Wong <jeanclin@eecs.berkeley.edu>
 alias jeanette Jeanette Palwick <jeanette@eecs.berkeley.edu>
 alias jeffery Shawn Ryan Jeffery <jeffery@eecs.berkeley.edu>
 alias jeffw Jeff Wilkinson <jeffw@eecs.berkeley.edu>
-alias jemkok Jeremy Kok <jemkok@eecs.berkeley.edu>
-alias jengo Jennifer Gomez <jengo@eecs.berkeley.edu>
-alias jennifer Jennifer Dawson <jennifer@eecs.berkeley.edu>
 alias jens Jens Harnisch <jens@eecs.berkeley.edu>
 alias jensg GROSSKLAGS <jensg@eecs.berkeley.edu>
+alias jeremyhu Jeremy Huddleston <jeremyhu@eecs.berkeley.edu>
 alias jesnjosh Jessica Gamble <jesnjosh@eecs.berkeley.edu>
+alias jessicap Jessica Jean Pannequin <jessicap@eecs.berkeley.edu>
 alias jevan Furmanski <jevan@eecs.berkeley.edu>
 alias jfc John Canny <jfc@eecs.berkeley.edu>
 alias jfeldman Jerry Feldman <jfeldman@eecs.berkeley.edu>
 alias jfiddler Jerry Fiddler <jfiddler@eecs.berkeley.edu>
 alias jfire Firebaugh <jfire@eecs.berkeley.edu>
-alias jfrank Jeremy Frank <jfrank@eecs.berkeley.edu>
 alias jgf James G. Fung <jgf@eecs.berkeley.edu>
 alias jhala Ranjit Jhala <jhala@eecs.berkeley.edu>
-alias jhauser John Hauser <jhauser@eecs.berkeley.edu>
 alias jheer Jeffrey Michael Heer <jheer@eecs.berkeley.edu>
 alias jheppner Joshua Heppner <jheppner@eecs.berkeley.edu>
-alias jhmo Jeonghoon Mo <jhmo@eecs.berkeley.edu>
 alias jholwill Juliet Alison Holwill <jholwill@eecs.berkeley.edu>
 alias jhouser John Houser <jhouser@eecs.berkeley.edu>
 alias jhug Joshua Adam Hug <jhug@eecs.berkeley.edu>
@@ -670,26 +721,28 @@ alias jhuggins John Huggins <jhuggins@eecs.berkeley.edu>
 alias jhurst Jon Hurst <jhurst@eecs.berkeley.edu>
 alias jia Zhanfeng Jia <jia@eecs.berkeley.edu>
 alias jianghai Jianghai Hu <jianghai@eecs.berkeley.edu>
-alias jieae Jieae A. Goo <jieae@eecs.berkeley.edu>
 alias jiejiang Jie-Hong Jiang <jiejiang@eecs.berkeley.edu>
+alias jiening Jiening Zhan <jiening@eecs.berkeley.edu>
 alias jike Jike Chong <jike@eecs.berkeley.edu>
 alias jimb Jim Blomo <jimb@eecs.berkeley.edu>
 alias jimchou Jim_Chen Chou <jimchou@eecs.berkeley.edu>
 alias jimlin James Lin <jimlin@eecs.berkeley.edu>
 alias jimmygmc Jimmy G. M. Chang <jimmygmc@eecs.berkeley.edu>
-alias jimmyho Jimmy Ho <jimmyho@eecs.berkeley.edu>
 alias jimmysu Jimmy Zhigang Su <jimmysu@eecs.berkeley.edu>
 alias jin Hyoun Jin Kim <jin@eecs.berkeley.edu>
 alias jinger Jinger Zhao <jinger@eecs.berkeley.edu>
 alias jingtaow Jingtao Wang <jingtaow@eecs.berkeley.edu>
 alias jinhe Jin He <jinhe@eecs.berkeley.edu>
+alias jinwoo Jinwoo Kim <jinwoo@eecs.berkeley.edu>
 alias jinyao Jin Yao <jinyao@eecs.berkeley.edu>
+alias jiwan James Iwan <jiwan@eecs.berkeley.edu>
 alias jjamison Johnathon Jamison <jjamison@eecs.berkeley.edu>
 alias jjjordan John Jordan <jjjordan@eecs.berkeley.edu>
 alias jjtsao TSAO <jjtsao@eecs.berkeley.edu>
 alias jkeller John Keller <jkeller@eecs.berkeley.edu>
 alias jkeren Iordanis Kerenidis <jkeren@eecs.berkeley.edu>
 alias jkimdon Joey A. Kimdon <jkimdon@eecs.berkeley.edu>
+alias jkit Kittiyachavalit <jkit@eecs.berkeley.edu>
 alias jkodumal John Kodumal <jkodumal@eecs.berkeley.edu>
 alias jkuroda jon kuroda <jkuroda@eecs.berkeley.edu>
 alias jlacome Jessie LaCome <jlacome@eecs.berkeley.edu>
@@ -698,20 +751,18 @@ alias jlckao James Kao <jlckao@eecs.berkeley.edu>
 alias jlee Jason Kwok-San Lee <jlee@eecs.berkeley.edu>
 alias jmacd Josh MacDonald <jmacd@eecs.berkeley.edu>
 alias jmankoff Jennifer Mankoff <jmankoff@eecs.berkeley.edu>
+alias jmedel Jesse Edelstein <jmedel@eecs.berkeley.edu>
 alias jmh Joseph Hellerstein <jmh@eecs.berkeley.edu>
 alias jmoondan John Moondanos <jmoondan@eecs.berkeley.edu>
 alias jmurph Jim Murphy <jmurph@eecs.berkeley.edu>
 alias job James O'Brien <job@eecs.berkeley.edu>
 alias joe0218 Tsutung Chien <joe0218@eecs.berkeley.edu>
-alias joec Joe Chung <joec@eecs.berkeley.edu>
+alias joeh Joseph Hellerstein <joeh@eecs.berkeley.edu>
 alias jog Anand V Jog <jog@eecs.berkeley.edu>
-alias johnc Connors <johnc@eecs.berkeley.edu>
 alias johnpli John Li <johnpli@eecs.berkeley.edu>
-alias johnr John Reekie <johnr@eecs.berkeley.edu>
 alias johnw John Wawrzynek <johnw@eecs.berkeley.edu>
 alias jonah Jeff Anderson-Lee <jonah@eecs.berkeley.edu>
 alias jongho Jongho Lee <jongho@eecs.berkeley.edu>
-alias jonhsu HSU <jonhsu@eecs.berkeley.edu>
 alias jonm Jon D. McAuliffe <jonm@eecs.berkeley.edu>
 alias jonnovak Jon Novak <jonnovak@eecs.berkeley.edu>
 alias jont Jonathan Traupman <jont@eecs.berkeley.edu>
@@ -723,12 +774,13 @@ alias josei Josephine Bea Lee <josei@eecs.berkeley.edu>
 alias josh Chao-Hsi Chi <josh@eecs.berkeley.edu>
 alias joshuag Joshua Garrett <joshuag@eecs.berkeley.edu>
 alias joyceg Joyce Gross <joyceg@eecs.berkeley.edu>
+alias jpope Justin Pope <jpope@eecs.berkeley.edu>
 alias jprovine J. Provine <jprovine@eecs.berkeley.edu>
 alias jpv Johan Peter Vanderhaegen <jpv@eecs.berkeley.edu>
 alias jpvainio Jukka-Pekka Vainio <jpvainio@eecs.berkeley.edu>
 alias jqliu Jonathan Liu <jqliu@eecs.berkeley.edu>
-alias jra3 Jeannie Albrecht <jra3@eecs.berkeley.edu>
 alias jrahe Jeremy Rahe <jrahe@eecs.berkeley.edu>
+alias jramish John Ramish <jramish@eecs.berkeley.edu>
 alias jrheaume Jonathan M Rheaume <jrheaume@eecs.berkeley.edu>
 alias jrl James Lee <jrl@eecs.berkeley.edu>
 alias jrleek James R. Leek <jrleek@eecs.berkeley.edu>
@@ -736,22 +788,25 @@ alias jrosario Jose D Rosario-Rosario <jrosario@eecs.berkeley.edu>
 alias jrs Jonathan Shewchuk <jrs@eecs.berkeley.edu>
 alias jrvb James Robert von Behren <jrvb@eecs.berkeley.edu>
 alias jscalf jscalf <jscalf@eecs.berkeley.edu>
+alias jschiff Schiff <jschiff@eecs.berkeley.edu>
 alias jschwehr Jaclyn Schwehr <jschwehr@eecs.berkeley.edu>
 alias jsinger Jerome Singer <jsinger@eecs.berkeley.edu>
-alias jsingh Jagdeep Singh Hansra <jsingh@eecs.berkeley.edu>
 alias jsm Joel Marciano <jsm@eecs.berkeley.edu>
 alias jsmith J. Smith <jsmith@eecs.berkeley.edu>
 alias jstone Jennifer Stone <jstone@eecs.berkeley.edu>
-alias jsw WADE <jsw@eecs.berkeley.edu>
+alias jsyang Jae-Seok Yang <jsyang@eecs.berkeley.edu>
+alias jtam Judy Tam <jtam@eecs.berkeley.edu>
+alias jtast John Tast <jtast@eecs.berkeley.edu>
 alias jtstauth Jason Thaine Stauth <jtstauth@eecs.berkeley.edu>
-alias judyf Judy Fong <judyf@eecs.berkeley.edu>
+alias judien Judie Nelson <judien@eecs.berkeley.edu>
 alias juliea Julie Aquino <juliea@eecs.berkeley.edu>
 alias junewang Jiajun Wang <junewang@eecs.berkeley.edu>
+alias junming Junming Yin <junming@eecs.berkeley.edu>
 alias jvclark jvclark <jvclark@eecs.berkeley.edu>
-alias jwaddle Jason Waddle <jwaddle@eecs.berkeley.edu>
 alias jwhui Jonathan W Hui <jwhui@eecs.berkeley.edu>
 alias jwpchen Jeng-Wenpeter Chen <jwpchen@eecs.berkeley.edu>
 alias jyeh Joseph Yeh <jyeh@eecs.berkeley.edu>
+alias jyzhang James Yan Zhang <jyzhang@eecs.berkeley.edu>
 alias jzlin Zhujie Lin <jzlin@eecs.berkeley.edu>
 alias kabdali S. Kamal Abdali <kabdali@eecs.berkeley.edu>
 alias kaboakye  <kaboakye@eecs.berkeley.edu>
@@ -760,13 +815,14 @@ alias kamil Amir Ashraf Kamil <kamil@eecs.berkeley.edu>
 alias kamin Kamin Whitehouse <kamin@eecs.berkeley.edu>
 alias kaminow Ivan P. Kaminow <kaminow@eecs.berkeley.edu>
 alias kannanr Kannan Ramchandran <kannanr@eecs.berkeley.edu>
-alias kaos Sean Wen Kao <kaos@eecs.berkeley.edu>
+alias kappen Hilbert J. Kappen <kappen@eecs.berkeley.edu>
 alias karaya1 Andrev V. Kolobov <karaya1@eecs.berkeley.edu>
-alias kari Kari Hansen <kari@eecs.berkeley.edu>
 alias karloff Howard Karloff <karloff@eecs.berkeley.edu>
 alias karrickk Karric Kai Kwong <karrickk@eecs.berkeley.edu>
 alias karthik Karthik Lakshminarayanan <karthik@eecs.berkeley.edu>
+alias katagiri Takahiro Katagiri <katagiri@eecs.berkeley.edu>
 alias kaushikr Kaushik Ravindran <kaushikr@eecs.berkeley.edu>
+alias kazuhisa Kazuhisa Takamura <kazuhisa@eecs.berkeley.edu>
 alias kbcheng Kan Bun Cheng <kbcheng@eecs.berkeley.edu>
 alias kcamera KEVINBRANDON CAMERA <kcamera@eecs.berkeley.edu>
 alias kdatta Kaushik Datta <kdatta@eecs.berkeley.edu>
@@ -776,87 +832,89 @@ alias kellogg kellogg <kellogg@eecs.berkeley.edu>
 alias kelu Ke Lu <kelu@eecs.berkeley.edu>
 alias kelvinso SO <kelvinso@eecs.berkeley.edu>
 alias kenjioba Kenji Obata <kenjioba@eecs.berkeley.edu>
-alias kennyk Kenneth J. Kahrs <kennyk@eecs.berkeley.edu>
 alias kenwoj Kenneth_Edward Wojciechowski <kenwoj@eecs.berkeley.edu>
 alias kenyon Claire Kenyon <kenyon@eecs.berkeley.edu>
 alias keswaran Krishnan Eswaran <keswaran@eecs.berkeley.edu>
-alias ket Eui-Tae Kim <ket@eecs.berkeley.edu>
 alias kevinc Kevin Chen <kevinc@eecs.berkeley.edu>
 alias kevinm Kevin Mullally <kevinm@eecs.berkeley.edu>
 alias kfall Kevin Fall <kfall@eecs.berkeley.edu>
+alias kfuji Kan Fujiwara <kfuji@eecs.berkeley.edu>
 alias khossrov khossrov <khossrov@eecs.berkeley.edu>
-alias khutch Kimberly Hutchinson <khutch@eecs.berkeley.edu>
+alias kihun KI-HUN JEONG <kihun@eecs.berkeley.edu>
+alias kilty Sheila Kilty <kilty@eecs.berkeley.edu>
 alias kinyip Kin-Yip Phoa <kinyip@eecs.berkeley.edu>
 alias kjk Jayanth Kumar Kannan <kjk@eecs.berkeley.edu>
-alias kkat Kathy Nester <kkat@eecs.berkeley.edu>
 alias klau Kam Lau <klau@eecs.berkeley.edu>
 alias kleinber Jon Kleinberg <kleinber@eecs.berkeley.edu>
 alias klingner Bryan Matthew Klingner <klingner@eecs.berkeley.edu>
 alias klouie Kenneth Louie <klouie@eecs.berkeley.edu>
+alias klrhodes Karen Rhodes <klrhodes@eecs.berkeley.edu>
 alias klumban Khirstine Lumban <klumban@eecs.berkeley.edu>
 alias klwin Kelvin Lwin <klwin@eecs.berkeley.edu>
-alias kolja Kolja Sulimma <kolja@eecs.berkeley.edu>
+alias knoxm Mary Tai  Knox <knoxm@eecs.berkeley.edu>
 alias koo koo <koo@eecs.berkeley.edu>
 alias koslofto Todd Jerome Kosloff <koslofto@eecs.berkeley.edu>
 alias kraitch mark kraitchman <kraitch@eecs.berkeley.edu>
-alias kreyes Katherine Reyes <kreyes@eecs.berkeley.edu>
-alias kristen Kirsten Larson <kristen@eecs.berkeley.edu>
+alias krarick Keith Rarick <krarick@eecs.berkeley.edu>
 alias krobbins Katy Robbins <krobbins@eecs.berkeley.edu>
 alias kubitron John Kubiatowicz <kubitron@eecs.berkeley.edu>
 alias kuehl Andreas Kuehlmann <kuehl@eecs.berkeley.edu>
 alias kunal Kunal Talwar <kunal@eecs.berkeley.edu>
-alias kunzman Charles Kunzman <kunzman@eecs.berkeley.edu>
+alias kurtm Kurt Meinz <kurtm@eecs.berkeley.edu>
 alias kurzhans Alexander Kurzhanski <kurzhans@eecs.berkeley.edu>
 alias kwei Kai Wei <kwei@eecs.berkeley.edu>
 alias kwright Kristin Wright <kwright@eecs.berkeley.edu>
 alias lacker Kevin D Lacker <lacker@eecs.berkeley.edu>
-alias laik KEVIN I-SEN LAI <laik@eecs.berkeley.edu>
 alias lakhia Ali Abbas Lakhia <lakhia@eecs.berkeley.edu>
 alias lakme Lakshminarayanan Subramanian <lakme@eecs.berkeley.edu>
 alias lakshmin Shyam Lakshmin <lakshmin@eecs.berkeley.edu>
 alias lalarcon Louis Poblete Alarcon <lalarcon@eecs.berkeley.edu>
 alias landay James Landay <landay@eecs.berkeley.edu>
 alias larry & Rowe <larry@eecs.berkeley.edu>
-alias larryt Larry Thompson <larryt@eecs.berkeley.edu>
 alias larsrohr Lars Rohrbach <larsrohr@eecs.berkeley.edu>
 alias lashana LaShana Porlaris <lashana@eecs.berkeley.edu>
-alias lasnake Anshi Liang <lasnake@eecs.berkeley.edu>
 alias latham David D Latham <latham@eecs.berkeley.edu>
 alias lauro Jesse J. Lauro <lauro@eecs.berkeley.edu>
 alias lazzaro John Lazzaro <lazzaro@eecs.berkeley.edu>
 alias lbailey Lauren Bailey <lbailey@eecs.berkeley.edu>
 alias lbarrett Leon Rubin Barrett <lbarrett@eecs.berkeley.edu>
+alias lboni Lady N. Bonifacio <lboni@eecs.berkeley.edu>
 alias lcarloni Luca Carloni <lcarloni@eecs.berkeley.edu>
+alias lcarnel Lana Carnel <lcarnel@eecs.berkeley.edu>
+alias lchilton LaTanya Chilton <lchilton@eecs.berkeley.edu>
 alias lchu Chu Lillian <lchu@eecs.berkeley.edu>
 alias lederer Scott Lederer <lederer@eecs.berkeley.edu>
-alias leet Ted Lee <leet@eecs.berkeley.edu>
+alias lee1225 Joo Yong Lee <lee1225@eecs.berkeley.edu>
 alias lefebvre Martin Lefebvre <lefebvre@eecs.berkeley.edu>
 alias lennien Laneida Nakagawa <lennien@eecs.berkeley.edu>
+alias lenzi Ellen  Lenzi <lenzi@eecs.berkeley.edu>
 alias leonardc Leonard Chi-Chiu Chung <leonardc@eecs.berkeley.edu>
 alias leont Leon Tsao <leont@eecs.berkeley.edu>
+alias leonwang Leon Wang <leonwang@eecs.berkeley.edu>
 alias leopando Shemida Leopando <leopando@eecs.berkeley.edu>
 alias lesliei Leslie Kanani Michiko Ikemoto <lesliei@eecs.berkeley.edu>
 alias leullier leullier <leullier@eecs.berkeley.edu>
 alias lewis Ted Lewis <lewis@eecs.berkeley.edu>
 alias lgolds Leslie Goldstein <lgolds@eecs.berkeley.edu>
 alias lgrokop Leonard Henry Grokop <lgrokop@eecs.berkeley.edu>
-alias lianeb LIANESUSAN BECKMAN <lianeb@eecs.berkeley.edu>
+alias liangs Sherry Liang <liangs@eecs.berkeley.edu>
 alias liblit Ben Liblit <liblit@eecs.berkeley.edu>
 alias lieber Michael Lieberman <lieber@eecs.berkeley.edu>
 alias lilianag Liliana Gonzalez <lilianag@eecs.berkeley.edu>
 alias lin_xu Lin Xu <lin_xu@eecs.berkeley.edu>
 alias linan Mike Linan <linan@eecs.berkeley.edu>
 alias lindoris LIN <lindoris@eecs.berkeley.edu>
-alias linhai Linhai He <linhai@eecs.berkeley.edu>
 alias linus Linus Chuang <linus@eecs.berkeley.edu>
 alias linusl Linus Liang <linusl@eecs.berkeley.edu>
 alias lip Lawrence_Poi_Heng Ip <lip@eecs.berkeley.edu>
-alias lippitt Bill Lippitt <lippitt@eecs.berkeley.edu>
 alias little Dana Dee Little <little@eecs.berkeley.edu>
 alias liugang Gang Liu <liugang@eecs.berkeley.edu>
 alias liupj Phillip Liu <liupj@eecs.berkeley.edu>
 alias liuxj liuxj <liuxj@eecs.berkeley.edu>
+alias ljiang Libin Jiang <ljiang@eecs.berkeley.edu>
 alias ljilja Ljiljana Trajkovic <ljilja@eecs.berkeley.edu>
+alias llmanly Linda Manly <llmanly@eecs.berkeley.edu>
+alias llusha Stela Llusha <llusha@eecs.berkeley.edu>
 alias lmanly Linda Manly <lmanly@eecs.berkeley.edu>
 alias lmuliadi lmuliadi <lmuliadi@eecs.berkeley.edu>
 alias loarie Sunman <loarie@eecs.berkeley.edu>
@@ -864,26 +922,31 @@ alias lobay Tony Lobay <lobay@eecs.berkeley.edu>
 alias lorch Jay Lorch <lorch@eecs.berkeley.edu>
 alias loret Loretta Lutcher <loret@eecs.berkeley.edu>
 alias lorieb Lorie Brofferio <lorieb@eecs.berkeley.edu>
-alias lreams Lisa Reams <lreams@eecs.berkeley.edu>
+alias lralston Leonore G Ralston <lralston@eecs.berkeley.edu>
 alias lstoll Lara Lynn Stoll <lstoll@eecs.berkeley.edu>
 alias ltpang Liang Teck Pang <ltpang@eecs.berkeley.edu>
-alias lucena Brian Lucena <lucena@eecs.berkeley.edu>
-alias lukasc Lukas Chrostowski <lukasc@eecs.berkeley.edu>
 alias luns Luns Tee <luns@eecs.berkeley.edu>
 alias lusche Luca Schenato <lusche@eecs.berkeley.edu>
 alias lydia Lydia Briedis <lydia@eecs.berkeley.edu>
+alias lygeros John Lygeros <lygeros@eecs.berkeley.edu>
+alias lzhao Lianhan Zhao <lzhao@eecs.berkeley.edu>
 alias m1lam Michael Lam <m1lam@eecs.berkeley.edu>
 alias machi Sridhar Machiraju <machi@eecs.berkeley.edu>
 alias madams Mark Adams <madams@eecs.berkeley.edu>
-alias madden Samuel Madden <madden@eecs.berkeley.edu>
+alias madhurt Madhur Tulsiani <madhurt@eecs.berkeley.edu>
+alias maeno Yohei Maeno <maeno@eecs.berkeley.edu>
 alias maggie Magdalene L. Crowley <maggie@eecs.berkeley.edu>
 alias makin Joseph Makin <makin@eecs.berkeley.edu>
+alias mamillr Marshal Miller <mamillr@eecs.berkeley.edu>
 alias mandelin David Mandelin <mandelin@eecs.berkeley.edu>
 alias mandric Milan Andric <mandric@eecs.berkeley.edu>
+alias maneesh Maneesh Agrawala <maneesh@eecs.berkeley.edu>
+alias mankit Man-Kit Leung <mankit@eecs.berkeley.edu>
 alias manu_s Manu Sridharan <manu_s@eecs.berkeley.edu>
 alias maowei maowei <maowei@eecs.berkeley.edu>
+alias maral Maral Gharib <maral@eecs.berkeley.edu>
 alias maratb Marat Boshernitsan <maratb@eecs.berkeley.edu>
-alias maravic Irena Maravic <maravic@eecs.berkeley.edu>
+alias marats Marats Golovkins <marats@eecs.berkeley.edu>
 alias marci Marci Meingast <marci@eecs.berkeley.edu>
 alias marekk Marek Karpinski <marekk@eecs.berkeley.edu>
 alias marghoob Marghoob Mohiyuddin <marghoob@eecs.berkeley.edu>
@@ -892,7 +955,9 @@ alias mariaj Maria Jauregui <mariaj@eecs.berkeley.edu>
 alias marianne Marianne Durand <marianne@eecs.berkeley.edu>
 alias marked Mark Davis <marked@eecs.berkeley.edu>
 alias marklee Ming-Chang Lee <marklee@eecs.berkeley.edu>
+alias marklin Cheng Lin <marklin@eecs.berkeley.edu>
 alias markm Michael Mark <markm@eecs.berkeley.edu>
+alias markusu Markus Ulm <markusu@eecs.berkeley.edu>
 alias mars Marcelino Enriquez <mars@eecs.berkeley.edu>
 alias marti & Hearst <marti@eecs.berkeley.edu>
 alias martin Martin Vetterli <martin@eecs.berkeley.edu>
@@ -900,7 +965,6 @@ alias marvinm Marvin Motley <marvinm@eecs.berkeley.edu>
 alias maryamv Maryam Vareth <maryamv@eecs.berkeley.edu>
 alias maryamzm Maryam Ziaie-Moayyed <maryamzm@eecs.berkeley.edu>
 alias maryc Mary Courtney <maryc@eecs.berkeley.edu>
-alias marykj Mary Kelleher-jones <marykj@eecs.berkeley.edu>
 alias marys Mary Stewart <marys@eecs.berkeley.edu>
 alias mas Marcia Steinfeld <mas@eecs.berkeley.edu>
 alias mashah Mehul Shah Shah <mashah@eecs.berkeley.edu>
@@ -908,6 +972,7 @@ alias massie Matt Massie <massie@eecs.berkeley.edu>
 alias mathai Sagi V. Mathai <mathai@eecs.berkeley.edu>
 alias matic Slobodan Matic <matic@eecs.berkeley.edu>
 alias matth Matthew Harren <matth@eecs.berkeley.edu>
+alias matthewj Matthew Johnson <matthewj@eecs.berkeley.edu>
 alias matthewm Matthew Hsiu-Kuang Muh <matthewm@eecs.berkeley.edu>
 alias mattkam Matthew Boontian Kam <mattkam@eecs.berkeley.edu>
 alias mattlast Matt Last <mattlast@eecs.berkeley.edu>
@@ -916,43 +981,44 @@ alias maurog Ioannis Mavroidis <maurog@eecs.berkeley.edu>
 alias mayi Yi Ma <mayi@eecs.berkeley.edu>
 alias mbharat Bharathwaj Muthuswamy <mbharat@eecs.berkeley.edu>
 alias mbleslie Matthew Bradley Leslie <mbleslie@eecs.berkeley.edu>
-alias mcao Mitchell Cao <mcao@eecs.berkeley.edu>
 alias mccaesar Matthew Caesar <mccaesar@eecs.berkeley.edu>
+alias mccoy Chris McCoy <mccoy@eecs.berkeley.edu>
 alias mcenk Cenk Cavusoglu <mcenk@eecs.berkeley.edu>
+alias mcguirk Jason McGuirk <mcguirk@eecs.berkeley.edu>
 alias mchan Mansun John Chan <mchan@eecs.berkeley.edu>
 alias mckelvin Mark McKelvin <mckelvin@eecs.berkeley.edu>
-alias mcmartin Michael Martin <mcmartin@eecs.berkeley.edu>
 alias mcnally Scott McNally <mcnally@eecs.berkeley.edu>
 alias mcneil Brian McNeil <mcneil@eecs.berkeley.edu>
-alias mcpark MinCheol Park <mcpark@eecs.berkeley.edu>
-alias mcqueen David McQueen <mcqueen@eecs.berkeley.edu>
 alias mct Megan Thomas <mct@eecs.berkeley.edu>
 alias mctien Ming-Chun Tien <mctien@eecs.berkeley.edu>
 alias mcyh Michael Chung-Yi Huang <mcyh@eecs.berkeley.edu>
 alias mdenny Matthew Denny <mdenny@eecs.berkeley.edu>
-alias mdownes Michael Sean Downes <mdownes@eecs.berkeley.edu>
+alias mdexter Matt Dexter <mdexter@eecs.berkeley.edu>
 alias mds Mark David Spiller <mds@eecs.berkeley.edu>
 alias mdscott Michael D. Scott <mdscott@eecs.berkeley.edu>
 alias megacz Adam Megacz <megacz@eecs.berkeley.edu>
 alias mehtank Ankur Mukesh Mehta <mehtank@eecs.berkeley.edu>
-alias meio Berkat S. Tung <meio@eecs.berkeley.edu>
 alias mekhail mekhail <mekhail@eecs.berkeley.edu>
 alias melindal Melinda L. Ler <melindal@eecs.berkeley.edu>
-alias meling Ngo <meling@eecs.berkeley.edu>
+alias melissa Melissa Ho <melissa@eecs.berkeley.edu>
 alias mellblom Benjamin Mellblom <mellblom@eecs.berkeley.edu>
 alias mellers Sue Mellers <mellers@eecs.berkeley.edu>
 alias meng Xiaofan Meng <meng@eecs.berkeley.edu>
 alias merport Todd Merport <merport@eecs.berkeley.edu>
 alias meyoum Marie-Ange Eyoum <meyoum@eecs.berkeley.edu>
+alias mfarrier Mark Farrier <mfarrier@eecs.berkeley.edu>
 alias mfoley Michele Foley <mfoley@eecs.berkeley.edu>
 alias mgbordua Michael G. Bordua <mgbordua@eecs.berkeley.edu>
 alias mhgraham Martin Graham <mhgraham@eecs.berkeley.edu>
 alias mhoemmen Mark Frederick Hoemmen <mhoemmen@eecs.berkeley.edu>
 alias mhoward Mike Howard <mhoward@eecs.berkeley.edu>
 alias micah Micah Adler <micah@eecs.berkeley.edu>
-alias mikechen Michael Chen <mikechen@eecs.berkeley.edu>
+alias micool Chung Yeung Cho <micool@eecs.berkeley.edu>
+alias mihaescu Radu Mihaescu <mihaescu@eecs.berkeley.edu>
+alias mihir Mihir Shah <mihir@eecs.berkeley.edu>
+alias mikaels Mikael Soini <mikaels@eecs.berkeley.edu>
 alias mikemm Michael Matsumura <mikemm@eecs.berkeley.edu>
-alias mikeym Michael Malkin <mikeym@eecs.berkeley.edu>
+alias milanis Simone Milani <milanis@eecs.berkeley.edu>
 alias milch Brian Milch <milch@eecs.berkeley.edu>
 alias millert Tamara Miller <millert@eecs.berkeley.edu>
 alias minero Paolo Minero <minero@eecs.berkeley.edu>
@@ -961,6 +1027,7 @@ alias minghua Minghua Chen <minghua@eecs.berkeley.edu>
 alias minjong KIM <minjong@eecs.berkeley.edu>
 alias mircea Mircea Stan <mircea@eecs.berkeley.edu>
 alias miyoko Miyoko Deschamps <miyoko@eecs.berkeley.edu>
+alias mjb2 Matthew Joseph Brockmeyer <mjb2@eecs.berkeley.edu>
 alias mjf Mark Friedman <mjf@eecs.berkeley.edu>
 alias mjohnson Mark Johnson <mjohnson@eecs.berkeley.edu>
 alias mju Marcin Jurdzinski <mju@eecs.berkeley.edu>
@@ -972,7 +1039,9 @@ alias mmaire Michael Randolph Maire <mmaire@eecs.berkeley.edu>
 alias mmc Monica Chew <mmc@eecs.berkeley.edu>
 alias mmoewe Michael James Moewe <mmoewe@eecs.berkeley.edu>
 alias mms Mary Sprinkle <mms@eecs.berkeley.edu>
-alias mohammad Mohammad Jafari-Nejad <mohammad@eecs.berkeley.edu>
+alias moen Kurt A Moen <moen@eecs.berkeley.edu>
+alias moeng Michael Moeng <moeng@eecs.berkeley.edu>
+alias moh12345 Michael O'Heigeartaigh <moh12345@eecs.berkeley.edu>
 alias molesas Steven Molesa <molesas@eecs.berkeley.edu>
 alias monika Monika Henzinger <monika@eecs.berkeley.edu>
 alias morgan Nelson Morgan <morgan@eecs.berkeley.edu>
@@ -982,8 +1051,8 @@ alias moss Moss Server <moss@eecs.berkeley.edu>
 alias mossel Elchanon Mossel <mossel@eecs.berkeley.edu>
 alias motor Erik Hertz <motor@eecs.berkeley.edu>
 alias mounir Mounir Bohsali <mounir@eecs.berkeley.edu>
-alias mpc Mark Paul Chew <mpc@eecs.berkeley.edu>
 alias mpearson Mark Roth Pearson <mpearson@eecs.berkeley.edu>
+alias mpierson Matthew David Pierson <mpierson@eecs.berkeley.edu>
 alias mpm Michael P Manzo <mpm@eecs.berkeley.edu>
 alias mrosen Michael Rosenblum <mrosen@eecs.berkeley.edu>
 alias msanvido Marco Sanvido <msanvido@eecs.berkeley.edu>
@@ -993,21 +1062,22 @@ alias mseeman Michael Douglas Seeman <mseeman@eecs.berkeley.edu>
 alias mseth Manu Seth <mseth@eecs.berkeley.edu>
 alias mshepard Mark Shepard <mshepard@eecs.berkeley.edu>
 alias mswanger Mitchell Swanger <mswanger@eecs.berkeley.edu>
-alias mtwu Ming Ting Wu <mtwu@eecs.berkeley.edu>
+alias mueller2 Michael Mueller <mueller2@eecs.berkeley.edu>
 alias mukunds Mukund Seshadri <mukunds@eecs.berkeley.edu>
 alias murali Muralidharan Rangan <murali@eecs.berkeley.edu>
-alias musacchj John Musacchj <musacchj@eecs.berkeley.edu>
+alias murphy Murphy Gant <murphy@eecs.berkeley.edu>
+alias mverhels Marian Verhelst <mverhels@eecs.berkeley.edu>
 alias mwasilik Matthew Wasilik <mwasilik@eecs.berkeley.edu>
 alias mzhou Min Zhou <mzhou@eecs.berkeley.edu>
-alias nadai Maurizio Nadai <nadai@eecs.berkeley.edu>
 alias najeem Najeem Bahram <najeem@eecs.berkeley.edu>
 alias nakov Preslav Ivanov Nakov <nakov@eecs.berkeley.edu>
+alias nam_mai Nam Hoang Mai <nam_mai@eecs.berkeley.edu>
 alias nancype Nancy Peshette <nancype@eecs.berkeley.edu>
 alias naratipw Naratip Wongkomet <naratipw@eecs.berkeley.edu>
 alias nardi Alessandra Nardi <nardi@eecs.berkeley.edu>
-alias natejew Nathan Jew <natejew@eecs.berkeley.edu>
 alias nbk Nathan Boyd Kitchen <nbk@eecs.berkeley.edu>
 alias nchen Nicholasyen-Cherng Chen <nchen@eecs.berkeley.edu>
+alias nchentan Nuttapong Chentanez <nchentan@eecs.berkeley.edu>
 alias ncowan Noah Cowan <ncowan@eecs.berkeley.edu>
 alias necula George Necula <necula@eecs.berkeley.edu>
 alias nehad Neha Dave <nehad@eecs.berkeley.edu>
@@ -1015,9 +1085,9 @@ alias nelsonb Blaine Alan Nelson <nelsonb@eecs.berkeley.edu>
 alias nemanja Nemanja Isailovic <nemanja@eecs.berkeley.edu>
 alias net NEIL_EDWARD TURNER <net@eecs.berkeley.edu>
 alias netina Natalya Etina <netina@eecs.berkeley.edu>
-alias neuendor Steve Neuendorffer <neuendor@eecs.berkeley.edu>
 alias newman Mark Newman <newman@eecs.berkeley.edu>
 alias ngood Nathaniel Good <ngood@eecs.berkeley.edu>
+alias ngsimon Simon Ng <ngsimon@eecs.berkeley.edu>
 alias ngupta Navin Gupta <ngupta@eecs.berkeley.edu>
 alias nguyendt David Tong Nguyen <nguyendt@eecs.berkeley.edu>
 alias nhekmat Neema Hekmat <nhekmat@eecs.berkeley.edu>
@@ -1025,38 +1095,44 @@ alias nhoven Niels Kang Hoven <nhoven@eecs.berkeley.edu>
 alias nhz Hao Zhang <nhz@eecs.berkeley.edu>
 alias nickl Nick Lanham <nickl@eecs.berkeley.edu>
 alias nicob Nikolaus Bruels <nicob@eecs.berkeley.edu>
+alias nicola Nicola Lofu <nicola@eecs.berkeley.edu>
 alias nicolas Nicolas Ducheneaut <nicolas@eecs.berkeley.edu>
 alias nidever Melissa Nidever <nidever@eecs.berkeley.edu>
 alias nidhi Nidhi Nayyar <nidhi@eecs.berkeley.edu>
+alias nikhils Nikhil Gopinath Shetty <nikhils@eecs.berkeley.edu>
 alias nikitab Nikita Borisov <nikitab@eecs.berkeley.edu>
 alias niknejad Ali_M Niknejad <niknejad@eecs.berkeley.edu>
+alias nikolai Jeena Nikolai Calderon <nikolai@eecs.berkeley.edu>
 alias nikraves Masoud Nikravesh <nikraves@eecs.berkeley.edu>
 alias nilim Arnab Nilim <nilim@eecs.berkeley.edu>
-alias ningc Ning Chen <ningc@eecs.berkeley.edu>
+alias ningc2 Ning Chen <ningc2@eecs.berkeley.edu>
 alias njw Jiawang Nie <njw@eecs.berkeley.edu>
 alias nks Naveen Sastry <nks@eecs.berkeley.edu>
-alias nma Nadeem Aboobaker <nma@eecs.berkeley.edu>
 alias nmani Manikandan Narayanan <nmani@eecs.berkeley.edu>
 alias nobby Nobuhiko P. Kobayashi <nobby@eecs.berkeley.edu>
+alias norm Norman Aleks <norm@eecs.berkeley.edu>
 alias normzhou Nan Zhou <normzhou@eecs.berkeley.edu>
 alias nrsatish Nadathur Satish <nrsatish@eecs.berkeley.edu>
 alias ntalbot NEIL TALBOT <ntalbot@eecs.berkeley.edu>
 alias ntien Norman Tien <ntien@eecs.berkeley.edu>
+alias ntt Nattavude Thirathon <ntt@eecs.berkeley.edu>
 alias nuntachp Nuntachai Poobuapheun <nuntachp@eecs.berkeley.edu>
 alias nweaver Nicholas C. Weaver <nweaver@eecs.berkeley.edu>
-alias nyeshia Nyeshia Rowland <nyeshia@eecs.berkeley.edu>
-alias oakamil Kamil <oakamil@eecs.berkeley.edu>
 alias odusanya Florence Odusanya <odusanya@eecs.berkeley.edu>
 alias oholtz Olga Holtz <oholtz@eecs.berkeley.edu>
 alias okan Okan Arikan <okan@eecs.berkeley.edu>
 alias olegb olegb <olegb@eecs.berkeley.edu>
+alias omar Omar Khan <omar@eecs.berkeley.edu>
 alias ombakr Omar Mohammed Bakr <ombakr@eecs.berkeley.edu>
 alias omids omids <omids@eecs.berkeley.edu>
 alias onureena Onureena Banerjee <onureena@eecs.berkeley.edu>
+alias orecchia Lorenzo Orecchia <orecchia@eecs.berkeley.edu>
 alias osni Osni Marques <osni@eecs.berkeley.edu>
 alias othar Othar Hansson <othar@eecs.berkeley.edu>
-alias owenc Owen Cooper <owenc@eecs.berkeley.edu>
+alias overlord Ji-Hoon Park <overlord@eecs.berkeley.edu>
+alias owrang Maryam Owrang <owrang@eecs.berkeley.edu>
 alias oxe Orion Elenzil <oxe@eecs.berkeley.edu>
+alias padilla Michael Thomas Padilla <padilla@eecs.berkeley.edu>
 alias pal Philip Levis <pal@eecs.berkeley.edu>
 alias parekh Abhay Parekh <parekh@eecs.berkeley.edu>
 alias parents UCB Parents <parents@eecs.berkeley.edu>
@@ -1064,21 +1140,19 @@ alias parsa Siavash Parsa <parsa@eecs.berkeley.edu>
 alias parvez Parvez Ahammad <parvez@eecs.berkeley.edu>
 alias paskin Mark A. Paskin <paskin@eecs.berkeley.edu>
 alias pathma Venasithamby <pathma@eecs.berkeley.edu>
-alias paulh Paul Horton <paulh@eecs.berkeley.edu>
 alias pbg Philip B Godfrey <pbg@eecs.berkeley.edu>
 alias pbhuang Paul Borland Huang <pbhuang@eecs.berkeley.edu>
 alias pbwell Peter Broadwell <pbwell@eecs.berkeley.edu>
 alias pcchang Paul C Chang <pcchang@eecs.berkeley.edu>
+alias pcm Philippe Cudre-Mauroux <pcm@eecs.berkeley.edu>
+alias pedro29 Pedro Rodriguez <pedro29@eecs.berkeley.edu>
 alias peijuan Liu Peijuan <peijuan@eecs.berkeley.edu>
 alias pepe Pepe Kaksonen <pepe@eecs.berkeley.edu>
 alias perona Pietro Perona <perona@eecs.berkeley.edu>
-alias perrig Adrian Perrig <perrig@eecs.berkeley.edu>
-alias perryk Perry Kavros <perryk@eecs.berkeley.edu>
 alias pete Pete Caragher <pete@eecs.berkeley.edu>
 alias peterch Angel_Vladimirov Peterchev <peterch@eecs.berkeley.edu>
 alias petermc Peter McCorquodale <petermc@eecs.berkeley.edu>
 alias peterwu WU <peterwu@eecs.berkeley.edu>
-alias petra Petra Farm <petra@eecs.berkeley.edu>
 alias petrov Slav Orlinov Petrov <petrov@eecs.berkeley.edu>
 alias pettyk Karl Petty <pettyk@eecs.berkeley.edu>
 alias pfriedbe Paul D. Friedberg <pfriedbe@eecs.berkeley.edu>
@@ -1090,44 +1164,51 @@ alias phred Frederick Reiss <phred@eecs.berkeley.edu>
 alias piazza Gianluca Piazza <piazza@eecs.berkeley.edu>
 alias piccola Piccola Evans <piccola@eecs.berkeley.edu>
 alias pingster Ka-Ping Yee <pingster@eecs.berkeley.edu>
-alias pinsu Pin Su <pinsu@eecs.berkeley.edu>
 alias pio Matt Piotrowski <pio@eecs.berkeley.edu>
+alias pjeevan Prasanth Jeevan <pjeevan@eecs.berkeley.edu>
 alias pjulian Pedro Julian <pjulian@eecs.berkeley.edu>
 alias pk Pankaj Kalra <pk@eecs.berkeley.edu>
-alias pkhoosh Peter Khooshabeh <pkhoosh@eecs.berkeley.edu>
 alias plamen Plamen Koev <plamen@eecs.berkeley.edu>
 alias pletch Nathan Pletcher <pletch@eecs.berkeley.edu>
+alias pliang Percy Shuo Liang <pliang@eecs.berkeley.edu>
 alias plishker William Plishker <plishker@eecs.berkeley.edu>
-alias pljones Portia Jones <pljones@eecs.berkeley.edu>
 alias pm Philip McLauchlan <pm@eecs.berkeley.edu>
-alias pmarcus Phil Marcus <pmarcus@eecs.berkeley.edu>
 alias pmcpeak Patricia McPeak <pmcpeak@eecs.berkeley.edu>
 alias pmichel Petra Michel <pmichel@eecs.berkeley.edu>
+alias podolsky Matthew_George Podolsky <podolsky@eecs.berkeley.edu>
 alias poggio Andy Poggio <poggio@eecs.berkeley.edu>
 alias pokai Po-Kai Chen <pokai@eecs.berkeley.edu>
 alias polastre Joseph Polastre <polastre@eecs.berkeley.edu>
+alias pollins Sofie Pollin <pollins@eecs.berkeley.edu>
 alias ponce Jean Ponce <ponce@eecs.berkeley.edu>
 alias poolla Kameshwar Poolla <poolla@eecs.berkeley.edu>
 alias popa Lucian Popa <popa@eecs.berkeley.edu>
 alias poppej POPPE <poppej@eecs.berkeley.edu>
+alias porce Ji Woong Lee <porce@eecs.berkeley.edu>
 alias postgres IDSG Postgres support login <postgres@eecs.berkeley.edu>
 alias ppatel Pratik Patel <ppatel@eecs.berkeley.edu>
 alias ppj Pushkar Prakash Joshi <ppj@eecs.berkeley.edu>
 alias prabal Prabal Dutta <prabal@eecs.berkeley.edu>
 alias pran Paolo Prandoni <pran@eecs.berkeley.edu>
+alias prandini Maria Prandini <prandini@eecs.berkeley.edu>
 alias pray Peter Ray <pray@eecs.berkeley.edu>
 alias psliu Paul S. Liu <psliu@eecs.berkeley.edu>
+alias pulkit Pulkit  Grover <pulkit@eecs.berkeley.edu>
 alias pvi Pramod Viswanath <pvi@eecs.berkeley.edu>
-alias pwillems Paul Willems <pwillems@eecs.berkeley.edu>
+alias pwg Paul Goldberg <pwg@eecs.berkeley.edu>
 alias pwright Paul Wright <pwright@eecs.berkeley.edu>
 alias pychiou Pei Yu Chiou <pychiou@eecs.berkeley.edu>
 alias qgliu Qingguo <qgliu@eecs.berkeley.edu>
+alias qiankun Kun Qian <qiankun@eecs.berkeley.edu>
+alias qiantang Qian Ying Tang <qiantang@eecs.berkeley.edu>
 alias qqliu Qingquan Liu <qqliu@eecs.berkeley.edu>
 alias qtzhang Qintao Zhang <qtzhang@eecs.berkeley.edu>
+alias quangloc NGUYEN <quangloc@eecs.berkeley.edu>
 alias quarl Karl Chen <quarl@eecs.berkeley.edu>
 alias qzhang Qiaolin Zhang <qzhang@eecs.berkeley.edu>
 alias rabani Yuval Rabani <rabani@eecs.berkeley.edu>
 alias rachliu Nurrachman Liu <rachliu@eecs.berkeley.edu>
+alias raghavan Vijay  Raghavan <raghavan@eecs.berkeley.edu>
 alias rahulj Rahul Jain <rahulj@eecs.berkeley.edu>
 alias rajeshn Rajesh Nishtala <rajeshn@eecs.berkeley.edu>
 alias rakhic Rakhi Cook <rakhic@eecs.berkeley.edu>
@@ -1139,22 +1220,24 @@ alias ranjeet Ranjeet Singh Jhutti <ranjeet@eecs.berkeley.edu>
 alias rattenbt Tye Rattenbury <rattenbt@eecs.berkeley.edu>
 alias ravenben Ben Yanbin Zhao <ravenben@eecs.berkeley.edu>
 alias ravinde1 SACHDEVA <ravinde1@eecs.berkeley.edu>
+alias raymond Raymond R Chou <raymond@eecs.berkeley.edu>
 alias rb rb <rb@eecs.berkeley.edu>
 alias rbyers Ralph Byers <rbyers@eecs.berkeley.edu>
 alias rcdavis Richard_Christopher_2 Davis <rcdavis@eecs.berkeley.edu>
 alias rchu Richard Chu <rchu@eecs.berkeley.edu>
+alias rchung Randy Chung <rchung@eecs.berkeley.edu>
 alias rcsaba Csaba Rekeczky <rcsaba@eecs.berkeley.edu>
-alias reblee Rebecca Lee <reblee@eecs.berkeley.edu>
+alias rdessai Rustom Dessai <rdessai@eecs.berkeley.edu>
+alias rdgregg GREGG <rdgregg@eecs.berkeley.edu>
 alias redinger David_H. Redinger <redinger@eecs.berkeley.edu>
 alias regroff Richard Groff <regroff@eecs.berkeley.edu>
-alias rencang Ren-Cang Li <rencang@eecs.berkeley.edu>
 alias renju Renju Thomas <renju@eecs.berkeley.edu>
 alias retkin Raul Etkin <retkin@eecs.berkeley.edu>
-alias reyno1ca Craig A. Reynolds <reyno1ca@eecs.berkeley.edu>
 alias rfonseca Rodrigo Fonseca <rfonseca@eecs.berkeley.edu>
 alias rhuang Randy Huang <rhuang@eecs.berkeley.edu>
 alias richie Richard Vuduc <richie@eecs.berkeley.edu>
 alias rik9 RISHI KANT <rik9@eecs.berkeley.edu>
+alias riku Riku Makela <riku@eecs.berkeley.edu>
 alias riofski Paul Riofski <riofski@eecs.berkeley.edu>
 alias risnerj Jeremy Risner <risnerj@eecs.berkeley.edu>
 alias rizvi Shariq Rizvi <rizvi@eecs.berkeley.edu>
@@ -1168,11 +1251,13 @@ alias rlrubin Rachel Leigh Rubin <rlrubin@eecs.berkeley.edu>
 alias robertc Robert Connolly <robertc@eecs.berkeley.edu>
 alias robi Robert Krauthgamer <robi@eecs.berkeley.edu>
 alias robm Rob McNicholas <robm@eecs.berkeley.edu>
+alias roc3 Ming-Yang Chen <roc3@eecs.berkeley.edu>
 alias roca Robert O'Callahan <roca@eecs.berkeley.edu>
 alias rochelle Rochelle Vaughn <rochelle@eecs.berkeley.edu>
-alias roded Roded Sharan <roded@eecs.berkeley.edu>
+alias rodny Rodny Rodriguez <rodny@eecs.berkeley.edu>
 alias rohitk Rohit Khandekar <rohitk@eecs.berkeley.edu>
 alias romrocco Rosina M. Rocco <romrocco@eecs.berkeley.edu>
+alias roncken Marly Roncken <roncken@eecs.berkeley.edu>
 alias ronf Ron Fearing <ronf@eecs.berkeley.edu>
 alias roosta TANYAGAZELLE ROOSTA <roosta@eecs.berkeley.edu>
 alias roper Christopher Roper <roper@eecs.berkeley.edu>
@@ -1181,37 +1266,39 @@ alias rosita Rosita Alvarez-Croft <rosita@eecs.berkeley.edu>
 alias roska Tamas Roska <roska@eecs.berkeley.edu>
 alias rothman Jeffrey Rothman <rothman@eecs.berkeley.edu>
 alias rpuri Rohit Puri <rpuri@eecs.berkeley.edu>
+alias rroberts Ryan Roberts <rroberts@eecs.berkeley.edu>
 alias rrubin Rachel Rubin <rrubin@eecs.berkeley.edu>
 alias rsahai Ranjana Sahai <rsahai@eecs.berkeley.edu>
-alias rshankar Raman Vijay Shankar <rshankar@eecs.berkeley.edu>
 alias rslin Rei-Shiun Lin <rslin@eecs.berkeley.edu>
+alias rsutton Roy Allen Sutton <rsutton@eecs.berkeley.edu>
 alias rtjohnso Robert Johnson <rtjohnso@eecs.berkeley.edu>
+alias rtseng Roger Tseng <rtseng@eecs.berkeley.edu>
 alias rtucker Rod Tucker <rtucker@eecs.berkeley.edu>
+alias ruanne Rwigara <ruanne@eecs.berkeley.edu>
 alias ruddin Raza Uddin <ruddin@eecs.berkeley.edu>
 alias ruhe Axel Ruhe <ruhe@eecs.berkeley.edu>
 alias rungsun RUNGSUN MUNKONG <rungsun@eecs.berkeley.edu>
 alias russell Stuart Russell <russell@eecs.berkeley.edu>
 alias ruthg Ruth Gjerde <ruthg@eecs.berkeley.edu>
-alias ruthwang Ruth Wang <ruthwang@eecs.berkeley.edu>
 alias rvidal Rene_Esteban Vidal <rvidal@eecs.berkeley.edu>
+alias rxr246 Reinaldo Romero <rxr246@eecs.berkeley.edu>
 alias ryanaip Ryan Aipperspach <ryanaip@eecs.berkeley.edu>
 alias ryanc Clint Ryan <ryanc@eecs.berkeley.edu>
 alias ryanw Ryan M. White <ryanw@eecs.berkeley.edu>
 alias sacarter Scott Carter <sacarter@eecs.berkeley.edu>
-alias sachan Sachan Madahar <sachan@eecs.berkeley.edu>
 alias safetp SafeTP <safetp@eecs.berkeley.edu>
 alias sagarwal Sharad Agarwal <sagarwal@eecs.berkeley.edu>
 alias sahai Anant Sahai <sahai@eecs.berkeley.edu>
 alias sailesh Saileshwar Krishnamurthy <sailesh@eecs.berkeley.edu>
-alias samm Sam Michiels <samm@eecs.berkeley.edu>
 alias sammon Russell P. Sammon <sammon@eecs.berkeley.edu>
 alias samr Samantha Riesenfeld <samr@eecs.berkeley.edu>
+alias samuelj Samual M Johnston <samuelj@eecs.berkeley.edu>
 alias samw Samuel Webb Williams <samw@eecs.berkeley.edu>
 alias sanders Seth Sanders <sanders@eecs.berkeley.edu>
 alias sangj Sang-Hack Jung <sangj@eecs.berkeley.edu>
 alias sanjayg Sanjay Govindjee <sanjayg@eecs.berkeley.edu>
-alias sanjayj Sanjay Jeyakumar <sanjayj@eecs.berkeley.edu>
 alias sant sant <sant@eecs.berkeley.edu>
+alias sarahta Sarah Tate <sarahta@eecs.berkeley.edu>
 alias sariel Ariel Schwartz <sariel@eecs.berkeley.edu>
 alias satishr Satish Rao <satishr@eecs.berkeley.edu>
 alias satrajit Satrajit Chatterjee <satrajit@eecs.berkeley.edu>
@@ -1219,13 +1306,16 @@ alias sauer Christian Sauer <sauer@eecs.berkeley.edu>
 alias sayf sayf <sayf@eecs.berkeley.edu>
 alias sbart Stephen Bart <sbart@eecs.berkeley.edu>
 alias sbashaw Sara Bashaw <sbashaw@eecs.berkeley.edu>
-alias sbensafi Souad Souafi-Bensafi <sbensafi@eecs.berkeley.edu>
 alias sbenting Steve Benting <sbenting@eecs.berkeley.edu>
 alias sbergbre Sarah Bergbreiter <sbergbre@eecs.berkeley.edu>
 alias sbitnev Valery Sbitnev <sbitnev@eecs.berkeley.edu>
-alias schang SHUN MING CHANG <schang@eecs.berkeley.edu>
+alias sbsuh Seung-Bum Suh <sbsuh@eecs.berkeley.edu>
+alias schang Samuel Chang <schang@eecs.berkeley.edu>
 alias schien Steve Chien <schien@eecs.berkeley.edu>
+alias schoen Jessica Lee Schoen <schoen@eecs.berkeley.edu>
 alias schwarz Steven Schwarz <schwarz@eecs.berkeley.edu>
+alias scjjchou Jeffery B. Chou <scjjchou@eecs.berkeley.edu>
+alias scottxp Scott Tung <scottxp@eecs.berkeley.edu>
 alias sdraper Stark Draper <sdraper@eecs.berkeley.edu>
 alias seanyang Sean Yang <seanyang@eecs.berkeley.edu>
 alias sears Russell Sears <sears@eecs.berkeley.edu>
@@ -1238,17 +1328,18 @@ alias sepanta sepanta <sepanta@eecs.berkeley.edu>
 alias sergiom Sergio Leon Martinez <sergiom@eecs.berkeley.edu>
 alias sergiu Sergiu Nedevschi <sergiu@eecs.berkeley.edu>
 alias serrano Elma Serrano <serrano@eecs.berkeley.edu>
-alias seyed Seyed Shahrestani <seyed@eecs.berkeley.edu>
 alias sfg Simon Goldsmith <sfg@eecs.berkeley.edu>
 alias sgardner Susan Gardner <sgardner@eecs.berkeley.edu>
 alias sghosh Sagnik Ghosh <sghosh@eecs.berkeley.edu>
-alias sgogna Sheena Gogna <sgogna@eecs.berkeley.edu>
+alias sgoetz Stefan Goetz <sgoetz@eecs.berkeley.edu>
 alias sgroi Marco Sgroi <sgroi@eecs.berkeley.edu>
 alias shafeman Scott Joseph Hafeman <shafeman@eecs.berkeley.edu>
+alias shamshmk Shams Karimkhan <shamshmk@eecs.berkeley.edu>
 alias shankars Shankar (Personal) Sastry <shankars@eecs.berkeley.edu>
 alias shanna Shanna Crankshaw <shanna@eecs.berkeley.edu>
 alias shannonz Shannon J. Zelinski <shannonz@eecs.berkeley.edu>
 alias shao14 Jingyi Shao <shao14@eecs.berkeley.edu>
+alias shareena Shareena Samson <shareena@eecs.berkeley.edu>
 alias sharimen Sharimen Newaz <sharimen@eecs.berkeley.edu>
 alias shaw Mark Shaw <shaw@eecs.berkeley.edu>
 alias shelleyz Shelley Zhuang <shelleyz@eecs.berkeley.edu>
@@ -1258,28 +1349,27 @@ alias shinjiro Shinjiro Kakita <shinjiro@eecs.berkeley.edu>
 alias shirley Shirley Price <shirley@eecs.berkeley.edu>
 alias shizhi Shizhi Chen <shizhi@eecs.berkeley.edu>
 alias sho Songhwai Oh <sho@eecs.berkeley.edu>
-alias shuhua Shuhua Liu <shuhua@eecs.berkeley.edu>
+alias shong2 Shong Yin <shong2@eecs.berkeley.edu>
 alias shumway Michael_David Shumway <shumway@eecs.berkeley.edu>
-alias sideri Martha Sideri <sideri@eecs.berkeley.edu>
 alias simic Slobodan Simic <simic@eecs.berkeley.edu>
-alias simsek Tunc Simsek <simsek@eecs.berkeley.edu>
 alias sinclair Alistair Sinclair <sinclair@eecs.berkeley.edu>
 alias sinopoli sinopoli <sinopoli@eecs.berkeley.edu>
-alias sippit Sangha Han <sippit@eecs.berkeley.edu>
 alias sirish Sirish Chandrasekaran <sirish@eecs.berkeley.edu>
 alias sirrice Eugene Wu <sirrice@eecs.berkeley.edu>
 alias sitea sitea <sitea@eecs.berkeley.edu>
-alias sjiang Steve Jiang <sjiang@eecs.berkeley.edu>
 alias sjkim Sungjin Kim <sjkim@eecs.berkeley.edu>
 alias sjs Stephen James Stafford <sjs@eecs.berkeley.edu>
+alias skallan Sim Kallan <skallan@eecs.berkeley.edu>
 alias skamil  Kamil_Shoaib <skamil@eecs.berkeley.edu>
 alias skanajan Sri Kanajan <skanajan@eecs.berkeley.edu>
 alias skhay Hayden So <skhay@eecs.berkeley.edu>
 alias slacoste Simon Lacoste-Julien <slacoste@eecs.berkeley.edu>
 alias slanzise Steven Michael Lanzisera <slanzise@eecs.berkeley.edu>
+alias slind Scott M. Lindeneau <slind@eecs.berkeley.edu>
 alias slingn Nathan Slingerland <slingn@eecs.berkeley.edu>
 alias smardan MARDANBEIGI <smardan@eecs.berkeley.edu>
 alias smcc Stephen McCamant <smcc@eecs.berkeley.edu>
+alias smcho Sungmin Cho <smcho@eecs.berkeley.edu>
 alias smcpeak Scott McPeak <smcpeak@eecs.berkeley.edu>
 alias smithsec Smithsec Smithsec <smithsec@eecs.berkeley.edu>
 alias smm Shridhar Mubaraq Mishra <smm@eecs.berkeley.edu>
@@ -1289,6 +1379,7 @@ alias sms Shawn M Schaffert <sms@eecs.berkeley.edu>
 alias smyau Siu Man Yau <smyau@eecs.berkeley.edu>
 alias so Hoi-Sheung Wilson So <so@eecs.berkeley.edu>
 alias sohrab Sohrab Emami-Neyestanak <sohrab@eecs.berkeley.edu>
+alias soltman Daniel Benjamin Soltman <soltman@eecs.berkeley.edu>
 alias sonesh Sonesh Surana <sonesh@eecs.berkeley.edu>
 alias soniad Sonia Dominguez <soniad@eecs.berkeley.edu>
 alias soumen Soumen Chakrabarti <soumen@eecs.berkeley.edu>
@@ -1296,6 +1387,7 @@ alias souravc Sourav Chatterji <souravc@eecs.berkeley.edu>
 alias sousa Joao Sousa <sousa@eecs.berkeley.edu>
 alias spahr Joseph Spahr <spahr@eecs.berkeley.edu>
 alias spanos Costas Spanos <spanos@eecs.berkeley.edu>
+alias sparedes Sara Paredes <sparedes@eecs.berkeley.edu>
 alias spayen Payen <spayen@eecs.berkeley.edu>
 alias spielman Dan Spielman <spielman@eecs.berkeley.edu>
 alias spivey Rosemary Spivey <spivey@eecs.berkeley.edu>
@@ -1309,15 +1401,17 @@ alias srinath Srinath Avadhanula <srinath@eecs.berkeley.edu>
 alias sriram_s Sriram Sankararaman <sriram_s@eecs.berkeley.edu>
 alias srk Scott Klemmer <srk@eecs.berkeley.edu>
 alias srobert Stephan Robert <srobert@eecs.berkeley.edu>
+alias sseshia Sanjit A Seshia <sseshia@eecs.berkeley.edu>
 alias ssinha Steven Sinha <ssinha@eecs.berkeley.edu>
 alias ssleung Stephanie Leung <ssleung@eecs.berkeley.edu>
 alias ssorkin Stephen Sorkin <ssorkin@eecs.berkeley.edu>
 alias sssimone Simone Gambini <sssimone@eecs.berkeley.edu>
 alias stacyw Stacy Wilson <stacyw@eecs.berkeley.edu>
 alias stanbaek Stanley Baek <stanbaek@eecs.berkeley.edu>
-alias stanley Kendall S. Stanley <stanley@eecs.berkeley.edu>
 alias starbow Tao Starbow <starbow@eecs.berkeley.edu>
 alias stbaker Steven Daniel Baker <stbaker@eecs.berkeley.edu>
+alias stefano Stefano Cervini <stefano@eecs.berkeley.edu>
+alias steiger William Steiger <steiger@eecs.berkeley.edu>
 alias stellayu Stella Yu <stellayu@eecs.berkeley.edu>
 alias stephp Stephanou <stephp@eecs.berkeley.edu>
 alias stergiou Panayiotis Stergiou <stergiou@eecs.berkeley.edu>
@@ -1328,6 +1422,7 @@ alias strib JeremyAndrew Stribling <strib@eecs.berkeley.edu>
 alias strive David Garmire <strive@eecs.berkeley.edu>
 alias stubbs Linda Stubbs <stubbs@eecs.berkeley.edu>
 alias subbu Subramaniam Venkatraman <subbu@eecs.berkeley.edu>
+alias subha Subha Gollakota <subha@eecs.berkeley.edu>
 alias subra P.A. Subrahmanyam <subra@eecs.berkeley.edu>
 alias sued Sue Devries <sued@eecs.berkeley.edu>
 alias sumitra Sumitra Ganesh <sumitra@eecs.berkeley.edu>
@@ -1336,15 +1431,18 @@ alias sunghoon SUNGHOON KWON <sunghoon@eecs.berkeley.edu>
 alias sungsu SUNGSU PARK <sungsu@eecs.berkeley.edu>
 alias sunil sunil <sunil@eecs.berkeley.edu>
 alias sunxin Xin Sun <sunxin@eecs.berkeley.edu>
+alias supj Sangsup Jeong <supj@eecs.berkeley.edu>
 alias susan Susan Madison <susan@eecs.berkeley.edu>
 alias susanc Susan Colby <susanc@eecs.berkeley.edu>
 alias susiet Susie Tzeng <susiet@eecs.berkeley.edu>
 alias svermani Sameer Vermani <svermani@eecs.berkeley.edu>
 alias svolkman Steven K. Volkman <svolkman@eecs.berkeley.edu>
+alias swchen Shuo-Wei Chen <swchen@eecs.berkeley.edu>
 alias sylviar Sylvia Ratnasamy <sylviar@eecs.berkeley.edu>
 alias syoon SANGHYUB YOON <syoon@eecs.berkeley.edu>
 alias szatmari Istvan Szatmari <szatmari@eecs.berkeley.edu>
 alias szewczyk Robert Szewczyk <szewczyk@eecs.berkeley.edu>
+alias szhou Shuheng Zhou <szhou@eecs.berkeley.edu>
 alias tachio Tachio Terauchi <tachio@eecs.berkeley.edu>
 alias tah Tom Henzinger <tah@eecs.berkeley.edu>
 alias takagi-t Tomohiro Takagi <takagi-t@eecs.berkeley.edu>
@@ -1352,7 +1450,9 @@ alias takeuchi Hideki Takeuchi <takeuchi@eecs.berkeley.edu>
 alias takuro Takuro Matsutoya <takuro@eecs.berkeley.edu>
 alias tan Chin-Woo Tan <tan@eecs.berkeley.edu>
 alias tan_john JOHN TEN-CHIEN HSU <tan_john@eecs.berkeley.edu>
+alias tancau Liviu Tancau <tancau@eecs.berkeley.edu>
 alias tandra Rahul Tandra <tandra@eecs.berkeley.edu>
+alias taneja Jayant Kumar Taneja <taneja@eecs.berkeley.edu>
 alias tangh Haiyun Tang <tangh@eecs.berkeley.edu>
 alias tapsis Tapsi Shah <tapsis@eecs.berkeley.edu>
 alias taskar Ben Taskar <taskar@eecs.berkeley.edu>
@@ -1366,28 +1466,36 @@ alias tduncan Timothy Duncan <tduncan@eecs.berkeley.edu>
 alias tea Tom Anderson <tea@eecs.berkeley.edu>
 alias tedhong Ted Hong <tedhong@eecs.berkeley.edu>
 alias teresat Teresa Tung <teresat@eecs.berkeley.edu>
-alias theyeh David Te-Mao Yeh <theyeh@eecs.berkeley.edu>
+alias therese Therese George <therese@eecs.berkeley.edu>
 alias thibaux Romain Jean Thibaux <thibaux@eecs.berkeley.edu>
+alias thomasr Thomas Riisgaard Hansen <thomasr@eecs.berkeley.edu>
 alias thuant Thuan Trinh <thuant@eecs.berkeley.edu>
 alias tiffcraw Tiffany Shenele Crawford <tiffcraw@eecs.berkeley.edu>
 alias tim_b BAKHISHEV <tim_b@eecs.berkeley.edu>
 alias timclee TIMOTHYCHUNG-TAO LEE <timclee@eecs.berkeley.edu>
 alias timloo Timothy Loo <timloo@eecs.berkeley.edu>
 alias timofeev Sergey Timofeev <timofeev@eecs.berkeley.edu>
+alias timok Timo Kartaavi <timok@eecs.berkeley.edu>
 alias timothyc Tim Callahan  <timothyc@eecs.berkeley.edu>
-alias timr Tim Roughgarden <timr@eecs.berkeley.edu>
+alias timso Timothy So <timso@eecs.berkeley.edu>
 alias tinas Tina Smilkstein <tinas@eecs.berkeley.edu>
+alias ting0918 Lynn Tao-Ning Wang <ting0918@eecs.berkeley.edu>
 alias titanium Titanium Project (Prof. Graham) <titanium@eecs.berkeley.edu>
 alias tjc CHARLESWORTH <tjc@eecs.berkeley.edu>
-alias tjdaniel Tyler Daniel <tjdaniel@eecs.berkeley.edu>
 alias tkaga Tomoyuki Kaga <tkaga@eecs.berkeley.edu>
+alias tkalil Tom Kalil <tkalil@eecs.berkeley.edu>
 alias tkchen TK Chen <tkchen@eecs.berkeley.edu>
 alias tkg T.K. Gustafson <tkg@eecs.berkeley.edu>
 alias tking Tsu-Jae King <tking@eecs.berkeley.edu>
+alias tkoyama Tsuyoshi Koyama <tkoyama@eecs.berkeley.edu>
+alias tksk Satish Thittamaranahalli <tksk@eecs.berkeley.edu>
 alias tlavian Lavian Tal <tlavian@eecs.berkeley.edu>
 alias tmaher Thomas Maher <tmaher@eecs.berkeley.edu>
 alias tmatthew Tara Lynn Matthews <tmatthew@eecs.berkeley.edu>
 alias tnomura Toshio Nomura <tnomura@eecs.berkeley.edu>
+alias toda Asako Toda <toda@eecs.berkeley.edu>
+alias tomlin Claire Tomlin <tomlin@eecs.berkeley.edu>
+alias tomobe Tom Obernesser <tomobe@eecs.berkeley.edu>
 alias tonyw Tony Wasserman <tonyw@eecs.berkeley.edu>
 alias toomim Michael Matthew Toomim <toomim@eecs.berkeley.edu>
 alias tparsons Tom Parsons <tparsons@eecs.berkeley.edu>
@@ -1396,18 +1504,16 @@ alias travisp Travis Pynn <travisp@eecs.berkeley.edu>
 alias travisr Travis Richardson <travisr@eecs.berkeley.edu>
 alias troscoe Timothy Roscoe <troscoe@eecs.berkeley.edu>
 alias tsengy Yu-Chih Tseng <tsengy@eecs.berkeley.edu>
-alias tsewen Tse-Wen Wang <tsewen@eecs.berkeley.edu>
+alias tshiao Tiffany Shiao <tshiao@eecs.berkeley.edu>
 alias tsunglin tsunglin <tsunglin@eecs.berkeley.edu>
 alias ttd Tina Dong <ttd@eecs.berkeley.edu>
 alias ttemplet Todd Russell Templeton <ttemplet@eecs.berkeley.edu>
+alias ttliu Tsung-Te Liu <ttliu@eecs.berkeley.edu>
 alias tumi Jon Gudmundsson <tumi@eecs.berkeley.edu>
 alias turi Turgut Sefket Aytur <turi@eecs.berkeley.edu>
-alias tuyen Tuyen Le <tuyen@eecs.berkeley.edu>
 alias tygar Doug Tygar <tygar@eecs.berkeley.edu>
 alias tzuyi Tzu-Yi Chen <tzuyi@eecs.berkeley.edu>
 alias ushankar Umesh Shankar <ushankar@eecs.berkeley.edu>
-alias uthara Uthara Srinivasan <uthara@eecs.berkeley.edu>
-alias uwb Bob Fleming <uwb@eecs.berkeley.edu>
 alias vadim Vadim Kogan <vadim@eecs.berkeley.edu>
 alias valencia Renate Valencia <valencia@eecs.berkeley.edu>
 alias varaiya Pravin Varaiya <varaiya@eecs.berkeley.edu>
@@ -1416,40 +1522,43 @@ alias varsha Varsha Dani <varsha@eecs.berkeley.edu>
 alias varunk Varun Kacholia <varunk@eecs.berkeley.edu>
 alias vdai Vito Dai <vdai@eecs.berkeley.edu>
 alias veljko Veljko Milanovic <veljko@eecs.berkeley.edu>
+alias vida Gyorgy Vida <vida@eecs.berkeley.edu>
 alias vidya Varadarajan Vidya <vidya@eecs.berkeley.edu>
 alias vikramg Vikram Gowrish <vikramg@eecs.berkeley.edu>
 alias vincente Vincent_Kitho Eng <vincente@eecs.berkeley.edu>
 alias vinodmp Vinod Prabhakaran <vinodmp@eecs.berkeley.edu>
-alias viola Emanuele Viola <viola@eecs.berkeley.edu>
 alias vissers Kees Vissers <vissers@eecs.berkeley.edu>
+alias vitorial LOK <vitorial@eecs.berkeley.edu>
 alias viveks  <viveks@eecs.berkeley.edu>
 alias vjmiller Victoria Miller <vjmiller@eecs.berkeley.edu>
 alias vladlen Vladlen Koltun <vladlen@eecs.berkeley.edu>
 alias vlpetkov Vladimir Plamenov Petkov <vlpetkov@eecs.berkeley.edu>
 alias vlucas Vicki Lucas <vlucas@eecs.berkeley.edu>
 alias voemel Christof Voemel <voemel@eecs.berkeley.edu>
+alias volkov Vasily Volkov <volkov@eecs.berkeley.edu>
 alias vonkorff Joshua Von Korff <vonkorff@eecs.berkeley.edu>
 alias voros voros <voros@eecs.berkeley.edu>
 alias vorrada Vorrada Loryuenyong <vorrada@eecs.berkeley.edu>
 alias vowall Viktor Owall <vowall@eecs.berkeley.edu>
 alias vtannura Vincent Tannura <vtannura@eecs.berkeley.edu>
+alias vullal Vijay Nayak Ullal <vullal@eecs.berkeley.edu>
 alias vvv Vijay Vazirani <vvv@eecs.berkeley.edu>
 alias vwen Victor Shih-hua Wen <vwen@eecs.berkeley.edu>
+alias vwng Vincent Wai-Shan Ng <vwng@eecs.berkeley.edu>
 alias waarts Orli Waarts <waarts@eecs.berkeley.edu>
 alias wainwrig Martin James Wainwright <wainwrig@eecs.berkeley.edu>
 alias walther David Walther <walther@eecs.berkeley.edu>
-alias wangjin Jin Wang <wangjin@eecs.berkeley.edu>
 alias wangwei Wei Wang <wangwei@eecs.berkeley.edu>
 alias wanh Hui Wan <wanh@eecs.berkeley.edu>
+alias warabino Takayuki Warabino <warabino@eecs.berkeley.edu>
 alias warnerc Warner T. Carlisle <warnerc@eecs.berkeley.edu>
 alias waynehua Wayne Huang <waynehua@eecs.berkeley.edu>
 alias wcarr William Carr <wcarr@eecs.berkeley.edu>
 alias wclee Won Chul Lee <wclee@eecs.berkeley.edu>
 alias wcwu Wei-Chung Wu <wcwu@eecs.berkeley.edu>
 alias wdc Weidong Cui <wdc@eecs.berkeley.edu>
-alias wehibeg WEHIBEG BELACHEW <wehibeg@eecs.berkeley.edu>
-alias weihua Weihua Shen <weihua@eecs.berkeley.edu>
 alias weimer Westley Weimer <weimer@eecs.berkeley.edu>
+alias weitings Tina Shyuan <weitings@eecs.berkeley.edu>
 alias weitu TU <weitu@eecs.berkeley.edu>
 alias weiwei Wei Wei <weiwei@eecs.berkeley.edu>
 alias wenko Wen Ko <wenko@eecs.berkeley.edu>
@@ -1472,8 +1581,6 @@ alias wolfi Wolfgang Raab <wolfi@eecs.berkeley.edu>
 alias wolisz Adam Wolisz <wolisz@eecs.berkeley.edu>
 alias woman William Oman <woman@eecs.berkeley.edu>
 alias wong Gene Wong <wong@eecs.berkeley.edu>
-alias wongjoh Johnny Wong <wongjoh@eecs.berkeley.edu>
-alias wrdavis wrdavis <wrdavis@eecs.berkeley.edu>
 alias wrichter Walter Carlos Richter <wrichter@eecs.berkeley.edu>
 alias wtyeung Wayne Yeung <wtyeung@eecs.berkeley.edu>
 alias wuc Christopher Wu <wuc@eecs.berkeley.edu>
@@ -1482,27 +1589,31 @@ alias wyc Wayne Chan <wyc@eecs.berkeley.edu>
 alias wychen WEI-YU CHEN <wychen@eecs.berkeley.edu>
 alias xdjiang Xiaodong Jiang <xdjiang@eecs.berkeley.edu>
 alias xiaoye Xiaoye Li <xiaoye@eecs.berkeley.edu>
+alias xiaoyi Xiaoyi Tang <xiaoyi@eecs.berkeley.edu>
 alias xinyan Xinyan Deng <xinyan@eecs.berkeley.edu>
-alias xiongsy Shiying Xiong <xiongsy@eecs.berkeley.edu>
 alias xpeng Xi Peng <xpeng@eecs.berkeley.edu>
 alias xpsu xpsu <xpsu@eecs.berkeley.edu>
 alias xren Xiaofeng Ren <xren@eecs.berkeley.edu>
+alias xtan Zhangxi Tan <xtan@eecs.berkeley.edu>
 alias xtitter Nathaniel Titterton <xtitter@eecs.berkeley.edu>
 alias xuanlong Xuanlong Nguyen <xuanlong@eecs.berkeley.edu>
 alias xuanming Xuanming Dong <xuanming@eecs.berkeley.edu>
 alias xuejing Jing Xue <xuejing@eecs.berkeley.edu>
+alias xuening Xuening Sun <xuening@eecs.berkeley.edu>
 alias xuliu Xuchun Liu <xuliu@eecs.berkeley.edu>
 alias xuw Wei Xu <xuw@eecs.berkeley.edu>
 alias xxzhao Xiaoxue Zhao <xxzhao@eecs.berkeley.edu>
 alias yael Yael Dekel <yael@eecs.berkeley.edu>
 alias yaibara Yasutoshi Aibara <yaibara@eecs.berkeley.edu>
 alias yairb Yair Bartal <yairb@eecs.berkeley.edu>
+alias yallen18 Cheng-Lun Yang <yallen18@eecs.berkeley.edu>
 alias yan Yan Huang <yan@eecs.berkeley.edu>
 alias yanchen Yan Chen <yanchen@eecs.berkeley.edu>
 alias yangjing Jing Yang <yangjing@eecs.berkeley.edu>
 alias yangli Yang Li <yangli@eecs.berkeley.edu>
 alias yangsta Yang Zhang <yangsta@eecs.berkeley.edu>
 alias yangxin Xin Yang <yangxin@eecs.berkeley.edu>
+alias yangyang Yang Yang <yangyang@eecs.berkeley.edu>
 alias yangzhao Yang Zhao <yangzhao@eecs.berkeley.edu>
 alias yanmei Yanmei Li <yanmei@eecs.berkeley.edu>
 alias yanw yanw <yanw@eecs.berkeley.edu>
@@ -1511,43 +1622,50 @@ alias yaoxi yaoxi <yaoxi@eecs.berkeley.edu>
 alias yaoyun Yaoyun Shi <yaoyun@eecs.berkeley.edu>
 alias yaping Yaping Li <yaping@eecs.berkeley.edu>
 alias yatish Yatish Patel <yatish@eecs.berkeley.edu>
-alias ycao Yu (Kevin) Cao <ycao@eecs.berkeley.edu>
+alias yben Yu Ben <yben@eecs.berkeley.edu>
+alias ycoh Yong-Chul  Oh <ycoh@eecs.berkeley.edu>
 alias yelick Kathy Yelick <yelick@eecs.berkeley.edu>
 alias yeo Engling Yeo <yeo@eecs.berkeley.edu>
 alias yezhou Ye Zhou <yezhou@eecs.berkeley.edu>
 alias yhchee Yuen Hui Chee <yhchee@eecs.berkeley.edu>
 alias yhui LIU <yhui@eecs.berkeley.edu>
-alias yiding DING <yiding@eecs.berkeley.edu>
+alias yiding Yi Ding <yiding@eecs.berkeley.edu>
 alias yihchun Yih-Chun Hu <yihchun@eecs.berkeley.edu>
 alias yinghua Yinghua Li <yinghua@eecs.berkeley.edu>
 alias yingying Ying_Ying Wei <yingying@eecs.berkeley.edu>
 alias yinli Li Yin <yinli@eecs.berkeley.edu>
 alias ykc Young Choi <ykc@eecs.berkeley.edu>
+alias ylu Yuming Kathy Lu <ylu@eecs.berkeley.edu>
 alias yooo Onesun Yoo <yooo@eecs.berkeley.edu>
+alias yoshi Tadayoshi Kohno <yoshi@eecs.berkeley.edu>
 alias yozo Yozo Hida <yozo@eecs.berkeley.edu>
 alias yptong Yuh-Ping Tong <yptong@eecs.berkeley.edu>
 alias yschen Yuan-Shih Chen <yschen@eecs.berkeley.edu>
 alias yuanlei Lei Yuan <yuanlei@eecs.berkeley.edu>
 alias yujia Yu-Jia Jin <yujia@eecs.berkeley.edu>
 alias yukuwan Richard Yu-Kuwan Su <yukuwan@eecs.berkeley.edu>
-alias yunan PEI <yunan@eecs.berkeley.edu>
-alias yunbiao Frank Wang <yunbiao@eecs.berkeley.edu>
+alias yulikjan SARKISYAN <yulikjan@eecs.berkeley.edu>
 alias yuncao Yun Cao <yuncao@eecs.berkeley.edu>
 alias yunfei Yunfei Deng <yunfei@eecs.berkeley.edu>
+alias yuri Yuri Masuoka <yuri@eecs.berkeley.edu>
 alias yurym Yury Markovskiy <yurym@eecs.berkeley.edu>
 alias ywteh Yee Whye Teh <ywteh@eecs.berkeley.edu>
 alias yytommy YANG <yytommy@eecs.berkeley.edu>
 alias zaller Debra Zaller <zaller@eecs.berkeley.edu>
+alias zander Alexander H Nguyen <zander@eecs.berkeley.edu>
 alias zendejas Frank Zendejas <zendejas@eecs.berkeley.edu>
+alias zengd Dekong Zeng <zengd@eecs.berkeley.edu>
 alias zenghb Haibo Zeng <zenghb@eecs.berkeley.edu>
 alias zf Feng Zhou <zf@eecs.berkeley.edu>
 alias zgang Gang Zhou <zgang@eecs.berkeley.edu>
+alias zhanghx Haixia Zhang <zhanghx@eecs.berkeley.edu>
 alias zhangjh Jianhui Zhang <zhangjh@eecs.berkeley.edu>
 alias zhangjun Jun Zhang <zhangjun@eecs.berkeley.edu>
 alias zhengguo Zheng Guo <zhengguo@eecs.berkeley.edu>
 alias zhengwei Wei Zheng <zhengwei@eecs.berkeley.edu>
 alias zhiyu Zhiyu Pan <zhiyu@eecs.berkeley.edu>
 alias zhli Zhihong Li <zhli@eecs.berkeley.edu>
+alias zhores Zhores Alferov <zhores@eecs.berkeley.edu>
 alias zhouye Ye Zhou <zhouye@eecs.berkeley.edu>
 alias zhuqi Qi Zhu <zhuqi@eecs.berkeley.edu>
 alias zhyder Zohair Hyder <zhyder@eecs.berkeley.edu>
@@ -1555,12 +1673,14 @@ alias zhzhang Zhi-Li Zhang <zhzhang@eecs.berkeley.edu>
 alias zile Zile Wei <zile@eecs.berkeley.edu>
 alias zimdars Andrew Zimdars <zimdars@eecs.berkeley.edu>
 alias zl Li Zhuang <zl@eecs.berkeley.edu>
+alias zlz Lizhen Zheng <zlz@eecs.berkeley.edu>
 alias zmao Z. Morley Mao <zmao@eecs.berkeley.edu>
 alias zoran Zoran Cvetkovic <zoran@eecs.berkeley.edu>
 alias zra Zachary Ryan Anderson <zra@eecs.berkeley.edu>
 alias zradu Radu Zlatanovici <zradu@eecs.berkeley.edu>
 alias zsluo Zhongsheng Luo <zsluo@eecs.berkeley.edu>
 alias zuohao Chuohao Yeo <zuohao@eecs.berkeley.edu>
-alias zweig Geoffrey Zweig <zweig@eecs.berkeley.edu>
 alias zwick Uri Zwick <zwick@eecs.berkeley.edu>
+alias zyw Youwei Zhang <zyw@eecs.berkeley.edu>
 alias zyzhang Zhengya Zhang <zyzhang@eecs.berkeley.edu>
+alias zzw Zhuwen Zhou <zzw@eecs.berkeley.edu>
