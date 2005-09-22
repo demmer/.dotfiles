@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.36 $)
+;; Version: 1.2 ($Revision: 1.37 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -697,7 +697,7 @@ the file on this line."
 	  nil
 	(error "Can only commit \"M\", \"A\", or \"R\" files")))
     ;; Checks ok, give them the edit buffer.
-    (pop-to-buffer (get-buffer-create "*CVS-commit-message*"))
+    (switch-to-buffer (get-buffer-create "*CVS-commit-message*"))
     (lcvs-commit-mode this-buffer files)))
 
 (defun lcvs-diff-base (arg)
