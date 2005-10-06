@@ -7,7 +7,10 @@
 # Programs to run at login                        #
 ###################################################
 
-cat -s /etc/motd
+if [ -f /etc/motd ] ; then 
+    cat -s /etc/motd
+fi
+
 uname -snmr
 # frm -s new 2> /dev/null
 
