@@ -12,7 +12,7 @@ if  [ ! -d .dotfiles ]; then
 	exit 1
 fi
 
-echo "Making links for $host..."
+echo "Making links for $host (arch $ARCH)..."
 
 #
 # first the easy ones
@@ -22,7 +22,7 @@ for f in bin elisp online ; do
 
 	if [ -L $f ] ; then
 	    rm -f $f
-        else	
+        elif [ -e $f ] ; then
 	    rm -ri $f
 	fi
 	ln -s .dotfiles/$f $f
@@ -38,7 +38,7 @@ makelinks() {
 	
             if [ -L $f ] ; then
                 rm -f $f
-            else
+            elif [ -e $f ] ; then
                 rm -ri $f
             fi
 	    ln -s $dir/$f $f
@@ -47,6 +47,10 @@ makelinks() {
 }
 
 makelinks .dotfiles
+
+if [ -d .dotfiles/$ARCH ]; then
+	makelinks .dotfiles/$ARCH
+fi
 
 if [ -d .dotfiles/$host ]; then
 	makelinks .dotfiles/$host
