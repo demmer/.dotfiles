@@ -29,6 +29,13 @@ case $HOST in
 esac
 
 #
+# Or, try the architecture
+#
+if [ $ARCH = Cygwin ]; then
+    BASE_GEOM=Cygwin
+fi
+
+#
 # 1600x1200 geometry
 #
 if [ "$BASE_GEOM" = "1600x1200" ]; then
@@ -109,7 +116,7 @@ XTERM_5_GEOM="80x65+3134+115"
 ACROREAD_GEOM="1280x1024+0+0"
 
 #
-# 1024x786 geometry
+# 1024x768 geometry
 #
 elif [ "$BASE_GEOM" = "1024x768" ]; then
 
@@ -143,5 +150,14 @@ SSH_INIT_GEOM="+300+400"
 YABIFF_GEOM="400x100+1400+0"
 PISCO_XMUTT_GEOM="80x40-50+500"
 XOOPI_XMUTT_GEOM="80x40-650+500"
+
+#
+# Cygwin geometry
+#
+elif [ "$BASE_GEOM" = "Cygwin" ]; then
+
+SSH_INIT_GEOM="+250+220"
+PISCO_XMUTT_GEOM="80x40+1+190"
+XOOPI_XMUTT_GEOM="80x40+1+170"
 
 fi
