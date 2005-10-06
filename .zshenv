@@ -14,7 +14,10 @@ if [ "$USER" = "" ]; then
 fi
 
 # Defines the platform that we are running on
-UNAME=`which uname`
+UNAME=/usr/bin/uname
+if [ ! -x $UNAME ]; then
+	UNAME=`which uname`
+fi
 if [ -x $UNAME ]; then
 	export OSARCH=`$UNAME -s`-`$UNAME -r`
   	case "$OSARCH" in
@@ -35,6 +38,9 @@ if [ -x $UNAME ]; then
   		;;
 	Darwin-*)
 		export ARCH=Darwin
+		;;
+        CYGWIN*)
+		export ARCH=Cygwin
 		;;
   	*)
   		export ARCH=`$UNAME -s`
@@ -57,12 +63,12 @@ fi
 done
 
 #
-# I set my paths before all the others to override programs
+# I set my bin path (but not bindirs) before all the others to 
+# override programs
 #
 path=(						\
 	~/bin/$ARCH                             \
 	~/bin                                   \
-	$localpath				\
 	/usr/ucb				\
 	/usr/local/bin				\
 	/usr/local/sbin				\
@@ -73,6 +79,7 @@ path=(						\
 	/usr/X11R6/bin				\
 	/usr/games				\
 	/usr/java/jdk/bin			\
+	$localpath				\
 	.					\
       )
 #
