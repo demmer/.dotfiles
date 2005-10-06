@@ -16,7 +16,6 @@ fignore=(\~)
 
 # use hard limits, except for a smaller stack
 unlimit
-limit stack 8192
 limit -s
 
 if [ "$EMACSPARENT" = "1" ]; then
