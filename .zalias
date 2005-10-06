@@ -12,7 +12,11 @@ alias findbakl='findbak -maxdepth 1'
 alias rmbak='findbak -exec /bin/rm {} \;'
 alias rmbakl='findbakl -exec /bin/rm {} \;'
 
-alias startx='startx 2>&1 | tee ~/.err/startx.log'
+if [ $ARCH = Cygwin ] ; then
+   alias startx='export DISPLAY=localhost:0 && startxwin.bat'
+else
+   alias startx='startx 2>&1 | tee ~/.err/startx.log'
+fi
 alias x='startx'
 
 alias ls='ls -F'
