@@ -100,8 +100,10 @@
   (setq c-electric-pound-behavior '(alignleft))	; use electric pound
   (define-key c-mode-map "\C-m" 'newline-and-indent)
   (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
+  (define-key c-mode-map "\C-c\t" 'c-align-space-in-region)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
+  (define-key c++-mode-map "\C-c\t" 'c-align-space-in-region)
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
   (setq comment-use-syntax nil)
