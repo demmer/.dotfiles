@@ -575,6 +575,7 @@ bunch of = signs or variable declarations. Inserts space + offset."
   "Do the correct formatting on a region, heuristically by looking at
 the characters on the first line."
   (interactive "*r")
+  (whitespace-cleanup)
   (save-excursion
     (goto-char from)
     (beginning-of-line)
@@ -643,7 +644,7 @@ be used instead of the bit positions."
   ) ; save-excursion
 )
 
-(defun fold-by-line-on-region (from to fcn initial-value &optional ws)
+(defun fold-by-line-on-region (from to fcn initial-value)
   "Fold fcn on region (from, to), starting with the first line. fcn
 will have a signature (init-val beginning-of-line
 end-of-line). Returns the last folded value. Set ws to true if
@@ -652,10 +653,6 @@ of line."
   (save-excursion
     (let ((cur-val initial-value))
       (while (< (point) to)
-	(if ws (progn (end-of-line)
-		      (while (or (eq (char-before) " ")
-				 (eq (char-before) "\t"))
-			(delete-backward-char 1))))
 	(beginning-of-line)
 	(setq cur-val 
 	      (apply fcn (list cur-val (point) (point-at-eol))))
