@@ -185,6 +185,7 @@ else
 fi
 
 export CVS_RSH=ssh
+export RSYNC_RSH=ssh
  
 if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
     export DISPLAY=localhost:0
