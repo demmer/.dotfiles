@@ -70,8 +70,13 @@ zstyle ':completion:*' users $users
 if [ -f $HOME/.ssh/known_hosts ]; then
 	_ssh_known_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*})
 fi
+# And ssh config
+if [ -f $HOME/.ssh/config ]; then
+	_ssh_config_hosts=(${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*})
+fi
 hosts=(
     "$_ssh_known_hosts[@]"
+    "$_ssh_config_hosts[@]"
     localhost
 )
 zstyle ':completion:*' hosts $hosts
