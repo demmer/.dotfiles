@@ -685,3 +685,30 @@ of line."
   (recenter 0))
 
 (global-set-key "\C-v" 'scroll-up-ctrl-l)
+
+(defun c++-add-tag-types ()
+  "Interactive function prompts for filename for the types to be added
+to the font lock list"
+  (interactive)
+  (let ((filename (read-file-name "tags location: " 
+				  default-directory
+				  "types.tag"
+				  t
+				  "")))
+    (c++-add-tag-types-1 filename)))
+
+(defun c++-add-tag-types-1 (filename)
+  "Add filename which is a list of the types to the C++ types"
+  (let ((type-buffer (or (get-buffer "*c++-types-list*")
+			 (generate-new-buffer "*c++-types-list*"))))
+    (with-current-buffer type-buffer
+      (erase-buffer)
+      (insert-file filename)
+      (goto-char 0)
+      (while (not (= (point) (point-max)))
+	(let ((typename (buffer-substring (point) (point-at-eol))))
+	  (if (not (member typename c++-font-lock-extra-types))
+	      (setq c++-font-lock-extra-types 
+		    (append c++-font-lock-extra-types (list typename))))
+	  (goto-char (point-at-eol))
+	  (forward-char))))))
