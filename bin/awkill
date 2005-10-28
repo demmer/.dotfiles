@@ -1,4 +1,8 @@
 #!/bin/sh
-exec awk '{print $2}' | xargs kill $*
+if [ "$ARCH" = "Cygwin" ]; then
+    exec awk '{print $1}' | xargs kill $*
+else
+    exec awk '{print $2}' | xargs kill $*
+fi
 
 
