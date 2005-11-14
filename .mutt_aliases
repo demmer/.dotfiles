@@ -212,22 +212,35 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 # DTN related
 #
-alias durst Robert Durst <durst@mitre.org>
-alias kfall Kevin Fall <kfall@intel.com>
+alias durst_real Robert Durst <durst@mitre.org>
+alias kfall_real Kevin Fall <kfall@intel.com>
+alias keshav_real Srinivasan Keshav <keshav@uwaterloo.ca>
+alias kscott_real Keith Scott <kscott@mitre.org>
+alias scott_burleigh_real Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
+alias susan_real Susan Symington <susan@mitre.org>
+alias salil_real Salil Parikh <sparikh@mitre.org>
+alias dtn-dev_real dtn-dev@mailman.dtnrg.org
+
+alias me-dtn Michael Demmer <demmer@dtnmail.dtnrg.org>
+alias durst Robert Durst <durst@dtnmail.dtnrg.org>
+alias kfall Kevin Fall <kfall@dtnmail.dtnrg.org>
+alias keshav Srinivasan Keshav <keshav@dtnmail.dtnrg.org>
+alias kscott Keith Scott <kscott@dtnmail.dtnrg.org>
+alias scott_burleigh Scott Burleigh <Scott.Burleigh@dtnmail.dtnrg.org>
+alias susan Susan Symington <susan@dtnmail.dtnrg.org>
+alias salil Salil Parikh <sparikh@dtnmail.dtnrg.org>
+alias dtn-dev dtn-dev@dtnmail.dtnrg.org
+
+alias mho Melissa Ho <mrh9@cornell.edu>
 alias kfall-eecs Kevin Fall <kfall@eecs.berkeley.edu>
 alias jeff_allen Jeff Allen <jra@nella.org>
 alias jeriksson Jacob Eriksson <jeriksson@cs.ucr.edu>
-alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
-alias kscott Keith Scott <kscott@mitre.org>
-alias mho Melissa Ho <mrh9@cornell.edu>
 alias nabeel Nabeel Ahmed <n3ahmed@fe02.math.uwaterloo.ca>
 alias rrhain Regina Hain <rrhain@bbn.com>
-alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
 alias sushant Sushant Jain <sushjain@cs.washington.edu>
 alias tkoo Tristan Koo <tkoo@ocf.berkeley.edu>
 alias tliu Ting Liu <tliu@cs.princeton.edu>
 alias dtn-bugs dtn-bugs@mailman.dtnrg.org
-alias dtn-dev dtn-dev@mailman.dtnrg.org
 alias dtn-devel dtn-dev@mailman.dtnrg.org
 alias dtn-interest dtn-interest@mailman.dtnrg.org
 alias dtn-users dtn-users@mailman.dtnrg.org
@@ -278,6 +291,7 @@ alias mphillips Melissa Phillips <mphillips@mayacamasranch.com>
 alias vjager Vanessa Jager <vjager@mayacamasranch.com>
 alias ben_fishman Ben Fishman <fishmanben@hotmail.com>
 alias ptweedie Pauline Tweedie <ptweedie@cb.asiafound.org>
+alias ptweedie_gmail Pauline Tweedie <ptweedie@gmail.com>
 alias dan_durango Dan <dan@cb.asiafound.org>
 alias stephen.farrell Stephen Farrell <stephen.farrell@cs.tcd.ie>
 alias jef_poskanzer Jef Poskanzer <jef@mail.acme.com>
