@@ -1,0 +1,201 @@
+#!/usr/bin/tclsh
+
+set debug 0
+
+set rcfile   "$env(HOME)/.expectmailrc"
+set datafile "$env(HOME)/.expectmaildata"
+
+proc dprint {args} {
+    global debug
+    if {$debug} {
+	puts [join $args]
+    }
+}
+
+proc usage {err} {
+    puts stderr $err
+    puts stderr "usage: expectmail \[check|record\]"
+    exit 1
+}
+
+set report_address {}
+set expectations {}
+array set arrivals [list]
+
+proc report_to {addr} {
+    global report_address
+    set report_address $addr
+}
+
+proc expectmail {name timespec pattern} {
+    global expectations
+    
+    if {![regexp -- {(\d+)([m|h|d])} $timespec match interval units]} {
+	error "invalid time specification $timespec"
+    }
+
+    if [catch {regexp -- $pattern "foobar"} err] {
+	error "invalid pattern specification $pattern"
+    }
+    
+    if {$units == "m"} {
+	lappend expectations $name [expr $interval * 60] $pattern
+    } elseif {$units == "h"} {
+	lappend expectations $name [expr $interval * 60 * 60] $pattern
+    } elseif {$units == "d"} {
+	lappend expectations $name [expr $interval * 60 * 60 * 24] $pattern
+    } else {
+	error "bogus units $units"
+    }
+    
+    dprint "parsed expectation $name"
+}
+
+proc parse_rcfile {} {
+    global rcfile report_address
+
+    if {! [file readable $rcfile]} {
+	puts "ERROR: $rcfile not readable"
+	exit 1
+    }
+
+    if [catch {source $rcfile} err] {
+	puts "ERROR reading $rcfile: $err"
+	global errorInfo
+	puts $errorInfo
+	exit 1
+    }
+
+    if {$report_address == ""} {
+	puts "ERROR reading $rcfile: report_to not set"
+	exit 1
+    }
+}
+
+proc parse_datafile {} {
+    global arrivals datafile
+
+    if {! [file readable "~/.expectmaildata"]} {
+	dprint "can't read .expectmaildata file, nothing to parse"
+	return
+    }
+    
+    if [catch {
+	set fd [open $datafile]
+    } err] {
+	puts "ERROR: can't open $datafile: $err"
+	exit 1
+    }
+
+    while {! [eof $fd] } {
+	set line [gets $fd]
+	if {$line == ""} {
+	    continue
+	}
+	set name [lindex $line 0]
+	set time [lindex $line 1]
+	set ok   [lindex $line 2]
+	set arrivals($name) [list $time $ok]
+    }
+}
+
+proc write_datafile {} {
+    global arrivals datafile
+    
+    if [catch {
+	set fd [open $datafile w]
+    } err] {
+	puts "ERROR: can't open $datafile for writing: $err"
+	exit 1
+    }
+
+    foreach {name time_ok} [array get arrivals] {
+	if {$name == ""} {
+	    error "empty name"
+	}
+	puts $fd "$name [join $time_ok]"
+    }
+    
+    close $fd
+}
+
+proc check {} {
+    global arrivals expectations report_address
+    
+    set now [clock seconds]
+    
+    foreach {name interval pattern} $expectations {
+	if {! [info exists arrivals($name)]} {
+	    dprint "no info exists for arrivals($name), initializing"
+	    set arrivals($name) [list $now 1]
+	    continue
+	}
+
+	set last_arrival [lindex $arrivals($name) 0]
+	set last_ok      [lindex $arrivals($name) 1]
+
+	if {! $last_ok} {
+	    dprint "skipping $name since already reported as not ok"
+	    continue
+	}
+	
+	if {[expr $now > $last_arrival + $interval]} {
+	    set msg "\n\nexpectmail timeout for $name:\n\n"
+	    append msg "last arrival: [clock format $last_arrival]\n"
+	    append msg "current time: [clock format $now]\n"
+	    append msg "interval: $interval seconds\n"
+	    
+	    dprint "expectation $name... timed out"
+	    
+	    if [catch {
+		exec mail -s "expectmail report" $report_address << $msg
+	    } err] {
+		puts "ERROR running mail: $err"
+		exit 1
+	    }
+
+	    set arrivals($name) [list $last_arrival 0]
+	} else {
+	    dprint "expectation $name...\
+		    ok for [expr $last_arrival + $interval - $now] seconds"
+	}
+    }
+}
+
+proc arrival {} {
+    global arrivals expectations stdin
+
+    set now [clock seconds]
+    
+    while {! [eof stdin]} {
+	set line [gets stdin]
+
+	dprint "checking line $line"
+
+	foreach {name time pattern} $expectations {
+	    if [regexp $pattern $line] {
+		dprint "matched pattern $pattern for $name"
+	    }
+	    set arrivals($name) [list $now 1]
+	    return
+	}
+    }
+}
+
+if {[llength $argv] != 1} {
+    usage "must specify mode"
+}
+
+parse_rcfile
+parse_datafile
+
+set mode [lindex $argv 0]
+if {$mode == "check"} {
+    check
+} elseif {$mode == "arrival"} {
+    arrival
+} else {
+    usage "invalid mode $mode"
+}
+
+write_datafile
