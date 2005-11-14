@@ -77,8 +77,8 @@ bytesforall/
 #
 # Pipe the all dtnmail.dtnrg.org messages through expectmail
 #
-:0bhf
-* ^TO_:.*@dtnmail.dtnrg.org
+:0hc
+* ^TO_.*@dtnmail.dtnrg.org
 | expectmail arrival
 
 :0
