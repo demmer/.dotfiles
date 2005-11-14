@@ -33,7 +33,7 @@ LOGABSTRACT=all
 #
 :0c
 * ^content-type: text/html
-html
+html/
 
 #
 # Strip out htmlification from the message body and change the
@@ -48,31 +48,42 @@ html
 #
 :0
 * ^List-Id:.*debian-devel.lists.debian.org
-debian
+debian/
 
 :0
 * ^List-Id:.*debian-security.lists.debian.org
-debian
+debian/
+
+:0
+* ^List-Id:.*ubuntu-devel.lists.ubuntu.com
+ubuntu/
 
 :0
 * ^TO_.*soekris-tech@lists.soekris.com
-soekris
+soekris/
 
 :0
 * ^TO_.*end2end-interest@postel.org
-end2end
-
-:0
-* List-Id: .*tinyos
-tinyos
+end2end/
 
 :0
 * List-Id: .*ip@
-ip
+ip/
 
 :0
 * Mailing-List: list bytesforall
-bytesforall
+bytesforall/
+
+#
+# Pipe the all dtnmail.dtnrg.org messages through expectmail
+#
+:0bhf
+* ^TO_:.*@dtnmail.dtnrg.org
+| expectmail arrival
+
+:0
+* Subject: test dtnmail.dtnrg.org
+test_dtnmail/
 
 #
 # Save a copy of all mail into the spool mailbox, marking as already read.
@@ -118,19 +129,19 @@ dtn
 
 :0
 * List-Post: <.*dtn-commits.*>
-dtn-commits
+dtn-commits/
 
 :0
 * ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
-cs-crap
+cs-crap/
 
 :0
 * ^TO_.*(cs|eecs)-(grads|dept)(|-food|-jobs)
-cs-crap
+cs-crap/
 
 :0
 * ^TO_.*(soda|dept)-info
-cs-crap
+cs-crap/
 
 #
 # C'est fini.
