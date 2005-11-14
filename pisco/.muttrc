@@ -12,23 +12,23 @@ alternates ".*@demmer.nu|.*@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 
 set spoolfile =$HOME/Mail/inbox
 
-mailboxes =inbox =tier =dtn =dtn-commits =tinyos =cs-crap =spam-maybe \
-          =end2end =ip =bytesforall =debian =soekris
+mailboxes =inbox =tier =dtn =dtn-commits =cs-crap =spam-maybe \
+          =ubuntu =end2end =ip =bytesforall =debian =soekris
 
-subscribe tinyos-help tinyos-devel tinyos-internal tinyos-users \
-	  tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
-	  soekris-tech end2end-interest ip bytesforall_readers
+subscribe tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
+	  soekris-tech end2end-interest ip bytesforall_readers \
+	  ubuntu-devel
 
 #
 # Sorting order dependent on the folder
 #
-folder-hook . set sort=mailbox-order
-folder-hook tinyos set sort=threads
+folder-hook . set sort=date
 folder-hook dtn set sort=threads
 folder-hook tier set sort=threads
-folder-hook debian set sort=threads
-folder-hook soekris set sort=threads
-folder-hook end2end set sort=threads
-folder-hook ip set sort=threads
-folder-hook bytesforall set sort=threads
+folder-hook debian/? set sort=threads
+folder-hook ubuntu/? set sort=threads
+folder-hook soekris/? set sort=threads
+folder-hook end2end/? set sort=threads
+folder-hook ip/? set sort=threads
+folder-hook bytesforall/? set sort=threads
 
