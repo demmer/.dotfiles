@@ -20,7 +20,7 @@ proc usage {err} {
 
 set report_address {}
 set expectations {}
-array set arrivals [list]
+array set arrivals {}
 
 proc report_to {addr} {
     global report_address
@@ -148,7 +148,7 @@ proc check {} {
 	    dprint "expectation $name... timed out"
 	    
 	    if [catch {
-		exec mail -s "expectmail report" $report_address << $msg
+		exec mail -s "expectmail timeout report" $report_address << $msg
 	    } err] {
 		puts "ERROR running mail: $err"
 		exit 1
@@ -163,7 +163,7 @@ proc check {} {
 }
 
 proc arrival {} {
-    global arrivals expectations stdin
+    global arrivals expectations stdin report_address
 
     set now [clock seconds]
     
@@ -173,9 +173,28 @@ proc arrival {} {
 	dprint "checking line $line"
 
 	foreach {name time pattern} $expectations {
-	    if [regexp $pattern $line] {
-		dprint "matched pattern $pattern for $name"
+	    if {! [regexp $pattern $line]} {
+		continue
 	    }
+
+            dprint "matched pattern $pattern for $name"
+
+            set last_arrival [lindex $arrivals($name) 0]
+            set last_ok      [lindex $arrivals($name) 1]
+            
+            if {! $last_ok} { 
+                set msg "\n\nexpectmail arrival for $name:\n\n"
+                append msg "last arrival: [clock format $last_arrival]\n"
+                append msg "current time: [clock format $now]\n"
+
+                if [catch {
+                    exec mail -s "expectmail arrival report" $report_address << $msg
+                } err] {
+                    puts "ERROR running mail: $err"
+                    exit 1
+                }
+	    }
+	   
 	    set arrivals($name) [list $now 1]
 	    return
 	}
