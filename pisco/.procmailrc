@@ -59,6 +59,10 @@ debian/
 ubuntu/
 
 :0
+* ^List-Id:.*fuse-devel.lists.sourceforge.net
+fuse/
+
+:0
 * ^TO_.*soekris-tech@lists.soekris.com
 soekris/
 

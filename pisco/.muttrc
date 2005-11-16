@@ -13,11 +13,11 @@ alternates ".*@demmer.nu|.*@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 set spoolfile =$HOME/Mail/inbox
 
 mailboxes =inbox =tier =dtn =dtn-commits =cs-crap =spam-maybe \
-          =ubuntu =end2end =ip =bytesforall =debian =soekris
+          =end2end =ip =bytesforall =ubuntu =fuse =debian =soekris
 
 subscribe tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
 	  soekris-tech end2end-interest ip bytesforall_readers \
-	  ubuntu-devel
+	  ubuntu-devel fuse-devel
 
 #
 # Sorting order dependent on the folder
@@ -26,6 +26,7 @@ folder-hook . set sort=date
 folder-hook dtn set sort=threads
 folder-hook tier set sort=threads
 folder-hook debian/? set sort=threads
+folder-hook fuse/? set sort=threads
 folder-hook ubuntu/? set sort=threads
 folder-hook soekris/? set sort=threads
 folder-hook end2end/? set sort=threads
