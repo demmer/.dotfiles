@@ -151,7 +151,7 @@ export CVSROOT_INIGO=:ext:inigo:/repository
 export CVSROOT_PISCO=:ext:pisco:/repository
 export CVSROOT_TIER=:ext:pisco:/usr/projects/tier/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
-export CVSROOT_DTN=:ext:sandbox:/usr/src/bundles/orig
+export CVSROOT_DTN=:ext:sandbox:/repository
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
 export CVSROOT_LLADD=:ext:cvs-sourceforge:/cvsroot/lladd
 
@@ -166,13 +166,11 @@ elif [ -d /project/cs/brewer/tier/ICT/repository/CVSROOT ]; then
     export CVSROOT_TIER=/project/cs/brewer/tier/ICT/repository/
     export CVSROOT=$CVSROOT_TIER
 
-elif [ -d /usr/src/bundles/orig/CVSROOT ]; then
-    export CVSROOT_DTN=/usr/src/bundles/orig
-    export CVSROOT=$CVSROOT_DTN
-
 elif [ -d /repository/CVSROOT ]; then
     export CVSROOT=/repository
-
+    if [ -d /repository/DTN2 ]; then
+    	export CVSROOT_DTN=/repository
+    fi
 else 
     export CVSROOT=$CVSROOT_INIGO
 fi
@@ -211,5 +209,4 @@ if [ "$DBG" = "" ] ; then
 fi
 export CLASSPATH=".:$TOSROOT/tools/java"
 export JYTHON_HOME="$HOME/work/jython"
-
 
