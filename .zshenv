@@ -149,7 +149,7 @@ export EMACSHOME=$HOME
 # Handy to have these readily available
 export CVSROOT_INIGO=:ext:inigo:/repository
 export CVSROOT_PISCO=:ext:pisco:/repository
-export CVSROOT_TIER=:ext:pisco:/usr/projects/tier/ICT/repository
+export CVSROOT_TIER=:ext:pisco:/project/cs/brewer/tier/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
 export CVSROOT_DTN=:ext:sandbox:/repository
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
