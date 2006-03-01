@@ -1,0 +1,65 @@
+#!/usr/bin/wish
+
+set PORT  6200
+set QUIET 0
+
+proc share { {msg ""} } {
+    global PORT HOST
+
+    if {[string length $msg] == 0} {
+	set f /tmp/[pid].xwd-share
+	exec xwd > $f
+	exec scp -C $f $HOST:/tmp
+    } else {
+	set f $msg
+    }
+
+    set s [socket $HOST $PORT]
+    puts $s $f
+    close $s
+    # puts "Shared to $HOST"
+}
+
+proc accept {sock addr port} {
+    global QUIET
+    # puts "Got msg from $addr:$port"
+    set f [gets $sock]
+    if [expr ! $QUIET] {
+	if {! [file isfile $f]} {
+	    regsub -all -- {\\n} $f "\n" msg
+	    exec xmessage "$msg" &
+	} else {
+	    exec xwud -in $f &
+        }
+    }
+    close $sock
+}
+
+socket -server accept $PORT
+
+button .share -text "Share it!" -command share
+pack .share
+
+checkbutton .quiet -text "Quiet" -variable QUIET
+pack .quiet
+
+bind . <ButtonRelease-2> { 
+   regsub -all -- {\n} [selection get] {\\n} buf
+   share $buf
+}
+
+catch {
+    set conf [open "~/.xshare" "r"]
+    set hosts [read $conf]
+    close $conf
+
+    set i 0
+    foreach h $hosts {
+	set addr [lindex $h 0]
+	set desc [lindex $h 1]
+	
+	radiobutton .r$i -value $addr -text $desc -variable HOST 
+	pack .r$i -anchor nw 
+	incr i
+    }
+}
