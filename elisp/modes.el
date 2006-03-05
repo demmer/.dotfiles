@@ -582,3 +582,8 @@ with tab characters underneath."
 ;; Hooks for the electric buffer menu
 (require 'ebuff-menu)
 (define-key electric-buffer-menu-mode-map "\C-s" 'isearch-forward)
+
+;; Turn off whitespace stuff
+(require 'whitespace)
+(whitespace-global-mode nil)
+(setq whitespace-modes '())
