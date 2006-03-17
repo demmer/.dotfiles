@@ -9,14 +9,29 @@
 (if (null *HOME*)
     (setq *HOME* (getenv "HOME")))
 
+(if (string-equal window-system "mac")
+    (progn
+      (setq default-frame-alist '((foreground-color . "white")
+				  (background-color . "black")
+				  (cursor-color . "yellow")
+				  ))
+      (set-foreground-color "white")
+      (set-background-color "black")
+      (set-cursor-color "yellow")
+      
+      (set-face-foreground 'modeline "black")
+      (set-face-background 'modeline "grey")
+      )
+  )
+
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message (getenv "USER"))
 
 (setq which-emacs (cond
-;		    ((string-match "XEmacs" emacs-version) "xemacs")
 		    ((string-match "^19" emacs-version) "emacs-19")
 		    ((string-match "^20" emacs-version) "emacs-20")
 		    ((string-match "^21" emacs-version) "emacs-21")
+		    ((string-match "^22" emacs-version) "emacs-22")
 		    (t "emacs")
 		    )
       )
