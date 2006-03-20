@@ -1,3 +1,4 @@
 *.class
 .glimpse*
 build
+.DS_Store
