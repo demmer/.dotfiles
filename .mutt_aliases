@@ -212,24 +212,24 @@ alias patsy Patsy Manning <manningp@sterlingnet.com>
 #
 # DTN related
 #
-alias durst_real Robert Durst <durst@mitre.org>
-alias kfall_real Kevin Fall <kfall@intel.com>
-alias keshav_real Srinivasan Keshav <keshav@uwaterloo.ca>
-alias kscott_real Keith Scott <kscott@mitre.org>
-alias scott_burleigh_real Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
-alias susan_real Susan Symington <susan@mitre.org>
-alias salil_real Salil Parikh <sparikh@mitre.org>
-alias dtn-dev_real dtn-dev@mailman.dtnrg.org
+alias durst Robert Durst <durst@mitre.org>
+alias kfall Kevin Fall <kfall@intel.com>
+alias keshav Srinivasan Keshav <keshav@uwaterloo.ca>
+alias kscott Keith Scott <kscott@mitre.org>
+alias scott_burleigh Scott Burleigh <Scott.Burleigh@jpl.nasa.gov>
+alias susan Susan Symington <susan@mitre.org>
+alias salil Salil Parikh <sparikh@mitre.org>
+alias dtn-dev dtn-dev@mailman.dtnrg.org
 
 alias me-dtn Michael Demmer <demmer@dtnmail.dtnrg.org>
-alias durst Robert Durst <durst@dtnmail.dtnrg.org>
-alias kfall Kevin Fall <kfall@dtnmail.dtnrg.org>
-alias keshav Srinivasan Keshav <keshav@dtnmail.dtnrg.org>
-alias kscott Keith Scott <kscott@dtnmail.dtnrg.org>
-alias scott_burleigh Scott Burleigh <Scott.Burleigh@dtnmail.dtnrg.org>
-alias susan Susan Symington <susan@dtnmail.dtnrg.org>
-alias salil Salil Parikh <sparikh@dtnmail.dtnrg.org>
-alias dtn-dev dtn-dev@dtnmail.dtnrg.org
+alias durst_dtn Robert Durst <durst@dtnmail.dtnrg.org>
+alias kfall_dtn Kevin Fall <kfall@dtnmail.dtnrg.org>
+alias keshav_dtn Srinivasan Keshav <keshav@dtnmail.dtnrg.org>
+alias kscott_dtn Keith Scott <kscott@dtnmail.dtnrg.org>
+alias scott_burleigh_dtn Scott Burleigh <Scott.Burleigh@dtnmail.dtnrg.org>
+alias susan_dtn Susan Symington <susan@dtnmail.dtnrg.org>
+alias salil_dtn Salil Parikh <sparikh@dtnmail.dtnrg.org>
+alias dtn-dev_dtn dtn-dev@dtnmail.dtnrg.org
 
 alias mho Melissa Ho <mrh9@cornell.edu>
 alias kfall-eecs Kevin Fall <kfall@eecs.berkeley.edu>
@@ -249,6 +249,7 @@ alias dtn-users dtn-users@mailman.dtnrg.org
 # Tier / ICT4B related
 #
 alias jen_bussell Jen Bussell <jbussell@berkeley.edu>
+alias jordan Jordan Hayes <jordan@thinkbank.com>
 alias jordan_hayes Jordan Hayes <jordan@thinkbank.com>
 alias joyojeet Joyojeet Pal <joyojeet@berkeley.edu>
 alias renee_kuriyan Renee Kuriyan <rkuriyan@berkeley.edu>
@@ -260,6 +261,12 @@ alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
 alias tier-cellphone-devel tier-cellphone-devel <tier-cellphone-devel@tier.cs.berkeley.edu>
 alias tier-private tier-private <tier-private@tier.cs.berkeley.edu>
 alias cft <tier_case_paper@tier.cs.berkeley.edu>
+
+#
+# Cambodia
+#
+alias vireak-cic <rtk-cicstaff2@cambodiacic.org>
+alias vireak-gmail <yuthvireak@gmail.com>
 
 #
 # Other Mailing Lists
@@ -290,8 +297,17 @@ alias osprelims archanag, bowei, dmolnar, get, jwhui, pio, xuw
 alias mphillips Melissa Phillips <mphillips@mayacamasranch.com>
 alias vjager Vanessa Jager <vjager@mayacamasranch.com>
 alias ben_fishman Ben Fishman <fishmanben@hotmail.com>
-alias ptweedie Pauline Tweedie <ptweedie@cb.asiafound.org>
-alias ptweedie_gmail Pauline Tweedie <ptweedie@gmail.com>
+alias ptweedie_cic Pauline Tweedie <ptweedie@cb.asiafound.org>
+alias ptweedie Pauline Tweedie <ptweedie@gmail.com>
+alias govert <gvdwittenboer@gmail.com>
 alias dan_durango Dan <dan@cb.asiafound.org>
 alias stephen.farrell Stephen Farrell <stephen.farrell@cs.tcd.ie>
 alias jef_poskanzer Jef Poskanzer <jef@mail.acme.com>
+alias ramsay \"Jattan, RamsayX R\" <ramsayx.r.jattan@intel.com>
+alias chuang John Chuang <chuang@SIMS.Berkeley.EDU>
+alias dan_basebloc Dan <dan@basebloc.com>
+alias brenda Brenda Fernandes <Brenda.K.Fernandes@intel.com>
+alias gouttier Adam Gouttierre <gouttier@haas.berkeley.edu>
+alias karen_coppock Karen Coppock <karen_coppock@yahoo.com>
+alias cholzman Caren Holzman <cholzman@transfairusa.org>
+alias lfriedman Lauren Friedman <lfriedman@transfairusa.org>
