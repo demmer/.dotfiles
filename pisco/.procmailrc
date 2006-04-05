@@ -8,18 +8,11 @@ LOGFILE=$HOME/Mail/procmaillog
 LOGABSTRACT=all
 
 #
-# Kill the really bad spam (10 pts or higher).
+# Handle spam
 #
 :0
-* ^X-BTI-AntiSpam: sta:upper
+* ^X-Barracuda-Spam-Flag: YES
 | formail -I "Status: RO" >> $MAILDIR/spam
-
-#
-# And 5 points or more gets copied to the spam folder.
-#
-:0
-* ^X-BTI-AntiSpam: sta:lower
-| formail -I "Status: RO" >> $MAILDIR/spam-maybe
 
 #
 # Add a subject line for everything.
@@ -90,6 +83,25 @@ bytesforall/
 test_dtnmail/
 
 #
+# Ignore annoying dtn-users crap
+#
+:0
+* ^Subject: dtn-users post from .* requires approval
+dtn-users-crap/
+
+#
+# Grab dtn / tierstore commit notifications
+#
+:0
+* List-Post: <.*dtn-commits.*>
+dtn-commits/
+
+:0
+* ^TO_.*tierstore-commits
+dtn-commits/
+
+
+#
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
 :0c
@@ -98,8 +110,8 @@ test_dtnmail/
 #
 # And one copy to gmail
 #
-# :0c
-# ! demmer@gmail.com
+#:0c
+#! demmer@gmail.com
 
 #
 # Get rid of duplicate messages after saving a copy to the spool.
@@ -132,10 +144,6 @@ dtn
 dtn
 
 :0
-* List-Post: <.*dtn-commits.*>
-dtn-commits/
-
-:0
 * ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
 cs-crap/
 
@@ -148,7 +156,11 @@ cs-crap/
 cs-crap/
 
 #
-# C'est fini.
+# Copy all inbox-destined mail to an inbox copy, and forward everything
+# else to the dtnmail address.
 #
 :0
 inbox
+
+# :0
+# ! demmer@dtnmail.dtnrg.org
