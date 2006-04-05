@@ -1,0 +1,16 @@
+#!/bin/sh
+
+repository=$1
+shift
+
+if [ x$repository = x ]; then
+	echo "usage: fix-cvsrepository [repository]"
+	exit 1
+fi
+
+for cvs in `find . -type d -name CVS`; do
+	echo $cvs/Repository
+	rm -f $cvs/Repository
+	echo $repository > $cvs/Repository
+done
+
