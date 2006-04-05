@@ -1,0 +1,10 @@
+#!/bin/sh
+
+for f in $* ; do
+    touch $f 2>/dev/null || continue
+    test -w $f || continue
+    exec cat > $f
+done
+
+echo "$0: can't output to any of $*!!"
+exit 1
