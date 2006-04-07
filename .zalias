@@ -19,6 +19,7 @@ else
 fi
 alias x='startx'
 
+alias df='df -h'
 alias ls='ls -F'
 alias lrt='ls -lrt'
 alias lart='ls -lart'
