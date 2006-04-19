@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#
+# Silly little program that literally sleeps forever -- useful for
+# running ssh port forwarding tunnels in the background
+#
+while [ 1 ] ; do
+     sleep 10000000
+done
