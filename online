@@ -8,6 +8,7 @@ Wells Fargo	ssn			normal
 Citicard	mjdemmer		jasm1na
 Discover	mdemmer			jasm1na
 WF Routing #	125 008547
+Rachel ssn	077 64 0801
 
 CalNet		SID: 16271361		PIN: 0620, passwd: jasmina02...
 Aetna		mdemmer			jasm1na
@@ -31,6 +32,7 @@ tier-admins	demmer			t1er!
 dtn-users	demmer@uc		ipntodtn
 SIMS LDAP	demmer			Jasm1na
 skype		michael_demmer		bro2
+emulab		demmer			normal/bro
 
 American	85L67K6			pin: bro2
 UAL Online	01093820343		queen, pin: 826575
