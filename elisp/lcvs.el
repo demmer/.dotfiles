@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.37 $)
+;; Version: 1.2 ($Revision: 1.38 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1061,6 +1061,11 @@ and log message"
 		      (insert (format "file: %s:%s\n" file2 ver2))))
 	      )))
 	  ))
+
+      ;;; finally, sort the log entries by date
+      (lcvs-update-progress "Sorting records")
+      (sort-regexp-fields nil "^[=]+[^=]+" "^date:.*$" (point-min) (point-max))
+      
       (garbage-collect)
       (setq gc-cons-threshold old-gc-threshold)
       (setq buffer-read-only t)
