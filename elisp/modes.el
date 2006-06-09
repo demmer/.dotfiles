@@ -531,31 +531,6 @@ with tab characters underneath."
 (setq vc-handled-backends (cons 'SVN vc-handled-backends))
 
 ; fixes so shell-mode works with zsh
-(require 'comint)
-(require 'rlogin)
-
-(defun shell-mode-newline ()
-  (interactive)
-  (insert "")
-  (comint-send-input)
-  )
-
-(defun shell-newline-filter (string)
-  (let* ((point-marker (point-marker))
-         (end (process-mark (get-buffer-process (current-buffer))))
-         (beg (or (and (boundp 'comint-last-output-start)
-                       comint-last-output-start)
-                  (- end (length string)))))
-    (goto-char beg)
-    (while (search-forward "\\n" end t)
-      (delete-char -2))
-    (goto-char point-marker)))
-
-(defun my-shell-mode-init ()
-  (add-hook 'comint-output-filter-functions 'shell-newline-filter)
-  (add-hook 'comint-output-filter-functions 'rlogin-carriage-filter)
-  (define-key shell-mode-map "\C-m" 'shell-mode-newline)
-)
 (setenv "EMACSPARENT" "1")
 
 ;; ; Darwin has problems with zsh...
