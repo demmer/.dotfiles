@@ -21,6 +21,7 @@ limit -s
 if [ "$EMACSPARENT" = "1" ]; then
 	PROMPT='[%m] %~ -> '
 	RPROMPT=''
+	unsetopt zle
 elif [ "$SCRIPTPARENT" = "1" ] ; then
 	PROMPT='%S[%m]%s (script) -> '
 else
