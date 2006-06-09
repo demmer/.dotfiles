@@ -6,6 +6,8 @@
 *.elc$
 *.lo$
 *.pdf$
+*.out$
+*.log$
 autom4te.cache/*
 CVS/*
 .svn/*
