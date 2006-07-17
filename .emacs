@@ -11,13 +11,13 @@
 
 (if (string-equal window-system "mac")
     (progn
-      (setq default-frame-alist '((foreground-color . "white")
+      (setq initial-frame-alist '((foreground-color . "white")
 				  (background-color . "black")
 				  (cursor-color . "yellow")
 				  ))
-      (set-foreground-color "white")
-      (set-background-color "black")
-      (set-cursor-color "yellow")
+;;       (set-foreground-color "white")
+;;       (set-background-color "black")
+;;       (set-cursor-color "yellow")
       
       (set-face-foreground 'modeline "black")
       (set-face-background 'modeline "grey")
