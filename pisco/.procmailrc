@@ -24,52 +24,57 @@ LOGABSTRACT=all
 #
 # Save a copy of html mail unmodified, just in case.
 #
-:0c
-* ^content-type: text/html
-html/
+#:0c
+#* ^content-type: text/html
+#html/
 
 #
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
-:0bhf
-* ^content-type: text/html
-| dehtml.pl
+# :0bhf
+# * ^content-type: text/html
+# | dehtml.pl
 
 #
 # Mailing lists I don't care to spool
 #
 :0
 * ^List-Id:.*debian-devel.lists.debian.org
-debian/
+.debian/
 
 :0
 * ^List-Id:.*debian-security.lists.debian.org
-debian/
+.debian/
 
 :0
 * ^List-Id:.*ubuntu-devel.lists.ubuntu.com
-ubuntu/
+.ubuntu/
 
 :0
 * ^List-Id:.*fuse-devel.lists.sourceforge.net
-fuse/
+.fuse/
 
 :0
 * ^TO_.*soekris-tech@lists.soekris.com
-soekris/
+.soekris/
 
 :0
 * ^TO_.*end2end-interest@postel.org
-end2end/
+.end2end/
 
 :0
 * List-Id: .*ip@
-ip/
+.ip/
 
 :0
 * Mailing-List: list bytesforall
-bytesforall/
+.bytesforall/
+
+:0
+* From: .*@macosxhints.com
+* User-Agent: rss2email
+.macosxhints/
 
 #
 # Pipe the all dtnmail.dtnrg.org messages through expectmail
@@ -87,25 +92,37 @@ test_dtnmail/
 #
 :0
 * ^Subject: dtn-users post from .* requires approval
-dtn-users-crap/
+.dtn-users-crap/
 
 #
 # Grab dtn / tierstore commit notifications
 #
 :0
 * List-Post: <.*dtn-commits.*>
-dtn-commits/
+.dtn-commits/
 
 :0
 * ^TO_.*tierstore-commits
-dtn-commits/
-
+.dtn-commits/
 
 #
-# Save a copy of all mail into the spool mailbox, marking as already read.
-#
+# Save a copy of all mail into the spool maildir, marking as already read.
+# This ends up being a bit tricky for maildir, but not impossible.
 :0c
-| formail -I "Status: RO" >> $MAILDIR/spool
+{
+  foldername=all_eecs_mail
+
+  :0c
+  .$foldername/ # stores in .$foldername/new/
+
+  :0
+  * LASTFOLDER ?? /\/[^/]+$
+  { tail=$MATCH }
+
+  TRAP="mv $LASTFOLDER .$foldername/cur/$tail:2,S"
+
+  HOST
+}
 
 #
 # And one copy to gmail
@@ -125,42 +142,49 @@ dtn-commits/
 #
 :0
 * List-Id: TIER 
-tier
+.tier/
 
 :0
 * List-Id: Delay Tolerant Network
-dtn
+.dtn/
 
 :0
 * List-Id: <dtn-bugs.*>
-dtn
+.dtn/
 
 :0
 * List-Id: .*<dtn-security.*>
-dtn
+.dtn/
 
 :0
 * List-Post: <mailto:dtn-users@mailman.dtnrg.org>
-dtn
+.dtn/
 
 :0
 * ^From: (Ruth Gjerde|La Shana Porlaris|Kate Anderson)
-cs-crap/
+.cs-crap/
 
 :0
 * ^TO_.*(cs|eecs)-(grads|dept)(|-food|-jobs)
-cs-crap/
+.cs-crap/
 
 :0
 * ^TO_.*(soda|dept)-info
-cs-crap/
+.cs-crap/
 
 #
-# Copy all inbox-destined mail to an inbox copy, and forward everything
-# else to the dtnmail address.
+# To get the messages that I've sent into the all_mail mailbox, 
+# I've told Apple Mail to bcc myself on all messages, so find
+# them here and put them in the bitbucket before they end up
+# back in the inbox.
 #
 :0
-inbox
+* From: .*demmer@(cs|eecs|EECS).[Bb]erkeley.[Ee]du
+* X-AppleMailSentBy: demmer
+.bcc-test/
 
-# :0
-# ! demmer@dtnmail.dtnrg.org
+#
+# Finally, deliver all mail to the inbox maildir.
+#
+:0
+$MAILDIR/
