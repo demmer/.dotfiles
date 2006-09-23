@@ -10,11 +10,14 @@ source ~/.muttrc.generic
 my_hdr From: demmer@cs.berkeley.edu (Michael Demmer)
 alternates ".*@demmer.nu|.*@demmerfamily.com|demmer@(ee)?cs.berkeley.edu"
 
-# set spoolfile =imap://localhost/INBOX
-set spoolfile =$HOME/Mail/inbox
+set folder =imap://localhost/INBOX
+set spoolfile =imap://localhost/INBOX
+# set spoolfile =$HOME/Mail/inbox
+# set spoolfile =$HOME/Mail/
 
-mailboxes =inbox =tier =dtn =dtn-commits =cs-crap =spam-maybe \
-          =end2end =ip =bytesforall =ubuntu =fuse =debian =soekris
+set record =.all_eecs_mail
+
+mailboxes =.tier =.dtn =.dtn-commits =.cs-crap 
 
 subscribe tier dtn-interest ict4b_interest debian-devel debian-devel-announce \
 	  soekris-tech end2end-interest ip bytesforall_readers \

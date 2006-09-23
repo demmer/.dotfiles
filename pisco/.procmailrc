@@ -12,7 +12,20 @@ LOGABSTRACT=all
 #
 :0
 * ^X-Barracuda-Spam-Flag: YES
-| formail -I "Status: RO" >> $MAILDIR/spam
+{
+  foldername=Junk
+
+  :0c
+  .$foldername/ # stores in .$foldername/new/
+
+  :0
+  * LASTFOLDER ?? /\/[^/]+$
+  { tail=$MATCH }
+
+  TRAP="mv $LASTFOLDER .$foldername/cur/$tail:2,S"
+
+  HOST
+}
 
 #
 # Add a subject line for everything.
@@ -95,15 +108,29 @@ test_dtnmail/
 .dtn-users-crap/
 
 #
-# Grab dtn / tierstore commit notifications
+# Grab dtn / tierstore commit notifications (except my own checkins)
 #
 :0
 * List-Post: <.*dtn-commits.*>
-.dtn-commits/
+{
+   :0 B
+   * CVS User: demmer
+   /dev/null
+
+   :0
+   .dtn-commits/
+}
 
 :0
 * ^TO_.*tierstore-commits
-.dtn-commits/
+{
+   :0 B
+    * CVS User: demmer
+    /dev/null
+
+   :0
+   .dtn-commits/
+}
 
 #
 # Save a copy of all mail into the spool maildir, marking as already read.
@@ -181,7 +208,7 @@ test_dtnmail/
 :0
 * From: .*demmer@(cs|eecs|EECS).[Bb]erkeley.[Ee]du
 * X-AppleMailSentBy: demmer
-.bcc-test/
+/dev/null
 
 #
 # Finally, deliver all mail to the inbox maildir.
