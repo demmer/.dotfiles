@@ -263,6 +263,7 @@ with tab characters underneath."
   (define-key tcl-mode-map "\C-m" 'newline-and-indent)
   (make-local-variable 'paragraph-start)
   (setq paragraph-start (concat page-delimiter "\\|$"))
+  (setq indent-tabs-mode nil)
   )
 (add-hook 'tcl-mode-hook 'my-tcl-setup)
 
