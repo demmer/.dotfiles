@@ -244,6 +244,7 @@ with tab characters underneath."
 				("\\.[12345678]\\'" . text-mode)
 				("\\.xsl\\'" . sgml-mode)
 				("\\.\\(cls\\|bas\\|frm\\)\\'" . visual-basic-mode)
+				("\\.ac\\'" . autoconf-mode)
 				)
 			      auto-mode-alist))
 
