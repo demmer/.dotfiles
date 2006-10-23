@@ -712,3 +712,24 @@ to the font lock list"
 		    (append c++-font-lock-extra-types (list typename))))
 	  (goto-char (point-at-eol))
 	  (forward-char))))))
+
+
+;; Copied from lcvs
+(defun my-region-active-p ()
+  (if (fboundp 'region-active-p)
+      (region-active-p)
+    (and transient-mark-mode
+	 (condition-case ()
+	     (mark)
+	   (error nil)))))
+
+(defun add-c++-function-separator ()
+  "Add a comment-line of //---- to extend across the file."
+  (interactive)
+  (if (my-region-active-p)
+      (kill-region (mark) (point)))
+  (insert "//----------------------------------")
+  (insert "------------------------------------\n")
+  )
+
+    
