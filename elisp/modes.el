@@ -71,6 +71,12 @@
 
 ")
 
+(defun ooh-insert-license ()
+  "Insert the ooh-file-license into the current buffer"
+  (interactive)
+  (insert ooh-file-license)
+  )
+
 (defun my-c-common-setup ()
   (interactive)
   (setq c-tab-always-indent t)			; indent wherever cursor is
