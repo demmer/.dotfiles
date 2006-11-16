@@ -134,7 +134,7 @@ This must be bound to a mouse-down event in the mode-line."
 ;; load in other files
 (load "modes")
 (load "mjdkeys")
-(load "mwheel")
+;;(load "mwheel")
 (load "added")
 
 ;; lcvs setup
