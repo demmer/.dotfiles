@@ -11,7 +11,7 @@ debug = 0
 
 sys.argv.pop(0);
 
-cmd = "tcpdump -n -ttt -l ";
+cmd = "tcpdump -n -ttt -l -v ";
 
 printbytes = 0;
 
@@ -25,8 +25,7 @@ print "Cmd is: "+cmd;
 
 inp, outp, errp = os.popen3(cmd);
 
-exp = re.compile('(\d+)[^:]*: . \d+:\d+\((\d+)\)');
-
+exp = re.compile('(\d+) IP \(.*length: (\d+)\)');
 rate = 0.0;
 totalbits = 0;
 
