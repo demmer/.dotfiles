@@ -104,3 +104,4 @@
 (global-set-key "\C-x " 'next-error)
 (global-set-key "\M-m" 'man)
 (global-set-key "\M-\-" 'add-c++-function-separator)
+(global-set-key "\M-c" 'kill-ring-save)
