@@ -23,6 +23,7 @@
 			("M.nc" ".nc")
  			("M.nc" "C.nc")
 			(".cpp" ".hpp")
+			(".cpp" ".h")
 			))
 (require 'cl)
 (defun CH-buffer-match (name)
@@ -366,19 +367,11 @@ and selects that window."
     (unwind-protect
 	(progn
 	  (set-buffer grope-buf)
-	  (message "calling first-error")
 	  (first-error)
-	  (message "returned from first-error")
 	  (sit-for 1)
-	  (setq from (replace-regexp-in-string "\\\\" "" from))
-	  (message (format "from %s" from))
-	  (while t
-	    (while (search-forward from (line-end-position) t)
-	      (replace-highlight (match-beginning 0) (match-end 0))
-	      (if (y-or-n-p (format "Replace %s with %s? " from to))
-		  (replace-match to t))
-	      )
-	    (next-error)))
+	  ;(setq from (replace-regexp-in-string "\\\\" "" from))
+	  (query-replace from to nil (point) (line-end-position))
+	  (next-error))
       (replace-dehighlight))
     ))
 
@@ -424,7 +417,7 @@ to match the current line in the source file."
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (vc-annotate prompt-version)
+    (vc-annotate (buffer-file-name) prompt-version)
     (other-window 1)
     (goto-line linenum)
     (other-window -1)
@@ -585,6 +578,24 @@ the characters on the first line."
 	(c-align-by-last-char from to " " 1)))
   ) ; save excursion
 )
+
+(defun c-align-space-in-region-by-space (from to)
+  "Align columns based on space characters in the region"
+  (interactive "*r")
+  (whitespace-cleanup)
+  (save-excursion
+    (goto-char from)
+    (beginning-of-line)
+    (c-align-by-last-char from to " " 1)))
+
+(defun c-align-space-in-region-by-equal (from to)
+  "Align columns by equal characers in the region"
+  (interactive "*r")
+  (whitespace-cleanup)
+  (save-excursion
+    (goto-char from)
+    (beginning-of-line)
+    (c-align-by-last-char from to "=" 1)))
 
 ;; from bowei
 (defun c-create-flag-constants (from to type)
