@@ -54,7 +54,7 @@
 
 (setq ooh-file-license
 "/*
- *    Copyright 2006 Intel Corporation
+ *    Copyright 2007 Intel Corporation
  * 
  *    Licensed under the Apache License, Version 2.0 (the \"License\");
  *    you may not use this file except in compliance with the License.
@@ -86,9 +86,13 @@
   (define-key c-mode-map "\C-m" 'newline-and-indent)
   (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c-mode-map "\C-c\t" 'c-align-space-in-region)
+  (define-key c-mode-map "\C-c " 'c-align-space-in-region-by-space)
+  (define-key c-mode-map "\C-c=" 'c-align-space-in-region-by-equal)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c++-mode-map "\C-c\t" 'c-align-space-in-region)
+  (define-key c++-mode-map "\C-c " 'c-align-space-in-region-by-space)
+  (define-key c++-mode-map "\C-c=" 'c-align-space-in-region-by-equal)
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
   (setq comment-use-syntax nil)
@@ -197,7 +201,7 @@ with tab characters underneath."
 (defun my-java-setup()
   (interactive)
   (my-c-setup)
-  (c-indent-two-spaces)
+  (c-indent-four-spaces)
   )
 
 (add-hook 'java-mode-hook 'my-java-setup)
