@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.38 $)
+;; Version: 1.2 ($Revision: 1.39 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -1092,7 +1092,7 @@ the file on this line."
   (interactive "P")
   (message "Getting status...")
   (lcvs-do-command "status" "No output" nil
-		   (mapcar 'car (lcvs-get-relevant-files arg)))
+		   (cons "-v" (mapcar 'car (lcvs-get-relevant-files arg))))
   (message "Getting status...done"))
 
 ;;; I don't know why would someone would use marks for this one, but whatever.
