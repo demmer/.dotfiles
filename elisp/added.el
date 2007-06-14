@@ -336,15 +336,24 @@ and selects that window."
 		    (cons msg code)))
 	   (cons msg code)))))
 
+(define-compilation-mode grope-mode "Grope"
+  "Sets `grep-last-buffer' and `compilation-window-height'."
+  (setq grep-last-buffer (current-buffer))
+  (set (make-local-variable 'compilation-error-face)
+       grep-hit-face)
+  (set (make-local-variable 'compilation-error-regexp-alist)
+       grep-regexp-alist)
+  (set (make-local-variable 'compilation-process-setup-function)
+       'grep-process-setup)
+  (set (make-local-variable 'compilation-disable-input) t))
+
 (defun grope (sym)
+  "Like grep but using grope"
   (interactive
    (list (read-from-minibuffer "Grope for: "
 			       (current-word) nil nil 'grope-history)))
-
-  (let* ((compilation-process-setup-function 'grep-process-setup))
-    (compile-internal (concat "grope \"" sym "\"")
-		      "No more grope hits" "grope"
-		      nil grep-regexp-alist)))
+  (compilation-start (concat "grope \"" sym "\"")
+		     'grope-mode))
 
 (defun grope-replace (from to)
   (interactive
