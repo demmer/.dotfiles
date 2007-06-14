@@ -18,6 +18,11 @@ fignore=(\~)
 unlimit
 limit -s
 
+# no cores on OS X
+if [ $ARCH = "Darwin" ] ; then
+    ulimit -c 0
+fi
+
 if [ "$EMACSPARENT" = "1" ]; then
 	PROMPT='[%m] %~ -> '
 	RPROMPT=''
