@@ -123,6 +123,12 @@ if [ -f /sw/bin/init.sh ]; then
 	. /sw/bin/init.sh
 fi
 
+if [ $ARCH = "Darwin" ] ; then
+# pkg-config and autotools
+export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/X11R6/lib/pkgconfig"
+export ACLOCAL_FLAGS="-I /usr/share/aclocal"
+fi
+
 # less is a much better pager than more
 export MORE=less
 export PAGER=less
@@ -186,7 +192,7 @@ export CVS_RSH=ssh
 export RSYNC_RSH=ssh
  
 if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
-    export DISPLAY=localhost:0
+    export DISPLAY=:0.0
 fi
 
 
@@ -207,6 +213,11 @@ export TOSDIR="$TOSROOT/tos"
 if [ "$DBG" = "" ] ; then
 	export DBG="all"
 fi
-export CLASSPATH=".:$TOSROOT/tools/java"
+
+if [ $ARCH = Darwin ] ; then
+    export JUNIT_HOME=$HOME/Library/Java/junit4.1
+    export CLASSPATH=".:$JUNIT_HOME:$JUNIT_HOME/junit-4.1.jar"
+fi
+
 export JYTHON_HOME="$HOME/work/jython"
 
