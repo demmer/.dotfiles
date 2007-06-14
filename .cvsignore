@@ -2,3 +2,5 @@
 .glimpse*
 build
 .DS_Store
+.gdb_history
+*.dylib
