@@ -1,0 +1,5 @@
+#!/bin/sh
+
+touch _xxx.h 
+cpp -dM _xxx.h
+rm -f _xxx.h
