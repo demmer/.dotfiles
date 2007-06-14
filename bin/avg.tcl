@@ -19,7 +19,7 @@ while {![eof stdin]} {
 }
 
 set cnt [llength $L]
-set mean [expr $tot / $cnt]
+set mean [expr 1.0 * $tot / $cnt]
 
 set stddev 0
 foreach e $L {
