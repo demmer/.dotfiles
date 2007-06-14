@@ -48,7 +48,7 @@ case "$ARCH" in
         alias minew="ps uxww"
 	alias other="ps aux | egrep -v '^ *root|^ *$LOGNAME|^ *www|^ *daemon'"
 	alias proc="ps auxww | egrep "
-	alias pg="ps auxww | grep "
+	alias pg="ps auxww | grep -i "
 	;;
 esac
 
