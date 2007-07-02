@@ -319,7 +319,8 @@ and selects that window."
   )
 
 (require 'compile)
-
+(require 'grep)
+	 
 (defvar grope-history nil)
 (defvar grope-replace-history nil)
 
@@ -753,3 +754,17 @@ to the font lock list"
   )
 
     
+(defun compile-no-local (command)
+  "Just like 'compile' but forcing compile-command to be a global
+   variable."
+  (kill-local-variable 'compile-command)
+  (interactive
+   (if (or compilation-read-command current-prefix-arg)
+       (list (read-from-minibuffer "Compile command: "
+                                 (eval compile-command) nil nil
+                                 '(compile-history . 1)))
+     (list (eval compile-command))))
+  (unless (equal command (eval compile-command))
+    (setq compile-command command))
+  (save-some-buffers (not compilation-ask-about-save) nil)
+  (compile-internal command "No more errors"))

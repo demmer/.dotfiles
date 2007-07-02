@@ -176,7 +176,6 @@ CVS or a .svn subdirectory in the named dir"
 (append-no-dup ".T" completion-ignored-extensions)
 
 (require 'compile)
-(setq compile-command '"make")
 (setq compilation-scroll-output t)
 
 ;; host specific support

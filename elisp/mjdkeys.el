@@ -64,7 +64,7 @@
 (global-set-key "\C-xS" 'run-scheme)
 
 ; amd: these are the only ones I actually use
-(global-set-key [(f11)] 'compile)
+(global-set-key [(f11)] 'compile-no-local)
 (global-set-key [(f12)] 'repeat-complex-command)
 (global-set-key [(f14)] 'advertised-undo)
 (global-set-key [(f19)] 'next-error)
