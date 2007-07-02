@@ -1,0 +1,15 @@
+#!/bin/sh
+
+run() {
+    echo $*
+    eval $*
+}
+
+CMD="sudo rsync -rav --delete"
+DEST=mjdemmer@blfiles02:zabar
+
+run $CMD /etc/                           $DEST/etc/
+run $CMD "/Library/Application\ Support" $DEST/application_support/
+run $CMD /Library/Preferences            $DEST/preferences/
+run $CMD /Users/demmer/                  $DEST/demmer/
+
