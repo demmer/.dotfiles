@@ -14,10 +14,13 @@ sys.argv.pop(0);
 cmd = "tcpdump -n -ttt -l -v ";
 
 printbytes = 0;
+printkilo  = 0;
 
 for a in sys.argv:
     if (a == "-B"):
 	printbytes = 1;
+    elif (a == "-k"):
+	printkilo = 1;
     else:
         cmd += a + " ";
 
@@ -38,6 +41,10 @@ if (printbytes):
 else:
     bps = "bps";
     convert = 8.0;
+
+if (printkilo):
+    bps = "K" + bps;
+    convert /= 1024.0;
 
 while True:
     tnow = time.time();
