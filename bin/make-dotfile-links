@@ -25,7 +25,10 @@ for f in bin elisp online ; do
         elif [ -e $f ] ; then
 	    rm -ri $f
 	fi
-	ln -s .dotfiles/$f $f
+
+        if [ ! -e $f ] ; then
+	    ln -s .dotfiles/$f $f
+        fi
 done
 
 makelinks() {
@@ -41,8 +44,10 @@ makelinks() {
             elif [ -e $f ] ; then
                 rm -ri $f
             fi
-	    ln -s $dir/$f $f
-	    echo $dir/$f
+            if [ ! -e $f ] ; then
+		ln -s $dir/$f $f
+		echo $dir/$f
+            fi
 	done
 }
 
