@@ -5,11 +5,11 @@ run() {
     eval $*
 }
 
-CMD="sudo rsync -rav --delete"
+CMD="sudo rsync -rav --delete $*"
+EXCLUDE="--exclude-from /Users/demmer/.nobackup"
 DEST=mjdemmer@blfiles02:zabar
 
 run $CMD /etc/                           $DEST/etc/
 run $CMD "/Library/Application\ Support" $DEST/application_support/
 run $CMD /Library/Preferences            $DEST/preferences/
-run $CMD /Users/demmer/                  $DEST/demmer/
-
+run $CMD $EXCLUDE /Users/demmer/                  $DEST/demmer/
