@@ -1,0 +1,11 @@
+#!/bin/sh
+
+hostname=$1
+proxy=$2
+
+checkconnect $hostname 22
+if [ $? = 0 ] ; then
+    exec nc $hostname 22
+else 
+    exec ssh blssh nc $hostname 22
+fi

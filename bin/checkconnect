@@ -1,0 +1,17 @@
+#!/usr/bin/tclsh
+
+set host [lindex $argv 0]
+set port [lindex $argv 1]
+
+if {$host == "" || $port == ""} {
+    puts stderr "usage: checkconnect host port"
+    exit 1
+}
+
+if [catch {
+    socket $host $port
+} err] {
+    exit 1
+}
+
+exit 0
