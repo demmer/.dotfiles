@@ -1,11 +1,12 @@
 #!/bin/sh
 
 hostname=$1
-proxy=$2
+port=$2
+proxy=$3
 
-checkconnect $hostname 22
+checkconnect $hostname $port
 if [ $? = 0 ] ; then
-    exec nc $hostname 22
+    exec nc $hostname $port
 else 
-    exec ssh blssh nc $hostname 22
+    exec ssh $proxy nc $hostname $port
 fi
