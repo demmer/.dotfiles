@@ -1,12 +1,13 @@
 #!/bin/sh
 
-hostname=$1
+host=$1
 port=$2
 proxy=$3
 
-checkconnect $hostname $port
+nc -z $host $port 2> /dev/null
+
 if [ $? = 0 ] ; then
-    exec nc $hostname $port
+    exec nc $host $port
 else 
-    exec ssh $proxy nc $hostname $port
+    exec ssh $proxy nc $host $port
 fi
