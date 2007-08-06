@@ -155,19 +155,14 @@ export EMACSHOME=$HOME
 # Handy to have these readily available
 export CVSROOT_INIGO=:ext:inigo:/repository
 export CVSROOT_PISCO=:ext:pisco:/repository
-export CVSROOT_TIER=:ext:pisco:/project/cs/brewer/tier/ICT/repository
+export CVSROOT_TIER=:ext:wangari:/project/cs/brewer/tier/ICT/repository
 export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
 export CVSROOT_DTN=:ext:sandbox:/repository
 export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
 export CVSROOT_LLADD=:ext:cvs-sourceforge:/cvsroot/lladd
 
 # Host specific overrides
-if [ $HOST = pisco ]; then
-    export CVSROOT_PISCO=/repository
-    export CVSROOT_TIER=/usr/projects/tier/ICT/repository
-    export CVSROOT=$CVSROOT_PISCO
-
-elif [ -d /project/cs/brewer/tier/ICT/repository/CVSROOT ]; then
+if [ -d /project/cs/brewer/tier/ICT/repository/CVSROOT ]; then
     export CVSROOT_PISCO=/project/cs/brewer/tier/demmer/repository/
     export CVSROOT_TIER=/project/cs/brewer/tier/ICT/repository/
     export CVSROOT=$CVSROOT_TIER
