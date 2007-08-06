@@ -3,9 +3,9 @@
 ## DESC:  zsh commandline keybindings
 ##
 
-## Default bindings: emacs-mode with meta-keys enabled
+## Default bindings: emacs-mode
 bindkey -d
-bindkey -em
+bindkey -e
 
 #  These are bound incorrectly in the default bindings
 #  ie. these are the "real" emacs bindings
