@@ -1,0 +1,15 @@
+#!/bin/sh
+
+IGNORE=$1
+DIR=$2
+
+if test -z "$DIR" ; then
+    DIR=.
+fi
+
+cur=`svn propget svn:ignore $DIR`
+new="$IGNORE
+$cur
+"
+
+svn propset svn:ignore "$new" $DIR
