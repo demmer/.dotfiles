@@ -1,17 +1,3 @@
-(defun requote (start end)
-  "Requotes the selected text, mail style. [AMD]"
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region start end)
-      (goto-char start)
-      (replace-regexp "^> " "")
-      (fill-region start (point-max))
-      (goto-char start)
-      (replace-regexp "^" "> ")
-      )))
-
-
 (defvar CH-buffer-pairs)
 
 (setq CH-buffer-pairs '((".cc" ".h")
@@ -299,8 +285,9 @@ and selects that window."
 (defun rm-ctrl-ms ()
   (interactive)
   (let ((old-pt (point)))
-    (beginning-of-buffer)
-    (replace-string "" "")
+    (goto-char (point-min))
+    (while (search-forward "" nil t)
+      (replace-match "" nil t))
     (goto-char old-pt)
     ))
 
@@ -317,73 +304,6 @@ and selects that window."
   (other-window 1)
   (delete-other-windows)
   )
-
-(require 'compile)
-(require 'grep)
-	 
-(defvar grope-history nil)
-(defvar grope-replace-history nil)
-
-(defun grope-process-setup ()
-  "Set up `compilation-exit-message-function' for `grope'."
-  (set (make-local-variable 'compilation-exit-message-function)
-       (lambda (status code msg)
-	 (if (eq status 'exit)
-	     (cond ((zerop code)
-		    '("finished (matches found)\n" . "matched"))
-		   ((= code 1)
-		    '("finished with no matches found\n" . "no match"))
-		   (t
-		    (cons msg code)))
-	   (cons msg code)))))
-
-(define-compilation-mode grope-mode "Grope"
-  "Sets `grep-last-buffer' and `compilation-window-height'."
-  (setq grep-last-buffer (current-buffer))
-  (set (make-local-variable 'compilation-error-face)
-       grep-hit-face)
-  (set (make-local-variable 'compilation-error-regexp-alist)
-       grep-regexp-alist)
-  (set (make-local-variable 'compilation-process-setup-function)
-       'grep-process-setup)
-  (set (make-local-variable 'compilation-disable-input) t))
-
-(defun grope (sym)
-  "Like grep but using grope"
-  (interactive
-   (list (read-from-minibuffer "Grope for: "
-			       (current-word) nil nil 'grope-history)))
-  (compilation-start (concat "grope \"" sym "\"")
-		     'grope-mode))
-
-(defun grope-replace (from to)
-  (interactive
-   (let (from to)
-     (setq from (read-from-minibuffer "Grope replace: "
-				      (current-word) nil nil 'grope-history))
-     (setq to   (read-from-minibuffer (format "Grope replace: %s with: " from)
-				      nil nil nil 'grope-replace-history))
-     (list from to)))
-
-  (let (grope-buf grope-proc elapsed)
-    ;; run grope, wait for it to complete
-    (setq grope-buf (grope from))
-    (setq grope-proc (get-buffer-process grope-buf))
-
-    (message "Waiting for grope process...")
-    (while (eq (process-status grope-proc) 'run)
-      (sit-for 2))
-
-    (unwind-protect
-	(progn
-	  (set-buffer grope-buf)
-	  (first-error)
-	  (sit-for 1)
-	  ;(setq from (replace-regexp-in-string "\\\\" "" from))
-	  (query-replace from to nil (point) (line-end-position))
-	  (next-error))
-      (replace-dehighlight))
-    ))
 
 ;; pulled from tera-added.el
 (defun line-to-top-of-window nil
@@ -427,7 +347,13 @@ to match the current line in the source file."
 	(beginning-of-line)
 	(setq linenum (+ 1 (count-lines 1 (point))))
 	))
-    (vc-annotate (buffer-file-name) prompt-version)
+    (let ((def (vc-workfile-version buffer-file-name)))
+      (vc-annotate (buffer-file-name)
+		   (if (null prompt-version) def
+		     (read-string
+		      (format "Annotate from version (default %s): " def)
+		      nil nil def))))
+      
     (other-window 1)
     (goto-line linenum)
     (other-window -1)
@@ -527,7 +453,8 @@ to match the current line in the source file."
   (insert " */")
 
   ;; now replace all the //
-  (replace-string "//" " *" nil from to)
+  (while (search-forward "//" nil t)
+    (replace-match "*" nil t))
   
   ;; finally the start comment
   (goto-char from)
@@ -579,6 +506,7 @@ bunch of = signs or variable declarations. Inserts space + offset."
 the characters on the first line."
   (interactive "*r")
   (whitespace-cleanup)
+  (untabify from to)
   (save-excursion
     (goto-char from)
     (beginning-of-line)
@@ -593,6 +521,7 @@ the characters on the first line."
   "Align columns based on space characters in the region"
   (interactive "*r")
   (whitespace-cleanup)
+  (untabify from to)
   (save-excursion
     (goto-char from)
     (beginning-of-line)
@@ -602,6 +531,7 @@ the characters on the first line."
   "Align columns by equal characers in the region"
   (interactive "*r")
   (whitespace-cleanup)
+  (untabify from to)
   (save-excursion
     (goto-char from)
     (beginning-of-line)
@@ -724,7 +654,7 @@ to the font lock list"
 			 (generate-new-buffer "*c++-types-list*"))))
     (with-current-buffer type-buffer
       (erase-buffer)
-      (insert-file filename)
+      (insert-file-contents filename)
       (goto-char 0)
       (while (not (= (point) (point-max)))
 	(let ((typename (buffer-substring (point) (point-at-eol))))
@@ -749,22 +679,25 @@ to the font lock list"
   (interactive)
   (if (my-region-active-p)
       (kill-region (mark) (point)))
-  (insert "//----------------------------------")
-  (insert "------------------------------------\n")
+  (insert comment-start)
+  (if (eq (char-before (point)) 32)
+      (delete-region (- (point) 1) (point)))
+  (insert "----------------------------------")
+  (insert "------------------------------------")
+  (if longlines-mode (use-hard-newlines t))
+  (newline)
   )
 
     
-(defun compile-no-local (command)
+(defun compile-no-local ()
   "Just like 'compile' but forcing compile-command to be a global
    variable."
+  (interactive)
   (kill-local-variable 'compile-command)
-  (interactive
-   (if (or compilation-read-command current-prefix-arg)
-       (list (read-from-minibuffer "Compile command: "
-                                 (eval compile-command) nil nil
-                                 '(compile-history . 1)))
-     (list (eval compile-command))))
-  (unless (equal command (eval compile-command))
-    (setq compile-command command))
-  (save-some-buffers (not compilation-ask-about-save) nil)
-  (compile-internal command "No more errors"))
+  (let ((command (read-from-minibuffer "Compile command: "
+				       compile-command nil nil
+				       '(compile-history . 1))))
+    (unless (equal command compile-command)
+      (setq compile-command command))
+    (save-some-buffers (not compilation-ask-about-save) nil)
+    (compile-internal command "No more errors")))
