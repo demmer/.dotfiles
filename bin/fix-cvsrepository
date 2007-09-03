@@ -4,13 +4,15 @@ repository=$1
 shift
 
 if [ x$repository = x ]; then
-	echo "usage: fix-cvsrepository [repository]"
+	echo "usage: fix-cvsrepository [repository base]"
 	exit 1
 fi
 
 for cvs in `find . -type d -name CVS`; do
-	echo $cvs/Repository
+	echo $cvs/Repository:
+	path=`echo $cvs | sed 's|./||' | sed 's|CVS||'`
+	echo "`cat $cvs/Repository` -> $repository/$path"
 	rm -f $cvs/Repository
-	echo $repository > $cvs/Repository
+	echo $repository/$path > $cvs/Repository
 done
 
