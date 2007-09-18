@@ -87,6 +87,9 @@ alias xs=xsandbox
 alias script='SCRIPTPARENT=1 script'
 alias enscriptclean='enscript -B'
 
+alias qprof_start='LD_PRELOAD=/usr/local/lib/qprof/qprof.so; export LD_PRELOAD'
+alias qprof_stop='unset LD_PRELOAD'
+
 # debian shortcuts
 alias apti='sudo aptitude install'
 alias aptrm='sudo aptitude remove'
