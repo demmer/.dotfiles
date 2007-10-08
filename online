@@ -28,13 +28,16 @@ WDTN		demmer@cs		bro2
 Fastlane	Mike Demmer		voicemail pin
 Intel		WWID 10507133		normal/bro!!
 Intel		Cost Center 30430
+Intel		MyHealthBenefits	mjdemmer/pin2
 aetraveler	michael.j.demmer@intel	bro2
 USENIX		86191 / demmer
 tier-admins	demmer			t1er!
 dtn-users	demmer@uc		ipntodtn
 SIMS LDAP	demmer			Jasm1na
 skype		michael_demmer		bro2
-emulab		demmer			normal/bro
+emulab		demmer			kingofpain
+netapi- lists	admin			pubsub
+dtn- lists	admin			ipntodtn
 
 American	85L67K6			pin: bro2
 British Air	13507920		pin: voicemail
@@ -59,3 +62,6 @@ SourceForge	mikedemmer,demmer@cs	bro2
 Comcast		mjdemmer,comcast@	bro2
 nps.gov		1907643, nps@		
 rown ftp	demmer_rownftp		R0wnftp1
+
+sandbox mysql	mysqlr00t
+sandbox root	s@ndb0xr00t
