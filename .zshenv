@@ -82,8 +82,9 @@ path=(						\
 	$localpath				\
 	.					\
       )
+
 #
-# Similar trick for LD_LIBRARY_PATH and MANPATH
+# Similar trick for other paths
 #
 ld_library_path=
 if [ -d ~/lib ]; then
@@ -105,15 +106,26 @@ for d in ~/man/* ; do
 done
 fi
 
+pythonpath=
+if [ -d ~/pylib ]; then
+for d in ~/pylib/* ; do
+        if [ -d $d ] ; then
+                d=`(cd $d && pwd -r)`
+                pythonpath=($pythonpath $d)
+        fi
+done
+fi
+
 #
 # But they're not autoset like path is
 #
 LD_LIBRARY_PATH=${(j{:})ld_library_path}
 MANPATH=${(j{:})manpath}
+PYTHONPATH=${(j{:})pythonpath}
 
 # Make sure that these are exported to the environment
 # I know that zsh doesn't do this by default for MANPATH
-export PATH SHELL LD_LIBRARY_PATH MANPATH
+export PATH SHELL LD_LIBRARY_PATH MANPATH PYTHONPATH
 
 #
 # On OS X, fink wants us to source an init script to set up path,
