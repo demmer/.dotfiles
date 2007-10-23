@@ -195,6 +195,14 @@ else
     export SVNROOT=svn+ssh://wangari.cs.berkeley.edu:/svndepot/
 fi
 
+# And HGROOT
+export HGROOT
+if [ $HOST = sandbox ] ; then
+    export HGROOT_DTN=/data/hg-repository/
+else
+    export HGROOT_DTN=ssh://demmer@code.dtnrg.org//data/hg-repository/
+fi
+
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
  
