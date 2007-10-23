@@ -4,7 +4,7 @@ host=$1
 port=$2
 proxy=$3
 
-nc -z $host $port 2> /dev/null
+nc -z -w 2 $host $port 2> /dev/null
 
 if [ $? = 0 ] ; then
     exec nc $host $port
