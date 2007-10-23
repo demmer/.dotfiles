@@ -1,9 +1,11 @@
 #!/bin/sh
 # silly script to run diff in such a way as to report only meaningful
-# differences between two CVS trees
+# differences between two CVS / svn trees
 
-diff -N -ur --exclude \*.[oda] --exclude CVS --exclude .glimpse\* \
-	--ignore-matching-lines=\$Id --ignore-matching-lines=\$Header $*
+diff -N -ur --exclude \*.[oda] --exclude CVS --exclude .svn --exclude .hg \
+    --exclude .glimpse\* --exclude .\#\* \
+    --exclude \*.orig --exclude \*.rej \
+    --ignore-matching-lines=\$Id --ignore-matching-lines=\$Header $*
 
 
 	
