@@ -11,6 +11,7 @@ Citicard	mjdemmer		jasm1na
 Discover	mdemmer			jasm1na
 WF Routing #	125 008547
 Rachel ssn	077 64 0801
+Fidelity 	ssn			voicemail 2
 
 CalNet		SID: 16271361		PIN: 0620, passwd: jasmina02...
 Aetna		mdemmer			jasm1na
@@ -22,6 +23,7 @@ RHN		mdemmer			bro
 pairnic		ictresearch		1ctresearch
 pairnic		demmer			normal
 register.com	mdemmer			bro
+site5		demmer@gmail		normal/jasmina
 EDAS		demmer@cs		bro2
 OSDI04		demmer@cs		bro2
 WDTN		demmer@cs		bro2
@@ -53,7 +55,7 @@ Southwest	00000282528525,southwest@ bro2
 
 attws.com	4152051351		bro
 cingular.com	4152051351		bro2
-NY Times	mdemmer			bro2
+NY Times	nytimes@demmer.nu	bro2
 jcrew.com	me@thefam		bro2
 Tivo Online	mike@demmer.nu		bro
 Ticketmaster	mike@demmerfamily.com	bro
