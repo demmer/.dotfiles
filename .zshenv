@@ -196,7 +196,6 @@ else
 fi
 
 # And HGROOT
-export HGROOT
 if [ $HOST = sandbox ] ; then
     export HGROOT_DTN=/data/hg-repository/
 else
