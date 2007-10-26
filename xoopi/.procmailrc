@@ -1,50 +1,34 @@
-VERBOSE=no
+VERBOSE=yes
 MAILDIR=$HOME/Mail
-LOGFILE=$HOME/Mail/procmaillog
+LOGFILE=$HOME/procmaillog
 LOGABSTRACT=all
 
 #
 # Mailing lists that I want into separate folders before spooling
 #
 :0
-* List-Post: .*spamassassin-users
-sa-talk
-
-:0
 * List-Id: .*pair-notices
 pair-notices
 
-#
-# Annoying aol mail bounces that don't get kicked by spamassassin
-#
 :0
-* ^From: .*MAILER-DAEMON@aol\.com
+* To: .*dailykos@demmer.nu
 {
-	:0 B bh
-	* ^X-Mailer: .*Outlook
-	| resubject-spam >> $HOME/Mail/spam
+  :0fh
+  | sed 's/<> <rss@dailykos.com>/<rss@dailykos.com>/'
+
+  :0fh
+  | formail -I X-Spam-Flag -I X-Spam-Level -I X-Spam-Status
+
+  :0
+  dailykos
 }
 
 #
-# Kill the really bad spam (8 pts or higher). 
+# Spam
 #
 :0
-* ^X-Spam-Level: \*\*\*\*\*\*\*\*
-| resubject-spam >> $HOME/Mail/spam
-
-#
-# And anything to p@demmerfamily.com
-#
-:0
-* ^To: .*p@demmerfamily\.com 
-| resubject-spam >> $HOME/Mail/spam
-
-#
-# And 4 points or more gets copied to the spam folder.
-#
-:0
-* ^X-Spam-Level: \*\*\*\*
-| resubject-spam >> $HOME/Mail/spam-maybe
+* ^X-Spam-Flag: YES
+| formail -I "Status: RO" >> $HOME/Mail/spam
 
 #
 # Automatic email delivery testing
@@ -68,26 +52,19 @@ pair-notices
 | formail -I "Subject: (none)"
 
 #
-# Filter out links I don't want to show up in urlview all the time
-#
-:0fh
-*
-| filter-links
-
-#
 # Save a copy of html mail unmodified, just in case.
 #
-:0c
-* ^content-type: text/html
-html
+# :0c
+# * ^content-type: text/html
+# html
 
 #
 # Strip out htmlification from the message body and change the
 # Content-Type header
 #
-:0bhfw
-* ^content-type: text/html
-| dehtml.pl
+# :0bhfw
+# * ^content-type: text/html
+# | dehtml.pl
 
 #
 # Modify the subject line for other email addresses
@@ -131,16 +108,33 @@ $DEFAULT
 $DEFAULT
 
 #
+# Save some mailing lists without spooling
+#
+:0
+* From: .*Yahoo.*NHL
+hockey-news
+
+#
 # Save a copy of all mail into the spool mailbox, marking as already read.
 #
 :0c
-| formail -I "Status: RO" >> $HOME/Mail/spool
+| formail -I "Status: RO" >> $HOME/Mail/all_home_mail
+
+#
+# To get the messages that I've sent into the all_mail mailbox, 
+# I've told Apple Mail to bcc myself on all messages, so find
+# them here and put them in the bitbucket.
+#
+:0
+* From:.*@demmer.nu
+* X-AppleMailSentBy: demmer
+/dev/null
 
 #
 # Get rid of duplicate messages after saving a copy to the spool.
 #
 :0 Wh: msgid.lock
-| formail -D 32768 msgid.cache
+| formail -D 32768 $HOME/msgid.cache
 
 #
 # Now some other lists
@@ -149,6 +143,12 @@ $DEFAULT
 * Mailing-List: .*inkt.*
 inkt-crap
 
+#
+# Filter things that are to demmer@xoopi.pair.com directly 
+#
+:0
+* _TO: .*demmer@xoopi.pair.com
+demmer-xoopi   
 
 #
 # C'est fini.
