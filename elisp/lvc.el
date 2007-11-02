@@ -18,9 +18,13 @@
 echo area describing the current line. This info is always
 available with the \\[lcvs-explain-this-line] command.")
 
-;; The last dir we examined
 (defvar lvc-last-dir nil
   "Last directory where lvc-status was run.")
+
+(defvar lvc-current-directory nil
+  "Buffer-local root of the source directory."
+  )
+(make-variable-buffer-local 'lvc-current-directory)
 
 (defun lvc-read-directory-name (prompt
 				&optional dir default must-match

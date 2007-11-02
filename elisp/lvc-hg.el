@@ -21,7 +21,6 @@ the \\[lvc-explain-this-line] command.")
 ; hg status output with ability to add/commit/etc like lcvs does.
 ;
 ; hg ???? to find diffs between working dir and local repo
-; hg outgoing / incoming to show sync status with remote
 ;
 ; then have keybindings for pull, push, update, merge
 
@@ -69,6 +68,8 @@ the \\[lvc-explain-this-line] command.")
 ;    (define-key map "a" 'lcvs-annotate)
     (define-key map "g" 'lvc-hg-refresh-buffer)
     (define-key map "G" 'lvc-hg-status)
+    (define-key map "I" 'lvc-hg-incoming)
+    (define-key map "O" 'lvc-hg-outgoing)
     (define-key map "f" 'lvc-hg-find-file)
     (define-key map "o" 'lvc-hg-find-file-other-window)
     (define-key map "q" 'lvc-hg-quit-just-bury)
@@ -94,13 +95,37 @@ the \\[lvc-explain-this-line] command.")
   "Alist of marked files.  It is in the form `\(file . status)'.")
 (make-variable-buffer-local 'lvc-hg-marked-files)
 
-(defvar lvc-hg-status-other-cmds nil
-  "List of commands to run to complete the status update")
-(make-variable-buffer-local 'lvc-hg-status-other-cmds)
-
-
 
 ;; User functions.
+
+(defun lvc-hg-prepare-buffer (op)
+  "Prepare the buffer to accept output from operation 'op' by
+clearing old results and inserting the header for new ones.
+Returns the correct location for the process output."
+  (interactive)
+  ;; lvc-hg-mode makes the buffer read-only, so we have to take that
+  ;; into account here.
+  (save-excursion
+    (setq buffer-read-only nil)
+    (buffer-disable-undo (current-buffer))
+    ;; First strip out the old incoming values (if any) and insert the marker
+    (setq buffer-read-only nil)
+    (goto-char (point-min))
+    (if (re-search-forward (format "%s:\n" op) nil t)
+	(let ((beg (match-end 0)))
+	  (goto-char beg)
+	  (while (not (looking-at "---"))
+	    (forward-line))
+	  (forward-line)
+	  (delete-region beg (point)))
+      (goto-char (point-max))
+      (insert (format "%s:\n\n" op))
+      (backward-line 1)
+     )
+    (buffer-enable-undo (current-buffer))
+    (setq buffer-read-only t)
+    (point)
+    ))
 
 (defun lvc-hg-status (dir &optional want-fresh-buf)
   "Call \"hg status\" in DIR and then call `lvc-hg-mode' (which see).
@@ -114,9 +139,7 @@ the same directory."
 	 (procname (format "hg-status-%s" basename))
 	 (buf (get-buffer bufname))
 	 (cmd (list lvc-hg-command "status"))
-	 (other-cmds (list (list lvc-hg-command "incoming" "--style" "compact")
-			   (list lvc-hg-command "outgoing" "--style" "compact")))
-	 proc)
+	 proc insert-pt)
     ;; Use an existing buffer if it is "visiting" the same dir.
     (if (and (not want-fresh-buf)
 	     buf
@@ -134,30 +157,20 @@ the same directory."
 	    (error "%s process already running" procname))
 
 	;; Prepare the buffer.
-	;; lvc-hg-mode makes the buffer read-only, so we have to take that
-	;; into account here.
 	(set-buffer buf)
-	(unwind-protect
-	    (progn
-	      (setq buffer-read-only nil)
-	      (buffer-disable-undo (current-buffer))
-	      (erase-buffer)
-	      (setq default-directory dir)
-	      (insert "cd " dir "\n")
-	      (insert (mapconcat 'identity cmd " "))
-	      (insert "\n\n"))
-	  (buffer-enable-undo (current-buffer))
-	  (setq buffer-read-only t))
-
+	(setq default-directory dir)
+	
+	(setq insert-pt (lvc-hg-prepare-buffer "Status"))
+	
 	;; Set up keybindings etc.
 	(lvc-hg-mode)
-	(setq lvc-hg-status-other-cmds other-cmds)
 
 	;; Make the buffer visible and start the first process in the
 	;; sequence.
 	(pop-to-buffer buf)
-	(goto-char (point-min))
+	(setq lvc-current-directory (directory-file-name dir))
 	(setq proc (apply 'start-process procname buf cmd))
+	(set-marker (process-mark proc) insert-pt)
 	(set-process-filter proc (function lvc-hg-filter))
 	(set-process-sentinel proc (function lvc-hg-sentinel))))))
 
@@ -185,6 +198,48 @@ via `describe-key' on \\[describe-key]"
   (make-variable-buffer-local 'font-lock-defaults)
 ;  (setq font-lock-defaults '(lcvs-font-lock-keywords))
   (run-hooks 'lvc-hg-mode-hook))
+
+(defun lvc-hg-incoming ()
+  "Update a list of incoming changesets in the status buffer"
+  (interactive)
+  (let* ((basename (file-name-nondirectory lvc-current-directory))
+	 (buf (current-buffer))
+	 (cmd (list lvc-hg-command "-y" "-q" "incoming"))
+	 (procname (format "lvc-incoming-%s" basename))
+	 proc insert-pt)
+    
+    (if (and (get-buffer-process buf)
+	     (eq (process-status (get-buffer-process buf)) 'run))
+	(error "%s process already running" procname))
+
+    (setq insert-pt (lvc-hg-prepare-buffer "Incoming"))
+    (setq proc (apply 'start-process procname buf cmd))
+    (set-marker (process-mark proc) insert-pt)
+    (set-process-filter proc (function lvc-hg-filter))
+    (set-process-sentinel proc (function lvc-hg-sentinel))
+    )
+  )
+
+(defun lvc-hg-outgoing ()
+  "Update a list of outgoing changesets in the status buffer"
+  (interactive)
+  (let* ((basename (file-name-nondirectory lvc-current-directory))
+	 (buf (current-buffer))
+	 (cmd (list lvc-hg-command "-y" "-q" "outgoing"))
+	 (procname (format "lvc-outgoing-%s" basename))
+	 proc insert-pt)
+    
+    (if (and (get-buffer-process buf)
+	     (eq (process-status (get-buffer-process buf)) 'run))
+	(error "%s process already running" procname))
+
+    (setq insert-pt (lvc-hg-prepare-buffer "Outgoing"))
+    (setq proc (apply 'start-process procname buf cmd))
+    (set-marker (process-mark proc) insert-pt)
+    (set-process-filter proc (function lvc-hg-filter))
+    (set-process-sentinel proc (function lvc-hg-sentinel))
+    )
+  )
 
 (defun lvc-hg-explain-this-line ()
   "Explain what this line means.
@@ -1033,17 +1088,6 @@ the value of `foo'."
     (while stuff-to-do
       (setq dont-move nil)
 
-      (cond
-       ;; Note the reported HEAD revision.
-       ;; Be aware that hg:externals will print their info afterwards
-       ;; and we don't want their HEAD, so set this once.
-       ;; XXX/lomew this is broken for externals
-       ((and (looking-at "^Status against revision:[ \t]+\\([0-9]+\\)\n")
-	     (equal lvc-hg-head-revision-from-last-ustatus
-		    (default-value 'lvc-hg-head-revision-from-last-ustatus)))
-	(setq lvc-hg-head-revision-from-last-ustatus
-	      (string-to-number (match-string 1)))))
-
       ;; Move forward.  If point changes we have more stuff to do.
       (if dont-move
 	  nil
@@ -1078,41 +1122,34 @@ the value of `foo'."
 				    (process-exit-status proc)))))
 	    (lvc-hg-redraw-modeline)
 
-	    ;; Indicate status in buffer too.  Remember that lvc-hg-mode
-	    ;; makes the buffer read-only.
 	    (save-excursion
-	      (goto-char (point-max))
-	      (setq buffer-read-only nil)
-	      (insert "\n" msg-long)
-	      (forward-char -1)		;back up over the \n to insert the time
-	      (insert " at " (substring (current-time-string) 0 19))
-	      (forward-char 1)		;and step over it
-	      (setq buffer-read-only t))
+	      (goto-char (process-mark proc))
+	      (let ((buffer-read-only nil))
+		(insert "---\n"))
+	      )
 
-	    ;; If there are more commands to run to complete the
-	    ;; status output, do so now, moving the cursor back to
-	    ;; before the status of the last command
-	    (if (not (null lvc-hg-status-other-cmds))
-		(let* ((cmd (car lvc-hg-status-other-cmds))
-		       (procname (process-name proc))
-		       newproc)
+;; 	    ;; Indicate status in buffer too.  Remember that lvc-hg-mode
+;; 	    ;; makes the buffer read-only.
+;; 	    (save-excursion
+;; 	      (goto-char (point-max))
+;; 	      (setq buffer-read-only nil)
+;; 	      (insert "\n---" msg-long)
+;; 	      (forward-char -1)		;back up over the \n to insert the time
+;; 	      (insert " at " (substring (current-time-string) 0 19) "\n")
+;; 	      (forward-char 1)		;and step over it
+;; 	      (setq buffer-read-only t))
 
-		  (setq lvc-hg-status-other-cmds (cdr lvc-hg-status-other-cmds))
-		  (setq newproc (apply 'start-process procname buf cmd))
-		  (set-process-filter newproc (function lvc-hg-filter))
-		  (set-process-sentinel newproc (function lvc-hg-sentinel)))
-
-	      ;; Otherwise go to the first file, if there is one, unless the user
-	      ;; has already moved.  lvc-hg-next-line will print stuff
-	      ;; unless lvc-hg-explain-each-line is nil.  We make it nil
-	      ;; if BUF is not visible.  Also, lvc-hg-next-line will error
-	      ;; if no files.
-	      (if (= (point) (point-min))
-		  (let ((lvc-hg-explain-each-line
-			 (and lvc-hg-explain-each-line
-			      (get-buffer-window buf 'visible))))
-		    (condition-case nil
-			(lvc-hg-next-line)
-		      (error nil))))))))))
+	    ;; Go to the first file, if there is one, unless the user
+	    ;; has already moved.  lvc-hg-next-line will print stuff
+	    ;; unless lvc-hg-explain-each-line is nil.  We make it nil
+	    ;; if BUF is not visible.  Also, lvc-hg-next-line will error
+	    ;; if no files.
+	    (if (= (point) (point-min))
+		(let ((lvc-hg-explain-each-line
+		       (and lvc-hg-explain-each-line
+			    (get-buffer-window buf 'visible))))
+		  (condition-case nil
+		      (lvc-hg-next-line)
+		    (error nil)))))))))
 
 (provide 'lvc-hg)
