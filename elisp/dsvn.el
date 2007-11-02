@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.10 $)
+;; Version: 1.1 ($Revision: 1.11 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -216,9 +216,9 @@ a `U' line so you can update it in dsvn, not having to go to a shell.")
     (define-key map "m" 'dsvn-mark-file)
     (define-key map "u" 'dsvn-unmark-file)
     (define-key map "U" 'dsvn-update-some-files)
-    (define-key map "-" 'dsvn-remove)
+    (define-key map "r" 'dsvn-remove)
     (define-key map "R" 'dsvn-revert)
-    (define-key map "r" 'dsvn-resolve-conflict)
+    (define-key map "O" 'dsvn-resolve-conflict)
     (define-key map "C" 'dsvn-commit)
     (define-key map "i" 'dsvn-ignore)
     (define-key map "d" 'dsvn-diff-base)
@@ -1033,9 +1033,10 @@ This mode is not meant to be user invoked."
   (insert "SVN:\n")
   ;; These should match what is checked for in the file list before
   ;; calling this.
-  (dsvn-commit-insert-matching-files ?M "Modified")
-  (dsvn-commit-insert-matching-files ?A "Added")
-  (dsvn-commit-insert-matching-files ?R "Removed")
+  (dsvn-commit-insert-matching-files 'dsvn-local-state ?M "Modified")
+  (dsvn-commit-insert-matching-files 'dsvn-local-state ?A "Added")
+  (dsvn-commit-insert-matching-files 'dsvn-local-state ?D "Removed")
+  (dsvn-commit-insert-matching-files 'dsvn-property-state ?M "Property Modified")
   (insert "SVN: ")(insert-char ?- 70)(insert "\n")
   (dsvn-maybe-insert-template)
   (setq dsvn-commit-initial-buffer-contents (buffer-string))
@@ -1182,35 +1183,20 @@ This mode is not meant to be user invoked."
 	  (setq matches (cons (cdr all) matches))))
     matches))
 
-(defun dsvn-commit-insert-matching-files (char desc)
-  (if (rassoc char dsvn-commit-files)
-      (let ((prefix "SVN:    "))
-	(insert "SVN: " desc " Files:\n")
-	;; This is a lame place to put this, but that is close to what svn does.
-	;; We don't look in the SVN/Entries file but assume the SVN/Tag file
-	;; is the same.
-	(let ((tag (dsvn-sticky-tag (car (car dsvn-commit-files)))))
-	  (if tag
-	      (insert "SVN:  Tag: " tag "\n")))
-	(insert prefix)
-	(let ((cur dsvn-commit-files)
-	      (curcol (current-column))
-	      pair)
-	  (while cur
-	    (setq pair (car cur))
-	    (setq cur (cdr cur))
-	    (let ((file (car pair))
-		  (state (cdr pair)))
-	      (if (equal state char)
-		  (progn
-		    (if (> (+ curcol (length file) 1)
-			   fill-column)
-			(progn
-			  (insert "\n" prefix)
-			  (setq curcol (length prefix))))
-		    (insert file " ")
-		    (setq curcol (+ curcol (length file) 1))))))
-	  (insert "\n")))))
+(defun dsvn-commit-insert-matching-files (func char desc)
+  (let ((files dsvn-commit-files)
+	first cur state)
+    (setq first t)
+    (setq cur files)
+    (while cur
+      (setq file  (car (car cur)))
+      (setq state (cdr (car cur)))
+      (setq cur (cdr cur))
+      (if (equal (funcall func state) char)
+	  (let ((prefix "SVN:    "))
+	    (if first (progn (insert "SVN: " desc " Files:\n") (setq first nil)))
+	    (insert prefix file "\n")
+	    )))))
 
 (defun dsvn-commit-finish ()
   ;; Finish up the commit by grabbing the commit string and calling svn commit.
