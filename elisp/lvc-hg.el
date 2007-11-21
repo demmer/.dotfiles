@@ -36,6 +36,9 @@ the \\[lvc-explain-this-line] command.")
 (defvar lvc-hg-revert-confirm t
   "*If non-nil, reverting files will require confirmation.")
 
+(defvar lvc-hg-remove-confirm t
+  "*If non-nil, removing files will require confirmation.")
+
 
 ;; Internal Vars.
 
@@ -43,7 +46,19 @@ the \\[lvc-explain-this-line] command.")
 ;; in "hg status" output.  Also takes into account the characters
 ;; we add for marked files.
 ;; The parens are assumed to enclose the state information.
-(defconst lvc-hg-linepat "^\\([ MARC!?I]\\)[ *]")
+(defconst lvc-hg-file-pat "^\\([ MARC!?I]\\)[ *]")
+
+(defvar lvc-hg-font-lock-keywords
+  '(("^U[ *].*" . lvc-needs-update-face)
+    ("^[MA][ *].*" . lvc-local-changes-face)
+    ("^[AR][ *].*" . lvc-addremove-face)
+    ("^C[ *].*" . lvc-conflict-face)
+    ("^Status:" . lvc-other-face)
+    ("^Incoming:" . lvc-other-face)
+    ("^Outgoing:" . lvc-other-face)
+    ))
+
+(defconst lvc-hg-changeset-pat "\\([0-9]+\\):[0-9a-z]+[*]?")
 
 (defvar lvc-hg-debug nil
   "If non-nil, put lvc-hg into debug mode.")
@@ -56,13 +71,12 @@ the \\[lvc-explain-this-line] command.")
     (define-key map "m" 'lvc-hg-mark-file)
     (define-key map "u" 'lvc-hg-unmark-file)
 ;    (define-key map "U" 'lvc-hg-update-some-files)
+    (define-key map "r" 'lvc-hg-remove)
     (define-key map "R" 'lvc-hg-revert)
     (define-key map "C" 'lvc-hg-commit)
-    (define-key map "d" 'lvc-hg-diff-cur)
-    (define-key map "D" 'lvc-hg-diff-tip)
+    (define-key map "d" 'lvc-hg-diff)
 ;    (define-key map "e" 'lcvs-ediff)
-;    (define-key map "l" 'lvc-hg-log-base)
-;    (define-key map "L" 'lvc-hg-log-tip)
+    (define-key map "l" 'lvc-hg-log)
 ;    (define-key map "s" 'lcvs-show-status)
     (define-key map "S" 'lvc-hg-sort)
 ;    (define-key map "a" 'lcvs-annotate)
@@ -74,26 +88,17 @@ the \\[lvc-explain-this-line] command.")
     (define-key map "o" 'lvc-hg-find-file-other-window)
     (define-key map "q" 'lvc-hg-quit-just-bury)
     (define-key map "+" 'lvc-hg-add)
-;    (define-key map "-" 'lcvs-remove-crap)
-;    (define-key map "\C-k" 'lcvs-kill-region-or-line)
-;    (define-key map "\C-w" 'lcvs-kill-region)
-;    (define-key map "\C-xu" 'lcvs-undo)
-;    (define-key map "\C-xc" 'lcvs-clean)
-;    (condition-case ()
-;	 ;; This is for XEmacs, will error in Emacs.
-;	 (define-key map '(control /) 'lcvs-undo)
-;      (error nil))
     (define-key map "\C-c\C-k" 'lvc-hg-kill-process)
     map)
   "Keymap for `lvc-hg-mode'")
 
-(defvar lvc-hg-view-mode-commands
-  '("annotate" "log")
-  "List of hg commands that get their output put into view-mode.")
-
 (defvar lvc-hg-marked-files nil
   "Alist of marked files.  It is in the form `\(file . status)'.")
 (make-variable-buffer-local 'lvc-hg-marked-files)
+
+(defvar lvc-hg-marked-changesets nil
+  "List of marked changesets.")
+(make-variable-buffer-local 'lvc-hg-marked-changesets)
 
 
 ;; User functions.
@@ -195,8 +200,8 @@ via `describe-key' on \\[describe-key]"
 	mode-name "LVC-HG")
   (setq modeline-process '(":%s"))
   (setq buffer-read-only t)
-  (make-variable-buffer-local 'font-lock-defaults)
-;  (setq font-lock-defaults '(lcvs-font-lock-keywords))
+  (if lvc-font-lock-enabled
+      (setq font-lock-defaults '(lvc-hg-font-lock-keywords)))
   (run-hooks 'lvc-hg-mode-hook))
 
 (defun lvc-hg-incoming ()
@@ -204,7 +209,8 @@ via `describe-key' on \\[describe-key]"
   (interactive)
   (let* ((basename (file-name-nondirectory lvc-current-directory))
 	 (buf (current-buffer))
-	 (cmd (list lvc-hg-command "-y" "-q" "incoming"))
+	 (cmd (list lvc-hg-command "-y" "-q" "incoming"
+		    "--template" "{rev}:{node|short}  \t{desc|firstline}\n"))
 	 (procname (format "lvc-incoming-%s" basename))
 	 proc insert-pt)
     
@@ -255,7 +261,7 @@ been locally modified\"."
 (defun lvc-hg-next-line ()
   "Move cursor to the next file."
   (interactive)
-  (if (re-search-forward lvc-hg-linepat nil t)
+  (if (re-search-forward lvc-hg-file-pat nil t)
       (if lvc-hg-explain-each-line
 	  (lvc-hg-explain-this-line))
     (error "No more files")))
@@ -265,7 +271,7 @@ been locally modified\"."
   (interactive)
   (let ((pt (point)))
     (beginning-of-line)
-    (if (re-search-backward lvc-hg-linepat nil t)
+    (if (re-search-backward lvc-hg-file-pat nil t)
 	(progn 
 	  (goto-char (match-end 0))
 	  (if lvc-hg-explain-each-line
@@ -324,68 +330,46 @@ See also `lvc-hg-mark-file'."
       (lvc-hg-next-line)
     (error nil)))
 
-(defun lvc-hg-diff-cur (arg)
-  "Diff some files against the repository.
-Use this when you have locally modified files and want to see what
-you have done.  See also `lvc-hg-diff-tip'.
-If given a prefix argument, use the marked files.  Otherwise use
-the file on this line."
+(defun lvc-hg-diff (use-marks)
+  "Diff some files or show changeset diffs.
+If given a prefix argument, use the marked files or changesets.
+Otherwise use the file/changeset on this line."
   (interactive "P")
   (message "Diffing...")
-  (lvc-hg-do-command "diff"
-		   "No differences with the repository"
-		   nil
-		   (mapcar 'car (lvc-hg-get-relevant-files arg)))
-  (message "Diffing...done"))
+  (let ((files (lvc-hg-get-relevant-files use-marks 'noerror))
+	(changeset (lvc-hg-current-changeset t))
+	args)
+    (if files (setq args (mapcar 'car files))
+      (if use-marks (error "no marked files"))
+      (if changeset (setq args (list "-r" (format "%d" (- changeset 1))
+				     "-r" (format "%d" changeset)))
+	(error "no file or changeset on this line")))
+    
+    (lvc-hg-do-command "diff"
+		       "No differences with the repository"
+		       nil
+		       args)
+		       
+    (message "Diffing...done")))
 
-(defun lvc-hg-diff-head (arg)
-  "Diff some files against the HEAD revision.
-Use this when files have been checked in by someone else and you want
-to see what has changed before you update your copies.  See also
-`lvc-hg-diff-base'.
-If given a prefix argument, use the marked files.  Otherwise use
-the file on this line."
+(defun lvc-hg-log (use-marks)
+  "Show log for the current file or changeset."
   (interactive "P")
-  (message "Diffing...")
-  (lvc-hg-do-command "diff"
-		   "No differences with the HEAD"
-		   nil
-		   (cons (format "-rBASE:%s"
-				 lvc-hg-head-revision-from-last-ustatus)
-			 (mapcar 'car (lvc-hg-get-relevant-files arg))))
-  (message "Diffing...done"))
-
-;; XXX/lomew work in -v and --stop-on-copy
-;; XXX/lomew work in the repositioning stuff?
-;;   this would assume we are logging from beyond BASE
-(defun lvc-hg-log-base ()
-  "Show log for the current file.  Logs from BASE to the earliest revision."
-  (interactive)
   (message "Logging...")
-  (lvc-hg-do-command "log"
-		   "No output"
-		   nil
-		   (list "-v" (lvc-hg-current-file)))
-  (message "Logging...done"))
+  (if use-marks
+      (error "cannot use marks for log output"))
+  (let ((file (lvc-hg-current-file t))
+	(changeset (lvc-hg-current-changeset t))
+	args)
+    (if file (setq args (list file))
+      (if changeset (setq args (list "-r" (format "%d" changeset)))
+	(error "no file or changeset on this line")))
 
-(defun lvc-hg-log-head ()
-  "Shows the log for revisions you would get if you updated this file."
-  (interactive)
-  (message "Logging...")
-  (let ((base (lvc-hg-current-file-base)))
-    (if (numberp base)
-	;; Don't include BASE itself since we already have that and don't
-	;; want to show it (in case this file was changed in BASE).
-	(setq base (1+ base)))
     (lvc-hg-do-command "log"
-		     "No output"
-		     nil
-		     (list "-v"
-			   (format "-r%s:%s"
-				   lvc-hg-head-revision-from-last-ustatus
-				   base)
-			   (lvc-hg-current-file))))
-  (message "Logging...done"))
+		       "No output"
+		       nil
+		       (cons "-v" args))
+    (message "Logging...done")))
 
 (defun lvc-hg-sort ()
   "Sort the HG output in this buffer.
@@ -393,15 +377,13 @@ This is useful to get files with similar status together."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (re-search-forward "^$")
-    (beginning-of-line)
-    (forward-char 1)
+    (re-search-forward "^Status:$")
     (unwind-protect
 	(let ((beg (point)))
 	  (setq buffer-read-only nil)
-	  (sort-lines nil beg (progn (if (re-search-forward "^$" nil t)
-					 (point)
-				       (point-max)))))
+	  (sort-lines nil beg (progn (re-search-forward "^---$" nil t)
+				     (backward-line 1) (point))))
+
       (setq buffer-read-only t))))
 
 (defun lvc-hg-commit (arg)
@@ -413,6 +395,8 @@ the file on this line."
   (let ((files (lvc-hg-get-relevant-files arg))
 	(this-buffer (current-buffer))
 	cur state)
+    (if (not files)
+	(error "no files???"))
     ;; Don't let them do something dumb.
     ;; This should match what we display in the "HG:..." lines.
     (setq cur files)
@@ -455,7 +439,7 @@ The files won't be actually added to the repository until they are
 formally committed."
   (interactive "P")
   (let ((files (lvc-hg-get-relevant-files arg))
-	status cur)
+	status cur state)
     ;; Check thru the files for addable ones.  These are only ?/unversioned ones
     (setq cur files)
     (while cur
@@ -549,6 +533,25 @@ otherwise just this file."
 ;	  ;; If they operated on the marked list, unmark everything.
 ;	  (if (> (length files) 1)
 ;	      (lcvs-unmark-all-files))))    
+
+(defun lvc-hg-remove (arg)
+  "Remove some files, (obviously) discarding local changes."
+  (interactive "P")
+  (let* ((files (lvc-hg-get-relevant-files arg))
+	 (multiple (cdr files)))
+    (if (and lvc-hg-remove-confirm
+	     (not (yes-or-no-p (format "Remove %s? "
+				       (if multiple
+					   "the marked files"
+					 (car (car files)))))))
+	(message "Remove cancelled")
+      ;; Otherwise remove the files
+      (mapcar (function (lambda (e)
+			  (let ((file (car e)))
+			    (shell-command (format "rm -rf %s" file))
+			    (lvc-hg-remove-file-line file)
+			    )))
+	      files))))
 
 (defun lvc-hg-revert (arg)
   "Revert some files, discarding local changes.
@@ -662,7 +665,8 @@ This mode is not meant to be user invoked."
   (while files
     (let ((txtmod ?_)
 	  (file (car (car files)))
-	  (state (cdr (car files))))
+	  (state (cdr (car files)))
+	  info)
       ;; text
       (cond ((memq 'added state)	(setq info "added"))
 	    ((memq 'deleted state)	(setq info "removed"))
@@ -782,19 +786,22 @@ This mode is not meant to be user invoked."
 
 ;; Internal functions.
 
-(defun lvc-hg-current-file ()
+(defun lvc-hg-current-file (&optional noerror)
   (interactive)
+  (message "mark")
+  (message (format "noerror is %s" noerror))
   (save-excursion
     (beginning-of-line)
-    (if (looking-at lvc-hg-linepat)
+    (if (looking-at lvc-hg-file-pat)
 	(buffer-substring (match-end 0)
 			  (progn (end-of-line) (point)))
-      (error "No file on this line"))))
+      (if noerror nil
+	(error "No file on this line")))))
 
 (defun lvc-hg-current-file-state ()
   (save-excursion
     (beginning-of-line)
-    (if (looking-at lvc-hg-linepat)
+    (if (looking-at lvc-hg-file-pat)
 	(lvc-hg-parse-state-string (match-string 1))
       (error "No file on this line"))))
 
@@ -804,7 +811,7 @@ This mode is not meant to be user invoked."
   ;; return "BASE"
   (save-excursion
     (beginning-of-line)
-    (if (looking-at lvc-hg-linepat)
+    (if (looking-at lvc-hg-file-pat)
 	(progn
 	  (forward-char 8)
 	  (if (looking-at "[ \t]*\\([0-9]+\\)")
@@ -812,10 +819,19 @@ This mode is not meant to be user invoked."
 	    "BASE"))
       (error "No file on this line"))))
 
+(defun lvc-hg-current-changeset (&optional noerror)
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (if (looking-at lvc-hg-changeset-pat)
+	(string-to-number (buffer-substring (match-beginning 1) (match-end 1)))
+      (if noerror nil
+	(error "No changeset on this line")))))
+
 (defun lvc-hg-set-mark-state (on)
   (save-excursion
     (beginning-of-line)
-    (if (not (looking-at lvc-hg-linepat))
+    (if (not (looking-at lvc-hg-file-pat))
 	(error "No file on this line")
       (setq buffer-read-only nil)
       (replace-match (concat (match-string 1) (if on "*" " ")))
@@ -885,6 +901,7 @@ the value of `foo'."
   ;; otherwise use the current file.
   ;; Optionaly NOERROR means return nil instead of throwing an error
   ;; when no files are marked.
+  (message (format "use-marks %s noerror %s" use-marks noerror))
   (if use-marks
       (if lvc-hg-marked-files
 	  ;; sort modifies
@@ -894,9 +911,24 @@ the value of `foo'."
 	(if noerror
 	    nil
 	  (error "No marked files")))
-    (list (cons (lvc-hg-current-file)
-		(lvc-hg-current-file-state)))))
+    (let ((file (lvc-hg-current-file noerror)))
+      (if (not file) nil
+	  (list (cons file (lvc-hg-current-file-state)))))))
 
+(defun lvc-hg-get-relevant-changesets (use-marks &optional noerror)
+  ;; Return a list of changeset revision numbers.
+  ;; If USE-MARKS is non-nil then use the marked changeset list,
+  ;; otherwise use the current file.
+  ;; Optionaly NOERROR means return nil instead of throwing an error
+  ;; when no files are marked.
+  (if use-marks
+      (if lvc-hg-marked-changesets
+	  lvc-hg-marked-changesets
+	(if noerror
+	    nil
+	  (error "No marked files")))
+    (lvc-hg-current-changeset)))
+  
 ;; XXX/lomew hg doesn't distinguish between args before the command
 ;; and args after, clean this up later.
 (defun lvc-hg-do-command (cmd default-output hgopts &optional cmdopts)
@@ -928,8 +960,8 @@ the value of `foo'."
 				     (mapconcat 'identity args " ")
 				     "\n")))))
 	     (let ((win (display-buffer buf)))
-	       (if (member cmd lvc-hg-view-mode-commands)
-		   (lvc-hg-set-view-mode win buf))))))
+	       (if (member cmd lvc-view-mode-commands)
+		   (lvc-set-view-mode win buf))))))
       (with-output-to-temp-buffer bufname
 	(setq status (apply 'call-process lvc-hg-command
 			    nil standard-output
@@ -953,21 +985,6 @@ the value of `foo'."
 			nil buf nil
 			args))
     status))
-
-(defun lvc-hg-set-view-mode (win buf)
-  ;; Turn view-mode on for BUF in window WIN, making sure quitting it
-  ;; will get us back somewhere sane.
-  (if (not lvc-hg-use-view-mode)
-      nil
-    (let ((prevwin (selected-window))
-	  (prevbuf (current-buffer)))
-      (save-excursion
-	(set-buffer buf)
-	(condition-case nil
-	    (view-mode prevbuf 'kill-buffer) ;XEmacs
-	  (error
-	   (view-mode-enter (list win prevwin) 'kill-buffer)
-	   (setq buffer-read-only t))))))) ;Emacs
 
 (defun lvc-hg-buffer-size (&optional buffer)
   ;; `buffer-size' in Emacs doesn't take an arg like XEmacs.
@@ -1015,7 +1032,7 @@ the value of `foo'."
     (unwind-protect
 	(progn
 	  ;; Remove the line.
-	  (delete-matching-lines (concat lvc-hg-linepat (regexp-quote file) "$"))
+	  (delete-matching-lines (concat lvc-hg-file-pat (regexp-quote file) "$"))
 	  ;; Update marked files.
 	  (if (assoc file lvc-hg-marked-files)
 	      (setq lvc-hg-marked-files (lvc-hg-remassoc file lvc-hg-marked-files))))
@@ -1055,7 +1072,7 @@ the value of `foo'."
   ;; Change the displayed state of a file.
   (save-excursion
     (goto-char (point-min))
-    (if (re-search-forward (concat lvc-hg-linepat (regexp-quote file) "$") nil t)
+    (if (re-search-forward (concat lvc-hg-file-pat (regexp-quote file) "$") nil t)
 	(lvc-hg-change-this-file-state newstate))))
 
 
