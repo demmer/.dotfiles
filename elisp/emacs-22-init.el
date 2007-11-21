@@ -136,6 +136,7 @@ This must be bound to a mouse-down event in the mode-line."
 (load "mjdkeys")
 ;;(load "mwheel")
 (load "added")
+(load "grope")
 
 ;; lcvs setup
 (load "lcvs")
@@ -152,20 +153,7 @@ This must be bound to a mouse-down event in the mode-line."
 )
 (add-hook 'dsvn-mode-hook 'my-dsvn-setup)
 
-(defun dsvn-lcvs-examine-get-args ()
-  (list (expand-file-name
-	 (file-name-as-directory
-	  (lcvs-read-directory-name (format "CVS/SVN examine directory: ")
-				    lcvs-last-dir lcvs-last-dir t))
-	 current-prefix-arg)))
-
-(defun lcvs-or-dsvn-examine (dir)
-  "Run either lcvs-examine or svn-examine based on whether there's a
-CVS or a .svn subdirectory in the named dir"
-  (interactive (dsvn-lcvs-examine-get-args))
-  (if (file-exists-p (format "%s/CVS" dir))
-      (lcvs-examine dir)
-    (dsvn-examine dir)))
+(require 'lvc)
 
 ;; I should probably have a better place for this...
 (setq diff-switches (list "-u"))
