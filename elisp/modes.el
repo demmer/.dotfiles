@@ -206,6 +206,18 @@ with tab characters underneath."
 
 (add-hook 'java-mode-hook 'my-java-setup)
 
+(require 'python-mode)
+(defun my-python-setup()
+  (interactive)
+  (define-key py-mode-map "\C-c\C-c" 'comment-region)
+  (define-key py-mode-map "\C-c\C-u" 'uncomment-region)
+  (define-key py-mode-map "\C-c\t" 'c-align-space-in-region)
+  (set-variable 'py-pseudo-keyword-face 'fl-keyword-face)
+  )
+
+(add-hook 'python-mode-hook 'my-python-setup)
+
+
 ; load visual-basic mode
 (require 'visual-basic-mode)
 
@@ -222,6 +234,7 @@ with tab characters underneath."
 				("\\.c[cx]?x?\\'" . c++-mode)
 				("\\.[Cyxi]\\'" . c++-mode)
 				("\\.tcc\\'" . c++-mode)
+				("\\.ice\\'" . c-mode)
 				("\\.nc\\'" . nesc-mode)
 			        ("\\.w\\'" . web-mode)
 				("\\.zsh\\'" . shell-script-mode)
@@ -314,6 +327,22 @@ with tab characters underneath."
 (require 'tex-site nil t)
 
 (setq font-latex-title-fontity (quote color))
+
+(require 'latex)
+(require 'longlines)
+(defun my-tex-setup()
+  (interactive)
+  (message "my-tex-setup")
+  (auto-fill-mode nil)
+  (longlines-mode t)
+  (setq LaTeX-indent-level 0)
+  (setq LaTeX-item-indent 0)
+  (setq indent-line-function 'indent-relative)
+  )
+
+
+(add-hook 'tex-mode-hook 'my-tex-setup)
+(add-hook 'TeX-mode-hook 'my-tex-setup)
 
 ;; (defun latex-insert-section(type)
 ;;   "Insert a \\section{} style latex declaration."
@@ -518,8 +547,8 @@ with tab characters underneath."
 (define-key vc-prefix-map "?" 'vc-print-status)
 (setq vc-follow-symlinks t)
 
-(require 'vc-svn)
-(setq vc-handled-backends (cons 'SVN vc-handled-backends))
+; (require 'vc-svn)
+; (setq vc-handled-backends (cons 'SVN vc-handled-backends))
 
 ; fixes so shell-mode works with zsh
 (setenv "EMACSPARENT" "1")
