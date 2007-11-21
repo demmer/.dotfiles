@@ -688,7 +688,6 @@ to the font lock list"
   (newline)
   )
 
-    
 (defun compile-no-local ()
   "Just like 'compile' but forcing compile-command to be a global
    variable."
@@ -701,3 +700,40 @@ to the font lock list"
       (setq compile-command command))
     (save-some-buffers (not compilation-ask-about-save) nil)
     (compile-internal command "No more errors")))
+
+(defun my-fill-paragraph ()
+  "Just like fill-paragraph only in longlines-mode it forces
+   the paragraph to be one long line."
+  (interactive)
+  (if longlines-mode
+      ; first delete all newlines in paragraph
+      (let ((cur-adaptive-fill adaptive-fill-mode))
+	(save-excursion
+	  (move-to-left-margin)
+	  (if (zerop (forward-paragraph))
+	      (let ((to (- (point) 1))
+		    (from (progn (backward-paragraph) (point))))
+
+		;; make sure from > to
+		(goto-char (min from to))
+		(setq to   (max from to))
+		(setq from (point))
+	      
+		; skip blanks at beginning
+		(skip-chars-forward " \t\n")
+
+		;; delete all newlines in region
+		(while (< (point) to)
+		  (if (eq ?\n (char-after (point)))
+		      (progn (delete-char 1) (insert " "))
+		    (forward-char 1)
+		    ))
+		)))
+
+	(setq adaptive-fill-mode nil)
+	(fill-paragraph nil)
+	(setq adaptive-fill-mode cur-adaptive-fill)
+	)
+    (fill-paragraph nil)
+    ))
+
