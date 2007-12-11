@@ -84,6 +84,8 @@ the \\[lvc-explain-this-line] command.")
     (define-key map "G" 'lvc-hg-status)
     (define-key map "I" 'lvc-hg-incoming)
     (define-key map "O" 'lvc-hg-outgoing)
+    (define-key map "p" 'lvc-hg-pull)
+    (define-key map "P" 'lvc-hg-push)
     (define-key map "f" 'lvc-hg-find-file)
     (define-key map "o" 'lvc-hg-find-file-other-window)
     (define-key map "q" 'lvc-hg-quit-just-bury)
@@ -103,10 +105,10 @@ the \\[lvc-explain-this-line] command.")
 
 ;; User functions.
 
-(defun lvc-hg-prepare-buffer (op)
+(defun lvc-hg-prepare-buffer (op &optional noinsert)
   "Prepare the buffer to accept output from operation 'op' by
-clearing old results and inserting the header for new ones.
-Returns the correct location for the process output."
+clearing old results and optionally inserting the header for new
+ones. Returns the correct location for the process output."
   (interactive)
   ;; lvc-hg-mode makes the buffer read-only, so we have to take that
   ;; into account here.
@@ -117,16 +119,16 @@ Returns the correct location for the process output."
     (setq buffer-read-only nil)
     (goto-char (point-min))
     (if (re-search-forward (format "%s:\n" op) nil t)
-	(let ((beg (match-end 0)))
+	(let ((beg (match-beginning 0)))
 	  (goto-char beg)
 	  (while (not (looking-at "---"))
 	    (forward-line))
-	  (forward-line)
+	  (forward-line 2)
 	  (delete-region beg (point)))
-      (goto-char (point-max))
+      (goto-char (point-max)))
+    (if noinsert (insert "")
       (insert (format "%s:\n\n" op))
-      (backward-line 1)
-     )
+      (backward-line 1))
     (buffer-enable-undo (current-buffer))
     (setq buffer-read-only t)
     (point)
@@ -218,6 +220,9 @@ via `describe-key' on \\[describe-key]"
 	     (eq (process-status (get-buffer-process buf)) 'run))
 	(error "%s process already running" procname))
 
+    ;; clear the last pull
+    (lvc-hg-prepare-buffer "Pull" t)
+    
     (setq insert-pt (lvc-hg-prepare-buffer "Incoming"))
     (setq proc (apply 'start-process procname buf cmd))
     (set-marker (process-mark proc) insert-pt)
@@ -231,7 +236,8 @@ via `describe-key' on \\[describe-key]"
   (interactive)
   (let* ((basename (file-name-nondirectory lvc-current-directory))
 	 (buf (current-buffer))
-	 (cmd (list lvc-hg-command "-y" "-q" "outgoing"))
+	 (cmd (list lvc-hg-command "-y" "-q" "outgoing"
+		    "--template" "{rev}:{node|short}  \t{desc|firstline}\n"))
 	 (procname (format "lvc-outgoing-%s" basename))
 	 proc insert-pt)
     
@@ -239,7 +245,56 @@ via `describe-key' on \\[describe-key]"
 	     (eq (process-status (get-buffer-process buf)) 'run))
 	(error "%s process already running" procname))
 
+    ;; clear the last push
+    (lvc-hg-prepare-buffer "Push" t)
+    
     (setq insert-pt (lvc-hg-prepare-buffer "Outgoing"))
+    (setq proc (apply 'start-process procname buf cmd))
+    (set-marker (process-mark proc) insert-pt)
+    (set-process-filter proc (function lvc-hg-filter))
+    (set-process-sentinel proc (function lvc-hg-sentinel))
+    )
+  )
+
+(defun lvc-hg-pull ()
+  "Pull incoming changesets"
+  (interactive)
+  (let* ((basename (file-name-nondirectory lvc-current-directory))
+	 (buf (current-buffer))
+	 (cmd (list lvc-hg-command "pull"))
+	 (procname (format "lvc-pull-%s" basename))
+	 proc insert-pt)
+    
+    (if (and (get-buffer-process buf)
+	     (eq (process-status (get-buffer-process buf)) 'run))
+	(error "%s process already running" procname))
+
+    ;; clear the incoming changeset list
+    (lvc-hg-prepare-buffer "Incoming" t)
+    (setq insert-pt (lvc-hg-prepare-buffer "Pull"))
+    (setq proc (apply 'start-process procname buf cmd))
+    (set-marker (process-mark proc) insert-pt)
+    (set-process-filter proc (function lvc-hg-filter))
+    (set-process-sentinel proc (function lvc-hg-sentinel))
+    )
+  )
+
+(defun lvc-hg-push ()
+  "Push outgoing changesets"
+  (interactive)
+  (let* ((basename (file-name-nondirectory lvc-current-directory))
+	 (buf (current-buffer))
+	 (cmd (list lvc-hg-command "push"))
+	 (procname (format "lvc-push-%s" basename))
+	 proc insert-pt)
+    
+    (if (and (get-buffer-process buf)
+	     (eq (process-status (get-buffer-process buf)) 'run))
+	(error "%s process already running" procname))
+
+    ;; clear the outgoing changeset list
+    (lvc-hg-prepare-buffer "Outgoing" t)
+    (setq insert-pt (lvc-hg-prepare-buffer "Push"))
     (setq proc (apply 'start-process procname buf cmd))
     (set-marker (process-mark proc) insert-pt)
     (set-process-filter proc (function lvc-hg-filter))
