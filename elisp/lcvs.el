@@ -4,7 +4,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Aug 1997
-;; Version: 1.2 ($Revision: 1.39 $)
+;; Version: 1.2 ($Revision: 1.40 $)
 (defconst lcvs-version "1.2")
 ;; Date: Jul 10, 2003
 ;; Keywords: cvs
@@ -356,6 +356,7 @@ Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 examine even if there is an examine buffer hanging around for DIR."
   (interactive (lcvs-examine-update-common-get-args 'examine))
   (setq lcvs-last-dir dir)
+  (setq lvc-last-dir dir)
   (lcvs-examine-update-common 'examine dir dont-use-existing))
 
 (defun lcvs-update (dir &optional dont-use-existing)
