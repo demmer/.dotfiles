@@ -136,7 +136,6 @@ This must be bound to a mouse-down event in the mode-line."
 (load "mjdkeys")
 (load "mwheel")
 (load "added")
-(load "grope")
 
 ;; lcvs setup
 (load "lcvs")
@@ -168,6 +167,8 @@ CVS or a .svn subdirectory in the named dir"
       (lcvs-examine dir)
     (dsvn-examine dir)))
 
+(require 'lvc)
+
 ;; I should probably have a better place for this...
 (setq diff-switches (list "-u"))
 
@@ -188,6 +189,17 @@ CVS or a .svn subdirectory in the named dir"
 ;;; stuff that, for one reason or another, must come last
 (setq gc-cons-threshold 200000)
 (setq default-major-mode 'text-mode)
+
+
+ (defun grope (sym)
+   (interactive
+    (list (read-from-minibuffer "Grope for: "
+				(current-word) nil nil 'grope-history)))
+   
+   (let* ((compilation-process-setup-function 'grep-process-setup))
+     (compile-internal (concat "grope \"" sym "\"")
+		       "No more grope hits" "grope"
+		       nil grep-regexp-alist)))
 
 ;; clear the last message
 (message "")
