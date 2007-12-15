@@ -131,6 +131,9 @@ This must be bound to a mouse-down event in the mode-line."
        (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
        ))
 
+; XXX/demmer fixme
+(defvar longlines-mode nil)
+
 ;; load in other files
 (load "modes")
 (load "mjdkeys")

@@ -133,8 +133,8 @@ This must be bound to a mouse-down event in the mode-line."
 
 ;; load in other files
 (load "modes")
+(load "tex-setup")
 (load "mjdkeys")
-;;(load "mwheel")
 (load "added")
 (load "grope")
 
