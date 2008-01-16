@@ -70,7 +70,6 @@ the \\[lvc-explain-this-line] command.")
     (define-key map "p" 'lvc-hg-prev-line)
     (define-key map "m" 'lvc-hg-mark-file)
     (define-key map "u" 'lvc-hg-unmark-file)
-;    (define-key map "U" 'lvc-hg-update-some-files)
     (define-key map "r" 'lvc-hg-remove)
     (define-key map "R" 'lvc-hg-revert)
     (define-key map "C" 'lvc-hg-commit)
@@ -261,7 +260,8 @@ via `describe-key' on \\[describe-key]"
   (interactive)
   (let* ((basename (file-name-nondirectory lvc-current-directory))
 	 (buf (current-buffer))
-	 (cmd (list lvc-hg-command "pull"))
+	 (cmd (list lvc-hg-command "pull"
+		    (if (y-or-n-p "Update working directory? ") "-u" "")))
 	 (procname (format "lvc-pull-%s" basename))
 	 proc insert-pt)
     
@@ -392,19 +392,25 @@ Otherwise use the file/changeset on this line."
   (interactive "P")
   (message "Diffing...")
   (let ((files (lvc-hg-get-relevant-files use-marks 'noerror))
-	(changeset (lvc-hg-current-changeset t))
-	args)
-    (if files (setq args (mapcar 'car files))
+	(changeset (lvc-hg-current-changeset t)))
+    (if files
+	(lvc-hg-do-command "diff"
+			   "No differences with the repository"
+			   nil
+			   (mapcar 'car files))
+      
       (if use-marks (error "no marked files"))
-      (if changeset (setq args (list "-r" (format "%d" (- changeset 1))
-				     "-r" (format "%d" changeset)))
+      
+      (if changeset
+	  ;; we use the hg log command, with no output
+	  (lvc-hg-do-command "log"
+			     "No differences with the repository"
+			     nil
+			     (list
+			      "--template" "\n"
+			      "-p" "-r" (format "%d" changeset)))
 	(error "no file or changeset on this line")))
     
-    (lvc-hg-do-command "diff"
-		       "No differences with the repository"
-		       nil
-		       args)
-		       
     (message "Diffing...done")))
 
 (defun lvc-hg-log (use-marks)
@@ -529,65 +535,6 @@ formally committed."
 	      "*** Check this buffer closely to determine what is wrong.\n"
 	      "\n")
       (error "Add failed, see *HG-add* buffer for details."))))
-
-(defun lvc-hg-update-some-files (arg)
-  "Update some files.
-If given a prefix arg, update the working copy to HEAD,
-otherwise just this file."
-  (interactive "P")
-  (let ((filename (if arg "." (lvc-hg-current-file)))
-	(nconflicts 0)
-	update-msg status)
-    (setq update-msg (format "Updating %s to %s"
-			     (if (string-equal filename ".")
-				 "working copy"
-			       filename)
-			     (if (numberp lvc-hg-head-revision-from-last-ustatus)
-				 (format "HEAD (%d)"
-					 lvc-hg-head-revision-from-last-ustatus)
-			       "HEAD")))
-    (message (format "%s..." update-msg))
-    (setq status (lvc-hg-do-command-quietly
-		  "update"
-		  nil
-		  (list (format "-r%s" lvc-hg-head-revision-from-last-ustatus)
-			filename)))
-    (message (format "%s...done" update-msg))
-
-    (pop-to-buffer "*HG-update*")
-    (goto-char (point-min))
-    (insert "\n"
-	    "*** XXX/lomew deal with this buffer\n"
-	    "\n")))
-
-;    (if (zerop status)
-;	;; Parse the update output and update the displayed state accordingly.
-;	(let ((cur (lvc-hg-parse-update-buffer "*HG-update*"))
-;	      newstate file)
-;	  (while cur
-;	    (setq newstate (car (car cur)))
-;	    (setq file (cdr (car cur)))
-;	    (setq cur (cdr cur))
-;	    (if (memq 'updated newstate)
-;		(lvc-hg-remove-file-line file)
-;	      (lvc-hg-change-file-state file 
-;	    (if newpair
-;		(let ((newstate (cdr newpair)))
-;		  (if (or (equal newstate ?U) (equal newstate ?P))
-;		      (lcvs-remove-file-line file)
-;		    (lcvs-change-file-state file newstate))
-;		  (lcvs-revert-buffers-visiting-file file)
-;		  ;; If there were any conflicts, we want them to know.
-;		  (if (equal newstate ?C)
-;		      (setq nconflicts (1+ nconflicts))))
-;	      ;; If there is no match for this file it means it is up to date,
-;	      ;; so we delete its status line.
-;	      ;; This typically happens with files that have been committed
-;	      ;; behind our back, like thru vc-mode.
-;	      (lcvs-remove-file-line file)))
-;	  ;; If they operated on the marked list, unmark everything.
-;	  (if (> (length files) 1)
-;	      (lcvs-unmark-all-files))))    
 
 (defun lvc-hg-remove (arg)
   "Remove some files, (obviously) discarding local changes."
@@ -843,8 +790,6 @@ This mode is not meant to be user invoked."
 
 (defun lvc-hg-current-file (&optional noerror)
   (interactive)
-  (message "mark")
-  (message (format "noerror is %s" noerror))
   (save-excursion
     (beginning-of-line)
     (if (looking-at lvc-hg-file-pat)
@@ -956,7 +901,6 @@ the value of `foo'."
   ;; otherwise use the current file.
   ;; Optionaly NOERROR means return nil instead of throwing an error
   ;; when no files are marked.
-  (message (format "use-marks %s noerror %s" use-marks noerror))
   (if use-marks
       (if lvc-hg-marked-files
 	  ;; sort modifies
