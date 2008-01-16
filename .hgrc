@@ -1,5 +1,6 @@
 [ui]
 username = Michael Demmer <demmer@cs.berkeley.edu>
+merge = emacs-merge
 
 [extensions]
 hgext.mq=
@@ -13,3 +14,6 @@ ts      = ssh://demmer@sandbox.dtnrg.org//data/hg-repository/tierstore
 poasys  = ssh://demmer@playpen.dtnrg.org/work/oasys
 pdtn2   = ssh://demmer@playpen.dtnrg.org/work/DTN2
 pts     = ssh://demmer@playpen.dtnrg.org/work/tierstore
+
+[defaults]
+import = --exact
