@@ -448,6 +448,7 @@ with tab characters underneath."
 (require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq ediff-keep-variants nil)
+(setq ediff-autostore-merges t)
 
 ; vc: remap C-x v a to vc-annotate-at-point
 ;     add C-x v e to ediff-revision
