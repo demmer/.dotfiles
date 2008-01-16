@@ -737,3 +737,15 @@ to the font lock list"
     (fill-paragraph nil)
     ))
 
+(defun ediff-merge3-unique-bufname (file-A
+				    file-B
+				    file-ancestor
+				    &optional
+				    startup-hooks
+				    merge-buffer-file)
+  (interactive)
+  (let ((buf (ediff-merge-files-with-ancestor file-A file-B file-ancestor
+					     startup-hooks merge-buffer-file)))
+    (set-buffer buf)
+    (rename-buffer (format "* Ediff %s *" merge-buffer-file))))
+  
