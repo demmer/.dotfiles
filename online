@@ -40,6 +40,7 @@ skype		michael_demmer		bro2
 emulab		demmer			kingofpain
 netapi- lists	admin			pubsub
 dtn- lists	admin			ipntodtn
+cacert		demmer@cs		normal+bro
 
 American	85L67K6			pin: bro2
 British Air	13507920		pin: voicemail
@@ -67,3 +68,5 @@ rown ftp	demmer_rownftp		R0wnftp1
 
 sandbox mysql	mysqlr00t
 sandbox root	s@ndb0xr00t
+opal		0palD1ary
+
