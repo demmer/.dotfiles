@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.11 $)
+;; Version: 1.1 ($Revision: 1.12 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -346,7 +346,7 @@ For commit-mode buffers.")
 Optional arg DONT-USE-EXISTING (interactive prefix arg) means to do the
 examine even if there is an examine buffer hanging around for DIR."
   (interactive (dsvn-examine-update-common-get-args 'examine))
-  (setq lcvs-last-dir dir)
+  (setq lvc-last-dir dir)
   (dsvn-examine-update-common 'examine dir dont-use-existing))
 
 (defun dsvn-update (dir &optional dont-use-existing)
@@ -363,7 +363,7 @@ update even if there is an update buffer hanging around for DIR."
   "LVCS examine or update based on the current value of `dsvn-submode'.
 It doesn't make sense to call this outside of an DSVN buffer."
   (interactive (dsvn-examine-update-common-get-args dsvn-submode))
-  (setq lcvs-last-dir dir)
+  (setq lvc-last-dir dir)
   (dsvn-examine-update-common dsvn-submode dir dont-use-existing))
 
 (defun dsvn-mode (submode)
