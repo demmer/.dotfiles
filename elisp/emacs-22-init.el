@@ -120,16 +120,8 @@ This must be bound to a mouse-down event in the mode-line."
 (setq time-stamp-format "%b %d, %y %I:%M%p by %u")
 ;; (append-no-dup 'time-stamp write-file-hooks)
 
-;; start gnuserv (not emacsserver)
-(load "gnuserv-compat" 'noerror)
-(cond ((and window-system
-	    (functionp 'gnuserv-start)
-	    (or (file-executable-p "/usr/local/bin/gnuserv")
-		(file-executable-p "/usr/bin/gnuserv")))
-       (message "starting gnuserv")
-       (gnuserv-start)
-       (start-process "gnuserv-keepalive" nil "gnuserv-keepalive")
-       ))
+;; start the server
+(server-start)
 
 ;; load in other files
 (load "modes")
