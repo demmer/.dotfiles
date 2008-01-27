@@ -462,6 +462,15 @@ with tab characters underneath."
 ; (require 'vc-svn)
 ; (setq vc-handled-backends (cons 'SVN vc-handled-backends))
 
+(defun vc-hg-registered (file)
+  "Return non-nil if FILE is registered with hg."
+  (if (vc-find-root file ".hg")       ; short cut
+      (progn
+        (load "vc-hg")
+        (vc-hg-registered file))))
+
+(setq vc-handled-backends (cons 'hg vc-handled-backends))
+
 ; fixes so shell-mode works with zsh
 (setenv "EMACSPARENT" "1")
 
