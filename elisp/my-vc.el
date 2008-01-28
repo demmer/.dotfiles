@@ -5,7 +5,7 @@
 ;; Author:     Eric S. Raymond <esr@snark.thyrsus.com>
 ;; Maintainer: Andre Spiegel <spiegel@inf.fu-berlin.de>
 
-;; $Id: my-vc.el,v 1.1 2002-09-05 21:40:48 miked Exp $
+;; $Id: my-vc.el,v 1.2 2008-01-28 18:07:21 demmer Exp $
 
 ;; This file is part of GNU Emacs.
 

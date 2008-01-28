@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.12 $)
+;; Version: 1.1 ($Revision: 1.13 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -397,9 +397,8 @@ via `describe-key' on \\[describe-key]"
   (use-local-map dsvn-mode-map)
   (setq major-mode 'dsvn-mode
 	mode-name "DSVN")
-  (setq modeline-process '(":%s"))
+  (setq mode-line-process '(":%s"))
   (setq buffer-read-only t)
-  (make-variable-buffer-local 'font-lock-defaults)
   (setq font-lock-defaults '(dsvn-font-lock-keywords))
   (run-hooks 'dsvn-mode-hook))
 
@@ -1038,150 +1037,11 @@ This mode is not meant to be user invoked."
   (dsvn-commit-insert-matching-files 'dsvn-local-state ?D "Removed")
   (dsvn-commit-insert-matching-files 'dsvn-property-state ?M "Property Modified")
   (insert "SVN: ")(insert-char ?- 70)(insert "\n")
-  (dsvn-maybe-insert-template)
   (setq dsvn-commit-initial-buffer-contents (buffer-string))
   (set-buffer-modified-p nil)
 
   (message (substitute-command-keys "Type \\[dsvn-commit-finish] when done."))
   (run-hooks 'text-mode-hook))
-
-(defun dsvn-maybe-insert-template ()
-  ;; Look for a template to insert.
-  ;; This is for the SVNROOT/rcsinfo feature of svn.
-
-  ;; First look in SVN/Template.  This will exist if rcsinfo
-  ;; specifies a template but the repository is remote.
-  (let ((svn-template-filename (concat (file-name-as-directory "SVN")
-				       "Template")))
-    (if (file-readable-p svn-template-filename)
-	(insert-file-contents svn-template-filename)
-      ;; Otherwise check if the repository is local and use SVNROOT/rcsinfo
-      ;; to find the template.
-      (let* ((rcsinfo (dsvn-load-rcsinfo))
-	     (templates (dsvn-apply-rcsinfo
-			 rcsinfo
-			 (dsvn-get-directories (mapcar 'car
-						       dsvn-commit-files)))))
-	(if templates
-	    (progn
-	      (if (not (dsvn-all-same-elements templates))
-		  (insert "SVN: WARNING: files matched different "
-			  "templates in SVNROOT/rcsinfo, using first"))
-	      (insert-file-contents (car templates))))))))
-
-(defun dsvn-load-rcsinfo ()
-  ;; Load the SVNROOT/rcsinfo file into an alist ((pattern . template) ...)
-  ;; Return the alist
-  ;; Return nil if we can't find it, can't parse it, etc.
-  (let (result local-svnroot)
-    ;; Look for a local SVN/Root.  It must start with a slash or :local:
-    (let ((svnroot-contents (dsvn-get-special-file-contents-as-one-line
-			     "Root")))
-      (if svnroot-contents
-	  (if (string-match "^:local:\\(.*\\)" svnroot-contents)
-	      (setq local-svnroot (match-string-no-properties 1 svnroot-contents))
-	    (if (file-name-absolute-p svnroot-contents)
-		(setq local-svnroot svnroot-contents)))))
-    (if local-svnroot
-	;; Now look for the rcsinfo file.
-	;; This is normally in $SVNROOT/SVNROOT/rcsinfo
-	;; see svn/src/parseinfo.c for the format of these files
-	(let ((rcsinfo-filename (concat (file-name-as-directory local-svnroot)
-					(file-name-as-directory "SVNROOT")
-					"rcsinfo")))
-	  (if (file-readable-p rcsinfo-filename)
-	      (let ((tempbuf (get-buffer-create " *SVN-rcsinfo*"))
-		    done)
-		(save-excursion
-		  (set-buffer tempbuf)
-		  (erase-buffer)
-		  (insert-file-contents rcsinfo-filename)
-		  (goto-char (point-min))
-		  (while (not (eobp))
-		    (if (and (not (looking-at "^#"))
-			     (looking-at "\\s-*\\(\\S-+\\)\\s-+\\(.*\\)"))
-			(let ((exp (dsvn-emacsify-regexp (match-string-no-properties 1)))
-			      (value (dsvn-expand local-svnroot (match-string-no-properties 2))))
-			  ;; Append since order matters.
-			  (setq result (append result (list (cons exp value))))))
-		    (forward-line)))
-		(kill-buffer tempbuf)))))
-    result))
-
-(defun dsvn-expand (svnroot str)
-  ;; Expand env vars and ~user things in STR.
-  ;; Use param SVNROOT for $SVNROOT
-  (let ((current-root (getenv "SVNROOT"))
-	result)
-    (unwind-protect
-	(progn
-	  (setenv "SVNROOT" svnroot)
-	  (setq result (expand-file-name (substitute-in-file-name str))))
-      (setenv "SVNROOT" current-root))
-    result))
-
-(defun dsvn-get-directories (files)
-  ;; For each file, get the directory it is in relative to $SVNROOT.
-  ;; Algorithm:
-  ;;   We want to prepend something from the SVN/Repository to each file.
-  ;;   If the SVN/Repository is relative, that is our prefix.
-  ;;   Else, get the SVN/Root, remove the :local: prefix if present and
-  ;;   remove this from the SVN/Repository, that is our prefix.
-
-  (let ((repos (dsvn-get-special-file-contents-as-one-line "Repository"))
-	prefix)
-    (if repos
-	(progn
-	  ;; Absolute path, we need to modify it according to SVN/Root
-	  (if (file-name-absolute-p repos)
-	      (let ((root (dsvn-get-special-file-contents-as-one-line "Root")))
-		(if root
-		    (progn
-		      (if (string-match "^:local:\\(.*\\)" root)
-			  (setq root (match-string-no-properties 1 root)))
-		      (replace-in-string repos
-					 (concat "^" (regexp-quote root))
-					 "")))))
-	  (setq prefix (file-name-as-directory repos))))
-    (if prefix
-	(mapcar (lambda (f)
-		  (concat prefix f))
-		files)
-      ;; No prefix probably means no SVN/Repository, they're fucked but
-      ;; don't do anything.
-      files)))
-
-(defun dsvn-apply-rcsinfo (rcsinfo files)
-  ;; Apply the rules in RCSINFO to FILES, returning any matches.
-  ;; RCSINFO looks like ((exp . value) (exp . value)...)
-  ;; Return the list of VALUEs whose EXPs match a file.
-  ;; Two special EXPS:
-  ;;	ALL - always matches, used in addition to any matches
-  ;;	DEFAULT - used if no matches
-
-  (let (matches)
-    ;; First, get the matches.
-    (while files
-      (let ((file (car files))
-	    (info rcsinfo))
-	(while info
-	  (let* ((elem (car info))
-		 (exp (car elem))
-		 (value (cdr elem)))
-	    (if (string-match exp file)
-		(setq matches (cons value matches))))
-	  (setq info (cdr info))))
-      (setq files (cdr files)))
-    ;; If no matches, add the DEFAULT value.
-    (if (not matches)
-	(let ((default (assoc "DEFAULT" rcsinfo)))
-	  (if default
-	      (setq matches (list (cdr default))))))
-    ;; If there is an ALL rule, add it in.
-    (let ((all (assoc "ALL" rcsinfo)))
-      (if all
-	  (setq matches (cons (cdr all) matches))))
-    matches))
 
 (defun dsvn-commit-insert-matching-files (func char desc)
   (let ((files dsvn-commit-files)
@@ -1340,11 +1200,8 @@ This mode is not meant to be user invoked."
 	  (prevbuf (current-buffer)))
       (save-excursion
 	(set-buffer buf)
-	(condition-case nil
-	    (view-mode prevbuf 'kill-buffer) ;XEmacs
-	  (error
-	   (view-mode-enter (list win prevwin) 'kill-buffer)
-	   (setq buffer-read-only t))))))) ;Emacs
+	(view-mode-enter (list win prevwin) 'kill-buffer)
+	(setq buffer-read-only t)))))
 
 (defun dsvn-sticky-tag (file)
   ;; Return the sticky tag for FILE, or nil.
@@ -1785,7 +1642,7 @@ the value of `foo'."
 	    (set-buffer buf)
 
 	    ;; Hack the modeline.
-	    (setq modeline-process
+	    (setq mode-line-process
 		  (concat ":"
 			  (symbol-name (process-status proc))
 			  (if (zerop (process-exit-status proc))

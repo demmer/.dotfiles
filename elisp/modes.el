@@ -338,88 +338,46 @@ with tab characters underneath."
 
 ;; Set up the various faces for hilighting
 
-(cond (window-system
-       (set-face-foreground 'bold "MediumPurple1")
-       (set-face-foreground 'bold-italic "MediumPurple1")
-
-       (set-face-foreground 'italic "medium spring green")
-
-       (set-face-underline-p 'underline nil)
-       (set-face-foreground  'underline "SkyBlue1")
-       
-       (set-face-background 'highlight "steelblue")
-       (set-face-foreground 'highlight "white")
-       
-       (set-face-background 'secondary-selection "red")
-       
-       (make-face 'fl-comment-face)
-       (if (face-differs-from-default-p 'fl-comment-face) nil
-	 (set-face-foreground 'fl-comment-face "medium spring green")
-	 )       
-       (make-face 'fl-doc-string-face)
-       (if (face-differs-from-default-p 'fl-doc-string-face) nil
-	 (set-face-foreground 'fl-doc-string-face "LavenderBlush1")
-	 )
-       (make-face 'fl-string-face)
-       (if (face-differs-from-default-p 'fl-string-face) nil
-	 (set-face-foreground 'fl-string-face "VioletRed2")
-	 )
-       (make-face 'fl-function-name-face)
-       (if (face-differs-from-default-p 'fl-function-name-face) nil
-	 (set-face-foreground 'fl-function-name-face "MediumPurple1")
-	 )
-       (make-face 'fl-keyword-face)
-       (if (face-differs-from-default-p 'fl-keyword-face) nil
-	 (set-face-foreground 'fl-keyword-face "RoyalBlue1")
-	 )
-
-       (make-face 'fl-type-face)
-       (if (face-differs-from-default-p 'fl-type-face) nil
-	 (set-face-foreground 'fl-type-face "dodger blue")
-	 )
-       
-       (make-face 'fl-misspelled-face)
-       (if (face-differs-from-default-p 'fl-misspelled-face) nil
-	 (set-face-underline-p 'fl-misspelled-face t)
-	 (set-face-foreground 'fl-misspelled-face "grey87")
-	 )
-       ))
 (require 'font-lock)
 
 (defun my-font-lock-init ()
-;  (setq font-lock-java-member-face 'fl-java-member-face)
-;  (setq font-lock-java-member-func-face 'fl-java-member-func-face)
-;  (setq font-lock-java-mod-face 'fl-java-mod-face)
-;  (setq font-lock-java-class-face 'fl-java-class-face)
-;  (setq font-lock-doc-string-face 'fl-doc-string-face)
-  (setq font-lock-comment-face 'fl-comment-face)
-  (setq font-lock-string-face 'fl-string-face)
-  (setq font-lock-function-name-face 'fl-function-name-face)
-  (setq font-lock-keyword-face 'fl-keyword-face)
-  (setq font-lock-type-face 'fl-type-face)
-  (setq font-lock-reference-face 'fl-type-face)
-  (setq font-lock-builtin-face 'fl-keyword-face)
-  (setq font-lock-constant-face 'fl-keyword-face)
+  (set-face-foreground 'bold "MediumPurple1")
+  (set-face-foreground 'bold-italic "MediumPurple1")
+
+  (set-face-foreground 'italic "medium spring green")
+
+  (set-face-underline-p 'underline nil)
+  (set-face-foreground  'underline "SkyBlue1")
+       
+  (set-face-background 'highlight "steelblue")
+  (set-face-foreground 'highlight "white")
+       
+  (set-face-background 'secondary-selection "red")
+       
+  (set-face-foreground 'font-lock-comment-face "medium spring green")
+  (set-face-foreground 'font-lock-string-face "VioletRed2")
+  (set-face-foreground 'font-lock-function-name-face "MediumPurple1")
+  (set-face-foreground 'font-lock-keyword-face "RoyalBlue1")
+  (set-face-foreground 'font-lock-type-face "dodger blue")
+
+  (setq font-lock-builtin-face 'font-lock-keyword-face)
+  (setq font-lock-constant-face 'font-lock-keyword-face)
+
   (setq search-highlight t)
 
   (setq font-lock-maximum-decoration				      
 	(list
 	 (cons 'c++-mode 2)
+	 (cons 'latex-mode t)
 	 (cons t t)))
 
   (setq font-lock-multiline t)
+
+  (setq c++-font-lock-extra-types (append '("std" "u_char" "u_int")
+					  c++-font-lock-extra-types))
   )
 
 (add-hook 'font-lock-mode-hook 'my-font-lock-init)
-
-(setq c++-font-lock-extra-types (append '("std" "u_char" "u_int")
-					c++-font-lock-extra-types))
-
-;(require 'lazy-lock)
-;(setq font-lock-support-mode 'lazy-lock-mode)
-
-;;; Suck in prefix
-;; (require 'prefix)
 
 (defvar termtype nil)
 (setq termtype (getenv "TERM"))         ; get our terminal type
@@ -482,9 +440,9 @@ with tab characters underneath."
   )
 
 ;; encryption
-(require 'crypt++)
-(setq crypt-encryption-type 'pgp)
-(crypt-rebuild-tables)
+;(require 'crypt++)
+;(setq crypt-encryption-type 'pgp)
+;(crypt-rebuild-tables)
 
 ;; minibuffer
 ;; (resize-minibuffer-mode t)

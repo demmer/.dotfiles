@@ -671,13 +671,4 @@ If `tcl-process' is nil or dead, start a new process first."
 
 (provide 'tcl-mode)
 
-
-;;{{{ Emacs local variables
-
-;; Local Variables:
-;; folded-file: t
-;; End:
-
-;;}}}
-
 ;;; tcl-mode.el ends here
