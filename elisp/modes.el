@@ -250,6 +250,15 @@ with tab characters underneath."
 				)
 			      auto-mode-alist))
 
+;; purge ps-mode from the magic-mode-alist
+(setq magic-mode-alist
+      (mapcar
+       (lambda (pair) "" nil
+	 (if (not (eq (cdr pair) 'ps-mode))
+	     pair))
+       magic-mode-alist))
+(setq magic-mode-alist (remove-if #'null magic-mode-alist))
+
 ;;; Setup perl mode
 (require 'perl-mode)
 (defun my-perl-setup ()
