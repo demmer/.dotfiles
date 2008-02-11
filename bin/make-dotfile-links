@@ -37,6 +37,7 @@ makelinks() {
 	for f in `cd $dir && ls -1d .* | grep -v ".#"` ; do
 		[ $f = "." ] && continue
 		[ $f = ".." ] && continue
+		[ -f $dir/$host/$f-NOLINK ] && continue ; # per-host ignorable
 		[ -f $dir/$host/$f ] && continue ; # hack, works for toplevel
 	
             if [ -L $f ] ; then
