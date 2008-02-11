@@ -1,0 +1,35 @@
+! .Xdefaults.in
+!
+! Run through subst-geometry before loading to override geometry
+! settings for various screen resolutions.
+
+! xterm
+xterm*foreground:			ivory
+xterm*background:			black
+xterm*cursorColor:              	yellow
+xterm*pointerColor:             	white
+xterm*pointerColorBackground:   	ivory
+xterm*jumpScroll:			true
+xterm*saveLines:			1000	
+xterm*scrollBar:			false
+xterm*scrollBar*thickness:		12
+xterm*reverseWrap:			true
+xterm*font:       			-*-lucidatypewriter-bold-*-*-*-12-*-75-75-*-*-*-*
+
+
+! emacs
+emacs*font:			-*-lucidatypewriter-bold-*-*-*-12-*-75-75-*-*-*-*
+emacs*geometry:			=82x54+0+1
+emacs*borderWidth:		0
+emacs*internalBorder: 		0
+emacs*foreground:		ivory
+emacs*background:		black
+emacs*menu*foreground:		black
+emacs*menu*background:		gray87
+emacs*menubar*foreground:  	black
+emacs*menubar*background:  	grey87
+emacs*scrollbar*foreground:	honeydew2
+emacs*scrollbar*background:	cadetBlue4
+emacs*borderColor:		white
+emacs*cursorColor:		yellow
+emacs*pointerColor:		red
