@@ -19,6 +19,8 @@ printkilo  = 0;
 for a in sys.argv:
     if (a == "-B"):
 	printbytes = 1;
+    elif (a == "-sudo"):
+	cmd = "sudo " + cmd;
     elif (a == "-k"):
 	printkilo = 1;
     else:
