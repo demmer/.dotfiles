@@ -6,12 +6,38 @@ VERBOSE=no
 MAILDIR=$HOME/Mail
 LOGFILE=$HOME/Mail/procmaillog
 LOGABSTRACT=all
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/cloudmark/lib
+
+#
+# Reports from logcheck should just go straight to the inbox
+#
+:0
+* ^From: .*logcheck@pisco.cs.berkeley.edu
+$MAILDIR/
+
+#
+# Run mail through cloudmark, adding a header if it's spam (i.e.
+# cmae_client exited with an error code)
+#
+:0 Wc
+| $HOME/cloudmark/bin/cmae_client -t
+ 
+:0 Wef
+| formail -I "X-Cloudmark-Spam-Flag: YES"
+
+#
+# Specifically look for the X-ASG-Tag as an alternative to the 
+# full Barracuda classification.
+#
+:0 Wf
+* ^X-ASG-Tag: (RBL|INTENT)
+| formail -I "X-ASG-Spam-Flag: YES"
 
 #
 # Handle spam
 #
 :0
-* ^X-Barracuda-Spam-Flag: YES
+* ^X-(BarracudaXXX|ASGXXX|Cloudmark)-Spam-Flag: YES
 {
   foldername=Junk
 
@@ -69,10 +95,6 @@ LOGABSTRACT=all
 .fuse/
 
 :0
-* ^TO_.*soekris-tech@lists.soekris.com
-.soekris/
-
-:0
 * ^TO_.*end2end-interest@postel.org
 .end2end/
 
@@ -81,13 +103,22 @@ LOGABSTRACT=all
 .ip/
 
 :0
-* Mailing-List: list bytesforall
-.bytesforall/
-
-:0
 * From: .*@macosxhints.com
 * User-Agent: rss2email
-.macosxhints/
+.mac-stuff/
+
+:0
+* From: .*bozo@dev.null.invalid
+* User-Agent: rss2email
+.mac-stuff/
+
+:0
+* List-Id: .*x11-users.lists.apple.com
+.mac-stuff/
+
+:0
+* List-Id: .*openmoko.org
+.openmoko/
 
 #
 # Pipe the all dtnmail.dtnrg.org messages through expectmail
@@ -104,33 +135,16 @@ test_dtnmail/
 # Ignore annoying dtn-users crap
 #
 :0
-* ^Subject: dtn-users post from .* requires approval
+* ^Subject: dtn-users (post from .* requires approval|subscription notification)
 .dtn-users-crap/
 
 #
-# Grab dtn / tierstore commit notifications (except my own checkins)
+# Same thing for dtn-users-admin bounces
 #
 :0
-* List-Post: <.*dtn-commits.*>
-{
-   :0 B
-   * CVS User: demmer
-   /dev/null
-
-   :0
-   .dtn-commits/
-}
-
-:0
-* ^TO_.*tierstore-commits
-{
-   :0 B
-    * CVS User: demmer
-    /dev/null
-
-   :0
-   .dtn-commits/
-}
+* ^From: Postmaster@163.com
+* ^TO_.*dtn-users-admin
+.dtn-users-crap/
 
 #
 # Save a copy of all mail into the spool maildir, marking as already read.
@@ -208,6 +222,14 @@ test_dtnmail/
 :0
 * From: .*demmer@(cs|eecs|EECS).[Bb]erkeley.[Ee]du
 * X-AppleMailSentBy: demmer
+/dev/null
+
+#
+# Ditto for my iPhone
+#
+:0
+* From: .*demmer@(cs|eecs|EECS).[Bb]erkeley.[Ee]du
+* X-Mailer: iPhone.*
 /dev/null
 
 #
