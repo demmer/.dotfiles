@@ -1,0 +1,113 @@
+# Empty DH compatible .procmailrc file
+# Last updated 7/25/2007
+PATH=/bin:/usr/bin:/usr/local/bin
+MAILDIR=$HOME/Maildir
+LOGFILE=$HOME/procmaillog
+SHELL=/bin/sh
+
+#
+# Mailing lists that I want into separate folders before spooling
+#
+:0
+* To: .*dailykos@demmer.nu
+{
+  :0fh
+  | sed 's/<> <rss@dailykos.com>/<rss@dailykos.com>/'
+
+  :0
+  .dailykos/
+}
+
+:0
+* To: .*moveon@demmer.nu
+$DEFAULT
+
+:0
+* To: .*ppaction@demmer.nu
+$DEFAULT
+
+:0
+* To: .*amnesty@demmer.nu
+$DEFAULT
+
+:0
+* From: .*Yahoo.*NHL
+.hockey-news/
+
+:0
+* From: .*Sharks News
+.hockey-news/
+
+:0
+* From: .*ESPN.com.*NHL
+.hockey-news/
+
+#
+# Spam
+#
+:0
+* ^X-Spam-Flag: YES
+{
+  foldername=Junk
+
+  :0c
+  .$foldername/ # stores in .$foldername/new/
+
+  :0
+  * LASTFOLDER ?? /\/[^/]+$
+  { tail=$MATCH }
+
+  TRAP="mv $LASTFOLDER .$foldername/cur/$tail:2,S"
+
+  HOST
+}
+
+#
+# Save a copy of all mail into the spool mailbox, marking as already read.
+#
+:0c
+{
+  foldername=all_home_mail
+
+  :0c
+  .$foldername/ # stores in .$foldername/new/
+
+  :0
+  * LASTFOLDER ?? /\/[^/]+$
+  { tail=$MATCH }
+
+  TRAP="mv $LASTFOLDER .$foldername/cur/$tail:2,S"
+
+  HOST
+}
+
+#
+# To get the messages that I've sent into the all_mail mailbox, 
+# I've told Apple Mail to bcc myself on all messages, so find
+# them here and put them in the bitbucket.
+#
+:0
+* From:.*@demmer.nu
+* X-AppleMailSentBy: demmer
+/dev/null
+
+#
+# Get rid of duplicate messages after saving a copy to the spool.
+#
+:0 Wh: msgid.lock
+| formail -D 32768 $HOME/msgid.cache
+
+#
+# Now some other lists
+#
+:0
+* Mailing-List: .*inkt.*
+.inkt-crap/
+
+# Catch-all rule for all unmatched email
+:0
+$HOME/Maildir/
+
+#
+# C'est fini.
+#
