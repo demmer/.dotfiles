@@ -92,6 +92,14 @@ $DEFAULT
 /dev/null
 
 #
+# Ditto for my iPhone
+#
+:0
+* From:.*mike@demmer.nu
+* X-Mailer: iPhone.*
+/dev/null
+
+#
 # Get rid of duplicate messages after saving a copy to the spool.
 #
 :0 Wh: msgid.lock
