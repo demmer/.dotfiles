@@ -7,14 +7,6 @@
 (defvar lvc-hg-command "hg"
   "*How to run mercurial")
 
-(defvar lvc-hg-commit-template nil
-  "*If non nil, default text to put in commit buffers")
-
-(defvar lvc-hg-explain-each-line t
-  "*If non-nil lvc-hg-mode will print a message in the echo area
-describing the current line.  This info is always available with
-the \\[lvc-explain-this-line] command.")
-
 ;
 ; Plan:
 ;
@@ -24,14 +16,6 @@ the \\[lvc-explain-this-line] command.")
 ;
 ; then have keybindings for pull, push, update, merge
 
-
-(defvar lvc-hg-temp-file-directory
-  (or (getenv "TMPDIR")
-      (and (file-directory-p "/tmp") "/tmp")
-      (and (file-directory-p "C:\\TEMP") "C:\\TEMP")
-      (and (file-directory-p "C:\\") "C:\\")
-      "/tmp")
-  "*Name of a directory where lvc-hg can put temporary files.")
 
 (defvar lvc-hg-revert-confirm t
   "*If non-nil, reverting files will require confirmation.")
@@ -317,7 +301,7 @@ been locally modified\"."
   "Move cursor to the next file."
   (interactive)
   (if (re-search-forward lvc-hg-file-pat nil t)
-      (if lvc-hg-explain-each-line
+      (if lvc-explain-each-line
 	  (lvc-hg-explain-this-line))
     (error "No more files")))
 
@@ -329,7 +313,7 @@ been locally modified\"."
     (if (re-search-backward lvc-hg-file-pat nil t)
 	(progn 
 	  (goto-char (match-end 0))
-	  (if lvc-hg-explain-each-line
+	  (if lvc-explain-each-line
 	      (lvc-hg-explain-this-line)))
       (goto-char pt)
       (error "No more files"))))
@@ -541,7 +525,7 @@ formally committed."
   (interactive "P")
   (let* ((files (lvc-hg-get-relevant-files arg))
 	 (multiple (cdr files)))
-    (if (and lvc-hg-remove-confirm
+    (if (and lvc-remove-confirm
 	     (not (yes-or-no-p (format "Remove %s? "
 				       (if multiple
 					   "the marked files"
@@ -560,12 +544,12 @@ formally committed."
 By default reverts the file on this line.
 If supplied with a prefix argument, revert the marked files.
 By default this command requires confirmation to remove the files.  To
-disable the confirmation, you can set `lvc-hg-revert-confirm' to nil."
+disable the confirmation, you can set `lvc-revert-confirm' to nil."
   (interactive "P")
   (let* ((files (lvc-hg-get-relevant-files arg))
 	 (multiple-p (cdr files))
 	 status)
-    (if (and lvc-hg-revert-confirm
+    (if (and lvc-revert-confirm
 	     (not (yes-or-no-p (format "Revert %s? "
 				       (if multiple-p
 					   "the marked files"
@@ -647,8 +631,8 @@ This mode is not meant to be user invoked."
   (lvc-hg-prepare-commit-buffer files)
   (setq lvc-hg-commit-initial-buffer-contents (buffer-string))
   (goto-char (point-min))
-  (if lvc-hg-commit-template
-      (insert lvc-hg-commit-template))
+  (if lvc-commit-template
+      (insert lvc-commit-template))
   (set-buffer-modified-p nil)
 
   (message (substitute-command-keys "Type \\[lvc-hg-commit-finish] when done."))
@@ -1157,12 +1141,12 @@ the value of `foo'."
 
 	    ;; Go to the first file, if there is one, unless the user
 	    ;; has already moved.  lvc-hg-next-line will print stuff
-	    ;; unless lvc-hg-explain-each-line is nil.  We make it nil
+	    ;; unless lvc-explain-each-line is nil.  We make it nil
 	    ;; if BUF is not visible.  Also, lvc-hg-next-line will error
 	    ;; if no files.
 	    (if (= (point) (point-min))
-		(let ((lvc-hg-explain-each-line
-		       (and lvc-hg-explain-each-line
+		(let ((lvc-explain-each-line
+		       (and lvc-explain-each-line
 			    (get-buffer-window buf 'visible))))
 		  (condition-case nil
 		      (lvc-hg-next-line)

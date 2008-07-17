@@ -4,8 +4,8 @@
 ;
 
 (require 'lcvs)
-(require 'dsvn)
 (require 'lvc-hg)
+(require 'lvc-svn)
 
 (defvar lvc-use-diff-mode t
   "*If non nil, lsvn will put diff buffers into diff-mode (if available).")
@@ -29,6 +29,23 @@ available with the \\[lcvs-explain-this-line] command.")
 (defvar lvc-current-directory nil
   "Buffer-local root of the source directory.")
 (make-variable-buffer-local 'lvc-current-directory)
+
+(defvar lvc-temp-file-directory
+ (or (getenv "TMPDIR")
+     (and (file-directory-p "/tmp") "/tmp")
+     (and (file-directory-p "C:\\TEMP") "C:\\TEMP")
+     (and (file-directory-p "C:\\") "C:\\")
+     "/tmp")
+ "*Name of a directory where lvc-svn can put temporary files.")
+
+(defvar lvc-commit-template ""
+  "Template for commit messages")
+
+(defvar lvc-revert-confirm t
+ "*If non-nil, reverting files will require confirmation.")
+
+(defvar lvc-remove-confirm t
+  "*If non-nil, removing files will require confirmation.")
 
 (defvar lvc-font-lock-enabled t
   "Whether or not to turn on font lock")
@@ -119,7 +136,7 @@ available with the \\[lcvs-explain-this-line] command.")
    ((file-exists-p (format "%s/CVS" (directory-file-name dir)))
     (lcvs-examine dir))
    ((file-exists-p (format "%s/.svn" (directory-file-name dir)))
-    (dsvn-examine dir))
+    (lvc-svn-status dir))
    ((file-exists-p (format "%s/.hg" (directory-file-name dir)))
     (lvc-hg-status dir))
    (t (message (format "Cannot determine VC system in directory %s" dir)))
