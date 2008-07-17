@@ -54,10 +54,19 @@ available with the \\[lcvs-explain-this-line] command.")
   (let ((face (make-face 'lvc-needs-update-face)))
     (condition-case nil
 	(make-face-bold face)
-      (error (set-face-foreground face "purple")))
+      (error nil))
+    (set-face-foreground face "violet")
     face))
 
 (defvar lvc-local-changes-face
+  (let ((face (make-face 'lvc-local-changes-face)))
+    (condition-case nil
+	(make-face-bold face)
+      (error nil))
+    (set-face-foreground face "royalblue")
+    face))
+
+(defvar lvc-addremove-face
   (let ((face (make-face 'lvc-local-changes-face)))
     (condition-case nil
 	(make-face-bold face)
@@ -71,14 +80,6 @@ available with the \\[lcvs-explain-this-line] command.")
 	(make-face-bold face)
       (error nil))
     (set-face-foreground face "red")
-    face))
-
-(defvar lvc-conflict-face
-  (let ((face (make-face 'lvc-conflict-face)))
-    (condition-case nil
-	(make-face-bold face)
-      (error nil))
-    (set-face-foreground face "lightblue")
     face))
 
 (defvar lvc-other-face
