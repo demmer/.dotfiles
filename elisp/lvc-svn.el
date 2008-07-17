@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.2 $)
+;; Version: trunk ($Revision: 1.3 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -58,7 +58,7 @@
 (make-variable-buffer-local 'lvc-svn-linepat)
 
 (defvar lvc-svn-font-lock-keywords
-  '(("^[ ]+\\*[ ]+..+"    . lvc-needs-update-face)
+  '(("^[ ]+\\*[ ]+[^ ].+"    . lvc-needs-update-face)
     ("^[M][ *].*" . lvc-local-changes-face)
     ("^[AR][ *].*" . lvc-addremove-face)
     ("^C[ *].*"    . lvc-conflict-face)
