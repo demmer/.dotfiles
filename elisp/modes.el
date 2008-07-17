@@ -46,27 +46,19 @@
   )
 (add-hook 'text-mode-hook 'my-text-setup)
 
+; don't ignore case for dabbrev
+(require 'dabbrev)
+(setq dabbrev-case-fold-search nil		
+      dabbrev-case-replace nil)
+
 ;;; Setup c/c++/java mode
 (require 'cc-mode)
 (require 'cc-vars)
-(require 'dabbrev)
 (require 'once-only-header)
 
 (setq ooh-file-license
 "/*
- *    Copyright 2008 Intel Corporation
- * 
- *    Licensed under the Apache License, Version 2.0 (the \"License\");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- * 
- *        http://www.apache.org/licenses/LICENSE-2.0
- * 
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an \"AS IS\" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2008 KBM Labs. All rights reserved.
  */
 
 ")
@@ -80,8 +72,6 @@
 (defun my-c-common-setup ()
   (interactive)
   (setq c-tab-always-indent t)			; indent wherever cursor is
-  (setq dabbrev-case-fold-search nil		; don't ignore case for dabbrev
-	dabbrev-case-replace nil)
   (setq c-electric-pound-behavior '(alignleft))	; use electric pound
   (define-key c-mode-map "\C-m" 'newline-and-indent)
   (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
@@ -219,10 +209,10 @@ with tab characters underneath."
 
 
 ; load visual-basic mode
-(require 'visual-basic-mode)
+; (require 'visual-basic-mode)
 
 ; and nesc mode
-(require 'nesc-mode)
+; (require 'nesc-mode)
 
 ; and sgml mode
 (autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
@@ -327,6 +317,10 @@ with tab characters underneath."
   (setq indent-line-function 'indent-to-left-margin)
   )
 (add-hook 'html-mode-hook 'my-html-setup)
+
+;; little django mode
+(require 'django-mode)
+
 
 ;; setup sh-mode (shell-script-mode)
 (require 'sh-script)
@@ -471,3 +465,5 @@ with tab characters underneath."
 (if whitespace-global-mode
     (whitespace-global-mode nil))
 (setq whitespace-modes '())
+
+(require 'grope)
