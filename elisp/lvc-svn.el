@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.1 $)
+;; Version: trunk ($Revision: 1.2 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -56,6 +56,13 @@
 ;; Line pattern appropriate for this buffer.
 (defvar lvc-svn-linepat nil)
 (make-variable-buffer-local 'lvc-svn-linepat)
+
+(defvar lvc-svn-font-lock-keywords
+  '(("^[ ]+\\*[ ]+..+"    . lvc-needs-update-face)
+    ("^[M][ *].*" . lvc-local-changes-face)
+    ("^[AR][ *].*" . lvc-addremove-face)
+    ("^C[ *].*"    . lvc-conflict-face)
+    ))
 
 (defvar lvc-svn-debug nil
  "If non-nil, put lvc-svn into debug mode.")
@@ -221,7 +228,8 @@ via `describe-key' on \\[describe-key]"
  (setq modeline-process '(":%s"))
  (setq buffer-read-only t)
  (make-variable-buffer-local 'font-lock-defaults)
-;  (setq font-lock-defaults '(lcvs-font-lock-keywords))
+  (if lvc-font-lock-enabled
+      (setq font-lock-defaults '(lvc-svn-font-lock-keywords)))
  (run-hooks 'lvc-svn-mode-hook))
 
 (defun lvc-svn-explain-this-line ()
