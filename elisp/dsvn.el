@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2005- Michael Demmer <demmer@cs.berkeley.edu>
 ;; Created: April 2005
-;; Version: 1.1 ($Revision: 1.13 $)
+;; Version: 1.1 ($Revision: 1.14 $)
 (defconst dsvn-version "1.1")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -48,6 +48,9 @@
 
 ;; we depend on some lcvs functions
 (require 'lcvs)
+
+;; add ediff internal
+(require 'ediff-vers)
 
 (defvar dsvn-svn-command "svn"
   "*How to call svn.")
@@ -1045,7 +1048,7 @@ This mode is not meant to be user invoked."
 
 (defun dsvn-commit-insert-matching-files (func char desc)
   (let ((files dsvn-commit-files)
-	first cur state)
+	first cur state file)
     (setq first t)
     (setq cur files)
     (while cur
@@ -1164,16 +1167,6 @@ This mode is not meant to be user invoked."
 	(progn
 	  (string-match ".*" contents)
 	  (match-string-no-properties 0 contents)))))
-
-(defun dsvn-emacsify-regexp (exp)
-  ;; Convert a SVN-style regular expression into Emacs-style.
-  ;; SVN-style is egrep-style
-  ;; We basically just fix the parens and bars to be quoted,
-  ;; we don't handle the fancy stuff.
-  (setq exp (replace-in-string exp "\\(^\\|[^\\]\\)(" "\\1\\\\("))
-  (setq exp (replace-in-string exp "\\([^\\]\\))" "\\1\\\\)"))
-  (setq exp (replace-in-string exp "\\([^\\]\\)|" "\\1\\\\|"))
-  exp)
 
 (defun dsvn-all-same-elements (list)
   ;; Return non-nil if all elements in LIST are the same

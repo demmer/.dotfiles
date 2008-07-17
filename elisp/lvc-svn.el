@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.3 $)
+;; Version: trunk ($Revision: 1.4 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -29,6 +29,9 @@
 ;; blah blah blah
 ;; (setq lvc-svn-commit-template "BugID: \nCC: \nApproved-by: \nReviewed-by: \n")
 
+(require 'lvc)
+(require 'ediff)
+(require 'ediff-vers)
 
 ;; User vars.
 
@@ -79,7 +82,7 @@
    (define-key map "C" 'lvc-svn-commit)
    (define-key map "d" 'lvc-svn-diff-base)
    (define-key map "D" 'lvc-svn-diff-head)
-;    (define-key map "e" 'lcvs-ediff)
+   (define-key map "e" 'lvc-svn-ediff)
    (define-key map "l" 'lvc-svn-log-base)
    (define-key map "L" 'lvc-svn-log-head)
 ;    (define-key map "s" 'lcvs-show-status)
@@ -354,6 +357,20 @@ the file on this line."
 			 (mapcar 'car (lvc-svn-get-relevant-files arg))))
  (message "Diffing...done"))
 
+
+;; This doesn't drop you back to the examine/update buffer and is hard
+;; to do (would have to set the ediff hook (maybe the cleanup hook) to
+;; some function to put us back in the examine buffer then remove the
+;; function from the hook.  this would prevent multiple ediffs running
+;; from dsvn since the hook is global)
+(defun lvc-svn-ediff (arg)
+  "Ediff a file with the HEAD revision.
+This will compare the contents of the current-file with the tip of
+the current branch."
+  (interactive "P")
+  (find-file (lvc-svn-current-file))
+  (ediff-vc-internal "" "" nil))
+
 ;; XXX/lomew work in -v and --stop-on-copy
 ;; XXX/lomew work in the repositioning stuff?
 ;;   this would assume we are logging from beyond BASE
@@ -465,7 +482,7 @@ The files won't be actually added to the repository until they are
 formally committed."
  (interactive "P")
  (let ((files (lvc-svn-get-relevant-files arg))
-	status cur)
+	state status cur)
    ;; Check thru the files for addable ones.  These are only ?/unversioned ones
    (setq cur files)
    (while cur

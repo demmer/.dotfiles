@@ -688,18 +688,26 @@ to the font lock list"
   (newline)
   )
 
-(defun compile-no-local ()
+(defun compile-no-local (command &optional comint)
   "Just like 'compile' but forcing compile-command to be a global
    variable."
-  (interactive)
+  (interactive
+   (list
+    (let ((command (eval compile-command)))
+      (if (or compilation-read-command current-prefix-arg)
+	  (read-from-minibuffer "Compile command: "
+				command nil nil
+				(if (equal (car compile-history) command)
+				    '(compile-history . 1)
+				  'compile-history))
+	command))
+    (consp current-prefix-arg)))
   (kill-local-variable 'compile-command)
-  (let ((command (read-from-minibuffer "Compile command: "
-				       compile-command nil nil
-				       '(compile-history . 1))))
-    (unless (equal command compile-command)
-      (setq compile-command command))
-    (save-some-buffers (not compilation-ask-about-save) nil)
-    (compile-internal command "No more errors")))
+  (unless (equal command (eval compile-command))
+    (setq compile-command command))
+  (save-some-buffers (not compilation-ask-about-save) nil)
+  (setq compilation-directory default-directory)
+  (compilation-start command comint))
 
 (defun my-fill-paragraph ()
   "Just like fill-paragraph only in longlines-mode it forces
@@ -748,4 +756,10 @@ to the font lock list"
 					     startup-hooks merge-buffer-file)))
     (set-buffer buf)
     (rename-buffer (format "* Ediff %s *" merge-buffer-file))))
+  
+(defun byte-compile-whole-directory (directory)
+  "Forcably byte compile everything in a directory"
+  (interactive "DByte compile whole directory: \n")
+  (message (format "compiling %s" directory))
+  (byte-recompile-directory directory t t))
   

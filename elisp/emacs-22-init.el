@@ -97,7 +97,6 @@ This must be bound to a mouse-down event in the mode-line."
        (scroll-bar-mode -1)
        (blink-cursor-mode -1)
        (global-font-lock-mode t)
-       (load "func-menu")
        (transient-mark-mode 1)
        (set-face-foreground 'region "ivory")
        (set-face-background 'region "royal blue")))
