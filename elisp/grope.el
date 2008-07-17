@@ -67,3 +67,4 @@
       (replace-dehighlight))
     ))
 
+(provide 'grope)
