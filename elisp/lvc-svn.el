@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.4 $)
+;; Version: trunk ($Revision: 1.5 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -79,6 +79,7 @@
    (define-key map "u" 'lvc-svn-unmark-file)
    (define-key map "U" 'lvc-svn-update-some-files)
    (define-key map "R" 'lvc-svn-revert)
+   (define-key map "r" 'lvc-svn-remove)
    (define-key map "C" 'lvc-svn-commit)
    (define-key map "d" 'lvc-svn-diff-base)
    (define-key map "D" 'lvc-svn-diff-head)
@@ -603,6 +604,25 @@ disable the confirmation, you can set `lvc-revert-confirm' to nil."
 	      "\n")
      (error "Revert failed, see *SVN-revert* buffer for details.")))))
 
+
+(defun lvc-svn-remove (arg)
+  "Remove files, (obviously) discarding local changes."
+  (interactive "P")
+  (let* ((files (lvc-svn-get-relevant-files arg))
+	 (multiple-p (cdr files)))
+    (if (and lvc-remove-confirm
+	     (not (yes-or-no-p (format "Remove %s? "
+				       (if multiple-p
+					   "the marked files"
+					 (car (car files)))))))
+	(message "Remove cancelled")
+      ;; Otherwise remove the files
+      (mapcar (function (lambda (e)
+			  (let ((file (car e)))
+			    (shell-command (format "rm -rf %s" file))
+			    (lvc-svn-remove-file-line file)
+			    )))
+	      files))))
 
 ;; The committing major mode
 
