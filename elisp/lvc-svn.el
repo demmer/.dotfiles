@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.5 $)
+;; Version: trunk ($Revision: 1.6 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -29,7 +29,6 @@
 ;; blah blah blah
 ;; (setq lvc-svn-commit-template "BugID: \nCC: \nApproved-by: \nReviewed-by: \n")
 
-(require 'lvc)
 (require 'ediff)
 (require 'ediff-vers)
 
