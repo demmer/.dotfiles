@@ -3,40 +3,8 @@
 ;;; compiled from amd and other sources
 ;;;
 
-(defun memequal (el list)
-  "[Jak] Returns non-nil if ELT is an element of LIST.  Comparison
-done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
-  (let ((res nil))
-    (while list
-      (if (equal el (car list))
-          (progn
-            (setq res (cdr list))
-            (setq list nil)))
-      (setq list (cdr list)))
-    res))
-
-(defmacro append-no-dup (el list)
-  "[Jak] Macro: adds EL to the beginning of LIST if it is not already there."
-  (`(if (not (memequal (, el) (, list)))
-       (setq (, list) (append (, list) (list (, el)))))))
-
-(defmacro prepend-no-dup (el list)
-  "[Jak] Macro: adds EL to the beginning of LIST if it is not already there."
-  (`(if (not (memequal (, el) (, list)))
-       (setq (, list) (cons (, el) (, list))))))
-
-(defun remove-el (el list)
-  "Remove el from list"
-  (if (null list) nil
-    (let ((first (car list)))
-      (if (equal el first)
-	  (remove-el el (cdr list))
- 	(cons first (remove-el el (cdr list)))))
-    )
-  )
-
 ;;; Set up our load path
-(prepend-no-dup (format "%s/elisp" *HOME*) load-path)
+(push (format "%s/elisp" *HOME*) load-path)
 
 ;;; turn off audio bell
 (setq visible-bell t)
@@ -177,7 +145,7 @@ CVS or a .svn subdirectory in the named dir"
 ;; require these features...
 (require 'complete)
 (partial-completion-mode)
-(append-no-dup ".T" completion-ignored-extensions)
+(nconc completion-ignored-extensions '(".T"))
 
 (require 'compile)
 (setq compile-command '"make")

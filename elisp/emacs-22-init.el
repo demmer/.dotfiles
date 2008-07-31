@@ -3,38 +3,6 @@
 ;;; compiled from amd and other sources
 ;;;
 
-(defun memequal (el list)
-  "[Jak] Returns non-nil if ELT is an element of LIST.  Comparison
-done with EQUAL.  The value is actually the tail of LIST whose car is ELT."
-  (let ((res nil))
-    (while list
-      (if (equal el (car list))
-          (progn
-            (setq res (cdr list))
-            (setq list nil)))
-      (setq list (cdr list)))
-    res))
-
-(defmacro append-no-dup (el list)
-  "[Jak] Macro: adds EL to the beginning of LIST if it is not already there."
-  (`(if (not (memequal (, el) (, list)))
-       (setq (, list) (append (, list) (list (, el)))))))
-
-(defmacro prepend-no-dup (el list)
-  "[Jak] Macro: adds EL to the beginning of LIST if it is not already there."
-  (`(if (not (memequal (, el) (, list)))
-       (setq (, list) (cons (, el) (, list))))))
-
-(defun remove-el (el list)
-  "Remove el from list"
-  (if (null list) nil
-    (let ((first (car list)))
-      (if (equal el first)
-	  (remove-el el (cdr list))
- 	(cons first (remove-el el (cdr list)))))
-    )
-  )
-
 ;;; Set up our load path
 (prepend-no-dup (format "%s/elisp" *HOME*) load-path)
 
@@ -136,13 +104,6 @@ This must be bound to a mouse-down event in the mode-line."
   (setq lcvs-log-restrict-to-branch t)
 )
 (add-hook 'lcvs-mode-hook 'my-lcvs-setup)
-
-;; dsvn setup
-(load "dsvn")
-(defun my-dsvn-setup ()
-  (set-face-foreground 'dsvn-UP-face "yellow")
-)
-(add-hook 'dsvn-mode-hook 'my-dsvn-setup)
 
 (require 'lvc)
 
