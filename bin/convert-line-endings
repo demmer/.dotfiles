@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for f
+do
+    echo "converting $f..."
+    mv $f $f.bak
+    tr '\r\n' '\n' < $f.bak > $f
+done
