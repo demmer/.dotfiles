@@ -29,6 +29,41 @@
   (set (make-local-variable 'compilation-disable-input) t)
   (set (make-local-variable 'buffer-read-only) nil))
 
+(defvar grope-mode-font-lock-keywords
+  '(;; Command output lines.
+     ("^\\([A-Za-z_0-9/\.+-]+\\)[ \t]*:" 1 font-lock-function-name-face)
+     (": \\(.+\\): \\(?:Permission denied\\|No such \\(?:file or directory\\|device or address\\)\\)$"
+      1 grep-error-face)
+     ;; remove match from grep-regexp-alist before fontifying
+     ("^Grope[/a-zA-z]* started.*"
+      (0 '(face nil message nil help-echo nil mouse-face nil) t))
+     ("^Grope[/a-zA-z]* finished \\(?:(\\(matches found\\))\\|with \\(no matches found\\)\\).*"
+      (0 '(face nil message nil help-echo nil mouse-face nil) t)
+      (1 compilation-info-face nil t)
+      (2 compilation-warning-face nil t))
+     ("^Grope[/a-zA-z]* \\(exited abnormally\\|interrupt\\|killed\\|terminated\\)\\(?:.*with code \\([0-9]+\\)\\)?.*"
+      (0 '(face nil message nil help-echo nil mouse-face nil) t)
+      (1 grep-error-face)
+      (2 grep-error-face nil t))
+     ("^.+?-[0-9]+-.*\n" (0 grep-context-face))
+     ;; Highlight grep matches and delete markers
+     ("\\(\033\\[01;31m\\)\\(.*?\\)\\(\033\\[[0-9]*m\\)"
+      ;; Refontification does not work after the markers have been
+      ;; deleted.  So we use the font-lock-face property here as Font
+      ;; Lock does not clear that.
+      (2 (list 'face nil 'font-lock-face grep-match-face))
+      ((lambda (bound))
+       (progn
+	 ;; Delete markers with `replace-match' because it updates
+	 ;; the match-data, whereas `delete-region' would render it obsolete.
+	 (replace-match "" t t nil 3)
+	 (replace-match "" t t nil 1))))
+     ("\\(\033\\[[0-9;]*[mK]\\)"
+      ;; Delete all remaining escape sequences
+      ((lambda (bound))
+       (replace-match "" t t nil 1))))
+   "Additional things to highlight in grep output.
+This gets tacked on the end of the generated expressions.")
 
 (defun grope (sym)
   "Like grep but using grope"
