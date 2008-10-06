@@ -510,10 +510,13 @@ the characters on the first line."
   (save-excursion
     (goto-char from)
     (beginning-of-line)
-    (let ((use-equal (search-forward "=" (point-at-eol) t)))
+    (let ((use-equal (search-forward "=" (point-at-eol) t))
+	  (use-colon (search-forward ":" (point-at-eol) t)))
       (if use-equal
 	  (c-align-by-last-char from to "=" 1)
-	(c-align-by-last-char from to " " 1)))
+	(if use-colon
+	    (c-align-by-last-char from to ":" 1)
+	  (c-align-by-last-char from to " " 1))))
   ) ; save excursion
 )
 
