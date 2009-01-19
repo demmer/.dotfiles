@@ -99,3 +99,4 @@ alias apts='apt-cache search'
 alias aptq='sudo aptitude upgrade -s'
 alias dls='dpkg -l'
 
+alias p='python'
