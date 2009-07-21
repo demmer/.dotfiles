@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.6 $)
+;; Version: trunk ($Revision: 1.7 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -409,7 +409,9 @@ the current branch."
 				     ;; this file was changed in
 				     ;; BASE).
 				     (if (numberp base) (1+ base) base))
-			     (lvc-svn-current-file)))
+			     (if (string-equal (lvc-svn-current-file) ".")
+				 ""
+			       (lvc-svn-current-file))))
      (message "Logging...done"))))
 
 (defun lvc-svn-sort ()
