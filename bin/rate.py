@@ -19,6 +19,8 @@ printkilo  = 0;
 for a in sys.argv:
     if (a == "-B"):
 	printbytes = 1;
+    elif (a == "-debug"):
+        debug = 1
     elif (a == "-sudo"):
 	cmd = "sudo " + cmd;
     elif (a == "-k"):
@@ -30,7 +32,7 @@ print "Cmd is: "+cmd;
 
 inp, outp, errp = os.popen3(cmd);
 
-exp = re.compile('(\d+) IP \(.*length: (\d+)\)');
+exp = re.compile('(\d+) IP \(.*length:? (\d+)\)');
 rate = 0.0;
 totalbits = 0;
 
@@ -65,6 +67,9 @@ while True:
         
     readyrd, readywd, readyerr = select([outp], [], [outp], timeout)
 
+    if debug:
+        print "returned from select: readyrd %s" % readyrd
+
     if (readyrd == []):
         # timeout kicked, adjust on next loop
         continue
@@ -75,9 +80,15 @@ while True:
 
     fd = readyrd[0];
     line = fd.readline();
+
+    if debug:
+        print "got %s" % line
     
     m = exp.match(line);
     if (m == None):
+        if debug:
+            print "no match for pattern"
+    
         continue
     
     tdiff = m.group(1);
