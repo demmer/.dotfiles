@@ -106,14 +106,21 @@ for d in ~/man/* ; do
 done
 fi
 
+# XXX It's better to just have pylib in the path as opposed to
+# expanding out all the links
+# pythonpath=
+# if [ -d ~/pylib ]; then
+# for d in ~/pylib/* ; do
+#         if [ -d $d ] ; then
+#                 d=`(cd $d && pwd -r)`
+#                 pythonpath=($pythonpath $d)
+#         fi
+# done
+# fi
+
 pythonpath=
 if [ -d ~/pylib ]; then
-for d in ~/pylib/* ; do
-        if [ -d $d ] ; then
-                d=`(cd $d && pwd -r)`
-                pythonpath=($pythonpath $d)
-        fi
-done
+  pythonpath=~/pylib
 fi
 
 #
@@ -144,7 +151,7 @@ fi
 
 if [ $ARCH = "Darwin" ] ; then
 # pkg-config and autotools
-export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/X11R6/lib/pkgconfig"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/X11R6/lib/pkgconfig:/usr/local/ssl/lib/pkgconfig"
 export ACLOCAL_FLAGS="-I /usr/share/aclocal"
 fi
 
@@ -241,4 +248,4 @@ if [ $ARCH = Darwin ] ; then
 fi
 
 export JYTHON_HOME="$HOME/work/jython"
-
+export DJANGO_SETTINGS_MODULE='rope.settings'
