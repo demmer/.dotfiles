@@ -282,6 +282,8 @@
 
 (defun vc-hg-diff (files &optional oldvers newvers buffer)
   "Get a difference report using hg between two versions of FILES."
+  (if (not (listp files))
+      (setq files (list files)))
   (let ((working (vc-workfile-version (car files))))
     (if (and (equal oldvers working) (not newvers))
 	(setq oldvers nil))
@@ -517,6 +519,8 @@ REV is the revision to check out into WORKFILE."
   "A wrapper around `vc-do-command' for use in vc-hg.el.
 The difference to vc-do-command is that this function always invokes `hg',
 and that it passes `vc-hg-global-switches' to it before FLAGS."
+  (if (listp file-or-list)
+      (setq file-or-list (car file-or-list)))
   (apply 'vc-do-command buffer okstatus "hg" file-or-list
          (if (stringp vc-hg-global-switches)
              (cons vc-hg-global-switches flags)
