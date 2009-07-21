@@ -18,8 +18,9 @@ def strip_comments(dir):
     for root, dirs, files in os.walk(dir):
         tmpdir = join(tmp, root)
         os.mkdir(tmpdir)
-        
+
         for name in files:
+            print 'Stripping comments from', name
             name = join(root,name)
             f = file(name)
             data = f.read()

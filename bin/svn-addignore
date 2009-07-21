@@ -8,8 +8,8 @@ if test -z "$DIR" ; then
 fi
 
 cur=`svn propget svn:ignore $DIR`
-new="$IGNORE
-$cur
+new="$cur
+$IGNORE
 "
 
 svn propset svn:ignore "$new" $DIR

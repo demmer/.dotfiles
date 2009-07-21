@@ -3,8 +3,8 @@
 # differences between two CVS / svn trees
 
 diff -N -ur --exclude \*.[oda] --exclude CVS --exclude .svn --exclude .hg \
-    --exclude .glimpse\* --exclude .\#\* \
-    --exclude \*.orig --exclude \*.rej \
+    --exclude .glimpse\* --exclude .\#\* --exclude \#\* \
+    --exclude \*.orig --exclude \*.rej --exclude \*.pyc --exclude build\* --exclude logs\* \
     --ignore-matching-lines=\$Id --ignore-matching-lines=\$Header $*
 
 
