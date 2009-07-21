@@ -1,0 +1,19 @@
+#!/usr/bin/python
+#
+# Given a list of files on the command line, prints the one with the
+# most recent modification time.
+#
+
+import sys
+import os
+
+mtime = 0
+fname = ''
+for f in sys.argv[1:]:
+    info = os.stat(f)
+    if info.st_mtime > mtime:
+        mtime = info.st_mtime
+        fname = f
+
+print fname
+

@@ -1,0 +1,33 @@
+#!/usr/bin/python
+import os
+import matplotlib
+import sys
+import time
+
+i = 0
+while True:
+    f = os.popen('airport -I')
+
+    vals = {}
+    while True:
+        l = f.readline().strip()
+        if l == '':
+            break
+
+        (k,v) = l.split(': ')
+
+        vals[k] = v
+
+
+    f.close()
+
+    t = str(int(time.time()))
+    if vals.has_key('agrCtlRSSI') and vals.has_key('agrCtlNoise'):
+        print '\t'.join([t, vals['agrCtlRSSI'], vals['agrCtlNoise']])
+    else:
+        print '\t'.join([t, "0", "0"])
+    
+    i += 1
+    sys.stdout.flush()
+    time.sleep(1)
+      

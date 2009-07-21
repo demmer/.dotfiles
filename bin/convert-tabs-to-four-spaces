@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for f
+do
+    echo "converting $f..."
+    sed -i '' 's/	/    /g' $f
+done
