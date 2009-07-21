@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# safe-tee -- just like tee only it avoids clobbering
+
+f=$1
+if test -z "$f" ; then
+    echo "must specify output file"
+    exit 1
+fi
+
+if test -e $f ; then
+    dst="$f.`mtime $f`"
+    n=1
+    while test -e $dst ; do
+	dst="$f.`mtime $f`.$n"
+	n=$(($n+1))
+    done
+
+    mv $f $dst
+fi
+
+exec tee $f
