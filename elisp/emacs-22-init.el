@@ -3,9 +3,6 @@
 ;;; compiled from amd and other sources
 ;;;
 
-;;; Set up our load path
-(prepend-no-dup (format "%s/elisp" *HOME*) load-path)
-
 ;;; turn off audio bell
 (setq visible-bell t)
 
@@ -113,7 +110,6 @@ This must be bound to a mouse-down event in the mode-line."
 ;; require these features...
 (require 'complete)
 (partial-completion-mode)
-(append-no-dup ".T" completion-ignored-extensions)
 
 (require 'compile)
 (setq compilation-scroll-output t)
