@@ -7,7 +7,7 @@
 cdpath=(.)
 
 # on OS X, we don't run the .zlogin, so check for ssh-agent here
-if [ $ARCH = "Darwin" -a "$SSH_AUTH_SOCK" = "" ]; then
+if [ $SYS = "Darwin" -a "$SSH_AUTH_SOCK" = "" ]; then
 	source $HOME/.ssh-attach
 fi
 
