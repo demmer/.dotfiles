@@ -31,7 +31,7 @@ esac
 #
 # Or, try the architecture
 #
-if [ $ARCH = Cygwin ]; then
+if [ $SYS = Cygwin ]; then
     BASE_GEOM=Cygwin
 fi
 

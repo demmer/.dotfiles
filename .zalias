@@ -12,7 +12,7 @@ alias findbakl='findbak -maxdepth 1'
 alias rmbak='findbak -exec /bin/rm {} \;'
 alias rmbakl='findbakl -exec /bin/rm {} \;'
 
-if [ $ARCH = Cygwin ] ; then
+if [ $SYS = Cygwin ] ; then
    alias startx='export DISPLAY=localhost:0 && startxwin.bat'
 else
    alias startx='startx 2>&1 | tee ~/.err/startx.log'
@@ -33,7 +33,7 @@ alias trt='traceroute'
 alias td='tcpdump'
 
 #  architecture dependant - not if I use ucb
-case "$ARCH" in
+case "$SYS" in
      solaris)
         alias pscompat='/bin/ps -o user,pid,pcpu,pmem,vsz,rss,s,stime,time,comm'
         alias pscompatw='/bin/ps -o user,pid,pcpu,pmem,vsz,rss,s,stime,time,args'

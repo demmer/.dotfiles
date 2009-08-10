@@ -19,7 +19,7 @@ unlimit
 limit -s
 
 # no cores on OS X
-if [ $ARCH = "Darwin" ] ; then
+if [ $SYS = "Darwin" ] ; then
     ulimit -c 0
 fi
 
@@ -90,8 +90,8 @@ LOGCHECK=10
 source ~/.zbind
 source ~/.zcomp
 
-## ARCHITECTURE SPECIFIC
-if [ "$ARCH" = "IRIX" -o "$ARCH" = "HP-UX" ]; then
+## SYSTEM SPECIFIC
+if [ "$SYS" = "IRIX" -o "$SYS" = "HP-UX" ]; then
 	stty intr '^C' erase '^?' kill '^U' susp '^Z' echoe
 fi
 

@@ -19,36 +19,36 @@ if [ ! -x $UNAME ]; then
 	UNAME=`which uname`
 fi
 if [ -x $UNAME ]; then
-	export OSARCH=`$UNAME -s`-`$UNAME -r`
-  	case "$OSARCH" in
+	export SYSVER=`$UNAME -s`-`$UNAME -r`
+  	case "$SYSVER" in
   	SunOS-5*)
-  		export ARCH=solaris
+  		export SYS=solaris
   		;;
   	SunOS-4*)
-  		export ARCH=sunos
+  		export SYS=sunos
   		;;
 	FreeBSD-4*)
-		export ARCH=FreeBSD4
+		export SYS=FreeBSD4
 		;;
   	FreeBSD-3*)
-  		export ARCH=FreeBSD3
+  		export SYS=FreeBSD3
   		;;
   	FreeBSD-2*)
-  		export ARCH=FreeBSD2
+  		export SYS=FreeBSD2
   		;;
 	Darwin-*)
-		export ARCH=Darwin
+		export SYS=Darwin
 		;;
         CYGWIN*)
-		export ARCH=Cygwin
+		export SYS=Cygwin
 		;;
   	*)
-  		export ARCH=`$UNAME -s`
+  		export SYS=`$UNAME -s`
   		;;
   	esac
 else
-	export ARCH=unk
-	export OSARCH=unk
+	export SYS=unk
+	export SYSVER=unk
 fi
 
 #
@@ -67,7 +67,7 @@ done
 # override programs
 #
 path=(						\
-	~/bin/$ARCH                             \
+	~/bin/$SYS                             \
 	~/bin                                   \
 	/usr/ucb				\
 	/usr/local/bin				\
@@ -126,7 +126,7 @@ fi
 #
 # But they're not autoset like path is
 #
-if [ $ARCH = "Darwin" ] ; then
+if [ $SYS = "Darwin" ] ; then
     DYLD_LIBRARY_PATH=${(j{:})ld_library_path}
     export DYLD_LIBRARY_PATH 
 else
@@ -149,7 +149,7 @@ if [ -f /sw/bin/init.sh ]; then
 	. /sw/bin/init.sh
 fi
 
-if [ $ARCH = "Darwin" ] ; then
+if [ $SYS = "Darwin" ] ; then
 # pkg-config and autotools
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/X11R6/lib/pkgconfig:/usr/local/ssl/lib/pkgconfig"
 export ACLOCAL_FLAGS="-I /usr/share/aclocal"
@@ -219,7 +219,7 @@ fi
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
  
-if [ $ARCH = Darwin -a "$DISPLAY" = "" ] ; then
+if [ $SYS = Darwin -a "$DISPLAY" = "" ] ; then
     export DISPLAY=:0.0
 fi
 
@@ -242,7 +242,7 @@ if [ "$DBG" = "" ] ; then
 	export DBG="all"
 fi
 
-if [ $ARCH = Darwin ] ; then
+if [ $SYS = Darwin ] ; then
     export JUNIT_HOME=$HOME/Library/Java/junit4.1
     export CLASSPATH=".:$JUNIT_HOME:$JUNIT_HOME/junit-4.1.jar"
 fi
