@@ -78,11 +78,13 @@
   (define-key c-mode-map "\C-c\t" 'c-align-space-in-region)
   (define-key c-mode-map "\C-c " 'c-align-space-in-region-by-space)
   (define-key c-mode-map "\C-c=" 'c-align-space-in-region-by-equal)
+  (define-key c-mode-map "\M-q" 'my-fill-paragraph)
   (define-key c++-mode-map "\C-m" 'newline-and-indent)
   (define-key c++-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c++-mode-map "\C-c\t" 'c-align-space-in-region)
   (define-key c++-mode-map "\C-c " 'c-align-space-in-region-by-space)
   (define-key c++-mode-map "\C-c=" 'c-align-space-in-region-by-equal)
+  (define-key c++-mode-map "\M-q" 'my-fill-paragraph)
   (define-key java-mode-map "\C-m" 'newline-and-indent)
   (define-key java-mode-map "\C-c\C-u" 'uncomment-region)
   (setq comment-use-syntax nil)
@@ -454,7 +456,8 @@ with tab characters underneath."
 (require 'uniquify)
 (if (featurep 'uniquify)
     (setq uniquify-buffer-name-style 'post-forward
-	  uniquify-separator ", "))
+	  uniquify-separator ", "
+	  uniquify-strip-common-suffix nil))
 
 ;; Hooks for the electric buffer menu
 (require 'ebuff-menu)
