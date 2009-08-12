@@ -106,3 +106,4 @@
 (global-set-key "\M-\-" 'add-c++-function-separator)
 (global-set-key "\M-c" 'kill-ring-save)
 (global-set-key "\M-q" 'my-fill-paragraph)
+(global-set-key "\M-~" 'other-frame)
