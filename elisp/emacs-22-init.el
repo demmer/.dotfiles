@@ -70,6 +70,7 @@ This must be bound to a mouse-down event in the mode-line."
 			(menu-bar-lines . 1)
 			(horizontal-scroll-bars . nil)
 			(vertical-scroll-bars . nil)
+			(width . 100)
 			))
 
 ;;; initial frame appearance (geometry set by X)
@@ -113,6 +114,9 @@ This must be bound to a mouse-down event in the mode-line."
 
 (require 'compile)
 (setq compilation-scroll-output t)
+
+(require 'git)
+(require 'git-blame)
 
 ;; host specific support
 (let ((host-elisp (format "%s/elisp/%s.el" *HOME* (getenv "HOST"))))
