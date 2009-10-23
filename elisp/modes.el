@@ -58,7 +58,8 @@
 
 (setq ooh-file-license
 "/*
- * Copyright 2008 KBM Labs. All rights reserved.
+ * Copyright 2009 Riverbed Technology, Inc.
+ * All Rights Reserved. Confidential.
  */
 
 ")
