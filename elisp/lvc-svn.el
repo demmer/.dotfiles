@@ -5,7 +5,7 @@
 
 ;; Author: Bart Robinson <lomew@pobox.com>
 ;; Created: Sep 2006
-;; Version: trunk ($Revision: 1.7 $)
+;; Version: trunk ($Revision: 1.8 $)
 (defconst lvc-svn-version "trunk")
 ;; Date: the-date
 ;; Keywords: svn
@@ -126,6 +126,10 @@
  "The HEAD revision as reported by `status -u'.")
 (make-variable-buffer-local 'lvc-svn-head-revision-from-last-ustatus)
 
+(defvar lvc-svn-remember-revision-from-last-ustatus t
+  "If non-nil, then all operations (e.g. log, diff, etc) use the
+  revision returned from svn status -u. NOTE: This has problems
+  wrt externals. If nil, all operations use the HEAD revision.")
 
 ;; User functions.
 
@@ -1206,8 +1210,9 @@ the value of `foo'."
       ;; and we don't want their HEAD, so set this once.
       ;; XXX/lomew this is broken for externals
       ((looking-at "^Status against revision:[ \t]+\\([0-9]+\\)\n")
-	(if (equal lvc-svn-head-revision-from-last-ustatus
-		   (default-value 'lvc-svn-head-revision-from-last-ustatus))
+	(if (and lvc-svn-remember-revision-from-last-ustatus
+		 (equal lvc-svn-head-revision-from-last-ustatus
+		   (default-value 'lvc-svn-head-revision-from-last-ustatus)))
 	    (setq lvc-svn-head-revision-from-last-ustatus
 		  (string-to-number (match-string 1))))
 	;; Put in the ending dashes
