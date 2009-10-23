@@ -104,6 +104,7 @@ This must be bound to a mouse-down event in the mode-line."
 (add-hook 'lcvs-mode-hook 'my-lcvs-setup)
 
 (require 'lvc)
+(setq lvc-svn-remember-revision-from-last-ustatus nil)
 
 ;; I should probably have a better place for this...
 (setq diff-switches (list "-u"))
