@@ -6,6 +6,7 @@
 (require 'lcvs)
 (require 'lvc-hg)
 (require 'lvc-svn)
+(require 'git)
 
 (defvar lvc-use-diff-mode t
   "*If non nil, lsvn will put diff buffers into diff-mode (if available).")
@@ -140,6 +141,8 @@ available with the \\[lcvs-explain-this-line] command.")
     (lvc-svn-status dir))
    ((file-exists-p (format "%s/.hg" (directory-file-name dir)))
     (lvc-hg-status dir))
+   ((file-exists-p (format "%s/.git" (directory-file-name dir)))
+    (git-status dir))
    (t (message (format "Cannot determine VC system in directory %s" dir)))
    )
   )
