@@ -82,10 +82,6 @@ unsetopt \
   bgnice \
   nomatch 
 
-watch=(notme)
-WATCHFMT='%n %a %l from %m at %t.'
-LOGCHECK=10
-
 # get key bindings and completions
 source ~/.zbind
 source ~/.zcomp
