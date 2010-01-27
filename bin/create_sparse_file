@@ -5,7 +5,16 @@ if len(sys.argv) != 3:
     print 'usage: create-sparse-file <filename> <size>'
     sys.exit(1)
 
-f = open(sys.argv[0])
-f.seek(sys.argv[1] - 1)
+f = open(sys.argv[1])
+
+size = sys.argv[1]
+if size[-1] == 'K' or size[-1] == 'k':
+    size = int(size[:-1]*1024)
+elif size[-1] == 'M' or size[-1] == 'm':
+    size = int(size[:-1]*1024*1024)
+elif size[-1] == 'G' or size[-1] == 'g':
+    size = int(size[:-1]*1024*1024*1024)
+
+f.seek(size - 1)
 f.write('\0')
 f.close()
