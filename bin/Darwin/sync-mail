@@ -1,0 +1,11 @@
+#!/usr/bin/osascript
+
+set accounts to { "Riverbed" }
+
+if application "Mail" is running
+    repeat with acct in accounts
+        tell application "Mail"
+	    synchronize with imap account acct
+        end tell
+    end repeat
+end if
