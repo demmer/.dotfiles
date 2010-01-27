@@ -48,6 +48,9 @@ available with the \\[lcvs-explain-this-line] command.")
 (defvar lvc-remove-confirm t
   "*If non-nil, removing files will require confirmation.")
 
+(defvar lvc-resolve-confirm t
+  "*If non-nil, resolving files will require confirmation.")
+
 (defvar lvc-font-lock-enabled t
   "Whether or not to turn on font lock")
 
