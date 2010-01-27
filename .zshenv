@@ -170,6 +170,11 @@ chpwd
 export EDITOR='vi'
 export VISUAL='vi'
 
+if [ $SYS = "Darwin" ] ; then
+   export EDITOR='/usr/bin/vim'
+   export VISUAL='/usr/bin/vim'
+fi
+
 export ENSCRIPT_2UP='-p - -2r'
 
 export HOSTNAME=`echo $HOST | sed 's/\..*//g'`
