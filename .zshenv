@@ -46,9 +46,11 @@ if [ -x $UNAME ]; then
   		export SYS=`$UNAME -s`
   		;;
   	esac
+        export SYSARCH=`$UNAME -m | sed 's/i[3456]86/x86/'`
 else
 	export SYS=unk
 	export SYSVER=unk
+	export SYSARCH=unk
 fi
 
 #
@@ -67,7 +69,8 @@ done
 # override programs
 #
 path=(						\
-	~/bin/$SYS                             \
+	~/bin/$SYS/$SYSARCH                     \
+	~/bin/$SYS                              \
 	~/bin                                   \
 	/usr/ucb				\
 	/usr/local/bin				\
