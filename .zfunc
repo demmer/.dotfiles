@@ -90,3 +90,10 @@ function rgrep-internal () {
 	 echo find . -name $files -exec grep $pattern {} /dev/null \;
 	 find . -name $files -exec grep $pattern {} /dev/null \;
 }
+
+function pushd-ssh () {
+    pushd
+    "ssh" $*
+    popd
+}
+

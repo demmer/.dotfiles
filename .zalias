@@ -3,9 +3,9 @@
 ## DESC:  alias bindings
 ##
 
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+# alias rm='rm -i'
 alias findbak='find . -name .snapshot -prune \
 		     -o \( -name \*~ -o -name .\*~ \) -print'
 alias findbakl='findbak -maxdepth 1'
@@ -100,3 +100,5 @@ alias aptq='sudo aptitude upgrade -s'
 alias dls='dpkg -l'
 
 alias p='python'
+
+alias ssh='pushd-ssh'
