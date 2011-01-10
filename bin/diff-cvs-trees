@@ -2,7 +2,7 @@
 # silly script to run diff in such a way as to report only meaningful
 # differences between two CVS / svn trees
 
-diff -N -ur --exclude \*.[oda] --exclude CVS --exclude .svn --exclude .hg \
+diff -N -ur --exclude \*.[oda] --exclude CVS --exclude .svn --exclude .hg --exclude .git \
     --exclude .glimpse\* --exclude .\#\* --exclude \#\* \
     --exclude \*.orig --exclude \*.rej --exclude \*.pyc --exclude build\* --exclude logs\* \
     --ignore-matching-lines=\$Id --ignore-matching-lines=\$Header $*
