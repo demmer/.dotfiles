@@ -80,9 +80,9 @@ fi
 # Prompt the user about starting X windows
 #
 STARTX=no
-if [ `tty` = "/dev/tty1" -a "$TERM" = "linux" ]; then
+if [ "`tty`" = "/dev/tty1" -a "$TERM" = "linux" ]; then
     STARTX=yes
-elif [ `tty` = "/dev/ttyv0" -a `uname -s` = FreeBSD ]; then
+elif [ "`tty`" = "/dev/ttyv0" -a `uname -s` = FreeBSD ]; then
     STARTX=yes
 fi
 
