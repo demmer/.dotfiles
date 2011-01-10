@@ -11,6 +11,8 @@
 autom4te.cache/*
 CVS/*
 .svn/*
+.git/*
 TAGS
 tags
 doxygen/*
+.fuse_hidden*
