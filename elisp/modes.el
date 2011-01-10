@@ -70,11 +70,22 @@
   (insert ooh-file-license)
   )
 
+(defun newline-and-indent-non-blank-lines ()
+  "If the current line is only whitespace, remove the whitespace
+   before adding a newline"
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (if (looking-at "^\[ 	\]+$")
+	(delete-region (match-beginning 0) (match-end 0))))
+  (newline-and-indent)
+)
+
 (defun my-c-common-setup ()
   (interactive)
   (setq c-tab-always-indent t)			; indent wherever cursor is
   (setq c-electric-pound-behavior '(alignleft))	; use electric pound
-  (define-key c-mode-map "\C-m" 'newline-and-indent)
+  (define-key c-mode-map "\C-m" 'newline-and-indent-non-blank-lines)
   (define-key c-mode-map "\C-c\C-u" 'uncomment-region)
   (define-key c-mode-map "\C-c\t" 'c-align-space-in-region)
   (define-key c-mode-map "\C-c " 'c-align-space-in-region-by-space)
