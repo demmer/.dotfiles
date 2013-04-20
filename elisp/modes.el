@@ -210,7 +210,7 @@ with tab characters underneath."
 
 (add-hook 'java-mode-hook 'my-java-setup)
 
-(require 'python-mode)
+(require 'python)
 (defun my-python-setup()
   (interactive)
   (define-key py-mode-map "\C-c\C-c" 'comment-region)
@@ -255,6 +255,7 @@ with tab characters underneath."
 			      auto-mode-alist))
 
 ;; purge ps-mode from the magic-mode-alist
+(require 'cl)
 (setq magic-mode-alist
       (mapcar
        (lambda (pair) "" nil
@@ -287,7 +288,7 @@ with tab characters underneath."
 
 (defun my-lisp-setup ()
   (interactive)
-  (define-key lisp-mode-map "" 'delete-backward-char)
+  (define-key lisp-mode-map "" 'delete-backward-char)
   (define-key lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
 )
@@ -296,7 +297,7 @@ with tab characters underneath."
 
 (defun my-elisp-setup ()
   (interactive)
-  (define-key emacs-lisp-mode-map "" 'delete-backward-char)
+  (define-key emacs-lisp-mode-map "" 'delete-backward-char)
   (define-key emacs-lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key emacs-lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
 )
@@ -385,7 +386,6 @@ with tab characters underneath."
   (setq font-lock-maximum-decoration				      
 	(list
 	 (cons 'c++-mode 2)
-	 (cons 'latex-mode t)
 	 (cons t t)))
 
   (setq font-lock-multiline t)
@@ -474,11 +474,5 @@ with tab characters underneath."
 ;; Hooks for the electric buffer menu
 (require 'ebuff-menu)
 (define-key electric-buffer-menu-mode-map "\C-s" 'isearch-forward)
-
-;; Turn off whitespace stuff
-(require 'whitespace)
-(if whitespace-global-mode
-    (whitespace-global-mode nil))
-(setq whitespace-modes '())
 
 (require 'grope)

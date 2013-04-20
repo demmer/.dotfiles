@@ -9,18 +9,16 @@
 (if (null *HOME*)
     (setq *HOME* (getenv "HOME")))
 
-(if (string-equal window-system "mac")
+(if (string-equal window-system "ns")
     (progn
       (setq initial-frame-alist '((foreground-color . "white")
 				  (background-color . "black")
 				  (cursor-color . "yellow")
 				  ))
-;;       (set-foreground-color "white")
-;;       (set-background-color "black")
-;;       (set-cursor-color "yellow")
-      
-      (set-face-foreground 'modeline "black")
-      (set-face-background 'modeline "grey")
+      (set-foreground-color "white")
+      (set-background-color "black")
+      (set-cursor-color "yellow")
+      (set-variable 'ns-command-modifier (quote meta))
       )
   )
 
@@ -37,7 +35,10 @@
       )
 
 (setq load-path (cons (format "%s/elisp" *HOME*) load-path))
-(load (format "%s-init" which-emacs))
+
+;; XXX/demmer no more version-specific initialization
+;; (load (format "%s-init" which-emacs))
+(load "emacs-init")
 
 (message "Loading .emacs... done.")
 (message "")
