@@ -6,3 +6,5 @@
 	email = demmer@gmail.com
 [core]
 	pager = less
+	excludesfile = /Users/demmer/.gitignore_global
+
