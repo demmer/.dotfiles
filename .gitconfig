@@ -4,3 +4,5 @@
 [user]
 	name = Michael Demmer
 	email = demmer@gmail.com
+[core]
+	pager = less
