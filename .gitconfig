@@ -5,6 +5,6 @@
 	name = Michael Demmer
 	email = demmer@gmail.com
 [core]
-	pager = less
+	pager = less -F -X
 	excludesfile = /Users/demmer/.gitignore_global
 
