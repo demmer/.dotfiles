@@ -1,0 +1,6 @@
+[alias]
+	st = status
+	ci = commit
+[user]
+	name = Michael Demmer
+	email = demmer@gmail.com
