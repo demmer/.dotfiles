@@ -288,7 +288,7 @@ with tab characters underneath."
 
 (defun my-lisp-setup ()
   (interactive)
-  (define-key lisp-mode-map "" 'delete-backward-char)
+  (define-key lisp-mode-map "" 'delete-backward-char)
   (define-key lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
 )
@@ -297,7 +297,7 @@ with tab characters underneath."
 
 (defun my-elisp-setup ()
   (interactive)
-  (define-key emacs-lisp-mode-map "" 'delete-backward-char)
+  (define-key emacs-lisp-mode-map "" 'delete-backward-char)
   (define-key emacs-lisp-mode-map "\C-m" 'newline-and-indent)
   (define-key emacs-lisp-mode-map "\M-\C-m" 'indent-new-comment-line)
 )
