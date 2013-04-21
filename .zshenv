@@ -129,13 +129,13 @@ fi
 #
 # But they're not autoset like path is
 #
-if [ $SYS = "Darwin" ] ; then
-    DYLD_LIBRARY_PATH=${(j{:})ld_library_path}
-    export DYLD_LIBRARY_PATH 
-else
-    LD_LIBRARY_PATH=${(j{:})ld_library_path}
-    export LD_LIBRARY_PATH 
-fi
+#if [ $SYS = "Darwin" ] ; then
+#    DYLD_LIBRARY_PATH=${(j{:})ld_library_path}
+#    export DYLD_LIBRARY_PATH 
+#else
+#    LD_LIBRARY_PATH=${(j{:})ld_library_path}
+#    export LD_LIBRARY_PATH 
+#fi
 
 MANPATH=${(j{:})manpath}
 PYTHONPATH=${(j{:})pythonpath}
