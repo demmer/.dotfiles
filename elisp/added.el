@@ -68,7 +68,7 @@ current directory for buffer.H.[mjd]"
     
     ;; Try to find an open buffer that matches a name from the list
     (setq matches
-`	  (mapcar 
+	  (mapcar 
 	   (lambda (targetname) "" nil
 	     (mapcar 
 	      (lambda (buffer) "" nil
