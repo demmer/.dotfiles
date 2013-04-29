@@ -97,3 +97,27 @@ function pushd-ssh () {
     popd
 }
 
+# from jordansissel
+function bytes() {
+  if [ $# -gt 0 ]; then
+    while [ $# -gt 0 ]; do
+      echo -n "${1}B = "
+      byteconv "$1"
+      shift
+    done
+  else
+    while read a; do
+      byteconv "$a"
+    done
+  fi
+}
+
+function byteconv() {
+  a=$1
+  ORDER=BKMGTPE
+  while [ $(echo "$a >= 1024" | bc) -eq 1 -a $#ORDER -gt 1 ]; do
+    a=$(echo "scale=2; $a / 1024" | bc)
+    ORDER="${ORDER#?}"
+  done
+  echo "${a}$(echo "$ORDER" | cut -b1)"
+}
