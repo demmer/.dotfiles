@@ -10,3 +10,5 @@
 
 [color]
 	ui = true
+[color "status"]
+	untracked = blue
