@@ -3,7 +3,7 @@
 	ci = commit
 [user]
 	name = Michael Demmer
-	email = demmer@gmail.com
+	email = demmer
 [core]
 	pager = less -F -X -r
 	excludesfile = /Users/demmer/.gitignore_global
