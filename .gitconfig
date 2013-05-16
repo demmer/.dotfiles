@@ -7,6 +7,7 @@
 [core]
 	pager = less -F -X -r
 	excludesfile = /Users/demmer/.gitignore_global
+	editor = /usr/bin/vim
 
 [color]
 	ui = true
