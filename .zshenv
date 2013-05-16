@@ -126,12 +126,17 @@ if [ -d ~/pylib ]; then
   pythonpath=~/pylib
 fi
 
+node_path=(						\
+	/usr/local/lib/node_modules                     \
+)
+
 MANPATH=${(j{:})manpath}
 PYTHONPATH=${(j{:})pythonpath}
+NODE_PATH=${(j{:})node_path}
 
 # Make sure that these are exported to the environment
 # I know that zsh doesn't do this by default for MANPATH
-export PATH SHELL MANPATH PYTHONPATH
+export PATH SHELL MANPATH PYTHONPATH NODE_PATH
 
 #
 # On OS X, fink wants us to source an init script to set up path,
