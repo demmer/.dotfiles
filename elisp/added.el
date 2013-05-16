@@ -677,6 +677,7 @@ to the font lock list"
 	     (mark)
 	   (error nil)))))
 
+(require 'longlines)
 (defun add-c++-function-separator ()
   "Add a comment-line of //---- to extend across the file."
   (interactive)
@@ -765,4 +766,4 @@ to the font lock list"
   (interactive "DByte compile whole directory: \n")
   (message (format "compiling %s" directory))
   (byte-recompile-directory directory t t))
-  
+
