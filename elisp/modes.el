@@ -210,6 +210,15 @@ with tab characters underneath."
 
 (add-hook 'java-mode-hook 'my-java-setup)
 
+(require 'js2-mode)
+
+(defun my-js-setup()
+  (interactive)
+  (setq indent-tabs-mode nil)
+  )
+
+(add-hook 'js2-mode-hook 'my-js-setup)
+
 (require 'python)
 (defun my-python-setup()
   (interactive)
@@ -251,6 +260,8 @@ with tab characters underneath."
 				("\\.xsl\\'" . sgml-mode)
 				("\\.\\(cls\\|bas\\|frm\\)\\'" . visual-basic-mode)
 				("\\.ac\\'" . autoconf-mode)
+				("\\.js\\'" . js2-mode)
+				("\\.json\\'" . js2-mode)
 				)
 			      auto-mode-alist))
 
@@ -476,3 +487,9 @@ with tab characters underneath."
 (define-key electric-buffer-menu-mode-map "\C-s" 'isearch-forward)
 
 (require 'grope)
+
+;; ;;; set up jshint flymake
+;; (require 'flymake-jshint)
+;; (set-variable 'jshint-mode-location (format "%s/work/jshint-mode" *HOME*))
+
+
