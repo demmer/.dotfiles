@@ -12,6 +12,9 @@
 ;;; wrap too-long lines in half windows
 (setq truncate-partial-width-windows nil)
 
+;;; Don't open new windows when displaying buffers
+(setq ns-pop-up-frames nil)
+
 ;;; some defaults
 (setq text-mode-hook 'turn-on-auto-fill)
 (setq line-number-mode t)
@@ -86,7 +89,16 @@ This must be bound to a mouse-down event in the mode-line."
 ;; (append-no-dup 'time-stamp write-file-hooks)
 
 ;; start the server
-(server-start)
+; (server-start)
+
+(setq exec-path
+      '(
+	"/usr/local/bin"
+	"/bin"
+	"/usr/bin"
+	))
+
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 
 ;; load in other files
 (load "modes")
