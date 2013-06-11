@@ -180,51 +180,8 @@ export EMACSLOCKDIR=$HOME/.emacslockdir
 # needed for su to still grab my .emacs
 export EMACSHOME=$HOME
 
-# Handy to have these readily available
-export CVSROOT_INIGO=:ext:inigo:/repository
-export CVSROOT_PISCO=:ext:pisco:/repository
-export CVSROOT_TIER=:ext:shirin:/project/cs/brewer/tier/ICT/repository
-export CVSROOT_TINYOS=:ext:cvs-sourceforge:/cvsroot/tinyos/
-export CVSROOT_DTN=:ext:sandbox:/repository
-export CVSROOT_NINJA=:ext:ninja.cs.berkeley.edu:/disks/ninja/.CVS-ninja
-export CVSROOT_LLADD=:ext:cvs-sourceforge:/cvsroot/lladd
-
-# Host specific overrides
-if [ -d /project/cs/brewer/tier/ICT/repository/CVSROOT ]; then
-    export CVSROOT_PISCO=/project/cs/brewer/tier/demmer/repository/
-    export CVSROOT_TIER=/project/cs/brewer/tier/ICT/repository/
-    export CVSROOT=$CVSROOT_TIER
-
-elif [ -d /repository/CVSROOT ]; then
-    export CVSROOT=/repository
-    if [ -d /repository/DTN2 ]; then
-    	export CVSROOT_DTN=/repository
-    fi
-else 
-    export CVSROOT=$CVSROOT_INIGO
-fi
-
-# Ditto for SVNROOT
-if [ $HOST = wangari ]; then
-    export SVNROOT=file://svndepot/
-else
-    export SVNROOT=svn+ssh://wangari.cs.berkeley.edu:/svndepot/
-fi
-
-# And HGROOT
-if [ $HOST = sandbox ] ; then
-    export HGROOT_DTN=/data/hg-repository/
-else
-    export HGROOT_DTN=ssh://demmer@code.dtnrg.org//data/hg-repository/
-fi
-
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
- 
-if [ $SYS = Darwin -a "$DISPLAY" = "" ] ; then
-    export DISPLAY=:0.0
-fi
-
 
 unset XAUTHORITY
 export XAUTHORITY
@@ -233,21 +190,4 @@ export XAUTHORITY
 unset LANG
 export LANG
 
-# tex search path
-export TEXINPUTS=".:/usr/share/texmf//:~/.dotfiles/latex//:"
-
-# TinyOS / Java / Jython
-export JAVA_HOME="/opt/IBMJava2-141"
-export TOSROOT="$HOME/work/tinyos-1.x"
-export TOSDIR="$TOSROOT/tos"
-if [ "$DBG" = "" ] ; then
-	export DBG="all"
-fi
-
-if [ $SYS = Darwin ] ; then
-    export JUNIT_HOME=$HOME/Library/Java/junit4.1
-    export CLASSPATH=".:$JUNIT_HOME:$JUNIT_HOME/junit-4.1.jar"
-fi
-
-export JYTHON_HOME="$HOME/work/jython"
-export DJANGO_SETTINGS_MODULE='rope.settings'
+export EC2_HOME="$HOME/src/ec2-api-tools"
