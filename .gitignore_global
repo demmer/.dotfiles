@@ -2,3 +2,6 @@ CVS/
 *~
 .DS_Store
 .glimpse*
+*.o
+*.a
+config.status
