@@ -57,12 +57,14 @@ fi
 # Figure out machine local path based on symlinks in ~/bin/bindirs
 #
 localpath=
+if [ -d ~/bin/bindirs -a ! -z "`ls ~/bin/bindirs/ 2> /dev/null`" ] ; then
 for d in ~/bin/bindirs/*; do
 if [ -h $d ] ; then
 	d=`(cd $d && pwd -r)`
 	localpath=($localpath $d)
 fi
 done
+fi
 
 #
 # I set my bin path (but not bindirs) before all the others to 
