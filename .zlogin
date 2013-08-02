@@ -54,7 +54,7 @@ mkdir -p ~/.err
 ## load ssh environment if it doesn't exist
 if [ "$SSH_AUTH_SOCK" = "" ]; then
 	echo -n "Looking for ssh-agent... "
-	. .ssh-attach
+	. ./.ssh-attach
 	if [ "$SSH_AUTH_SOCK" = "" ]; then
 		echo "not found."
 	else
