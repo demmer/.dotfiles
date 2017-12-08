@@ -121,3 +121,24 @@ function byteconv() {
   done
   echo "${a}$(echo "$ORDER" | cut -b1)"
 }
+
+function devdb {
+	ssh -t slack-db-dev16 'mycli -ugod'
+}
+
+function prodb {
+
+    if [ "$1" == 'mains' ]; then
+        ssh -t slack-db35 'mycli -ugod -D slack_main; bash -l';
+        return
+    fi
+
+    # locate `slack_shard_<#>`
+
+    shard_host=slack-shard$1$2.ec2.tinyspeck.com
+    echo $shard_host
+    shard_db=$(ssh -t "$shard_host" 'mysql -ugod -Ne "SHOW databases";' | grep -Eo --color=never "slack_shard_[0-9]+")
+
+    ssh -t "$shard_host" 'mycli -ugod -D '$shard_db'';
+}
+

@@ -193,3 +193,8 @@ unset LANG
 export LANG
 
 export EC2_HOME="$HOME/src/ec2-api-tools"
+
+export GOPATH=$HOME/work/go
+export SLACK_SYNC_DEV_AUTO_ATTACH=1
+
+export VTROOT=$HOME/work/go

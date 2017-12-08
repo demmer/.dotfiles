@@ -1,9 +1,11 @@
 [alias]
 	st = status
 	ci = commit
+	cp = cherry-pick
+	rbm = rebase origin/master
 [user]
 	name = Michael Demmer
-	email = demmer
+	email = mdemmer@slack-corp.com
 [core]
 	pager = less -F -X -r
 	excludesfile = /Users/demmer/.gitignore_global
@@ -12,4 +14,8 @@
 [color]
 	ui = true
 [color "status"]
-	untracked = blue
+	untracked = white
+[push]
+	default = current
+[fetch]
+	prune = true

@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+kill-sync-bar
+cd $HOME/work/webapp
+slack sync-bar > /tmp/sync-bar.log 2>&1 < /dev/null &
+

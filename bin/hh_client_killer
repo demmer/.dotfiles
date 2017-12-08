@@ -1,0 +1,9 @@
+#!/bin/sh
+
+while true ; do
+	pids=`ps auxww | grep "hh_client ide" | grep -v grep`
+	echo $pids
+	echo $pids | awkill
+	sleep 1
+done
+

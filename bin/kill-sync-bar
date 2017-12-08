@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+pg sync-bar | grep -v grep | grep -v start-sync-bar | grep -v kill-sync-bar | awkill

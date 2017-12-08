@@ -23,6 +23,14 @@ if [ $SYS = "Darwin" ] ; then
     ulimit -c 0
 fi
 
+# Enable Git info in prompt
+autoload -Uz vcs_info
+autoload -U colors && colors
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats ' [%b]'
+
 if [ "$EMACSPARENT" = "1" ]; then
 	PROMPT='[%m] %~ -> '
 	RPROMPT=''
@@ -31,7 +39,7 @@ elif [ "$SCRIPTPARENT" = "1" ] ; then
 	PROMPT='%S[%m]%s (script) -> '
 else
 	PROMPT='%S[%m]%s -> '
-	RPROMPT=' %~'
+	RPROMPT=' %~%{$fg[yellow]%}$vcs_info_msg_0_%{$reset_color%}'
 fi
 
 # what is a word, really?
@@ -80,7 +88,7 @@ setopt \
 # don't want these, though
 unsetopt \
   bgnice \
-  nomatch 
+  nomatch
 
 # get key bindings and completions
 source ~/.zbind

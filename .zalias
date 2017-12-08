@@ -27,7 +27,6 @@ alias more='less'
 alias m='more'
 alias l='less'
 alias e='emacs'
-alias rg='rungrep'
 
 alias trt='traceroute'
 alias td='tcpdump'
@@ -102,3 +101,8 @@ alias dls='dpkg -l'
 alias p='python'
 
 alias ssh='pushd-ssh'
+
+alias vtssh='pushd-ssh -L15000:localhost:15000'
+
+alias govt='cd ~/work/go/src/github.com/youtube/vitess'
+alias atomd='open -a "Atom Beta" `pwd`'
