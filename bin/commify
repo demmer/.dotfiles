@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#
+# commify: Convert a number of lines from std into a comma separated list.
+#          That's it.
+#
+tr '\n' ',' | sed 's/,$//'

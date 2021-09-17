@@ -45,18 +45,13 @@ fi
 # what is a word, really?
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-SAVEHIST=200
 HISTFILE=~/.zhist
-HISTSIZE=200
+HISTSIZE=500
+SAVEHIST=500
 
 DIRSTACKSIZE=50
 
-# This next heinosity is so that zsh does not check the mail file for
-# modifications ever.  This might hang the shell if the mail server
-# goes down.  I hate that.  zsh has no good way of disabling this
-# feature.
-# MAILCHECK=90000000
-MAILCHECK=5
+MAILCHECK=0
 
 # lots of options
 setopt \
@@ -70,7 +65,10 @@ setopt \
   clobber \
   correct \
   extendedglob \
+  extendedhistory \
+  histexpiredupsfirst\
   histignoredups \
+  incappendhistory \
   listtypes \
   longlistjobs \
   nobeep \
@@ -112,3 +110,9 @@ function xtitle {
 
 fi
 #  end of xterm specific functions
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+

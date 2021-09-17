@@ -1,8 +1,29 @@
 [alias]
+	chekcout = checkout
+	co = checkout
 	st = status
 	ci = commit
 	cp = cherry-pick
-	rbm = rebase origin/master
+	rbo = rebase origin/master
+	rbio = rebase -i origin/master
+	rbu = rebase upstream/master
+	rbiu = rebase -i upstream/master
+	rbc = rebase --cont
+	fo = fetch origin master
+	of = fetch origin master
+	reset-master = checkout -B master origin/master
+	rhom = reset --hard origin/master
+	com = checkout origin/master
+	cob = checkout -b 
+	mbranch = checkout origin/master -b 
+	history = log --color=always --follow -p --
+        hist = history
+	pushf = push -f
+	pushj = push
+	fpu = push -f
+	amend = ci -C HEAD --amend
+	dc = diff --cached
+	dom = diff origin/master
 [user]
 	name = Michael Demmer
 	email = mdemmer@slack-corp.com
@@ -19,3 +40,10 @@
 	default = current
 [fetch]
 	prune = true
+[url "git@slack-github.com:"]
+	insteadOf = https://slack-github.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

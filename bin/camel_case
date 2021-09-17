@@ -1,0 +1,8 @@
+#!/usr/bin/python
+
+import sys
+import re
+
+word = sys.argv[1]
+print ''.join(x.capitalize()  for x in word.split('_'))
+

@@ -1,0 +1,37 @@
+#!/bin/sh
+
+
+run() {
+    echo $*
+    # /bin/echo -n "?> "
+    # read prompt
+    $*
+}
+DATE=`date +%Y.%m.%dr0`
+
+cd ~/work/vitess
+
+run git checkout origin/master
+
+run git tag -d slack-vitess-$DATE-base
+run git push --delete origin slack-vitess-$DATE-base
+
+run git tag -d slack-vitess-$DATE-upstream
+run git push --delete origin slack-vitess-$DATE-upstream
+
+run git branch -D slack-sync-upstream-$DATE
+run git push origin --delete slack-sync-upstream-$DATE
+
+run git fetch origin
+run git fetch upstream
+
+run git tag slack-vitess-$DATE-base origin/master
+run git tag slack-vitess-$DATE-upstream upstream/master
+
+run git checkout origin/master
+run git checkout -b slack-sync-upstream-$DATE
+
+run git merge --signoff upstream/master
+
+run git push --tags
+run git push

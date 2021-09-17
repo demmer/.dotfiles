@@ -1,0 +1,26 @@
+#!/bin/sh
+
+cd ~/work/webapp
+
+case $1 in
+   */*)
+	tests="$1"
+	;;
+   *)
+	tests=`find tests  src -name \*$1\* \( -name \*php -or -name \*hack \) `
+	;;
+esac
+
+echo test-php-test $tests
+
+nc -zv 127.0.0.1 8990 > /dev/null 2>&1
+if [ $? = 1 ] ; then
+    echo "setting LOCAL mode since docker not running"
+    LOCAL=1
+fi
+
+if [ $LOCAL ] ; then
+	tests/php-test $tests
+else
+	tests/run_unit_in_curl.sh $tests
+fi

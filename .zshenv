@@ -74,6 +74,7 @@ path=(						\
 	~/bin/$SYS/$SYSARCH                     \
 	~/bin/$SYS                              \
 	~/bin                                   \
+	/usr/local/opt/openjdk/bin		\
 	/usr/ucb				\
 	/usr/local/bin				\
 	/usr/local/sbin				\
@@ -195,6 +196,13 @@ export LANG
 export EC2_HOME="$HOME/src/ec2-api-tools"
 
 export GOPATH=$HOME/work/go
-export SLACK_SYNC_DEV_AUTO_ATTACH=1
+#export SLACK_SYNC_DEV_AUTO_ATTACH=1
+export SLACK_SYNC_DEV_ASSETS_SOURCE=dev-mains
 
-export VTROOT=$HOME/work/go
+export VTROOT=$HOME/work/go/src/vitess.io/vitess
+export USE_CLI_SERVER=1
+
+export ANT_HOME=/usr/local/ant
+
+export SSH_USER=demmer
+

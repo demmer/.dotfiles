@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+require 'shellwords'
+
+def confirm?(msg)
+	print msg + ' '
+	!!readline.strip.match(/^y/i)
+end
+
+def get_newest_commit_timestamp(branch)
+	`git log --max-count=1 --date=unix --format='%cd' #{Shellwords.escape(branch)}`.strip
+end
+
+def was_same_named_branch_merged_since_timestamp?(branch, timestamp)
+	search_term = "/#{branch}:"
+	!`git log origin/master --max-count=1 --since=#{Shellwords.escape(timestamp)} --grep #{Shellwords.escape(search_term)}`.empty?
+end
+
+def remove_branch!(branch)
+	puts "Removing #{branch}..."
+	`git branch -D #{branch}`
+	puts "\n"
+end
+
+branches = `git branch|grep -v master|grep -v ^*`.strip.split("\n").map(&:strip)
+remote_branches = `git branch -r|grep -v master|grep -v ^*`.strip.split("\n").map do |branch|
+	branch.strip.gsub('origin/', '')
+end
+
+branches.each do |branch|
+	last_commit_timestamp = get_newest_commit_timestamp(branch)
+	puts branch
+	puts last_commit_timestamp
+	next unless was_same_named_branch_merged_since_timestamp?(branch, last_commit_timestamp)
+	next unless confirm? "Remove #{branch}?"
+	remove_branch! branch
+end
+
+exit
+
+`git fetch origin master`
+
+`git branch|grep -v master|grep -v ^*`.strip.split("\n").each do |branch|
+    branch = branch.strip
+
+    head_of_branch = `git rev-parse #{branch}`.strip
+    has_merges = !`git log #{head_of_branch}..origin/master --ancestry-path --merges -n1`.strip.empty?
+
+    next unless has_merges
+
+    puts "Removing #{branch}"
+    `git branch -D #{branch}`
+    fork do
+        $stdout.reopen('/dev/null', 'w')
+        $stderr.reopen('/dev/null', 'w')
+        exec 'git', 'branch', '-d', branch
+    end
+    Process.waitpid
+    if $? == 0 && confirm?("Remove #{branch} from origin?")
+        fork do
+            $stdout.reopen('/dev/null', 'w')
+            $stderr.reopen('/dev/null', 'w')
+            exec 'git', 'push', 'origin', (':' + branch)
+        end
+        Process.waitpid
+        if $? == 0
+            puts "Removed #{branch} locally and from remote"
+        else
+            puts "Remove #{branch} locally"
+        end
+    end
+end
+

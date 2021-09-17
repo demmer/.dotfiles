@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CMD=""
+while [ "$#" -gt 0 ]; do
+  CMD="$CMD $(printf "%q" "$1")"
+  shift
+done
+
+ssh z-ops-demmer "$CMD"

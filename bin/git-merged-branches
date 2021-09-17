@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# With squash commits git can't figure out merged local branches.
+#
+# This falls back to tried-and-true grep to figure it out.
+
+
+COMMITLOG=/tmp/git-merged-branches.commit.log
+git log | egrep "Merge.*from" > $COMMITLOG
+
+branches=`git for-each-ref --sort='committerdate'  refs/heads | sed -e 's-refs/heads/--' | awk '{print $3}'`
+
+for branch in $branches ; do
+    egrep "Merge.*from.*$branch" $COMMITLOG > /dev/null
+    if [ $? ] ; then echo $branch; fi
+done
+

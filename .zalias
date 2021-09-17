@@ -106,3 +106,38 @@ alias vtssh='pushd-ssh -L15000:localhost:15000'
 
 alias govt='cd ~/work/go/src/github.com/youtube/vitess'
 alias atomd='open -a "Atom Beta" `pwd`'
+
+alias gnife='run-ops-beach gnife'
+alias vtctld="gnife search node 'roles:slack-vtctld AND slack_environment:prod' -i | head -1"
+alias ssh-vtctld='ssh `vtctld`'
+
+alias vtctld-dev="gnife search node 'roles:slack-vtctld AND slack_environment:dev' -i | head -1"
+alias ssh-vtctld-dev='ssh `vtctld-dev`'
+
+
+alias vtgate-web='ssh slack-vtgate-web-1qnu'
+alias vtgate-web-dev='ssh slack-vtgate-dev-web-v5mi'
+
+alias mysql-vtgate-web='ssh -t slack-vtgate-web-1qnu mysql -u god'
+alias mysql-vtgate-web-dev='ssh -t slack-vtgate-dev-web-v5mi mysql -u god'
+
+alias vtgate-loadtest='ssh vtgate-loadtest-prod-iad-2tbz'
+alias vtgate-loadtest-dev='ssh vtgate-loadtest-dev-iad-bsz3'
+
+alias hackstatsa="ssh tools3.nebula.tinyspeck.com php /mnt/is-slack-typed-yet/src/aggregate_commit_stats.php -a"
+alias fhhvm="hhvm -v Eval.JitEnableRenameFunction=true -d hhvm.jit=false -d hhvm.php7.engine_exceptions=false -m debug -d hhvm.force_hh=true"
+alias top="top -o cpu"
+
+alias spr="slack checkpoint --pr"
+
+alias ssh-flannel="ssh -L8081:localhost:8081"
+alias reload-flannel=/Users/demmer/work/flannel/scripts/chef/reload-cache.sh
+alias slocker="slack hhvm-docker"
+alias killall-hhvm-vsdebug="pg hhvm | grep vsdebug | awkill"
+
+alias sld='slack hhvm-docker'
+alias sle='sld exec'
+#alias sle='docker exec -it hhvm-slack-dev'
+alias hh_client='sle hh_client'
+alias slreset='sle pkill -9 hhvm ; sld restart-test-server'
+alias whatwasidoing='git branch -v --sort=committerdate | tail -10'

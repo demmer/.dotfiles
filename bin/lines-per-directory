@@ -1,0 +1,59 @@
+#!/usr/bin/python
+
+import os
+import sys
+import mmap
+
+def mapcount(filename):
+    f = open(filename, "r+")
+    buf = mmap.mmap(f.fileno(), 0)
+    lines = 0
+    readline = buf.readline
+    while readline():
+        lines += 1
+    return lines
+
+
+def counts(path, depth, max_depth):
+    count = 0
+    subcount = 0
+    paths = os.listdir(path)
+    paths.sort()
+    for filename in paths:
+        if filename == ".git":
+            continue
+        if path != ".":
+            filepath = path + "/" + filename
+        else:
+            filepath = filename
+
+        if os.path.isdir(filepath):
+            subcount += counts(filepath, depth + 1, max_depth)
+        else:
+            if os.path.getsize(filepath) != 0:
+                count += mapcount(filepath)
+
+    if max_depth == 0 or depth <= max_depth:
+        if count != 0:
+            print("%8s %s" % (count, path))
+
+    return count + subcount
+
+def usage():
+    print("usage:", sys.argv[0], "<root directory> <max depth>")
+    sys.exit(1)
+
+if len(sys.argv) >= 2:
+    if os.path.isdir(sys.argv[1]):
+        os.chdir(sys.argv[1])
+    else:
+        usage()
+
+max_depth = 0
+
+if len(sys.argv) >= 3:
+    max_depth = int(sys.argv[2])
+
+total = counts(".", 0, max_depth)
+print("%8s Total" % (total))
+

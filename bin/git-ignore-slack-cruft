@@ -1,0 +1,23 @@
+#!/bin/sh
+paths="style_c thrift_idl gen-hack bzl 3rdparty helpcenter marketing public spacesuit templates_c rocket srv img shaders static fonts node_modules slackhq style plugins slackpress vendor js tests/js tests/cypress sounds webdriver-ui-tests webpack translations"
+
+cmd=`basename $0`
+
+if [ ! -z "$1" ]  ; then
+    echo "overriding paths to $1"
+    paths=$1
+fi
+
+if [ $cmd = 'git-ignore-slack-cruft' ] ; then
+	echo "ignoring paths $paths"
+	git_cmd="git update-index --skip-worktree"
+
+elif [ $cmd = 'git-unignore-slack-cruft' ] ; then
+	echo "unignoring paths $paths"
+	git_cmd="git update-index --no-skip-worktree"
+else
+	echo "script must be called git-ignore-slack-cruft or git-unignore-slack-cruft"
+	exit 1
+fi
+
+git ls-files -z $paths | xargs -0 $git_cmd
