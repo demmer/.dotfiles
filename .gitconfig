@@ -14,8 +14,8 @@
 	reset-master = checkout -B master origin/master
 	rhom = reset --hard origin/master
 	com = checkout origin/master
-	cob = checkout -b 
-	mbranch = checkout origin/master -b 
+	cob = checkout -b
+	mbranch = checkout origin/master -b
 	history = log --color=always --follow -p --
         hist = history
 	pushf = push -f
@@ -24,6 +24,7 @@
 	amend = ci -C HEAD --amend
 	dc = diff --cached
 	dom = diff origin/master
+	br = "!f() { root=$(git remote get-url origin | sed 's#\\.git##' | sed 's#com:#com/#' | sed 's#git@#https://#' ); branch=$(git symbolic-ref HEAD | sed 's#.*/##'); echo $root/compare/$branch; }; f"
 [user]
 	name = Michael Demmer
 	email = mdemmer@slack-corp.com
