@@ -141,3 +141,7 @@ alias sle='sld exec'
 alias hh_client='sle hh_client'
 alias slreset='sle pkill -9 hhvm ; sld restart-test-server'
 alias whatwasidoing='git branch -v --sort=committerdate | tail -10'
+
+alias vdev='slack vitess -s 0 -e dev -k @replica'
+alias vprod='slack vitess -s 0 -e prod -k @replica'
+
