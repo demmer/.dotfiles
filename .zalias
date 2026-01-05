@@ -142,6 +142,8 @@ alias hh_client='sle hh_client'
 alias slreset='sle pkill -9 hhvm ; sld restart-test-server'
 alias whatwasidoing='git branch -v --sort=committerdate | tail -10'
 
-alias vdev='slack vitess -s 0 -e dev -k @replica'
-alias vprod='slack vitess -s 0 -e prod -k @replica'
+alias vdev='slack vitess --standard-cli --env dev --keyspace @replica'
+alias vprod='slack vitess --standard-cli --env prod --keyspace @replica'
+alias p8='ping 8.8.8.8'
+alias defaultroute="netstat -rn -finet | grep default | awk '{print $2}' "
 

@@ -1,7 +1,6 @@
 #!/bin/sh
 
 while true ; do
-   clear
    echo "[`date` | $*]"
    $*
    sleep 1

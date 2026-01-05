@@ -1,3 +1,4 @@
+source /Users/mdemmer/.bootstrap_rc
 ##
 ## FILE:  .zshrc
 ## DESC:  zsh init file; sourced by interactive shells
@@ -116,3 +117,30 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+nvm use default
+
+##############################################
+export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+##############################################
+# PDE SETUP || 2023-10-17T20:51:06-0700
+##############################################
+/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
+##############################################
+
+##############################################
+# Adding Source for use with Webapp and Artifactory
+##############################################
+source /Users/mdemmer/.slack_webapp_artifactory
+
+export PATH=/Users/mdemmer/nobackup/slack-objc/bin:$PATH # added automatically by /Users/mdemmer/nobackup/slack-objc/bin/work bootstrap
+##############################################
+export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+##############################################
+##############################################
+export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+##############################################
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+##############################################
+export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+##############################################

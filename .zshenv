@@ -206,3 +206,4 @@ export ANT_HOME=/usr/local/ant
 
 export SSH_USER=demmer
 
+. "$HOME/.cargo/env"

@@ -25,13 +25,16 @@
 	dc = diff --cached
 	dom = diff origin/master
 	br = "!f() { root=$(git remote get-url origin | sed 's#\\.git##' | sed 's#com:#com/#' | sed 's#git@#https://#' ); branch=$(git symbolic-ref HEAD | sed 's#.*/##'); echo $root/compare/$branch; }; f"
+	hhkick = "!f() { hh_client --json | jq '.errors | .[] | .message | .[] | .path' | sed 's/\"//'g | xargs touch; }; f"
+        log1 = log --pretty=format:"%h%x09%an%x09%ad%x09%s"
 [user]
 	name = Michael Demmer
 	email = mdemmer@slack-corp.com
 [core]
 	pager = less -F -X -r
 	excludesfile = /Users/demmer/.gitignore_global
-	editor = /usr/bin/vim
+	editor = code --wait
+	ignorecase = true
 
 [color]
 	ui = true
@@ -48,3 +51,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[pull]
+	default = current
