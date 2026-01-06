@@ -1,2 +1,0 @@
-text/html; w3m -dump -T text/html %s ; copiousoutput ;
-application/msword; /usr/bin/antiword '%s'; copiousoutput; description="Microsoft Word Text"; nametemplate=%s.doc ;

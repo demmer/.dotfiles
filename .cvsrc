@@ -1,3 +1,0 @@
-update -d
-log -N
-diff -u

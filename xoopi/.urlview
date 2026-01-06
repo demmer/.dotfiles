@@ -1,3 +1,0 @@
-EXPERT
-#REGEXP ((ht|f)t(p|ps):(//)?[^ >\"\t]*|www\\.[-a-z0-9.]+)[^ .,;\t>\">)]
-COMMAND urlview-remote '%s'
