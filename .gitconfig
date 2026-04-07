@@ -33,7 +33,6 @@
 [core]
 	pager = less -F -X -r
 	excludesfile = /Users/demmer/.gitignore_global
-	editor = code --wait
 	ignorecase = true
 
 [color]

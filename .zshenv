@@ -207,3 +207,12 @@ export ANT_HOME=/usr/local/ant
 export SSH_USER=demmer
 
 . "$HOME/.cargo/env"
+
+# Added for Cursor AI tools
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+
+# Slack android stuff
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools

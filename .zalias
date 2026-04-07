@@ -146,4 +146,5 @@ alias vdev='slack vitess --standard-cli --env dev --keyspace @replica'
 alias vprod='slack vitess --standard-cli --env prod --keyspace @replica'
 alias p8='ping 8.8.8.8'
 alias defaultroute="netstat -rn -finet | grep default | awk '{print $2}' "
+alias devspace="slack remote-dev --cursor"
 
