@@ -100,10 +100,6 @@ alias dls='dpkg -l'
 
 alias p='python'
 
-alias ssh='pushd-ssh'
-
-alias vtssh='pushd-ssh -L15000:localhost:15000'
-
 alias govt='cd ~/work/go/src/github.com/youtube/vitess'
 alias atomd='open -a "Atom Beta" `pwd`'
 
@@ -147,4 +143,3 @@ alias vprod='slack vitess --standard-cli --env prod --keyspace @replica'
 alias p8='ping 8.8.8.8'
 alias defaultroute="netstat -rn -finet | grep default | awk '{print $2}' "
 alias devspace="slack remote-dev --cursor"
-
