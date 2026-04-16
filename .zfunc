@@ -143,6 +143,17 @@ function prodb {
 }
 
 
+# Cached wrapper for `slack remote-dev --envs` (5-min TTL)
+slack-remote-dev-envs-cached() {
+  local cache=/tmp/.slack-remote-dev-envs.cache
+  if [[ -f "$cache" ]] && [[ -z $(find "$cache" -mmin +5 2>/dev/null) ]]; then
+    echo "(cached: $cache)" >&2
+    cat "$cache"
+  else
+    slack remote-dev --envs 2>&1 | tee "$cache"
+  fi
+}
+
 # Spin up a DevSpace, SSH in, and launch clawd-opus
 # With no args, pick an existing DevSpace via fzf and SSH in
 # Use -l for lazygit, -s for plain SSH
@@ -164,7 +175,7 @@ devup() {
     fi
   else
     local selection
-    selection=$(slack remote-dev --envs 2>&1 | grep '^|' | grep -v '^ *| #' | fzf --ansi) || return
+    selection=$(slack-remote-dev-envs-cached | grep '^|' | grep -v '^ *| #' | fzf --ansi) || return
     local devenv=$(echo "$selection" | awk -F'|' '{print $7}' | xargs)
     local branch=$(echo "$selection" | awk -F'|' '{print $3}' | xargs)
     echo "Connecting to $devenv..."
