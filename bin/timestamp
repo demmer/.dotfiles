@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+"""Prepend timestamps to each line of stdin.
+
+Usage: some_command | timestamp       # wall-clock timestamps
+       some_command | timestamp -d    # elapsed time deltas
+"""
+
+import sys
+import time
+from datetime import datetime
+
+delta_mode = "-d" in sys.argv[1:]
+
+prev = time.monotonic()
+for line in sys.stdin:
+    if delta_mode:
+        now = time.monotonic()
+        delta = now - prev
+        prev = now
+        if delta < 0.001:
+            prefix = "[       ]"
+        else:
+            prefix = f"[{delta:6.3f}s]"
+    else:
+        prefix = f"[{datetime.now().strftime('%H:%M:%S.%f')[:12]}]"
+    sys.stdout.write(f"{prefix} {line}")
+    sys.stdout.flush()
